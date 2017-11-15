@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblAlarmInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblAlarmInfo" >
+    <id column="alarm_id" property="alarmId" jdbcType="BIGINT" />
+    <result column="alarm_code" property="alarmCode" jdbcType="VARCHAR" />
+    <result column="alarm_level" property="alarmLevel" jdbcType="CHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+    <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+    <result column="no_exec" property="noExec" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="alarm_operation" property="alarmOperation" jdbcType="CHAR" />
+    <result column="operation_state" property="operationState" jdbcType="CHAR" />
+    <result column="operation_memo" property="operationMemo" jdbcType="VARCHAR" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="check_user_id" property="checkUserId" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    alarm_id, alarm_code, alarm_level, machine_id, machine_name, order_child_id, no_exec, 
+    create_time, alarm_operation, operation_state, operation_memo, check_time, check_user_id, 
+    state,isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_alarm_info
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_alarm_info
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblAlarmInfo" >
+    insert into tbl_alarm_info (alarm_id, alarm_code, alarm_level, 
+      machine_id, machine_name, order_child_id, 
+      no_exec, create_time, alarm_operation, 
+      operation_state, operation_memo, check_time, 
+      check_user_id, state,isdel)
+    values (#{alarmId,jdbcType=BIGINT}, #{alarmCode,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=CHAR}, 
+      #{machineId,jdbcType=BIGINT}, #{machineName,jdbcType=VARCHAR}, #{orderChildId,jdbcType=BIGINT}, 
+      #{noExec,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{alarmOperation,jdbcType=CHAR}, 
+      #{operationState,jdbcType=CHAR}, #{operationMemo,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{checkUserId,jdbcType=BIGINT}, #{state,jdbcType=CHAR},#{isdel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblAlarmInfo" >
+    insert into tbl_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alarmId != null" >
+        alarm_id,
+      </if>
+      <if test="alarmCode != null" >
+        alarm_code,
+      </if>
+      <if test="alarmLevel != null" >
+        alarm_level,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="machineName != null" >
+        machine_name,
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+      <if test="noExec != null" >
+        no_exec,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="alarmOperation != null" >
+        alarm_operation,
+      </if>
+      <if test="operationState != null" >
+        operation_state,
+      </if>
+      <if test="operationMemo != null" >
+        operation_memo,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="checkUserId != null" >
+        check_user_id,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alarmId != null" >
+        #{alarmId,jdbcType=BIGINT},
+      </if>
+      <if test="alarmCode != null" >
+        #{alarmCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLevel != null" >
+        #{alarmLevel,jdbcType=CHAR},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="machineName != null" >
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="noExec != null" >
+        #{noExec,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmOperation != null" >
+        #{alarmOperation,jdbcType=CHAR},
+      </if>
+      <if test="operationState != null" >
+        #{operationState,jdbcType=CHAR},
+      </if>
+      <if test="operationMemo != null" >
+        #{operationMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUserId != null" >
+        #{checkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblAlarmInfo" >
+    update tbl_alarm_info
+    <set >
+      <if test="alarmCode != null" >
+        alarm_code = #{alarmCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLevel != null" >
+        alarm_level = #{alarmLevel,jdbcType=CHAR},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="machineName != null" >
+        machine_name = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id = #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="noExec != null" >
+        no_exec = #{noExec,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmOperation != null" >
+        alarm_operation = #{alarmOperation,jdbcType=CHAR},
+      </if>
+      <if test="operationState != null" >
+        operation_state = #{operationState,jdbcType=CHAR},
+      </if>
+      <if test="operationMemo != null" >
+        operation_memo = #{operationMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUserId != null" >
+        check_user_id = #{checkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblAlarmInfo" >
+    update tbl_alarm_info
+    set alarm_code = #{alarmCode,jdbcType=VARCHAR},
+      alarm_level = #{alarmLevel,jdbcType=CHAR},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      machine_name = #{machineName,jdbcType=VARCHAR},
+      order_child_id = #{orderChildId,jdbcType=BIGINT},
+      no_exec = #{noExec,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      alarm_operation = #{alarmOperation,jdbcType=CHAR},
+      operation_state = #{operationState,jdbcType=CHAR},
+      operation_memo = #{operationMemo,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      check_user_id = #{checkUserId,jdbcType=BIGINT},
+      state = #{state,jdbcType=CHAR},
+      isdel = #{isdel,jdbcType=CHAR}
+    where alarm_id = #{alarmId,jdbcType=BIGINT}
+  </update>
+  <update id="processingequipment" parameterType="com.qjkj.qjcsp.entity.TblAlarmInfo">
+   update tbl_alarm_info
+     set
+     <if test="checkUserId != null" >
+        check_user_id = #{checkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+        </if>
+        <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=TIMESTAMP}
+        </if>
+       where
+   <if test="isdel =='C'.toString()" > 
+        isdel = 'N'
+  </if>
+     <if test="isdel =='Y'.toString()" > 
+        isdel = 'C'
+  </if>
+       and machine_id = #{machineId,jdbcType=BIGINT}
+  </update>
+   <select id="getAlarmCellNumByDeviceCode" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_alarm_info
+    where machine_id = #{machineId,jdbcType=BIGINT}
+    ORDER BY alarm_id
+ DESC LIMIT 0,1
+  </select>
+   <select id="selectCountByalarmIdcheckUserId" resultType="int" parameterType="com.qjkj.qjcsp.entity.TblAlarmInfo" >
+ select count(1) from tbl_alarm_info where check_user_id!=#{checkUserId} and machine_id=#{machineId} and isdel='C'
+   </select>
+     <select id="selectCountByOrderChildId" resultType="int"  >
+ select count(1) from tbl_alarm_info where order_child_id=#{OrderChildId}
+   </select>
+  
+</mapper>

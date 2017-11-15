@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="Expires" content="0">
+		<title>余额说明</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="jquery.min.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div class="all">
+			<div class="Q1 main">
+				<h1>Q1：怎么获得红包？</h1>
+				<ul>
+					<li class="list">活动期间内，参与并完成活动要求即可获得红包；</li>
+					<li>使用过红包的优惠订单将不会纳入活动中，无法产生新的红包。</li>
+				</ul>
+			</div>
+			<div class="Q2 main">
+				<h1>Q2：红包如何使用？</h1>
+				<ul>
+					<li class="list">在每笔订单的结算页面中，可以选择并使用红包来抵扣现金；</li>
+					<li>每笔订单中，仅限使用一个红包，且红包抵用的最高金额为5元。</li>
+				</ul>
+			</div>
+			<div class="Q3 main">
+				<h1>Q3：红包的使用时间是多久？</h1>
+				<ul>
+					<li class="list">红包的有效使用期为10天，过期失效。</li>
+				</ul>
+			</div>
+			
+		</div>
+	</body>
+</html>

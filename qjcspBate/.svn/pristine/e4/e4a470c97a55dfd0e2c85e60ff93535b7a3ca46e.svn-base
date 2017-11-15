@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerDisActLogMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomerDisActLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="used_time" property="usedTime" jdbcType="TIMESTAMP" />
+    <result column="discount_money" property="discountMoney" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, order_num, used_time, discount_money
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_dis_act_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 首单优惠 -->
+  <select id="findByCount" parameterType="map" resultType="java.lang.Long">
+  	SELECT
+  		count(1)	
+  	FROM tbl_customer_dis_act_log l
+  	LEFT JOIN tbl_customer c ON l.customer_id = c.customer_id
+  	LEFT JOIN tbl_order o ON l.order_num = o.order_num
+  	WHERE 1 = 1
+
+  		<if test="orderNum != null and orderNum != '' ">
+  			AND o.order_num like '%${orderNum}%'
+  		</if>
+  		<if test="mobile != null and mobile != '' ">
+  			AND o.mobile like '%${mobile}%'
+  		</if>
+  		<if test="startDate != null and startDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{startDate,jdbcType=TIMESTAMP}) <= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="endDate != null and endDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{endDate,jdbcType=TIMESTAMP}) >= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="orderStatus != null and orderStatus != '' and orderStatus != '-1' ">
+  			AND o.order_status = #{orderStatus,jdbcType=VARCHAR}
+  		</if>
+	    <if test="order != null and order != ''" >
+	       	ORDER by ${order} ${sort}
+	    </if>
+	    <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if>  		
+  </select>
+  
+  <select id="findByList" parameterType="map" resultType="map">
+   	SELECT
+  		o.order_num AS orderNum, o.mobile, date_format(o.order_time, '%Y-%m-%d %H:%i:%s') AS orderTime, 
+  		o.total_money AS totalMoney, o.discount_money AS discountMoney, o.real_money AS realMoney,
+  		date_format(o.pay_time, '%Y-%m-%d %H:%i:%s') AS payTime, o.pay_number AS payNumber,
+  		o.pay_mode AS payMode, o.order_status AS orderStatus
+  			
+  	FROM tbl_customer_dis_act_log l
+  	LEFT JOIN tbl_customer c ON l.customer_id = c.customer_id
+  	LEFT JOIN tbl_order o ON l.order_num = o.order_num
+  	WHERE 1 = 1
+  		<if test="orderNum != null and orderNum != '' ">
+  			AND o.order_num like '%${orderNum}%'
+  		</if>
+  		<if test="mobile != null and mobile != '' ">
+  			AND o.mobile like '%${mobile}%'
+  		</if>
+  		<if test="startDate != null and startDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{startDate,jdbcType=TIMESTAMP}) <= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="endDate != null and endDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{endDate,jdbcType=TIMESTAMP}) >= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="orderStatus != null and orderStatus != '' and orderStatus != '-1' ">
+  			AND o.order_status = #{orderStatus,jdbcType=VARCHAR}
+  		</if>
+	    <if test="order != null and order != ''" >
+	       	ORDER by ${order} ${sort}
+	    </if>
+	    <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if>   		
+  </select>
+  
+  
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_customer_dis_act_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomerDisActLog" >
+    insert into tbl_customer_dis_act_log (id, customer_id, order_num, 
+      used_time, discount_money)
+    values (#{id,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, 
+      #{usedTime,jdbcType=TIMESTAMP}, #{discountMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerDisActLog" >
+    insert into tbl_customer_dis_act_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="usedTime != null" >
+        used_time,
+      </if>
+      <if test="discountMoney != null" >
+        discount_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="usedTime != null" >
+        #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountMoney != null" >
+        #{discountMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerDisActLog" >
+    update tbl_customer_dis_act_log
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="usedTime != null" >
+        used_time = #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountMoney != null" >
+        discount_money = #{discountMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblCustomerDisActLog" >
+    update tbl_customer_dis_act_log
+    set customer_id = #{customerId,jdbcType=BIGINT},
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      used_time = #{usedTime,jdbcType=TIMESTAMP},
+      discount_money = #{discountMoney,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

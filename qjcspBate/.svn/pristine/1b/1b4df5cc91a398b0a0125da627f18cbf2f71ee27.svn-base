@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsUsersMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsUsers" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="SMALLINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="user_memo" property="userMemo" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_code, user_account, user_name, password, user_type, company_id, user_mobile, 
+    user_tel, user_email, department_id, user_memo, user_status, isdel, create_time, last_mod_time, 
+    create_user_id, mod_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_users
+    where user_id = #{userId,jdbcType=BIGINT} and isdel = 'N'
+  </select>
+   <select id="selectByMobileNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_users
+    where user_mobile = #{userMobile,jdbcType=VARCHAR} and isdel='N'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_users
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsUsers" >
+    insert into basics_users (user_id, user_code, user_account, 
+      user_name, password, user_type, 
+      company_id, user_mobile, user_tel, 
+      user_email, department_id, user_memo, 
+      user_status, isdel, create_time, 
+      last_mod_time, create_user_id, mod_user_id
+      )
+    values (#{userId,jdbcType=BIGINT}, #{userCode,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userType,jdbcType=SMALLINT}, 
+      #{companyId,jdbcType=BIGINT}, #{userMobile,jdbcType=VARCHAR}, #{userTel,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{userMemo,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=CHAR}, #{isdel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastModTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, #{modUserId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsUsers" >
+    insert into basics_users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userAccount != null" >
+        user_account,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="userMobile != null" >
+        user_mobile,
+      </if>
+      <if test="userTel != null" >
+        user_tel,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="userMemo != null" >
+        user_memo,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userAccount != null" >
+        #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="userMobile != null" >
+        #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="userMemo != null" >
+        #{userMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsUsers" >
+    update basics_users
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userAccount != null" >
+        user_account = #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        user_tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="userMemo != null" >
+        user_memo = #{userMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsUsers" >
+    update basics_users
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      user_account = #{userAccount,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=SMALLINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      user_tel = #{userTel,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      user_memo = #{userMemo,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=CHAR},
+      isdel = #{isdel,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      mod_user_id = #{modUserId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getCount" resultType="Long" parameterType="map" >
+	SELECT count(*) FROM basics_users b 
+	JOIN basics_user_role t on t.user_id = b.user_id
+	JOIN basics_role r on r.role_id = t.role_id and b.company_id=r.company_id
+	<where>
+		r.company_id = #{companyId,jdbcType=BIGINT} AND r.special_role_num in (2,3) AND b.isdel = 'N'
+		<if test="userName != null and userName !='' " >
+   			and b.user_name like '%${userName}%'  
+   		</if>
+   		<if test="userMobile != null and userMobile !='' " >
+   			and b.user_mobile like '%${userMobile}%'
+   		</if>
+   		<if test="userId != null and userId !='' " >
+   			and b.user_id like '%${userId}%'
+   		</if>
+	</where>
+  </select>
+  
+  <select id="getCountByMaintenance" resultType="Long" parameterType="map" >
+	SELECT count(*) FROM basics_users b 
+	JOIN basics_user_role t on t.user_id = b.user_id
+	JOIN basics_role r on r.role_id = t.role_id
+	<where>
+		r.company_id = #{companyId,jdbcType=BIGINT} AND r.special_role_num = 1 AND b.isdel = 'N' AND b.user_type = 2
+		<if test="userName != null and userName !='' " >
+   			and b.user_name like '%${userName}%'  
+   		</if>
+   		<if test="userMobile != null and userMobile !='' " >
+   			and b.user_mobile like '%${userMobile}%'
+   		</if>
+   		<if test="userId != null and userId !='' " >
+   			and b.user_id like '%${userId}%'
+   		</if>
+	</where>
+  </select>
+  
+  <select id="findAllEmployeeList" resultType="map" >
+	SELECT 
+	b.user_id userId,
+	b.user_name userName,
+	b.user_mobile userMobile,
+	r.special_role_num specialRoleNum
+	FROM basics_users b 
+	JOIN basics_user_role t on t.user_id = b.user_id
+	JOIN basics_role r on r.role_id = t.role_id and r.company_id=b.company_id
+	<where>
+		r.company_id = #{companyId,jdbcType=BIGINT} AND r.special_role_num in (2,3) AND b.isdel = 'N'
+		<if test="userName != null and userName !='' " >
+   			and b.user_name like '%${userName}%'
+   		</if>
+   		<if test="userMobile != null and userMobile !='' " >
+   			and b.user_mobile like '%${userMobile}%'
+   		</if>
+   		<if test="userId != null and userId !='' " >
+   			and b.user_id like '%${userId}%'
+   		</if>
+	</where>
+	limit #{offset},#{limit}
+  </select>
+  
+  <select id="findAllMaintenanceList" resultMap="BaseResultMap" >
+	SELECT * FROM basics_users b 
+	JOIN basics_user_role t on t.user_id = b.user_id
+	JOIN basics_role r on r.role_id = t.role_id
+	<where>
+		r.company_id = #{companyId,jdbcType=BIGINT} AND r.special_role_num = 1 AND b.isdel = 'N' AND b.user_type = 2
+		<if test="userName != null and userName !='' " >
+   			and b.user_name like '%${userName}%'
+   		</if>
+   		<if test="userMobile != null and userMobile !='' " >
+   			and b.user_mobile like '%${userMobile}%'
+   		</if>
+   		<if test="userId != null and userId !='' " >
+   			and b.user_id like '%${userId}%'
+   		</if>
+	</where>
+	limit #{offset},#{limit}
+  </select>
+  
+  <select id="findUserIdByMobile" resultMap="BaseResultMap" >
+	SELECT * 
+	FROM basics_users t 
+	WHERE t.user_mobile = #{mobileNum,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findUserAccount" resultType="java.lang.String" >
+  	SELECT t.user_account FROM basics_users t WHERE t.user_id = #{createUserId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findModUserAccount" resultType="java.lang.String" >
+  	SELECT t.user_account FROM basics_users t WHERE t.user_id = #{modUserId,jdbcType=BIGINT}
+  </select>
+  <select id="getSpecialRoleNumByUserMobileNum" resultType="java.lang.String" >
+<!--      SELECT special_role_num AS specialRoleNum FROM basics_user_role ur,basics_role r -->
+<!-- 	 WHERE ur.role_id = r.role_id AND ur.user_id =#{userId,jdbcType=BIGINT} -->
+        SELECT special_role_num AS specialRoleNum FROM basics_user_role ur,basics_role r,basics_users u
+        WHERE ur.role_id = r.role_id AND u.user_id = ur.user_id AND u.user_mobile = #{mobileNum,jdbcType=VARCHAR}
+  </select>
+  <select id="getUserInfo" resultType="map">
+  	SELECT bu.company_id as companyId,bu.user_name as userName FROM basics_users bu WHERE bu.user_id=#{userId};
+  </select>
+  <select id="findAllUserByCompanyId" resultType="map">
+  	select a.user_name merchantName,a.user_memo merchantAddress from basics_users a,basics_user_role b,basics_role c where a.user_id=b.user_id and b.role_id=c.role_id and a.isdel='N' and a.user_type='4' and c.special_role_num='3' and a.user_status='1' and a.company_id=#{companyId}
+  </select>
+  <select id="findAllUserByUserName" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List" />
+    from basics_users
+    where isdel='N' and user_name = #{userName}
+  </select>
+   <select id="findUsersByMachineId" resultMap="BaseResultMap">
+    select 
+  	a.*
+    from basics_users a,basics_user_machine b
+    where a.user_id=b.user_id and a.isdel='N' and b.machine_id = #{machineId} and b.special_role_num = #{specialRoleNum}
+  </select>
+  
+</mapper>

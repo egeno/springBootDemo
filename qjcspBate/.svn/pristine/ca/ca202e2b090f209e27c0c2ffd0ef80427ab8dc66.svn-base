@@ -1,0 +1,555 @@
+body{background:#fcfcfc;}
+.none{display: none;}
+.modeMain{
+	width:98%;
+	height:100%;
+	position: relative;
+	margin: 0 auto;
+	padding-top: 10px;
+}
+.modeMain .modeTop{
+	width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+/*宸﹁竟*/
+.modeMain .modeLeft{
+	width: 24%;
+    height: 100%;
+    position: relative;
+}
+.modeLeft .modeTitle{
+	width:100%;
+	height:80px;
+}
+.modeTitle p{
+	position:absolute;
+	top:0;
+	left:0;
+	line-height:80px;
+	text-align: center;
+	width:100%;
+	font-size:16px;
+}
+.modeTitle .change{
+	display: block;
+	width:77px;
+	border-left:1px solid #D8D8D8;
+	height:31px;
+	line-height: 31px;
+	color:#2aa2ed;
+	float: right;
+    margin-top: 22px;
+    font-size:14px;
+    cursor: pointer;
+}
+.modeTitle .titlebg{
+	z-index:-1;
+	width:100%;
+	height:100%;
+}
+.modeLeft .modeAllot{
+	margin-top: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border:1px solid #bfbfbf;
+    position:relative;
+}
+/*宸﹁竟tab*/
+.modeAllot .modeAllot_tab{
+	width:100%;
+	position: relative;
+}
+.modeAllot_tab ul{background: #ebebeb;border-bottom: 1px solid #bfbfbf;}
+.modeAllot_tab li{
+	width:25%;
+	float:left;
+	text-align: center;
+	height:50px;
+	font-size:16px;
+	border-bottom: 1px solid #bfbfbf;
+	margin-bottom: -1px;
+}
+@media screen and (max-width:1440px){
+	.modeAllot_tab li{font-size: 14px;}
+}
+.modeAllot_tab li:nth-child(4n) div{
+	border:none;
+}
+.modeAllot_tab li:hover{
+	background:#2aa2ed;
+	color:#fff;
+	cursor:pointer;
+}
+.modeAllot_tab li.now{
+	background:#2aa2ed;
+	color:#fff;
+	cursor:pointer;
+}
+.modeAllot_tab li div{
+	height:30px;
+	line-height:30px;
+	box-sizing: border-box;
+	border-right: 1px solid #bfbfbf;
+	margin-top:10px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.showname{
+	position: absolute;
+    top:40px;
+    line-height: 40px;
+    background: #fff;
+    padding: 0px 10px;
+    z-index: 9999999;
+    width: 100%;
+    text-align: center;
+    display:none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modeAllot_tab li div em{
+	margin-left: 5px;
+}
+.modeAllot_main{
+	background:#fff;
+	box-sizing: border-box;
+    padding: 10px;
+    overflow: auto;
+}
+.modeAllot_botm{
+	height:40px;
+	line-height:40px;
+	text-align: center;
+	background:#f5f5f5;
+	border-top:1px solid #bfbfbf;
+	font-size:14px;
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+	color:red;
+}
+/*宸﹁竟鍒楄〃*/
+.modeAllot_main ul{
+	display: none;
+}
+.modeAllot_main li{
+	width:88.5%;
+	margin-bottom:10px;
+	border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+	border:1px solid #bfbfbf;
+	cursor: pointer;
+}
+@media screen and (max-width:1440px){
+	.modeAllot_main li{width: 95%;}
+}
+.modeAllot_main li .bor{
+	display: inline-block;
+	width:5px;
+	background:#2aa2ed;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.modeAllot_main li .mealName{
+	width:68%;
+	text-align: center;
+	margin-left: 10px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modeAllot_main li .pct{
+	width:22%;
+	border-left:1px solid #bfbfbf;
+	text-align: center;
+}
+.modeAllot_main .mask{
+	width:100%;
+	height:100%;
+	position: relative;
+	padding-top:1px;
+	z-index:99;
+	border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+	background:gray;
+	background:rgba(0,0,0,0.6);
+}
+.detel {
+    position: absolute;
+    left:0px;
+    width: 50%;
+    text-align: center;
+}
+.mask .update {
+    position: absolute;
+    right: 0px;
+    width: 50%;
+    text-align: center;
+    border-left: 1px solid #fff;
+}
+/*鍙宠竟*/
+.modeMain .modeRight{
+	position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+    border-bottom: 1px solid #bfbfbf;
+    overflow: hidden;
+}
+.modeRight_tab{width:100%;}
+.modeRight_tab li {
+    float: left;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 50px;
+    text-align: center;
+    position: relative;
+}
+.modeRight_tab li img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.modeRight_tab li div{
+	position: relative;
+    width: 80%;
+    margin: 0 auto;
+    line-height: 50px;
+}
+.modeRight_meal{
+	width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: auto;
+    border-left: 1px solid #bfbfbf;
+    border-right: 1px solid #bfbfbf;
+}
+.modeRight_meal li{
+	background:#ffffff;
+	border:1px solid #bfbfbf;
+	border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+	width:15%;
+	text-align: center;
+	cursor: pointer;
+	float:left;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	font-size:14px;
+}
+@media screen and (max-width:1440px){
+	.modeRight_meal li{font-size: 13px;}
+}
+.modeRight_meal li span{
+	display: block;
+	float:left;
+	width:5px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	background:#2aa2ed;
+}
+.modeRight_meal li .hasfood span{
+	display: block;
+	float:left;
+	width:5px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	background:#bfbfbf;
+}
+.modeRight_meal li div{
+	width:60%;
+	margin: 0 auto;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/*涓嬮潰*/
+.modeMain .modeBotm{
+	height:5.6%;
+    width: 100%;
+    background: #f5f5f5;
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+    position: absolute;
+    z-index: 99;
+   	bottom: 10px;
+    text-align: center;
+}
+.SureBtn {
+    border: 2px solid #2aa2ed;
+    border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+    text-align: center;
+    color: #2aa2ed;
+    margin: 0 auto;
+    cursor:pointer;
+}
+.back {
+    font-size: 16px;
+    border-left: 1px solid #bfbfbf;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+.back a{color:#090909;}
+.dialog{
+	width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: absolute;
+	background:gray;
+	filter:alpha(opacity=90);
+    background: rgba(0,0,0,0.5);
+}
+.dialogmain{
+	width:430px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-top: -85px;
+	margin-left: -215px;	
+}
+.dialog .tit{
+	width:100%;
+	height:40px;
+	background:#2aa2ed;
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 16px;
+	line-height: 40px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.dialog .top{
+	width:100%;
+	height:125px;
+	background: #FFFFFF;
+	border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+}
+.dialog .inp{
+	text-align: center;
+	font-size: 16px;
+	height: 85px;
+	line-height: 85px;
+}
+.dialog .inp input{
+	height:25px;
+	width:270px;
+	text-align: center;
+}
+.dialog .txt{
+	margin-top: 24px;
+}
+.dialog .txt p{
+	text-align: center;
+}
+.dialog .bottom{
+	margin-top: 5px;
+	width:100%;
+	height:40px;
+}
+.dialog .bottom div{
+	width:212px;
+	height:40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 16px;
+	border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+	float: left;
+	background: #FFFFFF;
+	cursor: pointer;
+}
+.btnConcle{
+	margin-right: 5px;
+}
+.concle{
+	position: absolute;
+	right:-10px;
+	top:-10px;
+	cursor: pointer;
+}
+.dialog .mealAllot_input .inpName{
+	display:inline-block;
+	margin-left: 40px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:223px;
+}
+.dialog .mealAllot_input .inpText{
+	position: absolute;
+    right: 40px;
+}
+.dialog .mealAllot_input input{
+	width:80px;
+	margin-right:10px;
+}
+/*选择机柜弹窗*/
+.dialog .choicebox{
+	width: 770px;
+	height: 506px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-top: -253px;
+	margin-left: -385px;
+}
+.choicebox{border-radius: 5px;}
+
+.jigui{
+	width: 770px;
+	height: 40px;
+	background-color: #2aa2ed;
+	border-radius: 5px 5px 0px 0px;
+	font-size: 16px;
+	line-height: 40px;
+	color: #FFFFFF;
+	text-align: center;
+}
+.choice{
+	height: 420px;
+	width: 770px;
+	 overflow: auto;
+	 background-color: #FFFFFF;
+	 list-style-type: none;
+	 overflow: auto;
+}
+.choice li{
+	width: 110px;
+	height: 60px;
+	margin-top: 12px;
+	margin-left: 12px;
+	float: left;
+	border: solid 1px #2aa2ed;
+	border-radius: 5px 5px 5px 5px;
+	font-size: 14px;
+	line-height: 60px;
+	text-align: center;
+	font-family: "微软雅黑";
+	cursor: pointer;
+	overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+}
+.choice li.active {
+    background: #2aa2ed;
+    color: #fff;
+}
+.showname{
+	position: absolute;
+    line-height: 40px;
+    background: #fff;
+    padding: 0px 10px;
+    z-index: 9999999;
+    width: 100%;
+    text-align: center;
+    display:none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.choicebox .bottom div{width:380px}
+/*.bgaa{
+	width: 1000px;
+	height: 900px;
+    background: rgba(0,0,0,0.5);
+}
+
+.popup{
+	width: 770px;
+	height: 506px;
+	margin-left: 20px;
+}
+.jigui{
+	width: 770px;
+	height: 40px;
+	background-color: #2aa2ed;
+	border-radius: 5px 5px 0px 0px;
+	font-size: 16px;
+	line-height: 40px;
+	color: #FFFFFF;
+	text-align: center;
+}
+.choice{
+	height: 420px;
+	width: 770px;
+	 overflow: auto;
+	 background-color: #FFFFFF;
+	 list-style-type: none;
+}
+.choice li{
+	width: 110px;
+	height: 60px;
+	margin-top: 12px;
+	margin-left: 12px;
+	float: left;
+	border: solid 1px #2aa2ed;
+	border-radius: 5px 5px 5px 5px;
+	font-size: 14px;
+	line-height: 60px;
+	text-align: center;
+	font-family: "微软雅黑";
+	
+}
+.yans{
+	width: 100px;
+	height: 60px;
+	margin-top: 12px;
+	margin-left: 12px;
+	float: left;
+	border: solid 1px #2aa2ed;
+	border-radius: 5px 5px 5px 5px;
+	font-size: 14px;
+	line-height: 60px;
+	text-align: center;
+	color: #FFFFFF;
+	font-family: "微软雅黑";
+	background-image: url(../image/bg.png);
+}
+.butta{
+	width: 770px;
+	height: 40px;
+}
+.buttaa{
+	width: 382px;
+	height: 40px;
+	margin-top: 4px;
+	float: left;
+	border-radius: 5px 5px 5px 5px;
+	background-color: #FFFFFF;
+	font-size: 16px;
+	text-align: center;
+	line-height: 40px;
+	font-family: "微软雅黑";
+}
+.buttab{
+	width: 382px;
+	height: 40px;
+	margin-top: 4px;
+	float: right;
+	border-radius: 5px 5px 5px 5px;
+	background-color: #FFFFFF;
+	font-size: 16px;
+	text-align: center;
+	line-height: 40px;
+	font-family: "微软雅黑";
+	
+}*/

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsMenuMapper">
+
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsMenu">
+		<id column="MENU_ID" property="menuId" jdbcType="INTEGER" />
+		<result column="PID" property="pid" jdbcType="INTEGER" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="PNAME" property="pname" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="MYID" property="myid" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="CHAR" />
+		<result column="ISUSED" property="isused" jdbcType="CHAR" />
+		<result column="STATE" property="state" jdbcType="VARCHAR" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+		<result column="ICONCLS" property="iconCls" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="MENU_CATEGORY" property="menuCategory" jdbcType="CHAR" />
+		<result column="CREATED" property="created" jdbcType="TIMESTAMP" />
+		<result column="LASTMOD" property="lastmod" jdbcType="TIMESTAMP" />
+		<result column="CREATER" property="creater" jdbcType="INTEGER" />
+		<result column="MODIFYER" property="modifyer" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		MENU_ID, PID, NAME, PNAME, SORT, MYID, TYPE, ISUSED, STATE, URL, ICONCLS,
+		STATUS,
+		DESCRIPTION, MENU_CATEGORY, CREATED, LASTMOD, CREATER, MODIFYER
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_menu
+		WHERE MENU_ID = #{menuId,jdbcType=INTEGER}
+	</select>
+
+	<update id="updateIsUsed" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		UPDATE basics_menu SET isused = 'N' WHERE MENU_ID = #{menuId}
+	</update>
+
+	<update id="updateIsUseds" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		UPDATE basics_menu SET isused = 'N' WHERE MENU_ID IN
+		<foreach collection="basicsMenuList" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item.menuId}
+		</foreach>
+	</update>
+
+	<delete id="deleteKey" parameterType="java.lang.Integer">
+		DELETE FROM basics_menu
+		WHERE MENU_ID =#{menuId}
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM basics_menu
+		WHERE MENU_ID = #{menuId,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteByPrimaryKeyList" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		DELETE FROM basics_menu
+		WHERE MENU_ID IN
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item.menuId}
+		</foreach>
+	</delete>
+
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		INSERT INTO basics_menu (MENU_ID, PID, NAME,
+		PNAME, SORT, MYID,
+		TYPE, ISUSED, STATE, URL,
+		ICONCLS, STATUS, DESCRIPTION,
+		MENU_CATEGORY, CREATED, LASTMOD,
+		CREATER, MODIFYER)
+		values (#{menuId,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{pname,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{myid,jdbcType=VARCHAR},
+		#{type,jdbcType=CHAR}, #{isused,jdbcType=CHAR},
+		#{state,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+		#{iconCls,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+		#{description,jdbcType=VARCHAR},
+		#{menuCategory,jdbcType=CHAR}, #{created,jdbcType=TIMESTAMP}, #{lastmod,jdbcType=TIMESTAMP},
+		#{creater,jdbcType=INTEGER}, #{modifyer,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		INSERT INTO basics_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				MENU_ID,
+			</if>
+			<if test="pid != null">
+				PID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="pname != null">
+				PNAME,
+			</if>
+			<if test="sort != null">
+				SORT,
+			</if>
+			<if test="myid != null">
+				MYID,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="isused != null">
+				ISUSED,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="url != null">
+				URL,
+			</if>
+			<if test="iconCls != null">
+				ICONCLS,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="description != null">
+				DESCRIPTION,
+			</if>
+			<if test="menuCategory != null">
+				MENU_CATEGORY,
+			</if>
+			<if test="created != null">
+				CREATED,
+			</if>
+			<if test="lastmod != null">
+				LASTMOD,
+			</if>
+			<if test="creater != null">
+				CREATER,
+			</if>
+			<if test="modifyer != null">
+				MODIFYER,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				#{menuId,jdbcType=INTEGER},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pname != null">
+				#{pname,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="myid != null">
+				#{myid,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=CHAR},
+			</if>
+			<if test="isused != null">
+				#{isused,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="iconCls != null">
+				#{iconCls,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="menuCategory != null">
+				#{menuCategory,jdbcType=CHAR},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmod != null">
+				#{lastmod,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creater != null">
+				#{creater,jdbcType=INTEGER},
+			</if>
+			<if test="modifyer != null">
+				#{modifyer,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		UPDATE basics_menu
+		<set>
+			<if test="pid != null">
+				PID = #{pid,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pname != null">
+				PNAME = #{pname,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="myid != null">
+				MYID = #{myid,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=CHAR},
+			</if>
+			<if test="isused != null">
+				ISUSED = #{isused,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="iconCls != null">
+				ICONCLS = #{iconCls,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="menuCategory != null">
+				MENU_CATEGORY = #{menuCategory,jdbcType=CHAR},
+			</if>
+			<if test="created != null">
+				CREATED = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmod != null">
+				LASTMOD = #{lastmod,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creater != null">
+				CREATER = #{creater,jdbcType=INTEGER},
+			</if>
+			<if test="modifyer != null">
+				MODIFYER = #{modifyer,jdbcType=INTEGER},
+			</if>
+		</set>
+		WHERE MENU_ID = #{menuId,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsMenu">
+		UPDATE basics_menu
+		SET PID = #{pid,jdbcType=INTEGER},
+		NAME = #{name,jdbcType=VARCHAR},
+		PNAME = #{pname,jdbcType=VARCHAR},
+		SORT = #{sort,jdbcType=INTEGER},
+		MYID = #{myid,jdbcType=VARCHAR},
+		TYPE = #{type,jdbcType=CHAR},
+		ISUSED = #{isused,jdbcType=CHAR},
+		STATE = #{state,jdbcType=VARCHAR},
+		URL = #{url,jdbcType=VARCHAR},
+		ICONCLS = #{iconCls,jdbcType=VARCHAR},
+		STATUS = #{status,jdbcType=CHAR},
+		DESCRIPTION = #{description,jdbcType=VARCHAR},
+		MENU_CATEGORY = #{menuCategory,jdbcType=CHAR},
+		CREATED = #{created,jdbcType=TIMESTAMP},
+		LASTMOD = #{lastmod,jdbcType=TIMESTAMP},
+		CREATER = #{creater,jdbcType=INTEGER},
+		MODIFYER = #{modifyer,jdbcType=INTEGER}
+		WHERE MENU_ID = #{menuId,jdbcType=INTEGER}
+	</update>
+
+	<select id="queryMenuList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List"></include>
+		FROM basics_menu
+	</select>
+
+	<select id="findAllFunctionList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_menu t WHERE t.status='A' AND t.type='F' ORDER BY t.sort
+	</select>
+	
+	<select id="findAllFunctionListsForMenu" resultMap="BaseResultMap" parameterType="String">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_menu t WHERE t.status='A'
+		<if test="menuCategory != null">
+			AND (t.MENU_CATEGORY = #{menuCategory} OR t.MENU_CATEGORY IS NULL OR t.MENU_CATEGORY = '')
+		</if>
+		<if test="pid != null">
+			AND t.pid = #{pid}
+		</if>
+		<if test="pid == null">
+			AND t.pid IS NULL
+		</if>
+		ORDER BY t.sort
+	</select>
+	
+	<select id="findAllFunctionLists" resultMap="BaseResultMap" parameterType="String">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_menu t WHERE t.status='A'
+		<if test="_parameter != null">
+			AND t.pid = #{_parameter}
+		</if>
+		<if test="_parameter == null">
+			AND t.pid IS NULL
+		</if>
+		ORDER BY t.sort
+	</select>
+	
+	<select id="findFunctionListForPermission" resultMap="BaseResultMap" parameterType="String">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_menu t WHERE t.status='A' AND (t.MENU_CATEGORY = #{menuCategory} OR t.MENU_CATEGORY IS NULL OR t.MENU_CATEGORY = '')
+		ORDER BY t.sort
+	</select>
+	
+	<select id="findFunctionListsByPId" resultMap="BaseResultMap" parameterType="String">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_menu t WHERE MENU_ID = #{pid} OR PID = #{pid} 
+		OR PID IN(SELECT MENU_ID FROM basics_menu where PID = #{pid})
+	</select>
+
+</mapper>

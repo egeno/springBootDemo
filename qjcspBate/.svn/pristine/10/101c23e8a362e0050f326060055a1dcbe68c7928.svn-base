@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>申请机柜</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/apply.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/apply.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="top"><a href="javascript:void(0);" class="gotoback"><img class="back" src="../img/images/return2.png" /></a>申请机柜<span class="finishBtn">完成</span></div>
+		<div class="address">
+			<p class="tit"><img src="../img/img/Marker@2x.png">具体位置</p>
+			<p class="area"><label>地区</label><input type="text" ></p>
+			<p class="info_address"><label>详细地址</label><input type="text"   placeholder="(请填写具体机柜铺放地址)"></p>
+		</div>
+		<div class="info">
+			<p class="tit"><img src="../img/img/address-book@2x.png">联系信息（选填）</p>
+			<p class="userName"><label>姓名</label><input type="text" ></p>
+			<p class="tel_phone"><label>电话</label><input type="text" ></p>
+		</div>
+		<div class="message">请填写必要信息</div>
+		<div class="addressMag">请填写必要信息</div>
+	</body>
+</html>

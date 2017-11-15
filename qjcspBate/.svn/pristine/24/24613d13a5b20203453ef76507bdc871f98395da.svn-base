@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qjkj.qjcsp.mapper.TblDeviceOrderAmountMapper">
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblDeviceOrderAmount">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="machine_name" jdbcType="VARCHAR" property="machineName" />
+    <result column="machine_id" jdbcType="BIGINT" property="machineId" />
+    <result column="order_amount" jdbcType="INTEGER" property="orderAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, machine_name, machine_id, order_amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_device_order_amount
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_device_order_amount
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblDeviceOrderAmount">
+    insert into tbl_device_order_amount (id, machine_name, machine_id, 
+      order_amount)
+    values (#{id,jdbcType=BIGINT}, #{machineName,jdbcType=VARCHAR}, #{machineId,jdbcType=BIGINT}, 
+      #{orderAmount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblDeviceOrderAmount">
+    insert into tbl_device_order_amount
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="machineName != null">
+        machine_name,
+      </if>
+      <if test="machineId != null">
+        machine_id,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineName != null">
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null">
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblDeviceOrderAmount">
+    update tbl_device_order_amount
+    <set>
+      <if test="machineName != null">
+        machine_name = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null">
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblDeviceOrderAmount">
+    update tbl_device_order_amount
+    set machine_name = #{machineName,jdbcType=VARCHAR},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      order_amount = #{orderAmount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectOrderAmountByMachineId" resultType="int">
+  	SELECT order_amount
+  	FROM tbl_device_order_amount
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByMachineId">
+  	DELETE FROM tbl_device_order_amount 
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+  </delete>
+  
+</mapper>

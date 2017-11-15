@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GoodsCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.GoodsCommentInfo" >
+    <result column="goods_id"  property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="evaluate_score" property="grade" jdbcType="INTEGER"/>
+    <result column="customer_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="evaluate_memo" property="commentContent" jdbcType="VARCHAR"/>
+    <result column="evaluate_time" property="commentDate" jdbcType="TIMESTAMP" /> 	
+  </resultMap>
+  <!--2.3.7.	根据设备id号获取有评论内容的设备菜品评论 -->
+  <select id="getGoodsCommentsWithContentByMachineId" parameterType="java.lang.Long" resultType="map">
+  	SELECT  
+  	  DISTINCT CAST(toie.goods_id as CHAR) as goodsId, toie.goods_name as goodsName,CAST(toie.evaluate_score AS CHAR) as grade,
+  	  tc.customer_name as nickName,toie.evaluate_memo as commentContent,
+  	  date_format(toie.evaluate_time,'%Y-%m-%d %H:%i:%s') as commentDate 
+    FROM tbl_item_detail tid , tbl_order_item_evaluate  toie ,tbl_order tod ,tbl_customer tc
+	WHERE tid.goods_id=toie.goods_id AND toie.machine_id=tid.machine_id
+		  AND tid.order_id=tod.order_id AND tod.customer_id=tc.customer_id 
+		  AND tid.machine_id=#{machineId} AND toie.evaluate_memo IS NOT NULL AND TRIM(toie.evaluate_memo)!='' 
+		  ORDER BY toie.evaluate_time DESC;
+  </select>
+  <!-- 根据设备id得到该设备的菜品评价分值 -->
+   <select id="getMachineGoodsAvgSore" parameterType="java.lang.Long" resultType="java.lang.Long">
+   		
+   	 SELECT  ROUND(AVG(evaluate_score)) FROM tbl_order_item_evaluate WHERE machine_id=#{machineId} AND evaluate_memo IS NOT NULL OR TRIM(evaluate_memo)!='';
+   </select>
+   
+   <!-- 菜品id号和设备id号获取该设备下的菜品评价数量 -->
+   <select id="getMachineGoodsGradeCount" parameterType="java.util.HashMap" resultType="java.lang.Long">
+   		select COUNT(1) from (SELECT COUNT(1) FROM tbl_order_item_evaluate WHERE machine_id=#{machineId} AND goods_id=#{goodsId} GROUP BY goods_id)tt;
+   </select>
+   
+    <!--2.3.9.	根据菜品id号和设备id号获取该设备下的菜品评论 -->
+  <select id="getGoodsCommentsWithMachineIdGoodsId" parameterType="java.util.HashMap" resultType="map">
+  	SELECT  
+  	  	DISTINCT CAST(toie.goods_id as CHAR) as goodsId ,toie.goods_name as goodsName,CAST(toie.evaluate_score AS CHAR) as grade,
+  	  	tc.customer_name as nickName,toie.evaluate_memo as commentContent,
+  	  	date_format(toie.evaluate_time,'%Y-%m-%d %H:%i:%s') as commentDate 
+    FROM tbl_item_detail tid , tbl_order_item_evaluate  toie ,tbl_order tod ,tbl_customer tc
+	WHERE tid.goods_id=toie.goods_id AND toie.machine_id=tid.machine_id
+		  AND tid.order_id=tod.order_id AND tod.customer_id=tc.customer_id 
+		  AND tid.machine_id=#{machineId} AND tid.goods_id=#{goodsId} 
+		  ORDER BY toie.evaluate_time DESC;
+  </select>
+   
+   <!-- 2.3.10 根据菜品id号和设备id号获取该设备下有评论内容的菜品评价数量 -->
+   <select id="getMachineGoodsGradeCountHasComment" parameterType="java.util.HashMap" resultType="java.lang.Long">
+   		SELECT COUNT(1) FROM tbl_order_item_evaluate toie WHERE machine_id=#{machineId} AND goods_id=#{goodsId} 
+   		AND  toie.evaluate_memo IS NOT NULL AND TRIM(toie.evaluate_memo)!=''  
+   		GROUP BY goods_id;
+   </select>
+   
+   <!--2.3.10	根据菜品id号和设备id号获取该设备下的有评论的商品评价信息 -->
+  <select id="getGoodsCommentsWithMachineIdGoodsIdHasComment" parameterType="java.util.HashMap" resultType="map">
+  	SELECT
+  	    DISTINCT CAST(toie.goods_id as CHAR) as goodsId ,toie.goods_name as goodsName,CAST(toie.evaluate_score AS CHAR) as grade,
+  	  	tc.customer_name as nickName,toie.evaluate_memo as commentContent,
+  	  	date_format(toie.evaluate_time,'%Y-%m-%d %H:%i:%s') as commentDate   
+    FROM tbl_item_detail tid , tbl_order_item_evaluate  toie ,tbl_order tod ,tbl_customer tc
+	WHERE tid.goods_id=toie.goods_id AND toie.machine_id=tid.machine_id
+		  AND tid.order_id=tod.order_id AND tod.customer_id=tc.customer_id 
+		  AND tid.machine_id=#{machineId} AND tid.goods_id=#{goodsId} 
+		  AND  toie.evaluate_memo IS NOT NULL AND TRIM(toie.evaluate_memo)!=''
+		  ORDER BY toie.evaluate_time DESC;
+  </select>
+  
+</mapper>

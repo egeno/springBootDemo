@@ -1,0 +1,341 @@
+.top{
+	width:100%;
+	height:1.0rem;
+	background: url(../img/images/banner.png) no-repeat;
+	background-size: cover;
+	overflow: hidden;
+}
+.top_inf{
+	width:100%;
+	height:2.3rem;
+	background-size: cover;
+	overflow: hidden;
+	background-color: #ffffff;
+}
+.gunyu{
+	height: 1.0rem;
+	width: 3.7rem;
+	float: left;
+	text-align: right;
+	line-height: 1.0rem;
+	font-size: 0.3rem;
+	color: #FFFFFF;
+}
+.news{
+	height: 1.0rem;
+	float: right;
+}
+.news img{
+	width: 0.36rem;
+	height: 0.41rem;
+	float: right;
+	margin-right: 0.2rem;
+	margin-top: 00.2rem;
+}
+.login{
+	height: 1.3rem;
+	margin-top: 0.4rem;
+}
+.circle{
+	float: left;
+	margin-left: 0.2rem;
+}
+.member{
+	width: 1.3rem;
+	height: 1.3rem;
+	border-radius: 50%;
+	border: 0.05rem solid #feead5;
+}
+.top-right{
+	display:inline-block;
+	width:4.6rem;
+}
+.top-right span:first-child{
+	width:4.2rem;
+	float:left;
+}
+.top-right span:last-child{
+	width:0.25rem;
+	float:right;
+}
+.status{
+	font-size: 0.36rem;
+	margin-left: 0.2rem;
+	margin-top: 0.35rem;
+    color: #000000;
+}
+
+.tel{
+	height: 0.5rem;
+    width: 4rem;
+    margin-left: 0.25rem;
+    /* display:none; */
+}
+.tel img{
+	color: #c4c4c4;
+    font-size: 0.3rem;
+    line-height: 0.6rem;
+    display: block;
+}
+.tel em{
+	color:#c4c4c4;
+	font-size:0.3rem;
+	line-height: 0.6rem;
+	display:block;
+}
+.edit{
+	float: right;
+	margin-top: 0.45rem;
+}
+.edit img{
+	width: 0.22rem;
+    height: 0.38rem;
+}
+.bottom{
+	font-size: 0.24rem;
+}
+.balance{
+	height: 1.4rem;
+	background-color: #fff;
+	color: #333333;
+	border-bottom: #E4E4E4 0.01rem solid;
+	font-size: 0.26rem;
+}
+.balance span{
+	width: 33.3%;
+    float: left;
+    text-align: center;
+    height: 1rem;
+    margin-top: 0.2rem;
+    border-right: 0.02rem solid #E4E4E4;
+    padding-top: 0.1rem;
+}
+.balance span:nth-child(3){
+	border-right: none;
+}
+.left .Amount{
+	color: #ff9310;
+}
+.center .red{
+	color: #ff5423;
+}
+.right .Points,
+.right .myPoints{
+	color: #b3b3b3;
+}
+.left .Amount em,
+.center .red em,
+.right .Points em{
+	font-size: 0.44rem;
+	margin-bottom: 0.1rem;
+	font-weight: 600;
+}
+.order{
+	height: 2.3rem;
+	background-color: #fff;
+	border-bottom: #E4E4E4 0.01rem solid;
+}
+.myOrder{
+	margin-top: 0.2rem;
+	height: 0.88rem;
+	border-bottom: #E4E4E4 0.01rem solid;
+}
+.myOrder .left,
+.collection .left,
+.mall .left,
+.score .left,
+.opinion .left,
+.aboutUs .left{
+	float: left;
+	margin-top: 0.25rem;
+	margin-left: 0.3rem;
+}
+.myOrder .left img{
+	width: 0.42rem;
+	height: 0.46rem;
+	vertical-align: middle;
+    margin-top: -0.1rem;
+}
+.myOrder .left span,
+.collection .left span,
+.mall .left span,
+.score .left span,
+.opinion .left span,
+.aboutUs .left span{
+	color: #414141;
+	margin-left: 0.15rem;
+	font-size: 0.32rem;
+}
+.myOrder .right,
+.collection .right,
+.mall .right,
+.score .right,
+.opinion .right,
+.aboutUs .right {
+	float: right;
+	margin-top: 0.3rem;
+	margin-right: 0.3rem;
+}
+.myOrder .right span,
+.collection .right span,
+.mall .right span,
+.score .right span,
+.opinion .right span,
+.aboutUs .right span{
+	color: #999999;
+	font-size: 0.26rem;
+}
+.myOrder .right img,
+.collection .right img,
+.mall .right img,
+.score .right img,
+.opinion .right img,
+.aboutUs .right img{
+	vertical-align: bottom;	
+	width: 0.16rem;
+	height: 0.27rem;
+}
+.orderStatus p{
+	color: #808080;
+}
+.orderStatus span{
+	float: left;
+	width: 25%;
+	text-align: center;
+    margin-top: 0.28rem;
+    position: relative;
+}
+.orderStatus span p{
+	margin-top: 0.1rem;
+}
+.orderStatus .knum{
+	position: absolute;
+    background: #f00;
+    color: #fff;
+    border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    -khtml-border-radius: 0.25rem;
+    left: 0.9rem;
+    padding: 0 0.07rem;
+}
+.orderStatus .waitPay img{
+	width: 0.42rem;
+	height: 0.46rem;
+}
+.orderStatus .waitTake img{
+	width: 0.46rem;
+	height: 0.46rem;
+}
+.orderStatus .waitEvaluate img{
+	width: 0.52rem;
+	height: 0.49rem;
+}
+.orderStatus .waitRefund img{
+	width: 0.45rem;
+	height: 0.45rem;
+}
+
+.collection,.mall,.score{
+	background-color: #fff;
+	color: #333333;
+	margin-top: 0.2rem;
+	height: 0.88rem;
+	border-bottom: #E4E4E4 0.01rem solid;
+}
+.collection .left img{
+	width: 0.39rem;
+	height: 0.41rem;
+	vertical-align: middle;
+    margin-top: -0.1rem;
+}
+.mall .left img{
+	width: 0.40rem;
+	height: 0.40rem;
+	vertical-align: middle;
+    margin-top: -0.1rem;
+}
+.score .left img{
+	width: 0.44rem;
+	height: 0.44rem;
+	vertical-align: middle;
+    margin-top: -0.1rem;
+}
+.opinion,.aboutUs{
+	background-color: #fff;
+	color: #333333;
+	height: 0.88rem;
+	border-bottom: #E4E4E4 0.01rem solid;
+}.opinion .left img{
+	width: 0.41rem;
+	height: 0.38rem;
+	vertical-align: middle;
+    margin-top: -0.1rem;
+}
+.aboutUs .left img{
+	width: 0.40rem;
+	height: 0.40rem;
+	vertical-align: middle;
+    margin-top: -0.1rem;
+}
+.phone{
+	background-color: #fff;
+	color: #333333;
+	text-align: center;
+	margin-top: 0.2rem;
+	height: 0.88rem;
+	border-bottom: #E4E4E4 0.01rem solid;
+}
+.phone span{
+	margin-top: 0.2rem;
+	color: #fea569;
+	font-size: 0.32rem;
+	display: inline-block;
+}
+.sevre{
+	color: #bababa;
+	text-align: center;
+	font-size: 0.3rem;
+	margin-top: 0.15rem;
+	margin-bottom: 3rem;
+}
+
+
+/* 弹窗 */
+.order_tel{
+	width:6rem;
+	margin-left:-3rem;
+	bottom:1.5rem;
+	margin-bottom:0;
+	height:2.03rem;
+}
+.order_tel h4{
+	font-size:0.26rem;
+	color:#8f8f8f;
+	font-weight:normal;
+	height:0.88rem;
+	line-height:0.88rem;
+	text-align:center;
+	border-bottom:1px solid #dadada;
+}
+.order_tel a{
+	display:block;
+	color:#fc6a42;
+	font-size:0.4rem;
+	height:1.14rem;
+	line-height:1.14rem;
+}
+.cancel{
+	position:absolute;
+	bottom:0.2rem;
+	height:1.14rem;
+	line-height:1.14rem;
+	background:#fff;
+	border-radius: 0.3rem;
+    text-align: center;
+    width: 6rem;
+    left:50%;
+    margin-left:-3rem;
+    font-size:0.4rem;
+    color:#fc6a42;
+}
+

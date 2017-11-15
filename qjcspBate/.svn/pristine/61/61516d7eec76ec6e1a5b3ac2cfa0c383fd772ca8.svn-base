@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>个人信息</title>
+		<link rel="stylesheet" type="text/css" href="../css/mine.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.json.js"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mine.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="top">
+			<div class="member">
+				<span class="left">
+					<img src="../img/images/return.png" class="return" />
+				</span>
+				<span class="right">
+					<img src="../img/images/help.png" class="help" />
+					<span class="taste">会员攻略</span>
+				</span>
+			</div>
+			<div class="level">
+				<span class="shadow"></span>
+				<span class="on-shadow levelOne"></span>
+				<span class="prevLevel">
+					<span class="circle"></span>
+					<img src="../img/images/V0.png" />
+					<span class="prevNum">5000</span>
+				</span>
+				<span class="mainLevel">
+					<span class="bigCircle">
+						<img src="../img/images/V1.png" />
+					</span>
+					<img src="../img/images/head-portrait.png"/ class="avatar">
+				</span>
+				<span class="nextLevel">
+					<span class="circle"></span>
+					<img src="../img/images/V2.png" />
+					<span class="nextNum">10000</span>
+				</span>
+			</div>
+			<div class="name">
+				<span>BLUEBERRY</span>
+			</div>
+			<div class="count">
+				<span class="grow">
+					<p class="growTop">
+						<img src="../img/images/V0.png"/>
+						<span>成长值</span>
+					</p>
+					<p class="growDown">0</p>
+				</span>
+				<span class="points">
+					<p class="pointsTop">
+						<img src="../img/images/cup.png"/>
+						<span>积分值</span>
+					</p>
+					<p class="pointsDown">0</p>
+				</span>
+			</div>
+		</div>
+		<div class="bottom">
+			<div class="personInfo">
+				<p class="person">
+					<span class="info">
+						<img src="../img/images/edit.png"/>
+						<span>个人信息</span>
+					</span>
+					<span class="edit">
+						<span>编辑</span>
+						<img src="../img/images/to.png"/>
+					</span>
+				</p>
+				<p class="sex">
+					<span class="title2">性别</span>
+					<span class="align">未设置</span>
+				</p>
+				<p class="provence">
+					<span class="title2">籍贯</span>
+					<span class="align">未设置</span>
+				</p>
+				<p class="telphone">
+					<span class="title2">手机号</span>
+					<span class="align">未设置</span>
+				</p>
+			</div>
+			<div class="school">
+				<p class="universityName">
+					<span class="title2">学校</span>
+					<span class="align">未设置</span>
+				</p>
+				<p class="grade">
+					<span class="title2">年级</span>
+					<span class="align">未设置</span>
+				</p>
+				<p class="dormitory">
+					<span class="title2">寝室楼</span>
+					<span class="align">未设置</span>
+				</p>
+				<p class="studentCard">
+					<span class="title2">专业</span>
+					<span class="align">未设置</span>
+				</p>
+			</div>
+			<div class="install">
+				<p class="set_up">
+					<span class="title2">
+						<img src="../img/images/install.png" class="img"/>
+						<span class="password">支付密码</span>
+					</span>
+					<span class="edit">
+						<span>未设置</span>
+						<img src="../img/images/to.png"/>
+					</span>
+				</p>
+			</div>
+			<div class="exit">
+				<span>退出当前账号</span>
+			</div>
+		</div>
+		<!-- 底部导航  start -->
+		<div class="foot">
+			<ul>
+				<li><a href="javascript:;"><img class="one" src="../img/images/foot_index.png" alt="首页"/><img class="two" src="../img/images/foot_indexActive.png" alt="首页"/><span>首页</span></a>
+				<li><a href="javascript:;"><img class="one" src="../img/images/foot_find.png" alt="发现"/><img class="two" src="../img/images/foot_findActive.png" alt="发现"/><span>发现</span></a>
+				<li class="active"><a href="javascript:;"><img class="one" src="../img/images/foot_my.png" alt="我的"/><img class="two" src="../img/images/foot_myActive.png" alt="我的"/><span>我的</span></a>
+			</ul>
+		</div>
+		<!-- 底部导航  end-->
+	</body>
+</html>

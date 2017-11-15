@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsCrowdsourcedMapper" >
+ <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.viewmodel.CrowdsourcedTree" >
+  <id column="university_id" property="universityid" jdbcType="BIGINT" />
+ <result column="university_name" property="universityname" jdbcType="VARCHAR" />
+ <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+ <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+ <result column="spell_all" property="spellall" jdbcType="VARCHAR" />
+ <result column="spell_short" property="spellshort" jdbcType="VARCHAR" />
+ <result column="zone_name" property="zonename" jdbcType="VARCHAR" />
+ <result column="city_id" property="cityCode" jdbcType="BIGINT" />
+ </resultMap>
+ <sql id="Base_Column_List" >
+    university_id, university_name,longitude,latitude,spell_all,spell_short,zone_name,city_id
+  </sql>
+  <select id="findMainList" resultMap="BaseResultMap">
+	 SELECT
+	<include refid="Base_Column_List" />
+	FROM g_university g
+	WHERE 1=1
+  </select>
+  <select id="findAllcrowdsourcedList" resultMap="BaseResultMap">
+    SELECT
+	<include refid="Base_Column_List" />
+	FROM g_university g
+	WHERE 1=1
+	<if test="pid != null">
+		AND g.university_id = #{pid,jdbcType=BIGINT}
+	</if>
+  </select>
+   <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.viewmodel.CrowdsourcedTree" >
+   insert into g_university
+   <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="universityname != null" >
+        university_name,
+      </if>
+      <if test="spellall != null" >
+        spell_all,
+      </if>
+      <if test="spellshort != null" >
+        spell_short,
+      </if>
+      <if test="zonename != null" >
+        zone_name,
+      </if>
+      <if test="CityCode != null" >
+        city_id,
+      </if>
+     <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+   </trim>
+     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="universityname != null" >
+      #{universityname,jdbcType=VARCHAR},
+      </if>
+      <if test="spellall != null" >
+      #{spellall,jdbcType=VARCHAR},
+      </if>
+      <if test="spellshort != null" >
+      #{spellshort,jdbcType=VARCHAR},
+      </if>
+      <if test="zonename != null" >
+      #{zonename,jdbcType=VARCHAR},
+      </if>
+      <if test="CityCode != null" >
+      #{CityCode,jdbcType=BIGINT},
+      </if>
+     <if test="latitude != null" >
+     #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null" >
+       #{longitude,jdbcType=DOUBLE},
+      </if>
+     
+     </trim>
+   
+   </insert>
+ <select id="selectCitynamebycityid" parameterType="java.lang.Long" resultType="com.qjkj.qjcsp.entity.viewmodel.CrowdsourcedTree">
+  	SELECT city_name as cityname FROM g_city g
+	WHERE g.city_id = #{CityCode}
+  </select>
+   <select id="selectCityidbycityname" parameterType="java.lang.String" resultType="com.qjkj.qjcsp.entity.viewmodel.CrowdsourcedTree">
+  	SELECT city_id as CityCode FROM g_city g
+	WHERE g.city_name = #{cityname}
+  </select>
+    <select id="judgeCrowdsourcedExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT count(*) FROM g_university g
+	WHERE g.university_id = #{universityid}
+  </select>
+  <update id="updateCrowdsourced" parameterType="com.qjkj.qjcsp.entity.viewmodel.CrowdsourcedTree">
+ update g_university
+ <set>
+      <if test="universityname != null" >
+   university_name=#{universityname,jdbcType=VARCHAR},
+      </if>
+      <if test="spellall != null" >
+      spell_all=#{spellall,jdbcType=VARCHAR},
+      </if>
+      <if test="spellshort != null" >
+    spell_short=#{spellshort,jdbcType=VARCHAR},
+      </if>
+      <if test="zonename != null" >
+     zone_name=#{zonename,jdbcType=VARCHAR},
+      </if>
+      <if test="CityCode != null" >
+      city_id=#{CityCode,jdbcType=BIGINT},
+      </if>
+     <if test="latitude != null" >
+    latitude=#{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null" >
+     longitude=#{longitude,jdbcType=DOUBLE},
+      </if>
+ </set>
+ WHERE university_id = #{universityid,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteCrowdsourcedbyId" parameterType="java.lang.Long">
+delete from g_university 
+WHERE university_id = #{universityid,jdbcType=BIGINT}
+</delete>
+ <select id="selectProvincebycityid" parameterType="java.lang.Long" resultType="com.qjkj.qjcsp.entity.viewmodel.CrowdsourcedTree">
+  select g.province_id AS provCode,
+g.province_name AS province
+FROM g_province g
+LEFT JOIN g_city c ON c.province_id=g.province_id
+WHERE c.city_id = #{CityCode}
+  </select>
+  </mapper>

@@ -1,0 +1,70 @@
+.top{
+	padding-top:0.15rem;
+	padding-bottom:0.1rem;
+	overflow:hidden;
+	border-bottom:1px solid #ccc;
+	background:#fff;
+}
+.search{
+	border:1px solid #e6e6e6;
+	width:5.14rem;
+	height:0.58rem;
+	border-radius:5px;
+	background:#F5F5F5;
+	line-height:0.58rem;
+	float:left;
+	margin-left:0.2rem;
+}
+.search img{
+	width:0.28rem;
+	height:0.28rem;
+}
+.search img.searchSign{
+	float:left;
+	margin:0.14rem 0.1rem 0 0.15rem;
+}
+.search img.clear{
+	float:right;
+	margin:0.14rem 0.14rem 0 0;
+}
+.search input{
+	color:#333;
+	font-size:0.3rem;
+	width:4rem;
+}
+.cancel{
+	font-size:0.32rem;
+	color:#ff8420;
+	line-height:0.58rem;
+	float:right;
+	margin-right:0.2rem;
+}
+.address{
+	padding:0.25rem 0;
+	margin-left:0.3rem;
+	border-bottom:1px solid #e3e3e3;
+}
+.address h1{
+	color:#1a1a1a;
+	font-weight:normal;
+	font-size:0.3rem;
+	line-height:0.4rem;
+	margin-bottom:0.05rem;
+}
+.address p{
+	font-size:0.26rem;
+	color:#666;
+	line-height:0.4rem;
+}
+.searchResult{
+	text-align:center;
+}
+.searchResult img{
+	width:3.1rem;
+	height:2.91rem;
+	margin-top:2.5rem;
+}
+.history p{
+	cursor:pointer;
+}
+

@@ -1,0 +1,14 @@
+
+
+.cle:after{visibility:hidden; display:block; font-size:0; content:'\20'; clear:both; height:0;}
+
+
+.clear { clear: both; height: 0; font-size: 0; line-height: 0; overflow: hidden; }
+
+.cle:after, .clearfix:after, .clear_f:after, .cle_float:after { visibility: hidden; display: block; font-size: 0; content: '\20'; clear: both; height: 0; }
+.cle, .clearfix, .clear_f, .cle_float { *zoom: 1 }
+.lf { float: left; } 
+#tool {padding: 5px 0 5px 10px;}
+#tool .action div{margin-right: 10px;}
+
+

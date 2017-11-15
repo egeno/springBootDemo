@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--订单详情</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/orderinfo.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/orderinfo.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="main">
+		<!--
+        	描述：订单详情
+        -->
+        <div class="dialog none">
+			<div class="dialog_cancel dialog_box">
+				<h3>温馨提示</h3>
+				<p>您真的要取消订单吗？</p>
+				<div class="yesNo"><span>是</span><span>否</span></div>
+			</div>
+		</div>
+		<div class="dialog none">
+			<div class="tuikuan dialog_box">
+				<h3>温馨提示</h3>
+				<p>您是否要退款？</p>
+				<div class="yesNo"><span>是</span><span>否</span></div>
+			</div>
+		</div>
+		<div class="dialog none">
+			<div class="dialog_rated dialog_box">
+				<img src="../img/image/rated.png" alt="" />
+				<h1 class="perfect">马上好评</h1>
+				<h1 class="good">不够满意</h1>
+				<h1 class="bad">不够满意</h1>
+			</div>
+		</div>
+		<div class="order_content">
+			<div class="title"><a href="Ordertab.html?live" ><img src="../img/image/return.png" alt="返回" /></a>订单详情</div>
+			<!-- 订单退餐结果  start -->
+			<div class="returnFoodResult">
+				<!-- 订单退餐失败  start -->
+				<div class="fail none">
+					<div class="returnFoodFail returnMain">
+						<div class="returnFoodFail_text returnText">
+							<img src="../img/image/orderfail.png" alt="订单失败" />
+							<div class="failText textInfo">
+								<h3>订单退款失败</h3>
+								<p>退款申请失败，若有疑问请联系客服！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_fail.png" alt="退款失败进度条" class="barFail"><!--失败 -->
+					</div>
+				</div>
+				<!-- 订单退餐失败  end -->
+				<!-- 订单退餐成功  start -->
+				<div class="success none">
+					<div class="returnFoodSuccess returnMain">
+						<div class="returnFoodSuccess_text returnText">
+							<img src="../img/image/ordering.png" alt="订单成功" />
+							<div class="successText textInfo">
+								<h3>订单退款成功</h3>
+								<p>订单退款成功，请查收退款金额！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_success.png" alt="退款成功进度条" class="barSuccess"><!--成功 -->
+					</div>
+				</div>
+				<!-- 订单退餐成功  end -->
+				<!-- 订单退餐中  start -->
+				<div class="ing none">
+					<div class="returnFoodIng returnMain">
+						<div class="returnFoodIng_text returnText">
+							<img src="../img/image/ordering.png" alt="订单进行中" />
+							<div class="IngText textInfo">
+								<h3>订单退款中</h3>
+								<p>申请退款中，等待客服核实！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_ing.png" alt="退款中进度条" class="barIng"><!--进行中-->
+					</div>
+				</div>
+				<!-- 订单退餐中  end -->
+				<!-- 订单超时  start -->
+				<div class="over none">
+					<div class="returnFoodOver returnMain">
+						<div class="returnFoodOver_text returnText">
+							<img src="../img/image/orderfail.png" alt="订单超时" />
+							<div class="OverText textInfo">
+								<h3>订单已超时</h3>
+								<p>未在预订时间内取餐，订单失效！</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 订单超时  end -->
+				<!-- 订单取消成功 start -->
+				<div class="cancel none">
+					<div class="returnFoodCancel returnMain">
+						<div class="returnFoodCancel_text returnText">
+							<img src="../img/image/orderfail.png" alt="订单取消成功" />
+							<div class="CancelText textInfo">
+								<h3>订单已取消</h3>
+								<p></p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_cancel.png" alt="订单取消成功进度条" class="barCancel"><!--订单取消成功-->
+					</div>
+				</div>
+				<!-- 订单取消成功  end -->
+				<!-- 订单完成  start -->
+				<div class="finish none">
+					<div class="returnFoodFinish returnMain">
+						<div class="returnFoodFinish_text returnText">
+							<img src="../img/image/orderfinish.png" alt="订单完成" />
+							<div class="FinishText textInfo">
+								<h3>订单已完成</h3>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_over.png" alt="订单取消成功进度条" class="barFinish"><!--订单完成-->
+					</div>
+					<div class="splitLine lineTitle"></div>
+					<div class="linktitle">
+						<img src="../img/img/success.png" class=""><em>已经评价</em><span>></span>
+					</div>
+				</div>
+				<!-- 订单完成  end -->
+				<!-- 待取餐  start -->
+				<div class="wait none">
+					<div class="returnFoodWait returnMain">
+						<div class="returnFoodWait_text returnText">
+							<img src="../img/image/orderfinish.png" alt="订单完成" />
+							<div class="WaitText textInfo">
+								<h3>订单已支付</h3>
+								<p>请查收提货短信！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_wait.png" alt="订单取消成功进度条" class="barWait"><!--订单完成-->
+					</div>
+				</div>
+				<!-- 待取餐  end -->
+				<!-- 故障订单完成  start -->
+				<div class="finishgz none">
+					<div class="returnFoodFinish returnMain">
+						<div class="returnFoodFinish_text returnText">
+							<img src="../img/image/orderfinish.png" alt="订单完成" />
+							<div class="FinishText textInfo">
+								<h3>订单已完成</h3>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/repair2.png" alt="故障单完成" class="barFinish"><!--订单完成-->
+					</div>
+					<div class="splitLine"></div>
+					<div class="linktitle">
+						<img src="../img/img/success.png" class=""><em>已经评价</em><span>></span>
+					</div>
+				</div>
+				<!-- 故障订单完成  end -->
+				<!-- 订单待付款  start -->
+				<div class="Payment">
+					<div class="returnFoodPayment returnMain">
+						<div class="returnFoodPayment_text returnText">
+							<img src="../img/image/orderfail.png"订单完成" />
+							<div class="PaymentText textInfo">
+								<h3>订单待付款</h3>
+								<p>5分钟内未完成支付，订单自动取消！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/orderInfoBar_payment.png" alt="订单取消成功进度条" class="barPayment"><!--订单完成-->
+					</div>
+				</div>
+				<!-- 订单待付款  end -->
+				<!-- 订单维修  start -->
+				<div class="repair none">
+					<div class="returnFoodSuccess returnMain">
+						<div class="returnFoodSuccess_text returnText">
+							<img src="../img/image/ordering.png" alt="订单成功" />
+							<div class="successText textInfo">
+								<h3>取餐机故障</h3>
+								<p>机器故障，等待维修人员！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/repair.png" alt="等待维修的进度条" class="barSuccess"><!--成功 -->
+					</div>
+				</div>
+				<!-- 订单维修  end -->
+				<!-- 订单取消成功  end -->
+				<!-- 订单已预订  start -->
+				<div class="reserved none">
+					<div class="returnFoodFinish returnMain">
+						<div class="returnFoodFinish_text returnText">
+							<img src="../img/image/orderfinish.png" alt="订单完成" />
+							<div class="FinishText textInfo">
+								<h3>订单已预订</h3>
+								<p>请查收每日短信，按时取餐！</p>
+							</div>
+						</div>
+					</div>
+					<div class="returnFoodBar">
+						<img src="../img/image/indent_reserve_wait_take.png" alt="等待维修的进度条" class="barSuccess"><!--成功 -->
+					</div>
+				</div>
+				<!-- 订单已预订  end -->
+			</div>
+			
+			
+			
+			
+			
+			<!-- 退餐结果 start -->
+			<div class="splitLine lineTitle"></div>    <!-- 分割线  --> 
+			<!-- 退餐原因  start -->
+			<div class="returnFoodReason">
+				<h1>退餐原因</h1>
+				<p>您的申请原因不符合退款要求</p>
+			</div>
+			<!-- 退餐原因  end -->
+			<div class="splitLine"></div>    <!-- 分割线  --> 
+			<div class="orderListbox">
+				<!-- 订单列表  start -->
+				<div class="orderList">
+					<h1>
+						<span>03-17</span>
+						<span>晚餐  (取餐时间：16:00-18:30)</span>
+						<span style="text-align: right;display: inline-block;width: 1.3rem;">已取消</span>
+					</h1>
+					<p>
+						<span class="goodsName">红烧狮子头套餐饭</span>
+						<span class="goodsCount">x1</span>
+						<span class="goodsPrice">&#165;<em>15.00</em></span>
+					</p>
+					<p>
+						<span class="goodsName">红烧狮子头套餐饭</span>
+						<span class="goodsCount">x1</span>
+						<span class="goodsPrice">&#165;<em>15.00</em></span>
+					</p>
+					<p>取餐码<span class="reducepick fr"><em>123456</em></span></p>
+				</div>
+				<!-- 订单列表  end -->
+			</div>
+			<!-- 优惠  start -->
+			<div class="discount">
+				<div class="discount_down">
+					<p>优惠<span class="reduceMoney fr">-&yen<em>2.00</em></span></p>
+				</div>
+				<div class="discount_total">
+					<p>合计<span class="totalMoney fr">&yen<em>43.00</em></span></p>
+				</div>
+				<!--待付款显示 start-->
+				<div class="discount_WaitPay">
+					<p class="payTime">支付剩余时间:<em>2分39秒</em></p>
+					<p class="button"><span class="pay fr">付款</span><span class="cancelOrder fr">取消订单</span><div class="clear"></div></p>
+				</div>
+				<!--待付款显示 end-->
+				<!--订单超时时显示退款 start-->
+				<div class="discount_refundMoney none">
+					<p class="button">
+						<span class="refund fr">退款</span><div class="clear"></div>
+					</p>
+				</div>
+				<!--订单超时时显示退款 end-->
+			</div>
+			<!-- 优惠  end -->
+			<div class="splitLine"></div>    <!-- 分割线  --> 
+			<!-- 订单信息  start -->
+			<div class="orderInfo">
+				<h1>订单信息</h1>
+				<p><span>订单号码：</span><em class="orderNumber">123456985</em></p>
+				<p><span>手机号码：</span><em class="phoneNumber">15868487580</em></p>
+				<p><span>下单时间：</span><em class="orderTime">2015-12-14 14:19</em></p>
+				<p><span>订单数量：</span><em class="orderAmount">3</em></p>
+				<p><span>订单总价：</span><em class="ordertotal">&yen<i>45</i></em></p>
+				<p><span>取货地址：</span><em class="takeAddress">西湖区万塘路西湖国际综合楼302号</em></p>
+			</div>
+			<!-- 提交订单  end -->
+		</div>
+
+	</body>
+</html>

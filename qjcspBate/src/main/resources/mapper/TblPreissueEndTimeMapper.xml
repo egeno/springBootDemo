@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblPreissueEndTimeMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblPreissueEndTime">
+		<id column="preissue_end_time_id" property="preissueEndTimeId"
+			jdbcType="BIGINT" />
+		<result column="preissue_end_time" property="preissueEndTime"
+			jdbcType="TIME" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+		<result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		preissue_end_time_id, preissue_end_time, company_id,
+		create_user_id, create_time,
+		mod_user_id, mod_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_preissue_end_time
+		where preissue_end_time_id =
+		#{preissueEndTimeId,jdbcType=BIGINT}
+	</select>
+	<select id="selectByCompanyId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_preissue_end_time
+		where company_id =
+		#{companyId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		tbl_preissue_end_time
+		where preissue_end_time_id =
+		#{preissueEndTimeId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblPreissueEndTime">
+		insert into
+		tbl_preissue_end_time (preissue_end_time_id,
+		preissue_end_time,
+		company_id,
+		create_user_id, create_time, mod_user_id,
+		mod_time)
+		values
+		(#{preissueEndTimeId,jdbcType=BIGINT},
+		#{preissueEndTime,jdbcType=TIME}, #{companyId,jdbcType=BIGINT},
+		#{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+		#{modUserId,jdbcType=BIGINT},
+		#{modTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblPreissueEndTime">
+		insert into tbl_preissue_end_time
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="preissueEndTimeId != null">
+				preissue_end_time_id,
+			</if>
+			<if test="preissueEndTime != null">
+				preissue_end_time,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+			<if test="modTime != null">
+				mod_time,
+			</if>
+			<if test="preissueEndTimeStr != null">
+				preissue_end_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="preissueEndTimeId != null">
+				#{preissueEndTimeId,jdbcType=BIGINT},
+			</if>
+			<if test="preissueEndTime != null">
+				#{preissueEndTime,jdbcType=TIME},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modTime != null">
+				#{modTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="preissueEndTimeStr != null">
+				#{preissueEndTimeStr,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblPreissueEndTime">
+		update tbl_preissue_end_time
+		<set>
+			<if test="preissueEndTime != null">
+				preissue_end_time = #{preissueEndTime,jdbcType=TIME},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modTime != null">
+				mod_time = #{modTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="preissueEndTimeStr != null">
+				preissue_end_time = #{preissueEndTimeStr,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where preissue_end_time_id = #{preissueEndTimeId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblPreissueEndTime">
+		update
+		tbl_preissue_end_time
+		set preissue_end_time =
+		#{preissueEndTime,jdbcType=TIME},
+		company_id =
+		#{companyId,jdbcType=BIGINT},
+		create_user_id =
+		#{createUserId,jdbcType=BIGINT},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		mod_user_id =
+		#{modUserId,jdbcType=BIGINT},
+		mod_time = #{modTime,jdbcType=TIMESTAMP}
+		where preissue_end_time_id = #{preissueEndTimeId,jdbcType=BIGINT}
+	</update>
+	<select id="selectPreissueEndTimeByCompanyId" resultType="map">
+		select
+		preissue_end_time_id preissueEndTimeId
+		,d.company_name companyName
+		,Cast(preissue_end_time AS CHAR) preissueEndTime
+		,(select user_name from basics_users a where a.user_id=c.create_user_id and a.isdel='N')
+		createUserName
+		,(select user_name from basics_users a where a.user_id=c.mod_user_id and a.isdel='N')
+		modUserName
+		,DATE_FORMAT(c.create_time,'%Y-%m-%d %T') createTime
+		,DATE_FORMAT(c.mod_time,'%Y-%m-%d %T') modTime
+		from tbl_preissue_end_time c,basics_company d where
+		c.company_id=d.company_id AND c.company_id=#{companyId}
+	</select>
+	
+	<select id="queryPreissueEndTimeByCompanyId" resultType="java.util.Date">
+		SELECT t.preissue_end_time FROM tbl_preissue_end_time t where t.company_id =#{companyId};
+	</select>
+	<select id="findPreissueEndTimeNumByCompanyId" resultType="int">
+		SELECT count(*) num FROM tbl_preissue_end_time t where t.company_id =#{companyId};
+	</select>
+</mapper>

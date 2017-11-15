@@ -1,0 +1,1468 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsMachineMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsMachine">
+		<id column="machine_id" property="machineId" jdbcType="BIGINT" />
+		<result column="model_id" property="modelId" jdbcType="INTEGER" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+		<result column="machine_icon" property="machineIcon" jdbcType="VARCHAR" />
+		<result column="model_type" property="modelType" jdbcType="CHAR" />
+		<result column="machine_row" property="machineRow" jdbcType="INTEGER" />
+		<result column="machine_column" property="machineColumn"
+			jdbcType="INTEGER" />
+		<result column="tolerance" property="tolerance" jdbcType="VARCHAR" />
+		<result column="target_temperature" property="targetTemperature"
+			jdbcType="VARCHAR" />
+		<result column="prov_code" property="provCode" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+		<result column="area_name" property="areaName" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+		<result column="machine_memo" property="machineMemo" jdbcType="VARCHAR" />
+		<result column="machine_status" property="machineStatus"
+			jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+		<result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+		<result column="machine_zone_id" property="machineZoneId"
+			jdbcType="BIGINT" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapVo"
+		type="com.qjkj.qjcsp.entity.viewmodel.BasicsMachineVo">
+		<id column="machine_id" property="machineId" jdbcType="BIGINT" />
+		<result column="model_id" property="modelId" jdbcType="INTEGER" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+		<result column="machine_icon" property="machineIcon" jdbcType="VARCHAR" />
+		<result column="model_type" property="modelType" jdbcType="CHAR" />
+		<result column="machine_row" property="machineRow" jdbcType="INTEGER" />
+		<result column="machine_column" property="machineColumn"
+			jdbcType="INTEGER" />
+		<result column="tolerance" property="tolerance" jdbcType="VARCHAR" />
+		<result column="target_temperature" property="targetTemperature"
+			jdbcType="VARCHAR" />
+		<result column="prov_code" property="provCode" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+		<result column="area_name" property="areaName" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+		<result column="machine_memo" property="machineMemo" jdbcType="VARCHAR" />
+		<result column="machine_status" property="machineStatus"
+			jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+		<result column="create_time_str" property="createTimeStr"
+			jdbcType="VARCHAR" />
+		<result column="last_mod_time_str" property="lastModTimeStr"
+			jdbcType="VARCHAR" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+		<result column="creater" property="creater" jdbcType="VARCHAR" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		machine_id, model_id, company_id, machine_name,
+		machine_icon, model_type,
+		machine_row,
+		machine_column, tolerance,
+		target_temperature, prov_code, province,
+		city_code, city_name,
+		area_code, area_name, address, latitude, longitude,
+		device_code,
+		machine_memo, machine_status, isdel, create_time, last_mod_time,
+		create_user_id,
+		mod_user_id,area_model_id,machine_zone_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from basics_machine
+		where machine_id = #{machineId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		basics_machine
+		where machine_id = #{machineId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsMachine">
+		insert into basics_machine
+		(machine_id, model_id, company_id,
+		machine_name, machine_icon,
+		model_type,
+		machine_row, machine_column, tolerance,
+		target_temperature,
+		prov_code,
+		province, city_code, city_name,
+		area_code, area_name,
+		address,
+		latitude, longitude, device_code,
+		machine_memo, machine_status,
+		isdel,
+		create_time, last_mod_time, create_user_id,
+		mod_user_id,
+		area_model_id,machine_zone_id)
+		values (#{machineId,jdbcType=BIGINT},
+		#{modelId,jdbcType=INTEGER},
+		#{companyId,jdbcType=BIGINT},
+		#{machineName,jdbcType=VARCHAR}, #{machineIcon,jdbcType=VARCHAR},
+		#{modelType,jdbcType=CHAR},
+		#{machineRow,jdbcType=INTEGER},
+		#{machineColumn,jdbcType=INTEGER},
+		#{tolerance,jdbcType=VARCHAR},
+		#{targetTemperature,jdbcType=VARCHAR}, #{provCode,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR},
+		#{cityName,jdbcType=VARCHAR},
+		#{areaCode,jdbcType=VARCHAR},
+		#{areaName,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE},
+		#{deviceCode,jdbcType=VARCHAR},
+		#{machineMemo,jdbcType=VARCHAR},
+		#{machineStatus,jdbcType=CHAR},
+		#{isdel,jdbcType=CHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{lastModTime,jdbcType=TIMESTAMP},
+		#{createUserId,jdbcType=BIGINT},
+		#{modUserId,jdbcType=BIGINT},
+		#{areaModelId,jdbcType=BIGINT}, #{machineZoneId,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="machineId" parameterType="com.qjkj.qjcsp.entity.BasicsMachine">
+		insert into basics_machine
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="machineId != null">
+				machine_id,
+			</if>
+			<if test="modelId != null">
+				model_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="machineName != null">
+				machine_name,
+			</if>
+			<if test="machineIcon != null">
+				machine_icon,
+			</if>
+			<if test="modelType != null">
+				model_type,
+			</if>
+			<if test="machineRow != null">
+				machine_row,
+			</if>
+			<if test="machineColumn != null">
+				machine_column,
+			</if>
+			<if test="tolerance != null">
+				tolerance,
+			</if>
+			<if test="targetTemperature != null">
+				target_temperature,
+			</if>
+			<if test="provCode != null">
+				prov_code,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="cityCode != null">
+				city_code,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="areaCode != null">
+				area_code,
+			</if>
+			<if test="areaName != null">
+				area_name,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="deviceCode != null">
+				device_code,
+			</if>
+			<if test="machineMemo != null">
+				machine_memo,
+			</if>
+			<if test="machineStatus != null">
+				machine_status,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModTime != null">
+				last_mod_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+			<if test="areaModelId != null">
+				area_model_id,
+			</if>
+			<if test="machineZoneId != null">
+				machine_zone_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="machineId != null">
+				#{machineId,jdbcType=BIGINT},
+			</if>
+			<if test="modelId != null">
+				#{modelId,jdbcType=INTEGER},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="machineName != null">
+				#{machineName,jdbcType=VARCHAR},
+			</if>
+			<if test="machineIcon != null">
+				#{machineIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="modelType != null">
+				#{modelType,jdbcType=CHAR},
+			</if>
+			<if test="machineRow != null">
+				#{machineRow,jdbcType=INTEGER},
+			</if>
+			<if test="machineColumn != null">
+				#{machineColumn,jdbcType=INTEGER},
+			</if>
+			<if test="tolerance != null">
+				#{tolerance,jdbcType=VARCHAR},
+			</if>
+			<if test="targetTemperature != null">
+				#{targetTemperature,jdbcType=VARCHAR},
+			</if>
+			<if test="provCode != null">
+				#{provCode,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				#{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="areaCode != null">
+				#{areaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="areaName != null">
+				#{areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="deviceCode != null">
+				#{deviceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="machineMemo != null">
+				#{machineMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="machineStatus != null">
+				#{machineStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModTime != null">
+				#{lastModTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				#{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="machineZoneId != null">
+				#{machineZoneId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachine">
+		update basics_machine
+		<set>
+			<if test="modelId != null">
+				model_id = #{modelId,jdbcType=INTEGER},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="machineName != null">
+				machine_name = #{machineName,jdbcType=VARCHAR},
+			</if>
+			<if test="machineIcon != null">
+				machine_icon = #{machineIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="modelType != null">
+				model_type = #{modelType,jdbcType=CHAR},
+			</if>
+			<if test="machineRow != null">
+				machine_row = #{machineRow,jdbcType=INTEGER},
+			</if>
+			<if test="machineColumn != null">
+				machine_column = #{machineColumn,jdbcType=INTEGER},
+			</if>
+			<if test="tolerance != null">
+				tolerance = #{tolerance,jdbcType=VARCHAR},
+			</if>
+			<if test="targetTemperature != null">
+				target_temperature =
+				#{targetTemperature,jdbcType=VARCHAR},
+			</if>
+			<if test="provCode != null">
+				prov_code = #{provCode,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="cityCode != null">
+				city_code = #{cityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				city_name = #{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="areaCode != null">
+				area_code = #{areaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="areaName != null">
+				area_name = #{areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				latitude = #{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="deviceCode != null">
+				device_code = #{deviceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="machineMemo != null">
+				machine_memo = #{machineMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="machineStatus != null">
+				machine_status = #{machineStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModTime != null">
+				last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				area_model_id = #{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="machineZoneId != null">
+				machine_zone_id = #{machineZoneId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where machine_id = #{machineId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsMachine">
+		update
+		basics_machine
+		set model_id = #{modelId,jdbcType=INTEGER},
+		company_id =
+		#{companyId,jdbcType=BIGINT},
+		machine_name =
+		#{machineName,jdbcType=VARCHAR},
+		machine_icon =
+		#{machineIcon,jdbcType=VARCHAR},
+		model_type =
+		#{modelType,jdbcType=CHAR},
+		machine_row =
+		#{machineRow,jdbcType=INTEGER},
+		machine_column =
+		#{machineColumn,jdbcType=INTEGER},
+		tolerance =
+		#{tolerance,jdbcType=VARCHAR},
+		target_temperature =
+		#{targetTemperature,jdbcType=VARCHAR},
+		prov_code =
+		#{provCode,jdbcType=VARCHAR},
+		province = #{province,jdbcType=VARCHAR},
+		city_code = #{cityCode,jdbcType=VARCHAR},
+		city_name =
+		#{cityName,jdbcType=VARCHAR},
+		area_code = #{areaCode,jdbcType=VARCHAR},
+		area_name = #{areaName,jdbcType=VARCHAR},
+		address =
+		#{address,jdbcType=VARCHAR},
+		latitude = #{latitude,jdbcType=DOUBLE},
+		longitude = #{longitude,jdbcType=DOUBLE},
+		device_code =
+		#{deviceCode,jdbcType=VARCHAR},
+		machine_memo =
+		#{machineMemo,jdbcType=VARCHAR},
+		machine_status =
+		#{machineStatus,jdbcType=CHAR},
+		isdel = #{isdel,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_mod_time =
+		#{lastModTime,jdbcType=TIMESTAMP},
+		create_user_id =
+		#{createUserId,jdbcType=BIGINT},
+		mod_user_id =
+		#{modUserId,jdbcType=BIGINT},
+		area_model_id =
+		#{areaModelId,jdbcType=BIGINT},
+		machine_zone_id =
+		#{machineZoneId,jdbcType=BIGINT}
+		where machine_id =
+		#{machineId,jdbcType=BIGINT}
+	</update>
+
+	<select id="findByCount" resultType="java.lang.Long"
+		parameterType="map">
+		SELECT
+		count(1)
+		FROM
+		basics_machine m
+		LEFT JOIN basics_company c
+		ON
+		m.company_id = c.company_id
+		WHERE
+		1 = 1 AND m.isdel = 'N'
+		<if test="machineId != null">
+			AND m.machine_id = #{machineId,jdbcType=BIGINT}
+		</if>
+		<if test="modelId != null">
+			AND m.model_id = #{modelId,jdbcType=INTEGER}
+		</if>
+		<if test="companyId != null">
+			AND m.company_id = #{companyId,jdbcType=BIGINT}
+		</if>
+		<if test="machineName != null">
+			AND m.machine_name = #{machineName,jdbcType=VARCHAR}
+		</if>
+		<if test="machineIcon != null">
+			AND m.machine_icon = #{machineIcon,jdbcType=VARCHAR}
+		</if>
+		<if test="modelType != null">
+			AND m.model_type = #{modelType,jdbcType=CHAR}
+		</if>
+		<if test="machineRow != null">
+			AND m.machine_row = #{machineRow,jdbcType=INTEGER}
+		</if>
+		<if test="machineColumn != null">
+			AND m.machine_column = #{machineColumn,jdbcType=INTEGER}
+		</if>
+		<if test="tolerance != null">
+			AND m.tolerance = #{tolerance,jdbcType=VARCHAR}
+		</if>
+		<if test="targetTemperature != null">
+			AND m.target_temperature =
+			#{targetTemperature,jdbcType=VARCHAR}
+		</if>
+		<if test="provCode != null">
+			AND m.prov_code = #{provCode,jdbcType=VARCHAR}
+		</if>
+		<if test="province != null">
+			AND m.province = #{province,jdbcType=VARCHAR}
+		</if>
+		<if test="cityCode != null">
+			AND m.city_code = #{cityCode,jdbcType=VARCHAR}
+		</if>
+		<if test="cityName != null">
+			AND m.city_name = #{cityName,jdbcType=VARCHAR}
+		</if>
+		<if test="areaCode != null">
+			AND m.area_code = #{areaCode,jdbcType=VARCHAR}
+		</if>
+		<if test="areaName != null">
+			AND m.area_name = #{areaName,jdbcType=VARCHAR}
+		</if>
+		<if test="address != null">
+			AND m.address = #{address,jdbcType=VARCHAR}
+		</if>
+		<if test="latitude != null">
+			AND m.latitude = #{latitude,jdbcType=DOUBLE}
+		</if>
+		<if test="longitude != null">
+			AND m.longitude = #{longitude,jdbcType=DOUBLE}
+		</if>
+		<if test="deviceCode != null">
+			AND m.device_code = #{deviceCode,jdbcType=VARCHAR}
+		</if>
+		<if test="machineMemo != null">
+			AND m.machine_memo = #{machineMemo,jdbcType=VARCHAR}
+		</if>
+		<if test="machineStatus != null">
+			AND m.machine_status = #{machineStatus,jdbcType=CHAR}
+		</if>
+		<if test="isdel != null">
+			AND m.isdel = #{isdel,jdbcType=CHAR}
+		</if>
+		<if test="createTime != null">
+			AND m.create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastModTime != null">
+			AND m.last_mod_time = #{lastModTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createUserId != null">
+			AND m.create_user_id = #{createUserId,jdbcType=BIGINT}
+		</if>
+		<if test="modUserId != null">
+			AND m.mod_user_id = #{modUserId,jdbcType=BIGINT}
+		</if>
+		<if test="areaModelId != null">
+			AND m.area_model_id = #{areaModelId,jdbcType=BIGINT}
+		</if>
+		<if test="companyName != null">
+			AND c.company_name like '%${companyName}%'
+		</if>
+	</select>
+
+   <!-- 查询所有设备信息 -->
+	<select id="findByList" resultMap="BaseResultMapVo"
+		parameterType="map">
+		SELECT
+		m.machine_id, m.model_id, m.company_id, m.machine_name,
+		m.machine_icon,
+		m.model_type, m.machine_row,
+		m.machine_column,
+		m.tolerance, m.target_temperature, m.prov_code, m.province,
+		m.city_code, m.city_name, m.area_code, m.area_name, m.address,
+		m.latitude, m.longitude, m.device_code,
+		m.machine_memo,
+		m.machine_status, m.isdel,
+		(SELECT u.user_account FROM basics_users u
+		WHERE u.user_id =
+		m.create_user_id) as creater,
+		(SELECT u.user_account
+		FROM basics_users u WHERE u.user_id = m.mod_user_id)
+		as modifier,
+		date_format(m.create_time, '%Y-%m-%d %H:%i:%s') as createTimeStr,
+		date_format(m.last_mod_time, '%Y-%m-%d %H:%i:%s') as lastModTimeStr,
+		c.company_name as companyName
+
+		FROM basics_machine m
+		LEFT JOIN
+		basics_company c
+		ON m.company_id = c.company_id
+		WHERE
+		1 = 1 AND m.isdel =
+		'N'
+		<if test="machineId != null">
+			AND m.machine_id = #{machineId,jdbcType=BIGINT}
+		</if>
+		<if test="modelId != null">
+			AND m.model_id = #{modelId,jdbcType=INTEGER}
+		</if>
+		<if test="companyId != null">
+			AND m.company_id = #{companyId,jdbcType=BIGINT}
+		</if>
+		<if test="machineName != null">
+			AND m.machine_name = #{machineName,jdbcType=VARCHAR}
+		</if>
+		<if test="machineIcon != null">
+			AND m.machine_icon = #{machineIcon,jdbcType=VARCHAR}
+		</if>
+		<if test="modelType != null">
+			AND m.model_type = #{modelType,jdbcType=CHAR}
+		</if>
+		<if test="machineRow != null">
+			AND m.machine_row = #{machineRow,jdbcType=INTEGER}
+		</if>
+		<if test="machineColumn != null">
+			AND m.machine_column = #{machineColumn,jdbcType=INTEGER}
+		</if>
+		<if test="tolerance != null">
+			AND m.tolerance = #{tolerance,jdbcType=VARCHAR}
+		</if>
+		<if test="targetTemperature != null">
+			AND m.target_temperature =
+			#{targetTemperature,jdbcType=VARCHAR}
+		</if>
+		<if test="provCode != null">
+			AND m.prov_code = #{provCode,jdbcType=VARCHAR}
+		</if>
+		<if test="province != null">
+			AND m.province = #{province,jdbcType=VARCHAR}
+		</if>
+		<if test="cityCode != null">
+			AND m.city_code = #{cityCode,jdbcType=VARCHAR}
+		</if>
+		<if test="cityName != null">
+			AND m.city_name = #{cityName,jdbcType=VARCHAR}
+		</if>
+		<if test="areaCode != null">
+			AND m.area_code = #{areaCode,jdbcType=VARCHAR}
+		</if>
+		<if test="areaName != null">
+			AND m.area_name = #{areaName,jdbcType=VARCHAR}
+		</if>
+		<if test="address != null">
+			AND m.address = #{address,jdbcType=VARCHAR}
+		</if>
+		<if test="latitude != null">
+			AND m.latitude = #{latitude,jdbcType=DOUBLE}
+		</if>
+		<if test="longitude != null">
+			AND m.longitude = #{longitude,jdbcType=DOUBLE}
+		</if>
+		<if test="deviceCode != null">
+			AND m.device_code = #{deviceCode,jdbcType=VARCHAR}
+		</if>
+		<if test="machineMemo != null">
+			AND m.machine_memo = #{machineMemo,jdbcType=VARCHAR}
+		</if>
+		<if test="machineStatus != null">
+			AND m.machine_status = #{machineStatus,jdbcType=CHAR}
+		</if>
+		<if test="isdel != null">
+			AND m.isdel = #{isdel,jdbcType=CHAR}
+		</if>
+		<if test="createTime != null">
+			AND m.create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastModTime != null">
+			AND m.last_mod_time = #{lastModTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createUserId != null">
+			AND m.create_user_id = #{createUserId,jdbcType=BIGINT}
+		</if>
+		<if test="modUserId != null">
+			AND m.mod_user_id = #{modUserId,jdbcType=BIGINT}
+		</if>
+		<if test="areaModelId != null">
+			AND m.area_model_id = #{areaModelId,jdbcType=BIGINT}
+		</if>
+		<if test="companyName != null">
+			AND c.company_name like '%${companyName}%'
+		</if>
+		<if test="order != null and order != ''">
+			order by ${order} ${sort}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<update id="deleteBasicsMachinebyId" parameterType="java.lang.Long">
+		UPDATE
+		basics_machine
+		SET machine_status = '0', isdel = 'Y'
+		WHERE machine_id =
+		#{machineId,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectMachineByCompanyId" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_machine where isdel='N'
+		<if test="companyId!=null">
+			AND company_id=#{companyId}
+		</if>
+		<if test="row!=null">
+			AND machine_row=#{row}
+		</if>
+		<if test="col!=null">
+			AND machine_column=#{col}
+		</if>
+		<if test="areaModelType!=null">
+			AND model_type=#{areaModelType}
+		</if>
+	</select>
+
+	<select id="getMachinesByGPSLocation" parameterType="map"
+		resultType="map">
+		SELECT
+		CAST(m.machine_id AS CHAR) machineId,
+		CAST(m.device_code AS CHAR) deviceCode,
+		CAST(c.company_id AS CHAR)
+		AS companyId, c.company_name AS companyName,
+		m.machine_name machineName,
+		m.address address,
+		CAST(m.machine_icon AS CHAR) AS machineIcon,
+		CAST(
+		ROUND(
+		(2 * 6378.137 *
+		ASIN(SQRT(POW(SIN(PI()*(#{latitude} -
+		m.latitude)/360),2) +
+		COS(PI() *
+		#{latitude}/180)* COS(m.latitude *
+		PI()/180)*POW(SIN(PI()*(#{longitude} - m.longitude)/360),2)))*1000)
+		)
+		AS CHAR
+		) AS distance
+		FROM basics_machine m
+		LEFT JOIN basics_company c ON
+		c.company_id = m.company_id
+		WHERE
+		<!-- m.longitude BETWEEN (#{longitude} - 1) AND (#{longitude} + 1) AND 
+			m.latitude BETWEEN (#{latitude} - 1) AND (#{latitude} + 1) AND m.machine_status 
+			= '1' AND m.isdel = 'N' -->
+		m.machine_status = '1' AND m.isdel = 'N'
+		<if test="companyId == ''">
+		and ROUND(
+		(2 * 6378.137 *
+		ASIN(SQRT(POW(SIN(PI()*(#{latitude} -
+		m.latitude)/360),2) +
+		COS(PI() *
+		#{latitude}/180)* COS(m.latitude *
+		PI()/180)*POW(SIN(PI()*(#{longitude} - m.longitude)/360),2)))*1000)
+		) &lt; 5000
+		</if>
+		AND m.machine_status = '1' AND m.isdel = 'N'
+		<if test="companyId != null and companyId != '' ">
+			AND m.company_id = #{companyId,jdbcType=BIGINT}
+		</if>
+		ORDER BY
+		ACOS(SIN((#{latitude} * PI()) / 180 ) *SIN((m.latitude * PI())
+		/ 180 ) +
+		COS((#{latitude} *
+		PI()) / 180 ) * COS((m.latitude * PI()) /
+		180 ) *COS((#{longitude} *
+		PI()) / 180 -
+		(m.longitude * PI()) / 180 ) )
+		* 6378.137 ASC;
+	</select>
+
+<!-- 获取附近的设备单位（米） -->
+<select id="getPreissueMachineList" resultType="map" parameterType="map">
+	SELECT
+		CAST(m.machine_id AS CHAR) AS machineId,
+		CAST(m.company_id AS CHAR) AS companyId,
+		m.machine_name AS machineName,
+		m.address address,
+		CAST(m.machine_zone_id AS CHAR) AS machineZoneId,
+		m.city_name AS cityName,
+		z.machine_zone_name AS machineZoneName,
+		d.university_name AS universityName,
+		CAST(d.university_id AS CHAR) AS universityId,
+		CAST(
+		ROUND(
+		(2 * 6378.137 *
+		ASIN(SQRT(POW(SIN(PI()*(#{latitude} -
+		m.latitude)/360),2) +
+		COS(PI() *
+		#{latitude}/180)* COS(m.latitude *
+		PI()/180)*POW(SIN(PI()*(#{longitude} - m.longitude)/360),2)))*1000)
+		)
+		AS CHAR
+		) AS machineDistance
+	FROM
+		basics_machine AS m
+	LEFT JOIN g_machine_zone AS z ON m.machine_zone_id = z.machine_zone_id
+	LEFT JOIN g_university AS d ON d.university_id = z.university_id
+	WHERE
+		m.machine_status = '1' AND m.isdel = 'N'
+		and ROUND(
+		(2 * 6378.137 *
+		ASIN(SQRT(POW(SIN(PI()*(#{latitude} -
+		m.latitude)/360),2) +
+		COS(PI() *
+		#{latitude}/180)* COS(m.latitude *
+		PI()/180)*POW(SIN(PI()*(#{longitude} - m.longitude)/360),2)))*1000)
+		) &lt; 5000
+	ORDER BY
+		ACOS(SIN((#{latitude} * PI()) / 180 ) *SIN((m.latitude * PI())
+		/ 180 ) +
+		COS((#{latitude} *
+		PI()) / 180 ) * COS((m.latitude * PI()) /
+		180 ) *COS((#{longitude} *
+		PI()) / 180 -
+		(m.longitude * PI()) / 180 ) )
+		* 6378.137 ASC
+</select>
+
+<select id="getPreissueHistoryMachineList" resultType="map" parameterType="map">
+select 
+		CAST(d.machine_id AS CHAR) AS machineId,
+		CAST(d.company_id AS CHAR) AS companyId,
+		d.machine_name AS machineName,
+		d.address address,
+		CAST(d.machine_zone_id AS CHAR) AS machineZoneId,
+		g.city_name AS cityName,
+		e.machine_zone_name AS machineZoneName,
+		f.university_name AS universityName,
+		CAST(f.university_id AS CHAR) AS universityId,
+		CAST(
+		ROUND(
+		(2 * 6378.137 *
+		ASIN(SQRT(POW(SIN(PI()*(#{latitude} -
+		d.latitude)/360),2) +
+		COS(PI() *
+		#{latitude}/180)* COS(d.latitude *
+		PI()/180)*POW(SIN(PI()*(#{longitude} - d.longitude)/360),2)))*1000)
+		)
+		AS CHAR
+		) AS machineDistance
+		from 
+	(select a.machine_id from tbl_order_child a,tbl_order b where a.order_id=b.order_id and  a.order_child_status='3' and b.customer_id=#{customerId} group by a.machine_id order by count(*) desc limit 3) c
+	,basics_machine d
+	,g_machine_zone e
+	,g_university f
+	,g_city g
+ 	where c.machine_id=d.machine_id 
+ 	and d.machine_zone_id=e.machine_zone_id 
+ 	and e.university_id=f.university_id 
+ 	and f.city_id=g.city_id 
+</select>
+
+
+
+	<select id="getMachineIdAndCompanyId" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		select machine_id AS machineId,company_id AS companyId
+		,device_code AS
+		deviceCode
+		FROM tbl_order
+		WHERE order_num=#{orderNum} AND
+		device_code=#{deviceCode}
+
+	</select>
+
+	<!-- 新增取餐记录 -->
+	<insert id="insertOrderPickDetails" parameterType="java.util.HashMap">
+
+		INSERT INTO
+		tbl_order_pick_detail(machine_id,company_id,order_child_id,order_detail_id,order_num,
+		item_id,cell_id,goods_id,pick_time,device_fault_symbol
+		)VALUES
+		<foreach collection="OrderPickDetails" item="item" index="index"
+			separator=",">
+			(#{machineId},#{companyId},#{item.orderChildId},
+			#{item.orderDetailId},#{item.orderNum},
+			#{item.itemId},#{item.cellId},
+			#{item.goodsId},#{date},
+			#{deviceFaultSymbol}
+			)
+		</foreach>
+
+	</insert>
+	<!-- 修改订单表，格子表，单品表的状态 -->
+	<update id="updateOrderItemCellStatus" parameterType="java.lang.String">
+		UPDATE
+		tbl_order_child tor,tbl_item_detail tid,basics_machine_cell bmc
+		SET
+		tor.order_child_status='3' ,
+		tid.taken_time=NOW(),
+		tid.item_status='1',
+		bmc.cell_status='0',
+		bmc.item_id=NULL
+		WHERE
+		tor.order_child_id=tid.order_child_id AND tid.cell_id=bmc.cell_id AND
+		tor.order_child_id=#{orderChildId};
+	</update>
+	<!-- 删除订单处理表的数据 -->
+	<delete id="deleteOrderPendingForOrderChildId" parameterType="java.lang.Long">
+		DELETE FROM tbl_pending_order WHERE order_child_id=#{orderChildId}
+	</delete>
+
+	<select id="getMachineIdByDeviceCode" resultType="java.lang.Long">
+		SELECT
+		machine_id FROM basics_machine
+		WHERE device_code =
+		#{deviceCode,jdbcType=VARCHAR} AND isdel = 'N'
+	</select>
+
+	<select id="selectByDeviceCode" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_machine
+		WHERE device_code = #{deviceCode,jdbcType=VARCHAR}
+		AND isdel = 'N'
+	</select>
+
+	<select id="getAreaModelbyDeviceCode" resultType="java.lang.Long">
+		SELECT
+		area_model_id FROM basics_machine
+		WHERE device_code =
+		#{deviceCode,jdbcType=VARCHAR} AND isdel = 'N'
+	</select>
+
+	<select id="selectByMachineId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List"></include>
+		FROM basics_machine
+		WHERE machine_id= #{machineId,jdbcType=BIGINT} AND
+		isdel = 'N'
+	</select>
+
+	<select id="getCount" resultType="Long" parameterType="map">
+		SELECT
+		count(*)
+		FROM basics_machine b
+		<where>
+			b.company_id = #{companyId,jdbcType=BIGINT} AND b.isdel = 'N'
+			<if test="deviceCode != null and deviceCode !='' ">
+				and b.device_code like '%${deviceCode}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="getMaintenanceCount" resultType="Long"
+		parameterType="map">
+		SELECT
+		count(*)
+		FROM basics_machine b
+		<where>
+			b.isdel = 'N'
+			<if test="deviceCode != null and deviceCode !='' ">
+				and b.device_code like '%${deviceCode}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="findAllMachinesList" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM basics_machine b
+		<where>
+			b.company_id = #{companyId,jdbcType=BIGINT} AND b.isdel = 'N'
+			<if test="deviceCode != null and deviceCode !='' ">
+				and b.device_code like '%${deviceCode}%'
+			</if>
+		</where>
+		limit #{offset},#{limit}
+	</select>
+
+	<select id="findMaintenanceMachinesList" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM basics_machine b
+		<where>
+			b.isdel = 'N'
+			<if test="deviceCode != null and deviceCode !='' ">
+				and b.device_code like '%${deviceCode}%'
+			</if>
+		</where>
+		limit #{offset},#{limit}
+	</select>
+
+	<select id="findEffectiveMachineIdByMachineName" resultType="java.lang.Long">
+		SELECT machine_id
+		FROM basics_machine
+		WHERE machine_status='1'
+		AND
+		isdel='N'
+		<if test="machineName != null and machineName != ''">
+			AND machine_name like '%${machineName}%'
+		</if>
+		<if test="companyId != null and companyId !='-1'">
+			AND company_id = #{companyId}
+		</if>
+	</select>
+
+	<select id="findEffectiveMachinesByMachineName" resultMap="BaseResultMap">
+		SELECT *
+		FROM basics_machine
+		WHERE machine_status='1'
+		AND isdel='N'
+		<if test="machineName != null and machineName != ''">
+			AND machine_name like '%${machineName}%'
+		</if>
+		<if test="companyId != null and companyId !='-1'">
+			AND company_id = #{companyId}
+		</if>
+	</select>
+	<select id="findEffectiveMachinesByMachineNameAlarm" resultMap="BaseResultMap" parameterType="com.qjkj.qjcsp.entity.AlarmReportSearch">
+		SELECT *
+		FROM basics_machine a,tbl_order_child b,tbl_order_pick_detail c
+		WHERE a.machine_status='1'
+		AND a.isdel='N'
+AND a.machine_id=b.machine_id 
+AND c.machine_id=b.machine_id
+		<if test="sellStartTime !=null and sellStartTime !=''">
+  		AND <![CDATA[ c.pick_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  		</if>
+  		<if test="sellEndTime !=null and sellEndTime !=''">
+  		AND <![CDATA[ c.pick_time  <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  		</if>
+  		<if test="machineName !=null and machineName !=''">
+   		 AND a.machine_name like '%${machineName}%'
+       	</if>
+AND b.order_child_status='10'
+GROUP BY a.machine_id
+	</select>
+
+	<select id="findEmployeeMachineList" resultMap="BaseResultMap"
+		parameterType="map">
+		SELECT
+		*
+		FROM basics_machine t
+		JOIN basics_user_machine b ON b.machine_id
+		= t.machine_id
+		<where>
+			AND t.isdel = 'N'
+			AND b.user_id = #{userId,jdbcType=BIGINT}
+			AND
+			b.special_role_num = #{specialRoleNum,jdbcType=CHAR}
+		</where>
+	</select>
+
+	<update id="updateAreaModelIdIfDifferent">
+		UPDATE basics_machine
+		SET area_model_id =
+		#{areaModelId,jdbcType=BIGINT}
+		WHERE machine_id =
+		#{machineId,jdbcType=BIGINT}
+	</update>
+
+	<select id="findMachineModelCountByModelId" parameterType="int"
+		resultType="java.lang.Integer">
+		SELECT
+		COUNT(1)
+		FROM basics_machine
+		WHERE isdel = 'N'
+		AND
+		model_id=#{modelId}
+	</select>
+	<select id="findBasicMachinesByAreaModelId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_machine
+		WHERE isdel = 'N'
+		AND company_id=#{companyId}
+		AND
+		area_model_id=#{areaModelId}
+	</select>
+    <!--根据定位 罗列设备列表 -->
+	<select id="getDeviceSalesInfo" resultType="map">		
+		SELECT
+		bmc.effectCapacity,
+		tid.monthSaleAmount
+		FROM
+		(
+		SELECT
+		CAST(COUNT(1) AS CHAR) effectCapacity
+		FROM
+		basics_machine_cell c
+		LEFT JOIN tbl_item_detail d ON c.item_id = d.item_id
+		WHERE
+		c.machine_id = #{machineId,jdbcType=BIGINT} AND c.item_id IS NOT NULL
+		AND d.item_status = #{itemStatus,jdbcType=CHAR}
+		AND d.item_type = '1'
+		) bmc,
+		(
+<!-- 		SELECT -->
+<!-- 		CAST(COUNT(1) AS CHAR) monthSaleAmount -->
+<!-- 		FROM -->
+<!-- 		tbl_item_detail -->
+<!-- 		WHERE -->
+<!-- 		DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= taken_time AND -->
+<!-- 		machine_id=#{machineId,jdbcType=BIGINT} -->
+		SELECT
+		CAST(COUNT(1) AS CHAR) monthSaleAmount
+		FROM
+		tbl_item_detail
+		where
+		LAST_DAY(CURDATE()) &gt;= taken_time 
+		AND DATE_ADD(CURDATE(), INTERVAL - DAY(CURDATE()) + 1 DAY) &lt;= taken_time AND
+		machine_id=#{machineId,jdbcType=BIGINT}
+		) tid
+	</select>
+	<!-- 根据设备ID查询模型ID -->
+	<select id="getAreaModelId" resultType="map">
+	   select  CAST(area_model_id AS CHAR) as areaModelId
+	   from basics_machine  where  machine_id=#{machineId,jdbcType=BIGINT}
+	</select>
+   
+   <!-- 根据模型ID查询零售清货开始时间 -->
+   <select id="getRetailCleanStartTime" resultType="map">
+	 select
+       CAST(a.area_model_id AS CHAR) as areaModelId,
+	   CAST(DATE_FORMAT(a.retail_clean_start_time,'%T')  AS CHAR) as retailCleanStartTime
+	   ,m.time_type AS timeType
+	  from basics_model_clean_goods a,basics_area_model m  where a.area_model_id=m.area_model_id and a.area_model_id=#{areaModelId,jdbcType=BIGINT}
+	</select>
+   
+   
+	<select id="getTemperaturebyDeviceCode" resultType="map">
+		SELECT
+		target_temperature as targetTemperature, tolerance
+		FROM basics_machine
+		WHERE device_code = #{deviceCode,jdbcType=VARCHAR} AND isdel = 'N'
+	</select>
+
+	<select id="findAreaModelIdByDeviceCode" parameterType="string"
+		resultType="long">
+		SELECT bm.area_model_id FROM basics_machine bm where
+		bm.device_code=#{deviceCode} AND bm.isdel = 'N';
+	</select>
+
+	<select id="selectModelAllById" resultType="map">
+		SELECT
+		CAST(am.area_model_id AS CHAR) AS areaModelId,m.area_model_name AS
+		areaModelName,
+		g.reserve_take_end_time AS takenEndTime,g.reserve_take_start_time AS takenStartTime,
+		g.reserve_end_time AS reserveEndTime,
+		m.time_type AS timeType
+		FROM basics_machine_area_model am, basics_area_model m
+		,basics_model_clean_goods g
+		WHERE m.area_model_id = am.area_model_id AND g.area_model_id =
+		am.area_model_id
+		AND am.machine_id = #{machineId,jdbcType=BIGINT} AND g.isdel='N' AND
+		m.isdel='N'
+		ORDER BY g.reserve_end_time
+	</select>
+
+	<select id="getAreaModelIdByMachineId" resultType="java.lang.Long">
+		SELECT
+		a.area_model_id FROM basics_machine a
+		WHERE  a.machine_id =
+		#{machineId,jdbcType=BIGINT} AND a.isdel = 'N'
+	</select>
+	<select id="getAreaModelCountByMachineId" resultType="java.lang.Long">
+		SELECT count(*)
+		 FROM basics_machine_area_model
+		WHERE machine_id =
+		#{machineId,jdbcType=BIGINT} 
+	</select>
+
+	<!-- 获取设备id和设备名 -->
+	<select id="getMachineList" resultType="map">
+		SELECT t.machine_id as
+		machineId ,t.machine_name as machineName FROM basics_machine t where
+		t.isdel ='N' and t.machine_status='1' and t.company_id=#{companyId}
+		ORDER BY t.machine_id ASC;
+	</select>
+	<select id="getDeviceCodeByMachineId" resultType="String">
+		SELECT
+		device_code FROM basics_machine
+		WHERE machine_id =
+		#{machineId,jdbcType=BIGINT} AND isdel = 'N'
+	</select>
+
+	<select id="getMachineNum" resultType="java.lang.Integer">
+		SELECT
+		t.machine_row*t.machine_column FROM basics_machine t
+		WHERE t.machine_id
+		= #{machineId}
+	</select>
+
+	<select id="getMachineNum2" resultType="java.lang.Integer">
+		SELECT
+		t.machine_row*t.machine_column FROM basics_machine t
+		WHERE t.company_id = #{companyId} AND t.isdel = 'N' AND t.machine_id =
+		#{machineId}
+	</select>
+
+	<select id="getTotalCellNumByMachineId" resultType="int">
+		SELECT
+		(machine_row*machine_column) AS totalCellNum
+		FROM basics_machine
+		WHERE machine_id = #{machineId,jdbcType=BIGINT}
+	</select>
+	<!-- 补货人员和维修人员查询自己的柜子 -->
+	<select id="queryMachineInfoByUserId" resultType="map">
+		<!-- SELECT CAST(bm.machine_id AS char) AS machineId,bm.machine_name AS machineName
+		,bm.address as address,
+		
+		(SELECT CASE bm.machine_status WHEN '0' THEN '3' WHEN '1' THEN 
+		IF(COUNT(CASE tai.isdel WHEN 'N' THEN '1' WHEN 'C' THEN '2' WHEN 'Y' THEN '0' END)>0,
+		(CASE tai.isdel WHEN 'N' THEN '1' WHEN 'C' THEN '2' WHEN 'Y' THEN '0' END),'0') END
+		FROM tbl_alarm_info tai WHERE tai.machine_id=bm.machine_id ) AS machineStatus 
+		
+		FROM basics_machine bm LEFT JOIN basics_users bu ON bm.company_id= bu.company_id 
+		LEFT JOIN basics_machine_cell bmc ON bm.machine_id=bmc.machine_id 
+		WHERE bm.isdel='N' AND  bu.user_id=#{userId} 
+		GROUP BY bm.machine_id ORDER BY bm.machine_id ASC --> 
+		SELECT CAST(bm.machine_id AS char) AS machineId,bm.machine_name AS machineName
+		,bm.address as address,
+		(SELECT CASE bm.machine_status WHEN '0' THEN '3' WHEN '1' THEN 
+			CASE WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='N' AND t.machine_id =bm.machine_id)>0 THEN '1'
+			WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='C' AND t.machine_id =bm.machine_id)>0 THEN '2'
+			ELSE '0' END 
+		END  ) AS machineStatus 
+		FROM basics_machine bm LEFT JOIN basics_user_machine bu ON bm.machine_id= bu.machine_id 
+		WHERE bm.isdel='N' AND  bu.user_id=#{userId} 
+		GROUP BY bm.machine_id ORDER BY bm.machine_id ASC  
+	</select>
+	<!-- 商户和众包商查询自己的柜子 -->
+	<select id="queryMachineInfoByUserIdTwo" resultType="map">
+		SELECT CAST(bm.machine_id AS char) AS machineId,bm.machine_name AS machineName
+		,bm.address as address,
+		(SELECT CASE bm.machine_status WHEN '0' THEN '3' WHEN '1' THEN 
+			CASE WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='N' AND t.machine_id =bm.machine_id)>0 THEN '1'
+			WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='C' AND t.machine_id =bm.machine_id)>0 THEN '2'
+			ELSE '0' END 
+		END  ) AS machineStatus 
+		FROM basics_machine bm LEFT JOIN basics_users bu ON bm.company_id= bu.company_id 
+		LEFT JOIN basics_goods bg ON bu.company_id=bg.company_id 
+		<if test="specialRoleNum == 3">
+			LEFT JOIN basics_user_machine bum ON bm.machine_id= bum.machine_id 
+		</if>
+		WHERE bm.isdel='N' 
+		<if test="specialRoleNum == 3">
+			AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1) =bu.user_name
+		</if>
+		<if test="specialRoleNum == 3">
+		 AND bum.user_id=#{userId}
+		 </if>
+		 <if test="specialRoleNum == 4">
+		 AND bu.user_id=#{userId}
+		 </if>
+		GROUP BY bm.machine_id ORDER BY bm.machine_id ASC 
+	</select>
+	
+	<select id="getCellValidNumByMachineId" resultType="integer">
+		SELECT COUNT(1) AS cellValidNum FROM basics_machine_cell bmc 
+		WHERE  bmc.cell_status in('0','1') AND bmc.machine_id=#{machineId};
+	</select>
+	
+	<select id="getCellNotNullNum" resultType="integer">
+		SELECT COUNT(1) AS cellNotNullNum FROM basics_machine_cell bmc 
+		WHERE  bmc.cell_status ='1' AND bmc.machine_id=#{machineId};
+	</select>
+	
+	<select id="getCellNotNullNumByUserName" resultType="integer">
+		SELECT COUNT(1) FROM basics_machine_cell  bmc ,basics_goods bg,tbl_item_detail tid
+		WHERE bg.isdel='N' AND bmc.machine_id=tid.machine_id AND bmc.item_id=tid.item_id 
+		AND bg.goods_id=tid.goods_id AND bmc.cell_status='1'  <!-- AND tid.item_status='0' -->
+		 AND bmc.machine_id=#{machineId} AND tid.company_id=#{companyId}
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1) =#{userName}
+	</select>
+	
+	<select id="findMachineListByCompanyId" resultType="map">
+	<if test="specialRoleNum ==1 ">
+		 select CAST(bm.machine_id AS CHAR) machineId,bm.machine_name machineName from basics_machine bm,basics_user_machine bum
+		 where  bum.machine_id=bm.machine_id AND bum.special_role_num='1' AND bum.user_id=#{userId} 
+		 and bm.isdel='N' and bm.machine_status='1'
+	</if>
+	<if test="specialRoleNum !=1 ">
+	 select CAST(machine_id AS CHAR) machineId,machine_name machineName from basics_machine where company_id=#{companyId} and isdel='N' and machine_status='1'
+	</if>
+	</select>
+	
+	<select id="findMachineInfoByIds" resultType="map">
+		SELECT bm.machine_name AS machineName
+		,bm.address as address,
+		(SELECT CAST(COUNT(1) AS CHAR) FROM basics_machine_cell bmc 
+		WHERE  bmc.cell_status in('0','1') AND bmc.machine_id=#{machineId} ) AS cellValidNum,
+		<if test="specialRoleNum == 3">	
+			(SELECT CAST(COUNT(1) AS CHAR) FROM basics_machine_cell  bmc ,basics_goods bg,tbl_item_detail tid
+			WHERE bg.isdel='N' AND bmc.machine_id=tid.machine_id AND bmc.item_id=tid.item_id 
+			AND bg.goods_id=tid.goods_id AND bmc.cell_status='1'  
+			 AND bmc.machine_id=#{machineId} AND tid.company_id=#{companyId}
+			AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1) =#{userName}) AS cellNotNullNum
+		</if>
+		<if test="specialRoleNum != 3 ">
+			(SELECT CAST(COUNT(1) AS CHAR) FROM basics_machine_cell bmc 
+			WHERE  bmc.cell_status ='1' AND bmc.machine_id=#{machineId}) AS cellNotNullNum
+		</if>
+		FROM basics_machine bm  
+		<!-- 众包 -->
+		<if test=" specialRoleNum ==4 ">
+			LEFT JOIN basics_users bu ON bm.company_id= bu.company_id 
+		</if>
+		<!-- 维修和补货和商户 -->
+		<if test="specialRoleNum ==1 or specialRoleNum ==2 or specialRoleNum ==3">
+			LEFT JOIN basics_user_machine bu ON bm.machine_id= bu.machine_id 
+		</if>
+		LEFT JOIN basics_machine_cell bmc ON bm.machine_id=bmc.machine_id 
+		WHERE bm.isdel='N' AND  bu.user_id=#{userId} AND bm.machine_id=#{machineId} GROUP BY bm.machine_id; 
+	</select>
+	
+	<select id="getFoodList" resultType="map">
+		SELECT bg.goods_name as goodsName,CAST(COUNT(tid.item_id)AS CHAR) AS goodsNum FROM tbl_item_detail tid,basics_goods bg  ,basics_machine_cell bmc 
+		WHERE  bmc.item_id=tid.item_id AND tid.goods_id=bg.goods_id AND bmc.cell_status ='1' AND bg.isdel='N' AND tid.machine_id =#{machineId}
+		<if test="specialRoleNum ==3 ">
+			AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		GROUP BY bg.goods_id 
+	</select>
+	
+	<select id="selectMachineInfo" resultType="map">
+		<!-- SELECT CASE bm.machine_status WHEN '0' THEN '3' WHEN '1' THEN 
+		IF(COUNT(CASE tai.isdel WHEN 'N' THEN '1' WHEN 'C' THEN '2' WHEN 'Y' THEN '0' END)>0,
+		(CASE tai.isdel WHEN 'N' THEN '1' WHEN 'C' THEN '2' WHEN 'Y' THEN '0' END),'0') END AS machineStatus ,
+		IFNULL(tai.alarm_id,'') AS alarmId,bm.target_temperature AS machineTemperature
+		FROM tbl_alarm_info tai,basics_machine bm WHERE tai.machine_id=bm.machine_id AND tai.machine_id=#{machineId}  -->
+		<!-- SELECT CASE bm.machine_status WHEN '0' THEN '3' WHEN '1' THEN 
+		IF(COUNT(CASE tai.isdel WHEN 'N' THEN '1' WHEN 'C' THEN '2' WHEN 'Y' THEN '0' END)>0,
+		(CASE tai.isdel WHEN 'N' THEN '1' WHEN 'C' THEN '2' WHEN 'Y' THEN '0' END),'0') END AS machineStatus ,
+		IFNULL((SELECT a.alarmId FROM(SELECT 
+		tai.alarm_id AS alarmId,
+		tai.machine_id as machineId
+		FROM tbl_alarm_info tai,basics_machine bm 
+		WHERE bm.machine_id=tai.machine_id AND tai.machine_id=#{machineId} ORDER BY tai.create_time DESC ) a GROUP BY a.machineId ),'') AS alarmId,
+		bm.target_temperature AS machineTemperature
+		FROM tbl_alarm_info tai,basics_machine bm 
+		WHERE bm.machine_id=tai.machine_id AND tai.machine_id=#{machineId}  -->
+		<!-- SELECT 
+		CASE bm.machine_status WHEN '0' THEN '3' WHEN '1' THEN 
+			CASE WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='N' AND t.machine_id =#{machineId})>0 THEN '1'
+			WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='C' AND t.machine_id =#{machineId})>0 THEN '2'
+			ELSE '0' END 
+		END AS machineStatus ,
+		IFNULL((SELECT a.alarmId FROM(SELECT 
+		tai.alarm_id AS alarmId,
+		tai.machine_id as machineId
+		FROM tbl_alarm_info tai,basics_machine bm 
+		WHERE bm.machine_id=tai.machine_id AND tai.machine_id=#{machineId} ORDER BY tai.create_time DESC ) a GROUP BY a.machineId ),'') AS alarmId,
+		bm.target_temperature AS machineTemperature
+		FROM tbl_alarm_info tai,basics_machine bm 
+		WHERE bm.machine_id=tai.machine_id AND tai.machine_id=#{machineId} LIMIT 1 -->
+		SELECT 
+		(SELECT 
+		CASE WHEN (SELECT COUNT(1) FROM basics_machine bm  WHERE bm.isdel='N' AND bm.machine_id =#{machineId} AND bm.machine_status ='0' )>0 THEN '3' 
+			WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='N' AND t.machine_id =#{machineId})>0 THEN '1'
+			WHEN (SELECT COUNT(1) FROM tbl_alarm_info t WHERE t.isdel='C' AND t.machine_id =#{machineId})>0 THEN '2'
+			ELSE '0' END ) AS machineStatus  
+		,(SELECT 
+			IFNULL((SELECT a.alarmId FROM(SELECT 
+			tai.alarm_id AS alarmId,
+			tai.machine_id as machineId
+			FROM tbl_alarm_info tai,basics_machine bm 
+			WHERE bm.machine_id=tai.machine_id AND tai.machine_id=#{machineId} ORDER BY tai.create_time DESC ) a GROUP BY a.machineId ),'') 
+		)AS alarmId,
+		(SELECT IFNULL(bm.target_temperature,'') 
+			FROM basics_machine bm 
+			WHERE bm.machine_id=#{machineId}) AS machineTemperature
+	</select>
+	
+	<select id="getAlarmCode" resultType="string">
+		SELECT DISTINCT REPLACE(tai.alarm_code,'|',',') FROM tbl_alarm_info tai where tai.isdel in ('N','C') AND tai.machine_id=#{machineId}
+	</select>
+	
+	<select id="getAlarmName" resultType="string">
+		SELECT ba.alarm_name FROM basics_alarms ba where ba.alarm_code in(
+		<foreach collection="alarmCode" item="item" index="index"
+			separator=",">
+			#{item}
+		</foreach>
+		)
+	</select>
+	<!-- 消息提醒>>>维修人员的故障设备提醒 -->
+	<select id="getAlarmMachineForMP" resultType="string">
+		SELECT bm.machine_name AS machineName FROM tbl_alarm_info tai,basics_user_machine bum,basics_machine bm
+		WHERE tai.machine_id=bum.machine_id AND tai.machine_id=bm.machine_id AND tai.isdel='N' AND bm.isdel='N'
+		AND bm.machine_status='1' AND bum.user_id=#{userId} GROUP BY bm.machine_id;
+	</select>
+	
+	<!-- 消息提醒>>>补货人员，商户等角色的设备故障提醒 -->
+	<select id="getAlarmMachineIsN" resultType="string">
+		SELECT bm.machine_name AS machineName FROM tbl_alarm_info tai,basics_user_machine bum,basics_machine bm,basics_goods bg
+		WHERE tai.machine_id=bum.machine_id AND tai.machine_id=bm.machine_id 
+		AND bm.company_id =bg.company_id AND tai.isdel ='N' AND bm.isdel='N'
+		AND bm.machine_status='1'  AND bm.company_id=#{companyId}
+		<if test="userName !=null and userName !=''">
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		AND bum.user_id=#{userId} GROUP BY bm.machine_id;
+	</select>
+	<!-- 消息提醒>>>补货人员，商户等角色的设备维修中提醒 -->
+	<select id="getAlarmMachineIsC" resultType="string">
+		SELECT bm.machine_name AS machineName FROM tbl_alarm_info tai,basics_user_machine bum,basics_machine bm,basics_goods bg
+		WHERE tai.machine_id=bum.machine_id AND tai.machine_id=bm.machine_id 
+		AND bm.company_id =bg.company_id AND tai.isdel ='C' AND bm.isdel='N'
+		AND bm.machine_status='1'  AND bm.company_id=#{companyId}
+		<if test="userName !=null and userName !=''">
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		AND bum.user_id=#{userId} GROUP BY bm.machine_id;
+	</select>
+	<!-- 消息提醒>>>众包商角色的设备维修中提醒 -->
+	<select id="getAlarmMachineIsNForMerchant" resultType="string">
+		SELECT bm.machine_name AS machineName FROM tbl_alarm_info tai,basics_users bu,basics_machine bm
+		WHERE tai.machine_id=bm.machine_id 
+		AND tai.isdel ='N' AND bm.isdel='N'
+		AND bm.machine_status='1' AND bm.company_id=#{companyId}
+		AND bu.user_id=#{userId} GROUP BY bm.machine_id;
+	</select>
+	<!-- 消息提醒>>>众包商角色的设备维修中提醒 -->
+	<select id="getAlarmMachineIsCForMerchant" resultType="string">
+		SELECT bm.machine_name AS machineName FROM tbl_alarm_info tai,basics_users bu,basics_machine bm
+		WHERE tai.machine_id=bm.machine_id 
+		AND tai.isdel ='C' AND bm.isdel='N'
+		AND bm.machine_status='1' AND bm.company_id=#{companyId}
+		AND bu.user_id=#{userId} GROUP BY bm.machine_id;
+	</select>
+	<!-- 消息提醒>>提醒是否需要清货 -->
+	<select id="isCleanGoods" resultType="map">
+		SELECT bam.area_model_name AS areaModelName,mcg.retail_clean_start_time AS cleanStartTime FROM basics_model_clean_goods mcg,basics_company bc,basics_area_model bam,basics_goods bg
+		WHERE mcg.area_model_id =bam.area_model_id AND bc.company_id=bam.company_id 
+		AND bg.company_id=bc.company_id AND bc.isdel='N' AND bam.isdel='N' AND bg.isdel='N' AND bg.goods_status='1' 
+		AND bam.area_model_status='1' AND bc.company_status='1' AND mcg.isdel='N' AND bc.company_id=#{companyId}
+		<if test="userName !=null and userName!=''">
+			AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		AND now() BETWEEN date_sub(mcg.retail_clean_start_time, interval 15 MINUTE) AND mcg.retail_clean_start_time GROUP BY mcg.area_model_id
+	</select>
+	<!-- 消息提醒 >>提醒用户是否需要补货 -->
+	<select id="issupplyGoods" resultType="map">
+		SELECT bam.area_model_name AS areaModelName,mcg.retail_supply_end_time AS supplyEndTime FROM basics_model_clean_goods mcg,basics_company bc,basics_area_model bam,basics_goods bg
+		WHERE mcg.area_model_id =bam.area_model_id AND bc.company_id=bam.company_id 
+		AND bg.company_id=bc.company_id AND bc.isdel='N' AND bam.isdel='N' AND bg.isdel='N' AND bg.goods_status='1' 
+		AND bam.area_model_status='1' AND bc.company_status='1' AND mcg.isdel='N' AND bc.company_id=#{companyId} 
+		<if test="userName !=null and userName!=''">
+			AND SUBSTRING_INDEX(SUBSTRING_INDEX(bg.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		AND now() BETWEEN date_sub(mcg.retail_supply_end_time, interval 1 hour) AND mcg.retail_supply_end_time GROUP BY mcg.area_model_id
+	</select>
+	<select id="getMachineListByuserid" resultType="map">
+	SELECT t.machine_id as
+		machineId ,b.machine_name as machineName FROM basics_user_machine t,basics_machine b 
+		where t.special_role_num='3' 
+		AND user_id=#{userId}
+	AND b.machine_id=t.machine_id 
+	AND b.isdel='N'
+ORDER BY t.machine_id ASC
+	</select>
+</mapper>

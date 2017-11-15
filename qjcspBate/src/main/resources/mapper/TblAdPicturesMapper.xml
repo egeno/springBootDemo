@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblAdPicturesMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblAdPictures" >
+    <id column="ad_pic_id" property="adPicId" jdbcType="BIGINT" />
+    <result column="ad_pic_type" property="adPicType" jdbcType="CHAR" />
+    <result column="ad_pic_name" property="adPicName" jdbcType="VARCHAR" />
+    <result column="ad_pic_desc" property="adPicDesc" jdbcType="VARCHAR" />
+    <result column="ad_pic_url" property="adPicUrl" jdbcType="VARCHAR" />
+    <result column="ad_href_url" property="adHrefUrl" jdbcType="VARCHAR" />
+    <result column="pic_sort_num" property="picSortNum" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ad_pic_id, ad_pic_type, ad_pic_name, ad_pic_desc, ad_pic_url, ad_href_url, pic_sort_num, 
+    create_time, create_user_id,modify_time,mod_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ad_pictures
+    where ad_pic_id = #{adPicId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_ad_pictures
+    where ad_pic_id = #{adPicId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblAdPictures" >
+    insert into tbl_ad_pictures (ad_pic_id, ad_pic_type, ad_pic_name, 
+      ad_pic_desc, ad_pic_url, ad_href_url, 
+      pic_sort_num, create_time, create_user_id,modify_time,mod_user_id
+      )
+    values (#{adPicId,jdbcType=BIGINT}, #{adPicType,jdbcType=CHAR}, #{adPicName,jdbcType=VARCHAR}, 
+      #{adPicDesc,jdbcType=VARCHAR}, #{adPicUrl,jdbcType=VARCHAR}, #{adHrefUrl,jdbcType=VARCHAR}, 
+      #{picSortNum,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{modUserId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblAdPictures" >
+    insert into tbl_ad_pictures
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adPicId != null" >
+        ad_pic_id,
+      </if>
+      <if test="adPicType != null" >
+        ad_pic_type,
+      </if>
+      <if test="adPicName != null" >
+        ad_pic_name,
+      </if>
+      <if test="adPicDesc != null" >
+        ad_pic_desc,
+      </if>
+      <if test="adPicUrl != null" >
+        ad_pic_url,
+      </if>
+      <if test="adHrefUrl != null" >
+        ad_href_url,
+      </if>
+      <if test="picSortNum != null" >
+        pic_sort_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adPicId != null" >
+        #{adPicId,jdbcType=BIGINT},
+      </if>
+      <if test="adPicType != null" >
+        #{adPicType,jdbcType=CHAR},
+      </if>
+      <if test="adPicName != null" >
+        #{adPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicDesc != null" >
+        #{adPicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicUrl != null" >
+        #{adPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adHrefUrl != null" >
+        #{adHrefUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picSortNum != null" >
+        #{picSortNum,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblAdPictures" >
+    update tbl_ad_pictures
+    <set >
+      <if test="adPicType != null" >
+        ad_pic_type = #{adPicType,jdbcType=CHAR},
+      </if>
+      <if test="adPicName != null" >
+        ad_pic_name = #{adPicName,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicDesc != null" >
+        ad_pic_desc = #{adPicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicUrl != null" >
+        ad_pic_url = #{adPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adHrefUrl != null" >
+        ad_href_url = #{adHrefUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picSortNum != null" >
+        pic_sort_num = #{picSortNum,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ad_pic_id = #{adPicId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblAdPictures" >
+    update tbl_ad_pictures
+    set ad_pic_type = #{adPicType,jdbcType=CHAR},
+      ad_pic_name = #{adPicName,jdbcType=VARCHAR},
+      ad_pic_desc = #{adPicDesc,jdbcType=VARCHAR},
+      ad_pic_url = #{adPicUrl,jdbcType=VARCHAR},
+      ad_href_url = #{adHrefUrl,jdbcType=VARCHAR},
+      pic_sort_num = #{picSortNum,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT}
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      mod_user_id = #{modUserId,jdbcType=BIGINT}
+    where ad_pic_id = #{adPicId,jdbcType=BIGINT}
+  </update>
+  <select id="findAppAdPicturesByPicType" parameterType="string"  resultType="java.util.Map">
+  	SELECT 
+ 	CAST(ad_pic_id AS CHAR) adPicId
+	,ad_pic_type adPicType
+	,ad_pic_name adPicName
+	,ad_pic_desc adPicDesc
+	,ad_pic_url adPicUrl
+	,ad_href_url adHrefUrl
+	,pic_sort_num picSortNum
+	FROM tbl_ad_pictures
+ 	WHERE ad_pic_type=#{adPicType}
+  </select>
+  
+  <select id="findAdCount" parameterType="java.util.Map" resultType="java.lang.Long">
+   SELECT
+   COUNT(*) 
+   FROM tbl_ad_pictures 
+   WHERE 1=1
+   <if test="picUsed !=null and picUsed!='-1'">
+    AND ad_pic_type = #{picUsed}
+   </if>
+   <if test="picName !=null and picName!=''">
+    AND ad_pic_name = #{picName}
+   </if>
+  </select>
+  
+  <select id="findAdvertisementByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+   SELECT
+   <include refid="Base_Column_List" /> 
+   FROM tbl_ad_pictures 
+   WHERE 1=1
+    <if test="picUsed !=null and picUsed!='-1'">
+     AND ad_pic_type = #{picUsed}
+   </if>
+   <if test="picName !=null and picName!=''">
+     AND ad_pic_name = #{picName}
+   </if>
+     LIMIT #{offset},#{limit}
+  </select>
+</mapper>

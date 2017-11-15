@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblGoodsEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblGoodsEvaluate" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="goods_evaluate_score" property="goodsEvaluateScore" jdbcType="SMALLINT" />
+    <result column="goods_evaluate_content" property="goodsEvaluateContent" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="isverify" property="isverify" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_id, machine_id, order_id, order_child_id, order_detail_id, goods_evaluate_score, 
+    goods_evaluate_content, create_time,isverify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_goods_evaluate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_goods_evaluate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblGoodsEvaluate" >
+    insert into tbl_goods_evaluate (id, goods_id, machine_id, 
+      order_id, order_child_id, order_detail_id, 
+      goods_evaluate_score, goods_evaluate_content, 
+      create_time,isverify)
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, 
+      #{orderId,jdbcType=BIGINT}, #{orderChildId,jdbcType=BIGINT}, #{orderDetailId,jdbcType=BIGINT}, 
+      #{goodsEvaluateScore,jdbcType=SMALLINT}, #{goodsEvaluateContent,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP},#{isverify,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsEvaluate" >
+    insert into tbl_goods_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="goodsEvaluateScore != null" >
+        goods_evaluate_score,
+      </if>
+      <if test="goodsEvaluateContent != null" >
+        goods_evaluate_content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+     <!--  <if test="isverify != null" >
+        isverify,
+      </if> -->
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsEvaluateScore != null" >
+        #{goodsEvaluateScore,jdbcType=SMALLINT},
+      </if>
+      <if test="goodsEvaluateContent != null" >
+        #{goodsEvaluateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <!-- <if test="isverify != null" >
+        #{isverify,jdbcType=CHAR},
+      </if> -->
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsEvaluate" >
+    update tbl_goods_evaluate
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id = #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsEvaluateScore != null" >
+        goods_evaluate_score = #{goodsEvaluateScore,jdbcType=SMALLINT},
+      </if>
+      <if test="goodsEvaluateContent != null" >
+        goods_evaluate_content = #{goodsEvaluateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isverify != null" >
+        isverify = #{isverify,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblGoodsEvaluate" >
+    update tbl_goods_evaluate
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      order_child_id = #{orderChildId,jdbcType=BIGINT},
+      order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      goods_evaluate_score = #{goodsEvaluateScore,jdbcType=SMALLINT},
+      goods_evaluate_content = #{goodsEvaluateContent,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+      isverify=#{isverify,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getCountByOrderId" resultType="int" >
+    select 
+   count(1)
+    from tbl_goods_evaluate
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+<select id="selectByorderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+  <include refid="Base_Column_List" />
+    from tbl_goods_evaluate
+    where order_id = #{orderId,jdbcType=BIGINT}
+<!--     where order_id = #{orderId,jdbcType=BIGINT} and isverify='Y' -->
+  </select>
+  <select id="selectBygoodsId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+  <include refid="Base_Column_List" />
+    from tbl_goods_evaluate
+    where goods_id = #{goodsId,jdbcType=BIGINT} and isverify='Y'
+  </select>
+   <select id="selectCountBygoodsId" resultType="int" parameterType="java.util.HashMap" >
+    select 
+  count(1)
+    from tbl_goods_evaluate
+    where goods_id = #{goodsId}
+     <if test="isdel!=0 and isdel!=null">
+			AND goods_evaluate_content!=''
+		</if>
+		and isverify='Y'
+  </select>
+  
+  <select id="findgoodscountbygoods" resultType="int"
+		parameterType="java.util.Map">
+		SELECT
+		count(1)
+		FROM
+		tbl_item_detail a,
+		basics_goods b,
+		basics_machine_cell c
+		WHERE
+		a.item_id = c.item_id
+		AND a.goods_id = b.goods_id
+		AND a.machine_id = #{machineId}
+		AND a.area_model_id =#{areaModelId}
+		AND a.item_type='1'
+		AND a.item_status='0'
+		AND c.cell_status='1'
+		AND b.isdel='N'
+	    AND a.stock_time &lt;=#{selectDate}
+	    AND a.goods_id=#{goodsId}
+	</select>
+	
+	  <select id="selectEvaluateByGoodsId" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+   		select 
+   		 <include refid="Base_Column_List" />
+   		 from tbl_goods_evaluate
+   		  where goods_id =#{goodsId}
+   		  <if test="isdel!=0 and isdel!=null">
+			AND goods_evaluate_content!=''
+		</if>
+		and isverify='Y'
+   		  limit #{start},#{end}
+   </select>
+    <select id="selectCount" resultType="java.lang.Long" parameterType="com.qjkj.qjcsp.entity.EvaluateSearch" >
+    select 
+  count(1)
+    from tbl_goods_evaluate
+    <where>
+			1=1
+			<if test="verifyStatus !=null and verifyStatus !=''">
+				AND isverify=#{verifyStatus}
+			</if>
+
+			<if test="evaluateStartTime !=null and evaluateStartTime !=''">
+				AND <![CDATA[ create_time >=CONCAT(#{evaluateStartTime},' 00:00:00')]]>
+			</if>
+			<if test="evaluateEndTime !=null and evaluateEndTime !=''">
+				AND <![CDATA[ create_time <=CONCAT(#{evaluateEndTime},' 23:59:59')]]>
+			</if>
+		</where>
+  </select>
+  <select id="findEvaluateList" resultType="java.util.Map" parameterType="com.qjkj.qjcsp.entity.EvaluateSearch" >
+   SELECT 
+DISTINCT(tge.id) AS evaluateId,
+o.mobile AS customerPhone,
+tc.customer_name AS customerName,
+tod.goods_name AS goodsName,
+tge.goods_evaluate_content AS goodsEvaluateContent,
+DATE_FORMAT(tge.create_time, '%Y-%m-%d %H:%i:%s')  AS createTime,
+tge.isverify AS isverify
+ from tbl_goods_evaluate tge,tbl_order o,tbl_order_detail tod,tbl_customer tc
+    <where>
+tge.order_id=o.order_id and
+o.customer_id=tc.customer_id AND
+tge.order_detail_id=tod.order_detail_id
+			<if test="verifyStatus !=null and verifyStatus !=''">
+				AND tge.isverify=#{verifyStatus}
+			</if>
+
+			<if test="evaluateStartTime !=null and evaluateStartTime !=''">
+				AND <![CDATA[ tge.create_time >=CONCAT(#{evaluateStartTime},' 00:00:00')]]>
+			</if>
+			<if test="evaluateEndTime !=null and evaluateEndTime !=''">
+				AND <![CDATA[ tge.create_time <=CONCAT(#{evaluateEndTime},' 23:59:59')]]>
+			</if>
+		</where>
+		order by tge.create_time DESC
+		limit #{offset},#{limit}
+  </select>
+  <update id="evaluatereviewedPass" >
+  <foreach collection="arrayObj" item="item" index="index" separator=";" >  
+     update tbl_goods_evaluate   
+     <set>   
+    isverify='Y'
+  </set>  
+   where id =#{item} 
+    </foreach>  
+  </update>
+  <update id="evaluatereviewedOut" >
+  <foreach collection="arrayObj" item="item" index="index" separator=";" >  
+     update tbl_goods_evaluate   
+     <set>   
+    isverify='C'
+  </set>  
+   where id =#{item}
+    </foreach>  
+  </update>
+  
+  <select id="evaluatereviewedExport" resultType="java.util.Map" parameterType="com.qjkj.qjcsp.entity.EvaluateSearch" >
+   SELECT 
+DISTINCT(tge.id) AS evaluateId,
+o.mobile AS customerPhone,
+tc.customer_name AS customerName,
+tod.goods_name AS goodsName,
+tge.goods_evaluate_content AS goodsEvaluateContent,
+CAST(tge.create_time AS CHAR)  AS createTime,
+(CASE 
+		      WHEN (tge.isverify ='N') THEN '未审核'
+ 		      WHEN (tge.isverify ='Y') THEN '已通过'
+ 		      WHEN (tge.isverify ='C') THEN '未通过'
+ 		 ELSE '' END)
+ AS isverify
+ from tbl_goods_evaluate tge,tbl_order o,tbl_order_detail tod,tbl_customer tc
+    <where>
+tge.order_id=o.order_id and
+o.customer_id=tc.customer_id AND
+tge.order_detail_id=tod.order_detail_id
+			<if test="verifyStatus !=null and verifyStatus !=''">
+				AND tge.isverify=#{verifyStatus}
+			</if>
+
+			<if test="evaluateStartTime !=null and evaluateStartTime !=''">
+				AND <![CDATA[ tge.create_time >=CONCAT(#{evaluateStartTime},' 00:00:00')]]>
+			</if>
+			<if test="evaluateEndTime !=null and evaluateEndTime !=''">
+				AND <![CDATA[ tge.create_time <=CONCAT(#{evaluateEndTime},' 23:59:59')]]>
+			</if>
+		</where>
+		order by tge.create_time DESC
+  </select>
+</mapper>

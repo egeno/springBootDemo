@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblMinnumLogMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblMinnumLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="min_time" property="minTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_id, goods_id, min_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_minnum_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_minnum_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblMinnumLog" >
+    insert into tbl_minnum_log (id, machine_id, goods_id, 
+      min_time)
+    values (#{id,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{minTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblMinnumLog" >
+    insert into tbl_minnum_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="minTime != null" >
+        min_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="minTime != null" >
+        #{minTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblMinnumLog" >
+    update tbl_minnum_log
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="minTime != null" >
+        min_time = #{minTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblMinnumLog" >
+    update tbl_minnum_log
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      min_time = #{minTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--订单详情</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/advice.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/advice.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="main">
+		<div class="vague"><!--无输入的时候显示-->
+	        <div class="title"><a href="index.html"><img src="../img/image/return.png" alt="返回" /></a>意见反馈</div>
+			
+			<textarea class="textbox" onkeyup="textbox(this);" placeholder="请留下您的宝贵意见和建议,我们将努力改进"></textarea>
+			<p class="textbox_len">还能输入<span class="len">300</span>个字</p>
+			<input class="phone" placeholder="请留下手机号码，以便我们回复您"></input>
+			<p class="testPhone">手机号码错误,请重新输入!</p>
+			<div class="btn">提交</div>
+		</div>
+	</body>
+	<script>
+	//字数限制
+		function textbox(obj){
+		   var curLength=$(obj).val().length;
+		   if(curLength>300)
+		   {
+		        var num=$(obj).val().substr(0,300);
+		        $(obj).val(num);
+		        $(obj).parent().find('.textbox_len').hide();
+		        $(obj).parent().find(".over_len").show();
+		   }
+		   else
+		   {
+		   		$(obj).parent().find('.textbox_len').show();
+		   		$(obj).parent().find(".over_len").hide();
+		        $(obj).parent().find(".textbox_len").find('.len').text(300-$(obj).val().length);
+		   }
+		}
+	</script>
+</html>

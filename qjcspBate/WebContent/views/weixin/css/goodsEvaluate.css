@@ -1,0 +1,33 @@
+body{background:#f5f5f5;}
+.goodsEvaluate_main{margin:0 auto;width:98%;}
+.goodsEvaluate_main_box{margin-bottom: 0.4rem;}
+.goods_main{background:#fff;margin-bottom: 0.15rem;border-top:1px solid #e6e6e6;}
+.goods_title{border-bottom:1px solid #e6e6e6;padding: 10px;}
+.goods_title p {
+    line-height: 0.6rem;
+    font-size: 0.3rem;
+    font-weight: 400;
+}
+.start img{margin-right:0.25rem;}
+.textbox{font-size:0.25rem;height: 2.5rem;padding:10px;width:100%;}
+textarea{font-size:0.25rem;height: 2.5rem;padding:10px;}
+.textbox span{color:#CCCCCC}
+.textbox_len,.over_len{font-size:0.22rem;color:#CCCCCC;text-align: right;padding: 5px 10px;}
+.publishBtn{width:98%;background:#fec497;color:#FFF;line-height: 1rem;text-align: center;font-size:0.3rem;border-radius: 0.04rem;position: relative;bottom: 0.15rem;}
+.goodsName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;}
+.success{
+	border: 1px solid #ccc;
+    width: 5.3rem;
+    height: .6rem;
+    border-radius: .1rem;
+    text-align: center;
+    line-height: .6rem;
+    background: #fff;
+    font-size: .3rem;
+    margin: 0 auto;
+    display:none;
+    position: absolute;
+    bottom: 2rem;
+    margin-left: 0.45rem;
+}
+

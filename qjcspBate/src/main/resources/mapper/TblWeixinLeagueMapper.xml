@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblWeixinLeagueMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblWeixinLeague" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel_phone" property="telPhone" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, tel_phone, content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_weixin_league
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_weixin_league
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblWeixinLeague" >
+    insert into tbl_weixin_league (id, name, tel_phone, 
+      content)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{telPhone,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblWeixinLeague" >
+    insert into tbl_weixin_league
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="telPhone != null" >
+        tel_phone,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telPhone != null" >
+        #{telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblWeixinLeague" >
+    update tbl_weixin_league
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telPhone != null" >
+        tel_phone = #{telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblWeixinLeague" >
+    update tbl_weixin_league
+    set name = #{name,jdbcType=VARCHAR},
+      tel_phone = #{telPhone,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByTelPhone" resultType="integer">
+  	SELECT COUNT(1) FROM tbl_weixin_league where tel_phone=#{mobileNum};
+  </select>
+  
+  
+   <select id="findWeixinLeagueCount" parameterType="com.qjkj.qjcsp.entity.TblWeixinLeague" resultType="java.lang.Integer">
+  	SELECT COUNT(*)  
+  		FROM tbl_weixin_league  tbweixin
+  	where
+  		1=1
+  		<if test="name !=null and name !=''">
+  			AND tbweixin.name like '%${name}%'
+  		</if> 		
+  		<if test="telPhone !=null and telPhone !=''">
+  			AND tbweixin.tel_phone like '%${telPhone}%'
+  		</if>
+  </select> 
+
+<select id="findWeixinLeagueList" parameterType="com.qjkj.qjcsp.entity.TblWeixinLeague" resultType="map">
+  	select 
+  	   tbweixin.id,
+  	   tbweixin.name,
+  	   tbweixin.tel_phone as telPhone,
+  	   tbweixin.content
+		
+		FROM tbl_weixin_league  tbweixin
+  	where
+  		1=1	 		
+  		 <if test="name !=null and name !=''">
+  			AND tbweixin.name like '%${name}%'
+  		</if> 		
+  		<if test="telPhone !=null and telPhone !=''">
+  			AND tbweixin.tel_phone like '%${telPhone}%'
+  		</if>
+  	  limit #{offset},#{limit}
+  </select>
+  
+  
+  
+</mapper>

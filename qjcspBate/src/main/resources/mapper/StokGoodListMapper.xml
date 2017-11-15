@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.StokGoodListMapper" >
+    <select id="selectStokGoodList" resultType="map">
+	    SELECT z.cell_num AS cellNum
+	    FROM tbl_temporary_retail z,basics_machine_cell c,tbl_order_child d
+	    WHERE c.cell_id=z.cell_id AND d.order_child_id=z.order_child_id and d.order_child_status='1' AND z.machine_id = #{machineId,jdbcType=BIGINT} AND 
+	    z.area_model_id = #{areaModelId,jdbcType=BIGINT} AND z.isdel = 'N'  AND z.temporary_date = DATE_FORMAT(NOW(),'%Y-%m-%d')
+	    <if test="userId != null" >
+         AND  z.goods_id IN(	
+	        SELECT goods_id FROM basics_goods 
+	        WHERE 
+	        SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1) = (
+	           SELECT user_name FROM basics_users WHERE user_id = #{userId}
+	        ) and isdel ='N'
+	      )
+      </if>
+    </select> 
+    <select id="selectCellBymachineId" resultType="map">
+    	SELECT 
+	    CAST(bmc.cell_num AS CHAR) AS cellNum, bmc.cell_status AS cellStatus,
+	    IF(bmc.item_id IS NOT NULL, tid.item_type, '')AS itemType,
+	    CAST(bmc.row_num AS CHAR) AS cellRow,
+	    CAST(bmc.col_num AS CHAR) AS cellColumn
+	    FROM basics_machine_cell bmc
+	    LEFT JOIN tbl_item_detail tid
+	    ON tid.item_id=bmc.item_id
+	    WHERE bmc.machine_id = #{machineId,jdbcType=BIGINT}
+        ORDER BY bmc.cell_num ASC
+    </select>
+    <select id="getCellByCellNum" resultType="int">
+       SELECT COUNT(*) AS num  FROM basics_machine_cell mc,tbl_item_detail tid,basics_goods bg
+	   WHERE 
+	   mc.item_id = tid.item_id 
+	   AND tid.goods_id = bg.goods_id 
+	   AND mc.machine_id =#{machineId}
+	   AND mc.cell_num = #{cellNum}
+	   AND bg.goods_id IN(
+	        SELECT goods_id FROM basics_goods 
+	        WHERE 
+	        SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1) = (
+	           SELECT user_name FROM basics_users WHERE user_id = #{userId}
+	        )
+	   )
+    </select>
+ 	
+</mapper>

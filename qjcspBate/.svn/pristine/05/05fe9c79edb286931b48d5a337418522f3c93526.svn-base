@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.ModelCleanGoodsMapper">
+	<!-- 查找此公司下的设备 -->
+  <select id="getCompanyList" parameterType="map" resultType="com.qjkj.qjcsp.entity.CompanyPo">
+  
+  	SELECT company_id AS companyId,company_name AS companyName FROM basics_company 
+  	<where> 
+  			1=1 
+  			AND isdel='N'
+  			AND company_status='1'
+ 			<if test="flag==false">
+ 				and company_id=#{companyId}
+ 			</if>
+ 		</where>
+  </select>
+
+  <select id="getAreaModel" parameterType="java.lang.Integer" resultType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	SELECT 
+  		area_model_id as areaModelId, area_model_name as areaModelName ,time_type as areaModelType
+  		FROM basics_area_model WHERE company_id=#{companyId}
+  		AND isdel='N'
+  		AND area_model_status='1'
+  
+  </select>
+  
+  <select id="findAllModelCleanGoodsListCount" parameterType="map" resultType="java.lang.Integer">
+  	SELECT COUNT(1) FROM basics_model_clean_goods bmcg ,basics_area_model bam 
+  	<where>
+  		1=1
+  		AND bam.area_model_id=bmcg.area_model_id
+  		AND bmcg.isdel='N'
+  		AND bam.isdel='N'
+  		AND bam.area_model_status='1'
+  		<if test="companyId !=null and companyId !=''">
+  			and bam.company_id=#{companyId}
+  		
+  		</if>
+  		<if test="areaModelId !=null and areaModelId !=''">
+  			and bam.area_model_id=#{areaModelId}
+  		</if> 				
+  	</where>  
+  </select>
+  
+  <select id="findAllModelCleanGoodsList" parameterType="map" resultType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	SELECT bmcg.clean_id as cleanId,bam.area_model_name as areaModelName,
+  	       IF(bmcg.date_str IS NULL,'每天',bmcg.date_str) as dateStr,bmcg.type,
+  	       bam.company_id as companyId,
+  	       bam.area_model_id as areaModelId,
+  	       bmcg.reserve_end_time as reserveEndTimeStr,
+  	       bmcg.retail_replenishment_start_time as retailReplenishmentStartTimeStr, 
+           bmcg.reserve_replenishment_start_time as reserveReplenishmentStartTimeStr, 
+           bmcg.reserve_supply_end_time as reserveSupplyEndTimeStr, 
+           bmcg.retail_supply_end_time as retailSupplyEndTimeStr, 
+		    bmcg.reserve_take_start_time as reserveTakeStartTimeStr, 
+		    bmcg.reserve_take_end_time as reserveTakeEndTimeStr, 
+		    bmcg.retail_take_end_time as retailTakeEndTimeStr, 
+		    bmcg.retail_clean_start_time as retailCleanStartTimeStr,
+		    bmcg.reserve_clean_start_time as reserveCleanStartTimeStr, 
+		    bmcg.retail_take_start_time as retailTakeStartTimeStr, 
+		    bmcg.retail_replenishment_prompt_time as retailReplenishmentPromptTimeStr, 
+		    bmcg.reserve_replenishment_prompt_time as reserveReplenishmentPromptTimeStr, 
+		    bmcg.retail_replenishment_warning_time as retailReplenishmentWarningTimeStr, 
+		    bmcg.reserve_replenishment_warning_time as reserveReplenishmentWarningTimeStr, 
+		    bmcg.retail_clearance_prompt_time as retailClearancePromptTimeStr, 
+		    bmcg.reserve_clearance_prompt_time as reserveClearancePromptTimeStr
+  	       FROM basics_model_clean_goods bmcg ,basics_area_model bam 
+  	<where>
+  		1=1
+  		AND bam.area_model_id=bmcg.area_model_id
+  		AND bmcg.isdel='N'
+  		AND bam.isdel='N'
+  		AND bam.area_model_status='1'
+  		<if test="companyId !=null and companyId !=''">
+  			and bam.company_id=#{companyId}
+  		
+  		</if>
+  		<if test="areaModelId !=null and areaModelId !=''">
+  			and bam.area_model_id=#{areaModelId}
+  		</if>
+  		order by bmcg.retail_clean_start_time, bmcg.reserve_clean_start_time
+  		limit #{offset},#{limit}
+  		 				
+  	</where>   
+  
+  </select>
+  
+  <insert id="addModelcleangoodsSave" parameterType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	insert into basics_model_clean_goods
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+		    <if test="areaModelId != null and areaModelId !=''" >
+        		area_model_id,
+      		</if>
+      		<if test="type != null and type!=''" >
+        		type,
+      		</if>
+     		<if test="dateStr != null and dateStr !=''" >
+        		date_str,
+      		</if>
+      		<!-- 
+      		<if test="cleanStartTimeStr != null and cleanStartTimeStr !=''" >
+        		clean_start_time,
+      		</if>
+      		<if test="supplyEndTimeStr != null and supplyEndTimeStr !=''" >
+        		supply_end_time,
+      		</if>
+      		-->
+      		 <if test="reserveEndTimeStr != null">
+		        reserve_end_time,
+		      </if>
+		      <if test="retailReplenishmentStartTimeStr != null">
+		        retail_replenishment_start_time,
+		      </if>
+		      <if test="reserveReplenishmentStartTimeStr != null">
+		        reserve_replenishment_start_time,
+		      </if>
+		      <if test="reserveSupplyEndTimeStr != null">
+		        reserve_supply_end_time,
+		      </if>
+		      <if test="retailSupplyEndTimeStr != null">
+		        retail_supply_end_time,
+		      </if>
+		      <if test="reserveTakeStartTimeStr != null">
+		        reserve_take_start_time,
+		      </if>
+		      <if test="reserveTakeEndTimeStr != null">
+		        reserve_take_end_time,
+		      </if>
+		      <if test="retailTakeEndTimeStr != null">
+		        retail_take_end_time,
+		      </if>
+		      <if test="retailCleanStartTimeStr != null">
+		        retail_clean_start_time,
+		      </if>
+		      <if test="reserveCleanStartTimeStr != null">
+		        reserve_clean_start_time,
+		      </if>
+		      <if test="retailTakeStartTimeStr != null">
+		        retail_take_start_time,
+		      </if>
+		      <if test="retailReplenishmentPromptTimeStr != null and retailReplenishmentPromptTimeStr != ''">
+		        retail_replenishment_prompt_time,
+		      </if>
+		      <if test="reserveReplenishmentPromptTimeStr != null and reserveReplenishmentPromptTimeStr != ''">
+		        reserve_replenishment_prompt_time,
+		      </if>
+		      <if test="retailReplenishmentWarningTimeStr != null and retailReplenishmentWarningTimeStr != ''">
+		        retail_replenishment_warning_time,
+		      </if>
+		      <if test="reserveReplenishmentWarningTimeStr != null and reserveReplenishmentWarningTimeStr!=''">
+		        reserve_replenishment_warning_time,
+		      </if>
+		      <if test="retailClearancePromptTimeStr != null and retailClearancePromptTimeStr != ''">
+		        retail_clearance_prompt_time,
+		      </if>
+		      <if test="reserveClearancePromptTimeStr != null and reserveClearancePromptTimeStr != ''">
+		        reserve_clearance_prompt_time,
+		      </if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+    		
+    		 <if test="areaModelId != null and areaModelId !=''" >
+        		#{areaModelId},
+      		</if>
+    		
+    		<if test="type != null and type!=''" >
+        		#{type},
+      		</if>
+      		
+      		<if test="dateStr != null and dateStr !=''" >
+        		#{dateStr},
+      		</if>
+      		<!-- 
+     		<if test="cleanStartTimeStr != null and cleanStartTimeStr!=''" >
+        		#{cleanStartTimeStr},
+      		</if>
+      		
+      		<if test="supplyEndTimeStr != null and supplyEndTimeStr !=''" >
+        		#{supplyEndTimeStr},
+      		</if>
+      		 -->
+      		
+      		<if test="reserveEndTimeStr != null">
+			  #{reserveEndTimeStr},
+			</if>
+			<if test="retailReplenishmentStartTimeStr != null">
+			  #{retailReplenishmentStartTimeStr},
+			</if>
+			<if test="reserveReplenishmentStartTimeStr != null">
+			  #{reserveReplenishmentStartTimeStr},
+			</if>
+			<if test="reserveSupplyEndTimeStr != null">
+			  #{reserveSupplyEndTimeStr},
+			</if>
+			<if test="retailSupplyEndTimeStr != null">
+			  #{retailSupplyEndTimeStr},
+			</if>
+			<if test="reserveTakeStartTimeStr != null">
+			  #{reserveTakeStartTimeStr},
+			</if>
+			<if test="reserveTakeEndTimeStr != null">
+			  #{reserveTakeEndTimeStr},
+			</if>
+			<if test="retailTakeEndTimeStr != null">
+			  #{retailTakeEndTimeStr},
+			</if>
+			<if test="retailCleanStartTimeStr != null">
+			  #{retailCleanStartTimeStr},
+			</if>
+			<if test="reserveCleanStartTimeStr != null">
+			  #{reserveCleanStartTimeStr},
+			</if>
+			<if test="retailTakeStartTimeStr != null">
+			  #{retailTakeStartTimeStr},
+			</if>
+			<if test="retailReplenishmentPromptTimeStr != null and retailReplenishmentPromptTimeStr != ''">
+			  #{retailReplenishmentPromptTimeStr},
+			</if>
+			<if test="reserveReplenishmentPromptTimeStr != null and reserveReplenishmentPromptTimeStr != ''">
+			  #{reserveReplenishmentPromptTimeStr},
+			</if>
+			<if test="retailReplenishmentWarningTimeStr != null and retailReplenishmentWarningTimeStr != ''">
+			  #{retailReplenishmentWarningTimeStr},
+			</if>
+			<if test="reserveReplenishmentWarningTimeStr != null and reserveReplenishmentWarningTimeStr != ''">
+			  #{reserveReplenishmentWarningTimeStr},
+			</if>
+			<if test="retailClearancePromptTimeStr != null and retailClearancePromptTimeStr != ''">
+			  #{retailClearancePromptTimeStr},
+			</if>
+			<if test="reserveClearancePromptTimeStr != null and reserveClearancePromptTimeStr != ''">
+			  #{reserveClearancePromptTimeStr},
+			</if> 
+    	</trim>
+  </insert>
+  
+  
+  <update id="editModelcleangoodsSave" parameterType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	UPDATE  basics_model_clean_goods
+  	<set>
+	  	 	<if test="areaModelId !=null and areaModelId !=''">
+	  	 			area_model_id=#{areaModelId},
+	  	 	</if>
+	  	 	<if test="type !=null and type !=''">
+	  	 			type=#{type},
+	  	 	</if>
+	  	 	<!--
+ 	  	    <if test="dateStr !=null and dateStr !=''"> 
+- 	  	 			date_str=#{dateStr}, 
+ 	  	    </if>
+	  	 	<if test="cleanStartTimeStr !=null and cleanStartTimeStr !=''">
+	  	 			clean_start_time=#{cleanStartTimeStr},
+	  	 	</if>
+	  	 	<if test="supplyEndTimeStr !=null and supplyEndTimeStr !=''">
+	  	 			supply_end_time=#{supplyEndTimeStr},
+	  	 	</if>
+	  	    -->
+	  	    <if test="reserveEndTimeStr !=null and reserveEndTimeStr !=''">
+	  	 			reserve_end_time=#{reserveEndTimeStr},
+	  	    </if>
+	  	    <if test="retailReplenishmentStartTimeStr !=null and retailReplenishmentStartTimeStr !=''">
+	  	 			retail_replenishment_start_time=#{retailReplenishmentStartTimeStr},
+	  	    </if>
+	  	    <if test="reserveReplenishmentStartTimeStr !=null and reserveReplenishmentStartTimeStr !=''">
+	  	 			reserve_replenishment_start_time=#{reserveReplenishmentStartTimeStr},
+	  	    </if>
+	  	    <if test="reserveSupplyEndTimeStr !=null and reserveSupplyEndTimeStr !=''">
+	  	 			reserve_supply_end_time=#{reserveSupplyEndTimeStr},
+	  	    </if>
+	  	    <if test="retailSupplyEndTimeStr !=null and retailSupplyEndTimeStr !=''">
+	  	 			retail_supply_end_time=#{retailSupplyEndTimeStr},
+	  	    </if>
+	  	    <if test="reserveTakeStartTimeStr !=null and reserveTakeStartTimeStr !=''">
+	  	 			reserve_take_start_time=#{reserveTakeStartTimeStr},
+	  	    </if>
+	  	    <if test="reserveTakeEndTimeStr !=null and reserveTakeEndTimeStr !=''">
+	  	 			reserve_take_end_time=#{reserveTakeEndTimeStr},
+	  	    </if>
+	  	    <if test="retailTakeEndTimeStr !=null and retailTakeEndTimeStr !=''">
+	  	 			retail_take_end_time=#{retailTakeEndTimeStr},
+	  	    </if>
+	  	    <if test="retailCleanStartTimeStr !=null and retailCleanStartTimeStr !=''">
+	  	 			retail_clean_start_time=#{retailCleanStartTimeStr},
+	  	    </if>
+	  	    <if test="reserveCleanStartTimeStr !=null and reserveCleanStartTimeStr !=''">
+	  	 			reserve_clean_start_time=#{reserveCleanStartTimeStr},
+	  	    </if>
+	  	    <if test="retailTakeStartTimeStr !=null and retailTakeStartTimeStr !=''">
+	  	 			retail_take_start_time=#{retailTakeStartTimeStr},
+	  	    </if>
+ 			retail_replenishment_prompt_time=#{retailReplenishmentPromptTimeStr},
+ 			reserve_replenishment_prompt_time=#{reserveReplenishmentPromptTimeStr},
+ 			retail_replenishment_warning_time=#{retailReplenishmentWarningTimeStr},
+ 			reserve_replenishment_warning_time=#{reserveReplenishmentWarningTimeStr},
+ 			retail_clearance_prompt_time=#{retailClearancePromptTimeStr},
+ 			reserve_clearance_prompt_time=#{reserveClearancePromptTimeStr},
+	  	  date_str=#{dateStr}
+	  	  where clean_id=#{cleanId}
+  	</set>
+  </update>
+  
+  <update id="deleteModelcleangoods" parameterType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	update basics_model_clean_goods set isdel='Y' WHERE clean_id=#{cleanId}
+  </update>
+  
+  
+<!-- Gekko 注：包含所有的时间段可一次取出 -->
+  <select id="getTime" resultType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	SELECT
+		f.clean_id AS cleanId,
+		f.area_model_id AS areaModelId,
+		f.reserve_clean_start_time AS reserveCleanStartTime,
+		f.reserve_clearance_prompt_time AS reserveClearancePromptTime,
+		f.reserve_end_time AS reserveEndTime,
+		f.reserve_replenishment_prompt_time AS reserveReplenishmentPromptTime,
+		f.reserve_replenishment_start_time AS reserveReplenishmentStartTime,
+		f.reserve_replenishment_warning_time AS reserveReplenishmentWarningTime,
+		f.reserve_supply_end_time AS reserveSupplyEndTime,
+		f.reserve_take_end_time AS reserveTakeEndTime,
+		f.reserve_take_start_time AS reserveTakeStartTime,
+		f.retail_clean_start_time AS retailCleanStartTime,
+		f.retail_clearance_prompt_time AS retailClearancePromptTime,
+		f.retail_replenishment_prompt_time AS retailReplenishmentPromptTime,
+		f.retail_replenishment_start_time AS retailReplenishmentStartTime,
+		f.retail_replenishment_warning_time AS retailReplenishmentWarningTime,
+		f.retail_supply_end_time AS retailSupplyEndTime,
+		f.retail_take_end_time AS retailTakeEndTime,
+		f.retail_take_start_time AS retailTakeStartTime,
+		f.date_str AS dateStr,
+		f.type AS type
+	FROM
+		basics_machine a,
+		basics_model_clean_goods f
+	WHERE 
+	a.area_model_id = f.area_model_id
+	AND a.isdel='N'
+	AND f.isdel='N'
+	AND a.machine_id=#{machineId}
+	AND f.area_model_id = #{modelId}
+  </select>
+  <!-- 注：根据模型id得到所有的时间段 -->
+  <select id="getTimeByModelId" resultType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	SELECT
+		f.clean_id AS cleanId,
+		f.area_model_id AS areaModelId,
+		f.reserve_clean_start_time AS reserveCleanStartTime,
+		f.reserve_clearance_prompt_time AS reserveClearancePromptTime,
+		f.reserve_end_time AS reserveEndTime,
+		f.reserve_replenishment_prompt_time AS reserveReplenishmentPromptTime,
+		f.reserve_replenishment_start_time AS reserveReplenishmentStartTime,
+		f.reserve_replenishment_warning_time AS reserveReplenishmentWarningTime,
+		f.reserve_supply_end_time AS reserveSupplyEndTime,
+		f.reserve_take_end_time AS reserveTakeEndTime,
+		f.reserve_take_start_time AS reserveTakeStartTime,
+		f.retail_clean_start_time AS retailCleanStartTime,
+		f.retail_clearance_prompt_time AS retailClearancePromptTime,
+		f.retail_replenishment_prompt_time AS retailReplenishmentPromptTime,
+		f.retail_replenishment_start_time AS retailReplenishmentStartTime,
+		f.retail_replenishment_warning_time AS retailReplenishmentWarningTime,
+		f.retail_supply_end_time AS retailSupplyEndTime,
+		f.retail_take_end_time AS retailTakeEndTime,
+		f.retail_take_start_time AS retailTakeStartTime,
+		f.date_str AS dateStr,
+		f.type AS type
+	FROM
+		basics_model_clean_goods f
+	WHERE 
+	f.isdel='N'
+	AND f.area_model_id = #{modelId}
+  </select>
+  
+  <select id="getCount" parameterType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo" resultType="java.lang.Integer">
+  	select count(1) from basics_model_clean_goods where area_model_id=#{areaModelId} AND isdel='N'
+  </select>
+  
+  <select id="getdayDateStr" parameterType="java.lang.Long" resultType="java.lang.String">
+  	SELECT date_str FROM basics_model_clean_goods where area_model_id=#{areaModelId} AND isdel='N'
+  </select>
+  
+  
+  <select id="checkHasallDaygetCount" parameterType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo" resultType="java.lang.Integer"> 
+  	select count(1) from basics_model_clean_goods where area_model_id=#{areaModelId} AND isdel='N' AND type='allDay'
+  </select>
+  
+  <select id="getEditDateStr"  resultType="java.lang.String">
+  SELECT date_str FROM basics_model_clean_goods where area_model_id=#{areaModelId} AND isdel='N' AND clean_id !=#{cleanId}
+  
+  </select>
+  <select id="getOrderNum" resultType="int">
+      SELECT COUNT(*) FROM tbl_order_child WHERE area_model_id =#{areaModelId} AND order_child_status = 1 AND end_time > DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+  </select>
+  
+  <select id="queryModelCleanGoodsByModelId" parameterType="Long" resultType="com.qjkj.qjcsp.entity.ModelCleanGoodsVo">
+  	SELECT 
+  	type, date_str AS dateStr, retail_supply_end_time AS supplyEndTime 
+  	FROM basics_model_clean_goods 
+  	WHERE area_model_id=#{areaModelId} AND isdel='N'
+  </select>
+  <select id="getAreaModeNum" resultType="int">
+     SELECT COUNT(*) as num FROM basics_machine WHERE area_model_id =#{areaModelId}
+  </select>
+  <select id="getMachineModeNum" resultType="Integer">
+      SELECT COUNT(area_model_id) AS num FROM basics_machine_area_model WHERE machine_id IN (
+	        SELECT machine_id FROM basics_machine_area_model WHERE area_model_id =#{areaModelId}
+	    ) AND area_model_id =#{areaModelId} GROUP BY  machine_id
+  </select>
+  
+  <select id="getSupplyEndTimeByAreaModelId" resultType="String">
+  	SELECT 
+        CAST(retail_supply_end_time AS CHAR) AS supplyEndTime
+  	FROM basics_model_clean_goods 
+  	WHERE area_model_id=#{areaModelId} AND isdel='N'
+  </select>
+  <select id="getSupplyEndTimeAndCleanStartTimeByAreaModelId" resultType="map">
+  	SELECT 
+        CAST(reserve_replenishment_start_time AS CHAR) AS reserveReplenishmentStartTimeStr,
+        CAST(retail_supply_end_time AS CHAR) AS retailSupplyEndTimeStr
+  	FROM basics_model_clean_goods 
+  	WHERE area_model_id=#{areaModelId} AND isdel='N'
+  </select>
+  
+  <select id="getEndTimeByAreaModelId" resultType="java.util.Date">
+  	SELECT
+	DATE_FORMAT(retail_take_end_time,'%Y-%m-%d %T')
+	FROM
+	basics_model_clean_goods
+	WHERE area_model_id=#{areaModelId, jdbcType=BIGINT}
+  </select>
+  
+  <select id="getReserveEndTimeByAreaModelId" parameterType="long" resultType="string">
+  select DATE_FORMAT(reserve_end_time,'%T') reserve_end_time from basics_model_clean_goods where area_model_id=#{areaModelId} and isdel='N'
+  </select>
+</mapper>

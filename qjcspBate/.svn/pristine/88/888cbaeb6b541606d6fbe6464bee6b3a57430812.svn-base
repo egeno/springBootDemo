@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/information.css" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.json.js"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/infomation.js" type="text/javascript" charset="utf-8"></script>
+		<title>个人信息</title>
+	</head>
+	<body>
+		<div class="top">
+			<img src="../img/images/return2.png" />
+			<span class="info">个人信息</span>
+			<span class="finish">完成</span>
+		</div>
+		<div class="bottom">
+			<p class="nickName">
+				<em>昵称</em>
+				<input type="text" placeholder="填写昵称">
+			</p>
+			<p class="universityName">
+				<em>学校</em>
+				<input type="text" placeholder="填写你的学校名称">
+			</p>
+			<p class="grade">
+				<em>年级</em>
+				<input type="text" placeholder="填写你的年级">
+			</p>
+			<p class="dormitory">
+				<em>寝室楼</em>
+				<input type="text" placeholder="填写你的寝室楼">
+			</p>
+			<p class="studentCard">
+				<em>专业</em>
+				<input type="text" placeholder="填写你的专业">
+			</p>
+		</div>
+		<div class="bottom">
+			<p>
+				<em>性别</em>
+				<span>
+					<label class="sex">
+						<em class="checked">男</em>
+						<em>女</em>
+					</label>
+				</span>
+			</p>
+			<p class="place">
+				<em>籍贯</em>
+				<input type="text" placeholder="填写你的籍贯">
+			</p>
+		</div>
+		<!-- 底部导航  start -->
+		<div class="foot">
+			<ul>
+					<li class="active"><a href="javascript:;"><img class="one" src="../img/img/foot_index.png" alt="首页"/><img class="two" src="../img/img/foot_indexActive.png" alt="首页"/><span>首页</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_find.png" alt="关于"/><img class="two" src="../img/img/foot_findActive.png" alt="关于"/><span>关于</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_find.png" alt="加盟"/><img class="two" src="../img/img/foot_findActive.png" alt="加盟"/><span>加盟</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_find.png" alt="申请"/><img class="two" src="../img/img/foot_findActive.png" alt="申请"/><span>申请</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_my.png" alt="我的"/><img class="two" src="../img/img/foot_myActive.png" alt="我的"/><span>我的</span></a></li>
+				</ul>
+		</div>
+		<!-- 底部导航  end-->
+		
+		
+		
+		
+		<!-- 弹窗  start -->
+		<div class="dialog">
+			<div class="dialog_clear dialog_box">
+				<h3>温馨提示</h3>
+				<p>您确定放弃编辑个人信息么？</p>
+				<div class="btn">
+					<span class="sure">确定</span>
+					<span class="cancel">取消</span>
+				</div>
+			</div>
+		</div>
+		<!-- 弹窗  end -->
+
+	</body>
+</html>

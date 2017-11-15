@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblPrideGradeMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pride_name" property="prideName" jdbcType="VARCHAR" />
+    <result column="pride_money" property="prideMoney" jdbcType="DECIMAL" />
+    <result column="pride_mount" property="prideMount" jdbcType="INTEGER" />
+    <result column="pride_single_money" property="prideSingleMoney" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pride_name, pride_money, pride_mount, pride_single_money
+  </sql>
+  <select id="findAllPrideGradeCount" resultType="java.lang.Long">
+    SELECT count(1) FROM(
+    SELECT 1
+    FROM tbl_pride_grade
+    ) AS tt
+  </select>
+  <select id="findIdByPrideName" resultType="java.lang.Long" parameterType="java.lang.String" >
+    SELECT count(ID) FROM
+tbl_pride_grade 
+where pride_name = #{prideName,jdbcType=VARCHAR}
+  </select>
+   <select id="getCountByPrideNameAndId" resultType="java.lang.Long" parameterType="java.util.Map" >
+    select count(1) from 
+    (SELECT 1 FROM
+tbl_pride_grade 
+where pride_name = #{prideName}
+and id != #{prideId}) as tt
+  </select>
+  <select id="findAllPrideGrade" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+    id AS prideId,
+    pride_name AS prideName,
+    tpd.pride_money AS prideMoney,
+    pride_mount AS prideMount ,
+    pride_single_money AS prideSingleMoney
+    FROM tbl_pride_grade tpd
+    ORDER BY tpd.pride_mount DESC
+    <if test="offset != null and limit != null">
+      limit #{offset},#{limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_pride_grade
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectpridegrades" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_pride_grade
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_pride_grade
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+   <delete id="deleteByPrideName" parameterType="java.lang.String" >
+    delete from tbl_pride_grade
+    where pride_name = #{prideName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    insert into tbl_pride_grade (id, pride_name, pride_money, 
+      pride_mount, pride_single_money)
+    values (#{id,jdbcType=BIGINT}, #{prideName,jdbcType=VARCHAR}, #{prideMoney,jdbcType=DECIMAL}, 
+      #{prideMount,jdbcType=INTEGER}, #{prideSingleMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insert2" parameterType="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    insert into tbl_pride_grade ( pride_name, pride_money, 
+      pride_mount, pride_single_money)
+    values ( #{prideName,jdbcType=VARCHAR}, #{prideMoney,jdbcType=DECIMAL}, 
+      #{prideMount,jdbcType=INTEGER}, #{prideSingleMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    insert into tbl_pride_grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prideName != null" >
+        pride_name,
+      </if>
+      <if test="prideMoney != null" >
+        pride_money,
+      </if>
+      <if test="prideMount != null" >
+        pride_mount,
+      </if>
+      <if test="prideSingleMoney != null" >
+        pride_single_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="prideName != null" >
+        #{prideName,jdbcType=VARCHAR},
+      </if>
+      <if test="prideMoney != null" >
+        #{prideMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="prideMount != null" >
+        #{prideMount,jdbcType=INTEGER},
+      </if>
+      <if test="prideSingleMoney != null" >
+        #{prideSingleMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    update tbl_pride_grade
+    <set >
+      <if test="prideName != null" >
+        pride_name = #{prideName,jdbcType=VARCHAR},
+      </if>
+      <if test="prideMoney != null" >
+        pride_money = #{prideMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="prideMount != null" >
+        pride_mount = #{prideMount,jdbcType=INTEGER},
+      </if>
+      <if test="prideSingleMoney != null" >
+        pride_single_money = #{prideSingleMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    update tbl_pride_grade
+    set pride_name = #{prideName,jdbcType=VARCHAR},
+      pride_money = #{prideMoney,jdbcType=DECIMAL},
+      pride_mount = #{prideMount,jdbcType=INTEGER},
+      pride_single_money = #{prideSingleMoney,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrideName" parameterType="com.qjkj.qjcsp.entity.TblPrideGrade" >
+    update tbl_pride_grade
+    set 
+      pride_money = #{prideMoney,jdbcType=DECIMAL},
+      pride_mount = #{prideMount,jdbcType=INTEGER},
+      pride_single_money = #{prideSingleMoney,jdbcType=DECIMAL}
+    where pride_name = #{prideName,jdbcType=VARCHAR}
+  </update>
+</mapper>

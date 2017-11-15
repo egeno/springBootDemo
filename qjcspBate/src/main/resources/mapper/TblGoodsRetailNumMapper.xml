@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblGoodsRetailNumMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblGoodsRetailNum" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_num" property="goodsNum" jdbcType="SMALLINT" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="replenishment_time" property="replenishmentTime" jdbcType="DATE" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_id, goods_id, goods_name, goods_num, area_model_id, replenishment_time, isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_goods_retail_num
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByMachintIdAndAreaModelId" resultType="com.qjkj.qjcsp.entity.TblGoodsRetailNum" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_goods_retail_num
+    where machine_id = #{machineId,jdbcType=BIGINT} 
+    AND area_model_id = #{areaModelId,jdbcType=BIGINT}  
+    AND replenishment_time = DATE_FORMAT(NOW(),'%y-%m-%d');
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_goods_retail_num
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailNum" >
+    insert into tbl_goods_retail_num (id, machine_id, goods_id, 
+      goods_name, goods_num, area_model_id, 
+      replenishment_time, isdel)
+    values (#{id,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=SMALLINT}, #{areaModelId,jdbcType=BIGINT}, 
+      #{replenishmentTime,jdbcType=DATE},#{isdel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailNum" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_goods_retail_num
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="replenishmentTime != null" >
+        replenishment_time,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=SMALLINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="replenishmentTime != null" >
+        #{replenishmentTime,jdbcType=DATE},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailNum" >
+    update tbl_goods_retail_num
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=SMALLINT},
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="replenishmentTime != null" >
+        replenishment_time = #{replenishmentTime,jdbcType=DATE},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailNum" >
+    update tbl_goods_retail_num
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=SMALLINT},
+      area_model_id = #{areaModelId,jdbcType=BIGINT},
+      replenishment_time = #{replenishmentTime,jdbcType=DATE},
+      isdel = #{isdel,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryRetailNumByMachineIdAndAreaModelId" resultType="map">
+  	SELECT 
+	tgrn.id, bg.goods_name AS goodsName, tgrn.goods_num AS goodsNum
+	FROM 
+	tbl_goods_retail_num tgrn
+	LEFT JOIN basics_machine bm ON bm.machine_id=tgrn.machine_id 
+	LEFT JOIN basics_goods bg ON tgrn.goods_id=bg.goods_id 
+	WHERE
+	tgrn.machine_id =#{machineId,jdbcType=BIGINT} 
+	AND tgrn.isdel = 'N'
+	AND tgrn.area_model_id=#{areaModelId,jdbcType=BIGINT} 
+	AND tgrn.replenishment_time=#{replenishmentTime,jdbcType=DATE}
+  </select>
+  
+  <select id="getGoodsNum" resultType="java.lang.Long">
+  	SELECT IFNULL(SUM(t.goods_num),0) FROM tbl_goods_retail_num t 
+	WHERE t.machine_id = #{machineId} AND t.isdel = 'N'
+  </select>
+  
+  <select id="getRetailCellNum" resultType="int">
+  	SELECT 
+  	IF(SUM(goods_num) IS NULL, 0, SUM(goods_num)) AS retailCellNum 
+  	FROM tbl_goods_retail_num 
+	WHERE 
+	machine_id=#{machineId,jdbcType=BIGINT} 
+	AND isdel = 'N'
+	AND area_model_id=#{areaModelId,jdbcType=BIGINT}  
+	AND replenishment_time=#{replenishmentTime,jdbcType=DATE}
+  </select>
+  
+  <update id="updateGoodsNum">
+  	UPDATE tbl_goods_retail_num 
+  	SET goods_num=goods_num+(#{addCellNum})
+	WHERE 
+	machine_id=#{machineId}
+	AND isdel = 'N' 
+	AND goods_id=#{goodsId} 
+	AND area_model_id=#{areaModelId} 
+	AND replenishment_time=#{replenishmentTime}
+  </update>
+  
+  <update id="updateGoodsNumById">
+  	UPDATE tbl_goods_retail_num 
+  	SET goods_num=goods_num+(#{addCellNum})
+	WHERE 
+	id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="deleteById">
+  	UPDATE tbl_goods_retail_num SET isdel='Y'
+    WHERE id=#{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getCountByMachineIdAndAreaModelId" resultType="int">
+    SELECT 
+  	count(1)
+  	FROM tbl_goods_retail_num 
+	WHERE 
+	machine_id=#{machineId,jdbcType=BIGINT} 
+	AND area_model_id=#{areaModelId,jdbcType=BIGINT}  
+	AND replenishment_time=#{replenishmentTime,jdbcType=DATE}
+  </select>
+  
+  <select id="getGoosNum" resultType="java.lang.Integer">
+  	SELECT IFNULL(SUM(t.goods_num),0) FROM tbl_goods_retail_num t 
+  	WHERE t.machine_id = #{machineId} AND t.area_model_id = #{goodsCategoryId}
+  </select>
+  <!-- 获取受影响的日期 -->
+  <select id="getQuestionDate" resultType="String">
+  	SELECT cast(t.replenishment_time as char) as replenishmentTime FROM tbl_goods_retail_num t 
+	where 1=1 
+	<if test="machineId != null">
+		and t.machine_id=#{machineId}
+	</if>
+	 and t.area_model_id in 
+	<foreach collection="areaModelIds" item="item" index="index"
+		open="(" separator="," close=")">
+		#{item}
+	</foreach>
+	and DATE_FORMAT(t.replenishment_time,'%Y-%m-%d') >=#{nowDate} 
+	GROUP BY t.replenishment_time;
+  </select>
+  
+  <select id="judgeUsed" resultType="map">
+  	<!-- SELECT b.area_model_name areaModelName,m.machine_name machineName FROM tbl_goods_retail_temporary t 
+	JOIN basics_machine m ON t.machine_id = m.machine_id
+	JOIN basics_area_model b ON t.area_model_id = b.area_model_id
+	WHERE t.area_model_id = #{areaModelId} 
+	 AND t.temporary_date=#{currentDate}
+	 AND t.goods_id in
+      <trim prefix="(" suffix=")">
+	   #{goodsId}
+	  </trim>
+	  GROUP BY m.machine_id -->
+	  	SELECT b.area_model_name areaModelName,m.machine_name machineName FROM tbl_goods_retail_temporary t 
+		JOIN basics_machine m ON t.machine_id = m.machine_id
+		JOIN basics_area_model b ON t.area_model_id = b.area_model_id
+		WHERE t.area_model_id = #{areaModelId} 
+		 AND t.temporary_date=#{currentDate}
+		 AND t.goods_id in
+		(
+		SELECT DISTINCT t.goods_id AS goodsId FROM tbl_goods_retail_temporary t WHERE t.goods_id 
+		NOT IN  
+		<foreach collection="goodsId" index="index" item="goodId" open="(" separator="," close=")">
+            #{goodId}
+         </foreach> 
+		AND t.area_model_id=#{areaModelId}  AND t.temporary_date=#{currentDate} 
+		)
+	  GROUP BY m.machine_id
+  </select>
+  
+  <select id="judgeUsedByAreaModelId" resultType="map">
+  	SELECT b.area_model_name areaModelName,m.machine_name machineName FROM tbl_goods_retail_temporary t 
+	JOIN basics_machine m ON t.machine_id = m.machine_id
+	JOIN basics_area_model b ON t.area_model_id = b.area_model_id
+	WHERE t.area_model_id = #{areaModelId} AND m.isdel='N' AND b.isdel='N' AND m.machine_status ='1' group by m.machine_id
+  </select>
+</mapper>

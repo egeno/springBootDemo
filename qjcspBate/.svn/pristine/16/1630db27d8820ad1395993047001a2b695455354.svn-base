@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderItemEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderItemEvaluate" >
+    <id column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="evaluate_time" property="evaluateTime" jdbcType="TIMESTAMP" />
+    <result column="order_detail_num" property="orderDetailNum" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="evaluate_score" property="evaluateScore" jdbcType="INTEGER" />
+    <result column="evaluate_memo" property="evaluateMemo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_detail_id, order_id, order_num, machine_id, device_code, company_id, order_time, 
+    evaluate_time, order_detail_num, goods_id, goods_name, evaluate_score, evaluate_memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_item_evaluate
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_order_item_evaluate
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrderItemEvaluate" >
+    insert into tbl_order_item_evaluate (order_detail_id, order_id, order_num, 
+      machine_id, device_code, company_id, 
+      order_time, evaluate_time, order_detail_num, 
+      goods_id, goods_name, evaluate_score, 
+      evaluate_memo)
+    values (#{orderDetailId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, 
+      #{machineId,jdbcType=BIGINT}, #{deviceCode,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{evaluateTime,jdbcType=TIMESTAMP}, #{orderDetailNum,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{evaluateScore,jdbcType=INTEGER}, 
+      #{evaluateMemo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrderItemEvaluate" >
+    insert into tbl_order_item_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="deviceCode != null" >
+        device_code,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="evaluateTime != null" >
+        evaluate_time,
+      </if>
+      <if test="orderDetailNum != null" >
+        order_detail_num,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="evaluateScore != null" >
+        evaluate_score,
+      </if>
+      <if test="evaluateMemo != null" >
+        evaluate_memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null" >
+        #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluateTime != null" >
+        #{evaluateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDetailNum != null" >
+        #{orderDetailNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateScore != null" >
+        #{evaluateScore,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateMemo != null" >
+        #{evaluateMemo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrderItemEvaluate" >
+    update tbl_order_item_evaluate
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null" >
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluateTime != null" >
+        evaluate_time = #{evaluateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDetailNum != null" >
+        order_detail_num = #{orderDetailNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateScore != null" >
+        evaluate_score = #{evaluateScore,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateMemo != null" >
+        evaluate_memo = #{evaluateMemo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrderItemEvaluate" >
+    update tbl_order_item_evaluate
+    set order_id = #{orderId,jdbcType=BIGINT},
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      device_code = #{deviceCode,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      evaluate_time = #{evaluateTime,jdbcType=TIMESTAMP},
+      order_detail_num = #{orderDetailNum,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      evaluate_score = #{evaluateScore,jdbcType=INTEGER},
+      evaluate_memo = #{evaluateMemo,jdbcType=VARCHAR}
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </update>
+</mapper>

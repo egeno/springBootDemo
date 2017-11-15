@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerApplyAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomerApplyAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_mobile" property="customerMobile" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, customer_name, customer_mobile, telephone, region, detail_address, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_apply_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_customer_apply_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomerApplyAddress" >
+    insert into tbl_customer_apply_address (id, customer_id, customer_name, 
+      customer_mobile, telephone, region, 
+      detail_address, create_time)
+    values (#{id,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{customerName,jdbcType=VARCHAR}, 
+      #{customerMobile,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{detailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerApplyAddress" >
+    insert into tbl_customer_apply_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerMobile != null" >
+        customer_mobile,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="detailAddress != null" >
+        detail_address,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerMobile != null" >
+        #{customerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress != null" >
+        #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerApplyAddress" >
+    update tbl_customer_apply_address
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerMobile != null" >
+        customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress != null" >
+        detail_address = #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblCustomerApplyAddress" >
+    update tbl_customer_apply_address
+    set customer_id = #{customerId,jdbcType=BIGINT},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      detail_address = #{detailAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   <select id="selectForrepeat" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_apply_address
+    where customer_mobile = #{customerMobile,jdbcType=VARCHAR}
+    and region = #{region,jdbcType=VARCHAR}
+    and detail_address = #{detailAddress,jdbcType=VARCHAR}
+  </select>
+  
+  
+   <select id="findByCount" resultType="java.lang.Long"
+		parameterType="map">
+		SELECT
+		count(1)
+		FROM
+		tbl_customer_apply_address  tbl
+		WHERE
+		1 = 1 		
+	</select>
+  
+
+<!-- <select id="findCustomerAddress" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+		tbl.customer_id,
+		tbl.customer_name,
+		tbl.customer_mobile,
+		tbl.telephone,
+		tbl.region,
+		tbl.detail_address,
+		date_format(tbl.create_time, '%Y-%m-%d %H:%i:%s') as createTime,		
+		tbl.id	
+		FROM
+		tbl_customer_apply_address  tbl
+				
+		WHERE
+		1 = 1 
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if> 
+  </select> -->
+  
+  <select id="findCustomerList" parameterType="com.qjkj.qjcsp.entity.TblCustomerApplyAddressList" resultType="map">
+  	select 
+		tbl.customer_id as customerId,
+		tbl.customer_name as customerName,
+		tbl.customer_mobile as customerMobile,
+		tbl.telephone as telephone,
+		tbl.region as region,
+		tbl.detail_address as detailAddress, 
+		date_format(tbl.create_time, '%Y-%m-%d %H:%i:%s') as createTime
+		FROM tbl_customer_apply_address  tbl
+  	where
+  		1=1	 		
+  		 <if test="customerName !=null and customerName !=''">
+  			AND tbl.customer_name like '%${customerName}%'
+  		</if>		
+  		<if test="telephone !=null and telephone !=''">
+  			AND tbl.customer_mobile like '%${telephone}%'
+  		</if>
+  	  limit #{offset},#{limit}
+  </select>
+  
+  <select id="findCustomerCount" parameterType="com.qjkj.qjcsp.entity.TblCustomerApplyAddressList" resultType="java.lang.Integer">
+  	SELECT COUNT(*)  
+  		FROM tbl_customer_apply_address  tca
+  	where
+  		1=1
+  		<if test="customerName !=null and customerName !=''">
+  			AND tca.customer_name like '%${customerName}%'
+  		</if> 		
+  		<if test="customerMobile !=null and customerMobile !=''">
+  			AND tca.customer_mobile like '%${customerMobile}%'
+  		</if>
+  </select> 
+  
+  <!-- 导出Excel -->
+  <select id="JoinCustomerListExport" parameterType="map" resultType="map">
+   	SELECT 
+   		tbladdress.customer_id as customerId,
+   		tbladdress.customer_name as customerName,
+   		tbladdress.customer_mobile  as  customerMobile,
+   		tbladdress.telephone,
+   		tbladdress.region,
+   		tbladdress.detail_address  as detailAddress,
+   		tbladdress.create_time	as createTime
+  	FROM tbl_customer_apply_address  tbladdress
+  
+  	WHERE 1=1
+  		<if test="customerName !=null and customerName !=''">
+  			AND tbladdress.customer_name like '%${customerName}%'
+  		</if> 
+  		<if test="telephone !=null and telephone !=''">
+  			AND tbladdress.customer_mobile like '%${telephone}%'
+  		</if>			    		
+  </select>
+</mapper>

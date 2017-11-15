@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Cabinetselection.css" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a1F62NERECgnHtjcFHdNGBuaIUcdEPU5"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/Cabinetselection.js"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="top">
+			<a href="javascript:void(0);" class="gotoback"><img src="../img/imagey/on.png" /></a>
+			<span>选择地址</span>
+			<div class="you">
+				<div class="youz"></div>
+				<div class="youy"><a href="Selectcity.html"><img src="../img/imagey/returnx.png"/></a></div>
+			</div>
+		</div>
+		<div class="neiron">
+		<a href="Selectschool.html"><div class="zjgs">
+				<span>此地区暂无机柜</span>
+				<img src="../img/imagey/xg.png" />
+			</div></a>	
+			<div class="neir">
+				<div class="neir-z">
+					
+						<!--<div>钱江湾</div>										
+						<div >钱江湾</div>									
+						<div>钱江湾</div>									
+						<div>钱江湾</div>-->
+				
+				</div>
+				<div class="neir-y">
+					<ul class="taba">
+						<!--<li class="tabaa">
+							<div class="zhuang">
+								<img src="../img/imagey/fangz.png" />
+								<span>46幢</span>
+							</div>
+						<div class="zhuang">
+								<img src="../img/imagey/fangz.png" />
+								<span>46幢</span>
+							</div>
+						</li>
+							<li class="tabaa">
+							<div class="zhuang">
+								<img src="../img/imagey/fangz.png" />
+								<span>47幢</span>
+							</div>
+							<div class="zhuang">
+								<img src="../img/imagey/fangz.png" />
+								<span>47幢</span>
+							</div>
+						
+						</li>
+						<li class="tabaa">
+							<div class="zhuang">
+								<img src="../img/imagey/fangz.png" />
+								<span>48幢</span>
+							</div>
+						
+						</li>
+						<li class="tabaa">
+							<div class="zhuang">
+								<img src="../img/imagey/fangz.png" />
+								<span>49幢</span>
+							</div>
+						</li>-->
+						<div class="guizi"><img  src="../img/imagey/guiz.png">
+						<p style="text-align: center;margin-top: 0.5rem;font-size: 0.32rem;color: #999;">该地区暂无机柜</p>
+						</div>
+						<div class="guizii"><img  src="../img/imagey/guiz.png">
+						<p style="text-align: center;margin-top: 0.5rem;font-size: 0.32rem;color: #999;">该地区暂无机柜</p>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+<script>
+$(function(){
+	$(".tabaa").eq(0).show();
+$(".neir-z div").click(function(){
+	var i=$(".neir-z div").index(this);
+	$(".tabaa").eq(i).stop(false,true).fadeIn(100);
+	$(".tabaa").eq(i).siblings().stop(false,true).fadeOut(100);
+});
+});
+</script>
+	</body>
+</html>

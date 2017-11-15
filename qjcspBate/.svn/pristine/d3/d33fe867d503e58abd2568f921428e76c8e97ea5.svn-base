@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--地址定位</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/changeSearch.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a1F62NERECgnHtjcFHdNGBuaIUcdEPU5"></script>
+		<script src="../js/search.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="change_content">
+			<!-- 切换搜素  start -->
+			<div class="title"><a href="javascript:void(0);" class="gotoback"><img src="../img/img/return.png" alt="返回" /></a>切换地址</div>
+			<div class="change">
+				<div class="change_search">
+					<img class="searchSign" src="../img/img/search.png" alt="搜索" />
+					<input type="text" placeholder="输入地址" class="guessAdd"/>
+					<span href="JavaScript:void(0);" class="buttom">取消</span>
+				</div>
+			</div>
+			<!-- 切换搜素  end -->
+			<div class="splitLine"></div>  <!-- 分割线 -->
+			<!-- 定位当前位置  start -->
+			<div class="location">
+				<img src="../img/img/positiom.png" />
+				<span>点击定位当前地址</span>
+			</div>
+			<!-- 定位当前位置  end -->
+			<!-- 历史定位地址  start -->
+			<div class="history">
+<!-- 				<h1>历史定位地址 </h1> -->
+				<p>西湖国际科技大厦杭州市西湖区文二路391号西湖国际大厦综合楼3楼 </p>
+				<p>西湖国际科技大厦杭州市西湖区文二路391号西湖国际大厦综合楼3楼 </p>
+				<p>西湖国际科技大厦杭州市西湖区文二路391号西湖国际大厦综合楼3楼 </p>
+			</div>
+			<!-- 历史定位地址  end -->
+			<div class="clearHistory">清除历史纪录</div>    <!-- 清除历史记录 -->
+		</div>
+		<!-- 弹窗  start -->
+		<div class="dialog">
+			<div class="dialog_clear dialog_box">
+				<h3>温馨提示</h3>
+				<p>确认删除全部历史纪录？</p>
+				<div class="btn">
+					<span class="sure">确定</span>
+					<span class="cancel">取消</span>
+				</div>
+			</div>
+		</div>
+		<!-- 弹窗  end -->
+	</body>
+</html>

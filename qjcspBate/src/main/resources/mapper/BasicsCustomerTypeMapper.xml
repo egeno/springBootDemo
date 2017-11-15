@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsCustomerTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsCustomerType" >
+    <id column="customer_type_id" property="customerTypeId" jdbcType="BIGINT" />
+    <result column="customer_type_name" property="customerTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    customer_type_id, customer_type_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_customer_type
+    where customer_type_id = #{customerTypeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_customer_type
+    where customer_type_id = #{customerTypeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsCustomerType" >
+    insert into basics_customer_type (customer_type_id, customer_type_name)
+    values (#{customerTypeId,jdbcType=BIGINT}, #{customerTypeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsCustomerType" >
+    insert into basics_customer_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerTypeId != null" >
+        customer_type_id,
+      </if>
+      <if test="customerTypeName != null" >
+        customer_type_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerTypeId != null" >
+        #{customerTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="customerTypeName != null" >
+        #{customerTypeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsCustomerType" >
+    update basics_customer_type
+    <set >
+      <if test="customerTypeName != null" >
+        customer_type_name = #{customerTypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where customer_type_id = #{customerTypeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsCustomerType" >
+    update basics_customer_type
+    set customer_type_name = #{customerTypeName,jdbcType=VARCHAR}
+    where customer_type_id = #{customerTypeId,jdbcType=BIGINT}
+  </update>
+</mapper>

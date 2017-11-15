@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblRetailMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblRetail" >
+    <id column="retail_id" property="retailId" jdbcType="BIGINT" />
+    <result column="template_id" property="templateId" jdbcType="BIGINT" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="retail_percent" property="retailPercent" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    retail_id, template_id, area_model_id, goods_id, retail_percent, create_time, create_user_id, 
+    mod_time, mod_user_id, isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_retail
+    where retail_id = #{retailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_retail
+    where retail_id = #{retailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblRetail" >
+    insert into tbl_retail (retail_id, template_id, area_model_id, 
+      goods_id, retail_percent, create_time, 
+      create_user_id, mod_time, mod_user_id, 
+      isdel)
+    values (#{retailId,jdbcType=BIGINT}, #{templateId,jdbcType=BIGINT}, #{areaModelId,jdbcType=BIGINT}, 
+      #{goodsId,jdbcType=BIGINT}, #{retailPercent,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=BIGINT}, #{modTime,jdbcType=TIMESTAMP}, #{modUserId,jdbcType=BIGINT}, 
+      #{isdel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblRetail" >
+    insert into tbl_retail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="retailId != null" >
+        retail_id,
+      </if>
+      <if test="templateId != null" >
+        template_id,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="retailPercent != null" >
+        retail_percent,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modTime != null" >
+        mod_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="retailId != null" >
+        #{retailId,jdbcType=BIGINT},
+      </if>
+      <if test="templateId != null" >
+        #{templateId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="retailPercent != null" >
+        #{retailPercent,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblRetail" >
+    update tbl_retail
+    <set >
+      <if test="templateId != null" >
+        template_id = #{templateId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="retailPercent != null" >
+        retail_percent = #{retailPercent,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where retail_id = #{retailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblRetail" >
+    update tbl_retail
+    set template_id = #{templateId,jdbcType=BIGINT},
+      area_model_id = #{areaModelId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      retail_percent = #{retailPercent,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      mod_time = #{modTime,jdbcType=TIMESTAMP},
+      mod_user_id = #{modUserId,jdbcType=BIGINT},
+      isdel = #{isdel,jdbcType=CHAR}
+    where retail_id = #{retailId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByTemplateId" resultType="map">
+  	SELECT * FROM tbl_retail t 
+  	WHERE t.template_id = #{templateId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="judgeExist" resultType="java.lang.Integer">
+  	SELECT count(*) FROM tbl_retail t 
+	WHERE t.template_id = #{templateId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByTemplateId">
+  	UPDATE tbl_retail SET isdel = 'Y' WHERE template_id = #{templateId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="realDeleteByTemplateId">
+  	DELETE FROM tbl_retail WHERE template_id = #{templateId,jdbcType=BIGINT}
+  </delete>
+  
+  <select id="selectGoodsList" resultType="map">
+  	SELECT b.goods_name,t.template_id,t.area_model_id,t.goods_id,(t.retail_percent*100) retail_percent FROM tbl_retail t  
+	JOIN basics_goods b ON b.goods_id = t.goods_id
+	WHERE t.area_model_id = #{areaModelId,jdbcType=VARCHAR} AND t.isdel = 'N' AND t.template_id = #{templateId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryRetailByTemplateIdAndModelId" resultType="map">
+  	SELECT 
+	tr.goods_id AS goodsId, 
+	bg.goods_name AS goodsName,
+	tr.retail_percent AS retailPercent 
+	FROM tbl_retail tr, basics_goods bg
+	WHERE
+	tr.goods_id = bg.goods_id 
+	AND tr.template_id=#{templateId,jdbcType=BIGINT} 
+	AND tr.area_model_id=#{areaModelId,jdbcType=BIGINT} 
+	AND tr.isdel='N' 
+	<if test="goodIds != null">
+		AND tr.goods_id in 
+		<foreach collection="goodIds" index="index" item="goodId" open="(" separator="," close=")">
+            #{goodId}
+         </foreach> 
+    </if>
+	ORDER BY tr.retail_percent DESC, tr.goods_id DESC
+  </select>
+  
+  <select id="judgeUsed" resultType="map">
+	SELECT b.template_name templateName FROM tbl_retail t
+	JOIN basics_template b ON t.template_id = b.template_id 
+	WHERE t.area_model_id = #{areaModelId} 
+	AND t.goods_id not in 
+	<trim prefix="(" suffix=")">
+	 #{goodsId}
+	</trim>
+	 AND t.isdel = 'N' GROUP BY b.template_id 
+  </select>
+  
+  <select id="judgeUsedByAreaModelId" resultType="map">
+  	SELECT b.template_name templateName FROM tbl_retail t
+	JOIN basics_template b ON t.template_id = b.template_id 
+	WHERE t.area_model_id = #{areaModelId} AND t.isdel = 'N' AND b.isdel='N' GROUP BY b.template_id 
+  </select>
+  <!-- 检测商品是否被模板中使用 -->
+  <select id="checkGoodsIsUseInTemplate" resultType="java.lang.Integer">
+  	SELECT COUNT(1) FROM(
+	SELECT tga.goods_id AS goodsId FROM tbl_goods_area_model tga WHERE tga.area_model_id=#{areaModelId}
+	<if test="goodsId != null and goodsId !=''">
+		AND tga.goods_id NOT IN
+		<foreach collection="goodsId" index="index" item="goodId" open="(" separator="," close=")">
+            #{goodId}
+         </foreach> 
+	</if>
+	)a WHERE a.goodsId IN(
+	 	SELECT t.goods_id as goodsId FROM tbl_retail t
+		JOIN basics_template b ON t.template_id = b.template_id 
+		WHERE t.area_model_id = #{areaModelId} AND t.isdel = 'N' AND b.isdel='N' 
+	)
+  </select>
+</mapper>

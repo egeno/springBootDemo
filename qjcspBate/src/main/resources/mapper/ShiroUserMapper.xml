@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.ShiroUserMapper">
+	
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsUsers" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="SMALLINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="user_memo" property="userMemo" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    
+  </resultMap>
+  
+  <resultMap id="BasicsCompany" type="com.qjkj.qjcsp.entity.BasicsCompany" >
+    <id column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="parent_company_id" property="parentCompanyId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="SMALLINT" />
+    <result column="is_last_layer" property="isLastLayer" jdbcType="CHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_alias" property="companyAlias" jdbcType="VARCHAR" />
+    <result column="company_prefix" property="companyPrefix" jdbcType="VARCHAR" />
+    <result column="prov_code" property="provCode" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="corporation" property="corporation" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="back_no" property="backNo" jdbcType="VARCHAR" />
+    <result column="back_name" property="backName" jdbcType="VARCHAR" />
+    <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+    <result column="telautogram" property="telautogram" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="company_status" property="companyStatus" jdbcType="CHAR" />
+    <result column="symbol" property="symbol" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    user_id, user_code, user_account, user_name, password, user_type, company_id, user_mobile, 
+    user_tel, user_email, department_id, user_memo, user_status, isdel, create_time, last_mod_time, 
+    create_user_id, mod_user_id
+  </sql>
+  
+  <select id="findPlaUserByList" resultMap="BaseResultMap" >
+    select 
+    b.*,bc.company_name companyName
+    from basics_users b
+    join basics_company bc on bc.company_id = b.company_id
+    <where>  
+    	b.isdel = 'N' and b.user_type = 2
+		<if test="userCode != null and userCode !=''" >
+			and user_code like '%${userCode}%'
+		</if>
+		<if test="userAccount != null and userAccount !=''" >
+			and user_account like '%${userAccount}%'
+		</if>
+   	</where> 
+   	ORDER BY b.last_mod_time DESC
+    limit #{offset},#{limit}
+  </select>
+  
+  
+  <select id="findPlaUserByCount" resultType="java.lang.Long" >
+    select 
+    count(*)
+    from basics_users b
+    <where>  
+    	b.isdel = 'N' and b.user_type = 2
+		<if test="userCode != null and userCode !=''" >
+			and user_code like '%${userCode}%'
+		</if>
+		<if test="userAccount != null and userAccount !=''" >
+			and user_account like '%${userAccount}%'
+		</if>
+   	</where> 
+    
+  </select>
+  
+  <select id="findComUserByCount" resultType="java.lang.Long" >
+    select 
+    count(*)
+    from basics_users b
+    JOIN basics_company c ON c.company_id = b.company_id
+    <where>
+		<choose>
+			<when test="companyId == 1">
+				1 = 1 and b.isdel = 'N' and b.user_type = 4 and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when>
+			<when test="companyId != null and companyId !=''">
+				and b.isdel = 'N' and b.user_type in('3','4') and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when>
+			<otherwise>
+				1 = 0
+			</otherwise>
+		</choose>
+	</where> 
+    
+  </select>
+  
+  <select id="findMerComUserByCount" resultType="java.lang.Long" >
+    select 
+    count(*)
+    from basics_users b
+    <where>
+		<!-- <choose>
+			<when test="companyId == 1">
+				1 = 1 and b.isdel = 'N' and b.user_type = 4 and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when> -->
+			<!-- <when test="companyId != null and companyId !=''"> -->
+				<!-- and b.isdel = 'N' and b.user_type = 4 and b.company_id = #{companyId,jdbcType=BIGINT} -->
+				and b.isdel = 'N' and (b.user_type = 4 OR b.user_type = 3) and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			<!-- </when> -->
+			<!-- <otherwise>
+				1 = 0
+			</otherwise>
+		</choose> -->
+	</where> 
+    
+  </select>
+  
+  
+  <select id="findComUserByList" resultMap="BaseResultMap" >
+    select 
+    b.*,bc.company_name companyName
+    from basics_users b
+    join basics_company bc on bc.company_id = b.company_id
+    
+    <where>
+		<choose>
+			<when test="companyId == 1">
+				1 = 1 and b.isdel = 'N' and b.user_type = 4 and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when>
+			<when test="companyId != null and companyId !=''">
+				and b.isdel = 'N' and b.user_type in ('3','4') and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when>
+			<otherwise>
+				1 = 0
+			</otherwise>
+		</choose>
+	</where>
+	ORDER BY b.last_mod_time DESC
+    limit #{offset},#{limit}
+  </select>
+  
+  <select id="findAllMerComUser" resultMap="BaseResultMap" >
+    select 
+    b.*,bc.company_name companyName
+    from basics_users b
+    join basics_company bc on bc.company_id = b.company_id
+    
+    <where>
+		<choose>
+			<when test="companyId == 1">
+				1 = 1 and b.isdel = 'N' and b.user_type = 4
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when>
+			<when test="companyId != null and companyId !=''">
+				and b.isdel = 'N' and (b.user_type = 4 OR b.user_type = 3) and b.company_id = #{companyId,jdbcType=BIGINT}
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+			</when>
+			<otherwise>
+				1 = 0
+			</otherwise>
+		</choose>
+	</where>
+	ORDER BY b.last_mod_time DESC
+    limit #{offset},#{limit}
+  </select>
+   	
+   
+  
+  <insert id="insert">
+  	insert into basics_users (user_code,user_account,user_name,password,user_type,company_id,user_mobile,
+  	user_tel,user_email,user_memo,user_status,isdel,create_time,last_mod_time,create_user_id,mod_user_id)
+    values (#{userCode,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{userType,jdbcType=SMALLINT}, #{companyId,jdbcType=BIGINT}, #{userMobile,jdbcType=VARCHAR}, 
+      #{userTel,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userMemo,jdbcType=VARCHAR}, #{userStatus,jdbcType=CHAR},
+      #{isdel,jdbcType=CHAR},#{createTime,jdbcType=TIMESTAMP},#{lastModTime,jdbcType=TIMESTAMP},#{createUserId,jdbcType=BIGINT},
+      #{modUserId,jdbcType=BIGINT}) 
+  </insert>
+  
+  <update id="update" parameterType="com.qjkj.qjcsp.entity.BasicsUsers" >
+    update basics_users
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userAccount != null" >
+        user_account = #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        user_tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userMemo != null" >
+        user_memo = #{userMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateIsdel">
+    update basics_users
+    <set >
+      isdel = 'Y'
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findMerUserByCount" resultType="java.lang.Long" >
+    select 
+    count(*)
+    from basics_users b
+    join basics_company bc on bc.company_id = b.company_id
+    <where>
+				b.isdel = 'N' and b.user_type = 3
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+				<if test="companyName != null and companyName !=''" >
+					and company_name like '%${companyName}%'
+				</if>
+	</where> 
+  </select>
+  
+  
+  <select id="findMerUserByList" resultMap="BaseResultMap" >
+    select 
+    b.*,bc.company_name companyName
+    from basics_users b
+    join basics_company bc on bc.company_id = b.company_id
+    <where>
+				1 = 1 and b.isdel = 'N' and b.user_type = 3
+				<if test="userCode != null and userCode !=''" >
+					and user_code like '%${userCode}%'
+				</if>
+				<if test="userAccount != null and userAccount !=''" >
+					and user_account like '%${userAccount}%'
+				</if>
+				<if test="companyName != null and companyName !=''" >
+					and company_name like '%${companyName}%'
+				</if>
+	</where>
+	ORDER BY b.last_mod_time DESC
+    limit #{offset},#{limit}
+  </select>
+  
+  <select id="findAllUnselectCompany" resultType="map">
+	    select bc.company_id,bc.company_name from basics_company bc where bc.company_id  not in
+	    
+	    (select bu.company_id from basics_users bu
+		where bu.user_type = 3 and bu.isdel = 'N')
+		 and bc.symbol ='N' and bc.isdel ='N'
+  </select> 
+  
+  <select id="findCompanyCount" resultType="java.lang.Integer">
+	    select count(*) from basics_company bc where bc.company_id  not in
+	    
+	    (select bu.company_id from basics_users bu
+		where bu.user_type = 3 and bu.isdel = 'N')
+		 and bc.company_id != 1
+  </select> 
+  
+  <select id="findUserInformationByCount" resultType="java.lang.Long">
+  	select count(*) from basics_users bu 
+	<where>
+		<choose>
+			<when test="userId != null and userId !=''">
+				bu.isdel = 'N' and bu.user_id = #{userId,jdbcType=BIGINT}
+			</when>
+			<otherwise>
+				1 = 1 and bu.isdel = 'N'
+			</otherwise>
+		</choose>
+	</where>
+  </select>
+  
+  <select id="getCountByCompanyId" resultType="java.lang.Long">
+  	select count(*) from basics_users bu 
+	<where>
+		<choose>
+			<when test="companyId != null and companyId !=''">
+				bu.isdel = 'N' and bu.company_id = #{companyId,jdbcType=BIGINT}
+			</when>
+			<otherwise>
+				1 = 1 and bu.isdel = 'N'
+			</otherwise>
+		</choose>
+	</where>
+  </select>
+	  
+  <select id="getListByCompanyId" resultMap="BaseResultMap">
+  	select bu.*,bc.company_name companyName
+  	from basics_users bu 
+  	join basics_company bc on bc.company_id = bu.company_id
+	<where>
+		<choose>
+			<when test="companyId != null and companyId !=''">
+				bu.isdel = 'N' and bu.company_id = #{companyId,jdbcType=BIGINT}
+			</when>
+			<otherwise>
+				1 = 1 and bu.isdel = 'N'
+			</otherwise>
+		</choose>
+	</where>
+	limit #{offset},#{limit} 
+  </select>  
+	  
+  <select id="findUserInformationByList" resultMap="BaseResultMap">
+  	select bu.*,bc.company_name companyName
+    from basics_users bu
+    join basics_company bc on bc.company_id = bu.company_id
+  	<where>
+  		<choose>
+			<when test="userId != null and userId !=''">
+				bu.isdel = 'N' and bu.user_id = #{userId,jdbcType=BIGINT}
+			</when>
+			<otherwise>
+				1 = 1 and bu.isdel = 'N' and user_type != 1
+			</otherwise>
+		</choose>
+	</where>
+	order by bu.user_type
+	limit #{offset},#{limit} 
+  </select>
+  
+   <select id="shiroUserLoginValidate" resultMap="BaseResultMap" parameterType="com.qjkj.qjcsp.entity.BasicsUsers">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM basics_users
+	WHERE user_account = #{userAccount} AND password = #{password} AND company_id = #{companyId}
+	LIMIT 0,1
+	</select>
+	
+	<select id="findBasicsUserByUserId" resultMap="BaseResultMap">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM basics_users
+	WHERE user_id = #{userId}
+	LIMIT 0,1
+	</select>
+	
+	<select id="getMenuListByUserId" resultType="com.qjkj.qjcsp.entity.BasicsMenu">
+	SELECT DISTINCT m.MENU_ID AS menuId,m.PID AS pid,m.NAME AS name,m.ICONCLS AS iconCls,m.URL AS url FROM
+				basics_role_menu as rm
+				INNER JOIN basics_role AS r on rm.role_id = r.role_id
+				INNER JOIN basics_user_role AS ur on rm.role_id = ur.role_id
+				INNER JOIN basics_users AS u on u.user_id = ur.user_id
+				INNER JOIN basics_menu AS m on rm.menu_id = m.menu_id
+				WHERE m.type='F' and m.isused='Y'
+				AND u.user_id=#{userId}
+	</select>
+	
+	<select id="findUserType" resultType="java.lang.Short">
+	  	select bu.user_type from basics_users bu 
+		where bu.isdel = 'N' and bu.user_id = #{userId,jdbcType=BIGINT}
+    </select>
+    
+    <select id="judgeExist" resultType="java.lang.Integer">
+	  	SELECT count(*) FROM basics_users t 
+	  	WHERE t.user_type = #{userType,jdbcType=BIGINT} 
+	  	AND t.company_id = #{companyId,jdbcType=BIGINT} 
+    </select>
+    
+    <select id="check" resultType="java.lang.Integer">
+	  	SELECT count(1) FROM basics_users where user_mobile = #{userMobile,jdbcType=VARCHAR} AND isdel = 'N'
+    </select>
+    
+    <select id="checkName" resultType="java.lang.Integer">
+    	SELECT count(*) FROM basics_users t WHERE t.user_name = #{userName,jdbcType=VARCHAR} AND isdel = 'N'
+    </select>
+    
+    <select id="checkAccount" resultType="java.lang.Integer">
+    	SELECT count(*) FROM basics_users t WHERE t.user_account = #{userAccount,jdbcType=VARCHAR} AND isdel = 'N'
+    </select>
+    
+    <select id="checkEdit" resultType="java.lang.Integer">
+	  	SELECT count(1) FROM basics_users where user_mobile = #{userMobile,jdbcType=VARCHAR} AND isdel = 'N' AND user_id != #{userId}
+    </select>
+    
+    <select id="checkNameEdit" resultType="java.lang.Integer">
+	  	SELECT count(*) FROM basics_users t WHERE t.user_name = #{userName,jdbcType=VARCHAR} AND isdel = 'N' AND user_id != #{userId}
+    </select>
+    
+    <select id="checkAccountEdit" resultType="java.lang.Integer">
+	  	SELECT count(*) FROM basics_users t WHERE t.user_account = #{userAccount,jdbcType=VARCHAR} AND isdel = 'N' AND user_id != #{userId}
+    </select>
+    
+    
+</mapper>

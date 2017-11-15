@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd"
+		default-lazy-init="true"> 
+		<!-- Timer schedule   -->
+  
+<!-- 要调度的对象   -->
+<bean id="job1" class="com.qjkj.qjcsp.core.quartz.OrderInSuspense" /> 
+
+<!-- 轮询分区预警要调度的对象 -->
+<bean id="areaMinNumjob1" class="com.qjkj.qjcsp.core.quartz.AreaMinNumWaring"/> 
+ 
+<bean id="jobDetail1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+    <property name="targetObject" ref="job1" />  
+    <property name="targetMethod" value="orderInSuspense" /> 
+  <!--   将并发设置为false -->  
+    <property name="concurrent" value="true" /> 
+ </bean> 
+ 
+ <bean id="areajobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <property name="targetObject" ref="areaMinNumjob1" />  
+    		<property name="targetMethod" value="areaWaringCheck" />  
+    		<!-- 将并发设置为false   -->
+    		<property name="concurrent" value="true" />  
+</bean> 
+
+<!--   订单取消   -->
+<bean id="trigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="jobDetail1" />  
+                <!-- 表达式，我的是每 30 执行一次   -->
+              <property name="cronExpression" value="*/5 * * * * ?"/>
+</bean> 
+
+<!-- Gekko 注：每七天删除一次临时表内7天前的数据 -->
+ <bean id="delExpireTemporary" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <property name="targetObject" ref="job1" />  
+    		<property name="targetMethod" value="delExpireTemporary" />  
+    		<!-- 将并发设置为false -->  
+    		<property name="concurrent" value="true" />  
+</bean> 
+<bean id="triggerTemporary" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="delExpireTemporary" />  
+                <!-- 表达式，我的是每周日23点 执行一次   -->
+              <property name="cronExpression" value="0 0 23 ? * SUN"/>
+</bean>
+<!-- Gekko end -->
+<!--  分区预警   -->
+<bean id="trigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="areajobtask" />  
+                <!-- 表达式，我的是每 30 执行一次   -->
+        <property name="cronExpression" value="*/5 * * * * ?"/>
+</bean>   
+<!-- 短信定时任务  -->
+
+		<!-- 定时发送短信  -->
+		<bean id="smsJob" class="com.qjkj.qjcsp.core.quartz.SendSmsMessage" />
+		
+		<!-- 清货短信发送JOB -->
+		<bean id="sendClearanceRemind" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		    <property name="targetObject" ref="smsJob" />  
+		    <property name="targetMethod" value="preClearance" />  <!--调度对象的方法名-->
+		   <!--   将并发设置为false -->  
+		    <property name="concurrent" value="true" /> 
+		 </bean> 
+		 <!-- 补货截止时间前短信发送JOB -->
+		 <bean id="sendReplenRemind" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		     <property name="targetObject" ref="smsJob" />  
+		     <property name="targetMethod" value="replenishmentBefore" />  <!--调度对象的方法名-->
+		     <!--   将并发设置为false -->  
+		     <property name="concurrent" value="true" /> 
+		  </bean> 
+		  <!-- 补货开始时间前短信发送JOB   中，休闲，晚-->
+		 <bean id="sendReplenStartTimeRemind" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		     <property name="targetObject" ref="smsJob" />  
+		     <property name="targetMethod" value="replenishmentRemind" />  <!--调度对象的方法名-->
+		     <!--   将并发设置为false -->  
+		     <property name="concurrent" value="true" /> 
+		  </bean> 
+		  <!-- 补货开始时间前短信发送JOB   早-->
+		 <bean id="sendReplenStartTimeRemindBreak" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		     <property name="targetObject" ref="smsJob" />  
+		     <property name="targetMethod" value="breakReplenishmentRemind" />  <!--调度对象的方法名-->
+		     <!--   将并发设置为false -->  
+		     <property name="concurrent" value="true" />
+		  </bean> 
+		 <!-- 早餐提醒   短信发送JOB -->
+		 <bean id="sendBreakRemind" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		     <property name="targetObject" ref="smsJob" />  
+		     <property name="targetMethod" value="sendBreakfastRemind" />  <!--调度对象的方法名-->
+		     <!--   将并发设置为false -->  
+		     <property name="concurrent" value="true" /> 
+		  </bean> 
+		   <!-- 中餐提醒   短信发送JOB -->
+		 <bean id="sendLunchRemind" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		     <property name="targetObject" ref="smsJob" />  
+		     <property name="targetMethod" value="sendLunchRemind" />  <!--调度对象的方法名-->
+		     <!--   将并发设置为false -->  
+		     <property name="concurrent" value="true" /> 
+		  </bean>    
+		 
+		<!--  清货前15分钟   -->
+		<bean id="smsCleanTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendClearanceRemind" />   <!--  JOB  id -->
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 10 13 * * ?"/>
+		</bean> 
+		<bean id="smsCleanTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendClearanceRemind" /> 
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 40 9,13,16,2 * * ?"/>
+		</bean> 
+		<!--  清货前15分钟   -->
+		
+        <!-- 补货截止前半小时提醒 -->
+		<bean id="smsReplenTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendReplenRemind" />   <!--  JOB  id -->
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 30 16 * * ?"/>
+		</bean> 
+		<bean id="smsReplenTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendReplenRemind" />  
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 0 9,12,21 * * ?"/>
+		</bean> 
+        <!-- 补货截止前半小时提醒 -->
+        
+        <!-- 补货开始前1小时提醒 -->
+        <!--中，休闲，晚  -->
+        <bean id="smsReplenStartTimeRemindTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendReplenStartTimeRemind" />  
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 0 9,16 * * ?"/>
+		</bean> 
+		<!--中，休闲，晚  -->
+		<bean id="smsReplenStartTimeRemindTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendReplenStartTimeRemind" />  
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 30 12 * * ?"/>
+		</bean> 
+		<!--早餐前一天的20点  早  -->
+		<bean id="smsReplenStartTimeRemindTrigger3" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendReplenStartTimeRemindBreak" />  
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 0 20 * * ?"/>
+		</bean> 
+        <!-- 补货开始前1小时提醒 -->
+        
+        <!-- 早餐提醒   -->
+        <bean id="smsBreakTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendBreakRemind" />   <!--  JOB  id -->
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 0 21 * * ?"/>
+		</bean> 
+		<!-- 早餐提醒   -->
+		
+		<!-- 中餐提醒   -->
+        <bean id="smsLunchTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="sendLunchRemind" />   <!--  JOB  id -->
+	        <!-- 表达式   -->
+	        <property name="cronExpression" value="0 0 10 * * ?"/>
+		</bean> 
+		<!-- 中餐提醒   -->
+		
+<!-- 短信定时任务  -->
+
+<!-- 推送  -->
+	<!-- 推送要调度的对象   推送类-->
+	<bean id="jobPush" class="com.qjkj.qjcsp.core.quartz.TimingPush"/> 
+	
+	<!-- 推送 推送2 ALERT1【温馨提示】餐食已全部安全着陆，小主可以来取餐啦！ 推送类里面的推送方法 -->
+	<!-- <bean id="push2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+         <property name="targetObject" ref="jobPush" />  
+   		<property name="targetMethod" value="testSendPush2" />  --> 
+   		<!-- 将并发设置为false 
+   		<property name="concurrent" value="false" />  
+	</bean> -->  
+	<!-- 推送提示1 ALERT 吃饭时间到！还在犹豫点什么？美食等你来翻牌！点我点我点我 >> 推送类里面的推送方法-->
+	<bean id="push" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="jobPush" />  
+   		<property name="targetMethod" value="testSendPush1" />  
+   		<!-- 将并发设置为false   -->
+   		<property name="concurrent" value="true" />  
+	</bean>
+	
+	<!-- 提前一小时提醒 众包商补货员补货-->
+	 <bean id="push3" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="jobPush" />  
+   		<property name="targetMethod" value="testSendPush3" />  
+   		<property name="concurrent" value="false" />  
+	</bean> 
+	<!-- 提前一小时提醒 商户补货员补货-->
+    <bean id="push4" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="jobPush" />  
+   		<property name="targetMethod" value="testSendPush4" />  
+   		<property name="concurrent" value="false" />  
+	</bean> 
+	<!-- 商户 早餐补货提醒 -->
+	<bean id="push5" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="jobPush" />  
+   		<property name="targetMethod" value="testSendPush5" />  
+   		<property name="concurrent" value="false" />  
+	</bean> 
+	<!-- 众包商 早餐补货提醒 -->
+	<bean id="push6" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="jobPush" />  
+   		<property name="targetMethod" value="testSendPush6" />  
+   		<property name="concurrent" value="false" />  
+	</bean> 
+	
+	<!-- app发推送的  推送时间10:30 13:00 16:30 20:30 推送第一条内容-->
+	<bean id="pushtrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="push" />  
+	        <property name="cronExpression" value="0 28 10,16,20 * * ?"/>
+	</bean> 
+	<bean id="pushtrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	        <property name="jobDetail" ref="push" />  
+	        <property name="cronExpression" value="0 58 12 * * ?"/>
+	</bean>
+	
+	
+	<!-- app发推送 取货推送发送时间：8：00 12:00 14:30 18:00 推送第二条内容-->
+	<!-- <bean id="pushtrigger3" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push2" />  
+	                表达式，8:00,18:00  
+	        <property name="cronExpression" value="0 58 7,17 * * ?"/>
+	</bean>
+	<bean id="pushtrigger4" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push2" />  
+	                表达式，12:30,14:30  
+	        <property name="cronExpression" value="0 28 11,14 * * ?"/>
+	</bean>   -->
+	
+	
+	
+	<!--提醒补货  -->
+	<!-- 众包商补货提醒   中餐，晚餐-->
+	 <bean id="triggerRemind1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push3" />  
+	              <!--   表达式，10:00,17:00   -->
+	        <property name="cronExpression" value="0 59 9,16 * * ?"/>
+	</bean> 
+	<!-- 众包商补货提醒   休闲餐-->
+	 <bean id="triggerRemind2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push3" />  
+	              <!--   表达式，13:30   -->
+	        <property name="cronExpression" value="0 29 13 * * ?"/>
+	</bean> 
+	<!-- 商户补货提醒   中餐，晚餐-->
+	<bean id="triggerMerchant1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push4" />  
+	               <!--  表达式，10:00,17:00   -->
+	        <property name="cronExpression" value="0 58 9,16 * * ?"/>
+	</bean> 
+	<!-- 商户补货提醒   休闲餐--> 
+	<bean id="triggerMerchant2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push4" />  
+	               <!--  表达式，13:30   -->
+	        <property name="cronExpression" value="0 28 13 * * ?"/>
+	</bean>  
+	<!-- 商户 早餐补货提醒 -->
+	<bean id="triggerBreakfast1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push5" />  
+	               <!--  表达式，表达式，每天20:00   -->
+	        <property name="cronExpression" value="0 01 20 * * ?"/>
+	</bean> 
+	<!-- 众包商 早餐补货提醒 -->
+	<bean id="triggerBreakfast2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+	        <property name="jobDetail" ref="push6" />  
+	               <!--  表达式，每天20:00   -->
+	        <property name="cronExpression" value="0 02 20 * * ?"/>
+	</bean> 
+<!-- 推送  -->
+
+<!--  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序     -->
+<bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="true" >  
+        <property name="triggers">  
+            <list>  
+                <!-- 作业调度器,list下可加入其他的调度器    -->
+            <ref bean="trigger1" />
+            <!--短信 -->
+	            <!-- <ref bean="smsCleanTrigger1" />
+	            <ref bean="smsCleanTrigger2" />
+	            <ref bean="smsReplenTrigger1" />
+	            <ref bean="smsReplenTrigger2" />
+	            <ref bean="smsBreakTrigger" />
+	            <ref bean="smsLunchTrigger" /> 
+	            <ref bean="smsReplenStartTimeRemindTrigger1" /> 
+	            <ref bean="smsReplenStartTimeRemindTrigger2" /> 
+	            <ref bean="smsReplenStartTimeRemindTrigger3" />   -->
+            <!--短信 -->
+            
+            <!--推送  -->
+	                <!-- <ref bean="pushtrigger1" /> 
+	             <ref bean="pushtrigger2" />  
+	            提醒补货
+	             <ref bean="triggerRemind1" />  
+	             <ref bean="triggerRemind2" /> 
+	             <ref bean="triggerMerchant1" />  
+	             <ref bean="triggerMerchant2" /> 
+	            早餐补货提醒  
+	             <ref bean="triggerBreakfast1" />  
+	            <ref bean="triggerBreakfast2" />    -->
+            <!--推送  -->
+            <!--Gekko 每7天删除临时表 -->
+           <ref bean="triggerTemporary" /> 
+            <!-- 每7天删除临时表 -->
+            <!--  <ref bean="trigger2"/> -->  
+            </list>  
+    </property>  
+</bean>
+</beans>  
+<!-- </beans> -->
+<!-- 
+Cron表达式范例：
+
+                 每隔5秒执行一次：*/5 * * * * ?
+
+                 每隔1分钟执行一次：0 */1 * * * ?
+
+                 每天23点执行一次：0 0 23 * * ?
+
+                 每天凌晨1点执行一次：0 0 1 * * ?
+
+                 每月1号凌晨1点执行一次：0 0 1 1 * ?
+
+                 每月最后一天23点执行一次：0 0 23 L * ?
+
+                 每周星期天凌晨1点实行一次：0 0 1 ? * L
+
+                 在26分、29分、33分执行一次：0 26,29,33 * * * ?
+
+                 每天的0点、13点、18点、21点都执行一次：0 0 0,13,18,21 * * ?
+
+spring quartz 技术：
+http://www.cnblogs.com/kay/archive/2007/11/02/947372.html
+http://xsxjb.iteye.com/blog/1068151
+http://www.oschina.net/question/8676_9032
+-->	

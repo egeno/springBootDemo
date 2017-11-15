@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.MachineDayReserveMapper" >
+
+  <select id="getMachineList" resultType="map" parameterType="map">
+  	  SELECT machine_id AS machineid,machine_name AS machinename,device_code AS devicecode 
+  	  FROM basics_machine WHERE isdel = 'N' AND machine_status = 1 AND  company_id = #{companyId}
+  	  <if test="machinename != null and machinename != ''">
+  	  and machine_name like '%${machinename }%'
+  	  </if>
+  	  ORDER BY machineid
+        
+  </select>
+  
+  <select id="getModelsByMachineid" resultType="map" parameterType="java.lang.Long">
+      SELECT m.area_model_id AS areamodelid,area_model_name AS  areamodelname
+      FROM basics_machine_area_model bm,basics_area_model m 
+      WHERE bm.area_model_id = m.area_model_id AND  bm.machine_id = #{machineid}
+      
+  </select>
+  
+  
+  <select id="findReserveList" resultType="map" parameterType="map">
+  
+          SELECT o.area_model_id,d.goods_id,d.goods_name AS goodsname,SUM(d.goods_num) 
+	      AS number FROM tbl_order o,tbl_order_detail d 
+	      WHERE o.order_num = d.order_num AND o.machine_id = #{machineid} AND o.order_type = 0 
+	      AND o.area_model_id = #{modelid} 
+	      <if test="psdate != null and psdate != ''">
+           and  DATE_FORMAT(o.order_time, '%Y-%m-%d') = #{psdate}
+          </if>
+	      GROUP BY goods_id
+         
+<!--       SELECT DISTINCT m.area_model_id,area_model_name, -->
+<!--       IF(m.area_model_id = g.area_model_id,g.goods_name,'') AS goodsname, -->
+<!--       IF(m.area_model_id = g.area_model_id,g.number,'') AS number -->
+<!--       FROM basics_machine_area_model bm,basics_area_model m, ( -->
+<!-- 	      SELECT o.area_model_id,d.goods_id,d.goods_name,SUM(d.goods_num)  -->
+<!-- 	      AS number FROM tbl_order o,tbl_order_detail d  -->
+<!-- 	      WHERE o.order_num = d.order_num AND o.machine_id = #{machineid}  AND o.order_type = 0  -->
+<!-- 	      AND o.area_model_id = #{modelid} -->
+<!-- 	      GROUP BY goods_id -->
+<!-- 	   ) AS g         -->
+<!--           WHERE bm.area_model_id = m.area_model_id  -->
+<!--           AND  bm.machine_id = #{machineid}  -->
+<!--           AND m.area_model_id =#{modelid} -->
+          
+  </select>
+ 
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.AlarmMapper">
+
+ <select id ="selectAlarmAll"  resultType="map" parameterType="com.qjkj.qjcsp.entity.AlarmReportSearch">
+	SELECT 
+	 (SELECT m.machine_name FROM basics_machine m WHERE m.machine_id = son2.machine_id) AS machineName,
+	 (SELECT area_model_name FROM  basics_area_model WHERE area_model_id =son2.area_model_id ) AS  areaModelName,
+	 son2.order_num AS orderNum,
+	 son2.goods_name AS goodsName,
+	 (SELECT cell_num FROM basics_machine_cell WHERE cell_id = son2.cell_id) AS cellNum,
+	  son2.device_fault_symbol AS deviceFaultSymbol,
+	 round(son2.price,2) AS costPrice,
+	  son2.pick_time AS alarmTime,
+	 (SELECT m.address FROM basics_machine m WHERE m.machine_id = son2.machine_id) AS machineAdress,
+	 (SELECT DISTINCT bu.user_name FROM tbl_alarm_info tai,basics_users bu
+	  WHERE  bu.user_id = tai.check_user_id AND tai.order_child_id = son2.order_child_id) AS repairName,
+	 (SELECT DISTINCT bu.user_mobile FROM tbl_alarm_info tai,basics_users bu
+	  WHERE  bu.user_id = tai.check_user_id AND tai.order_child_id = son2.order_child_id) AS repairPhone
+	FROM 
+	(
+		SELECT 
+		topd.order_num,
+		toc.order_id,
+		toc.machine_id,
+		toc.order_child_id,
+		toc.area_model_id,
+		topd.device_fault_symbol,
+		topd.cell_id,
+		topd.pick_time,
+		tod.goods_id,
+		tod.goods_name,
+		(tod.price/tod.goods_num) AS price
+		
+		FROM 
+		tbl_order_child toc,
+		tbl_order_detail tod,
+		tbl_order_pick_detail topd,
+		tbl_item_detail tid
+		WHERE 
+		toc.order_child_id = tod.order_child_id 
+		AND toc.order_child_id = topd.order_child_id 
+		AND topd.cell_id = tid.cell_id
+		AND tod.order_detail_id = tid.order_detail_id
+		AND toc.order_child_status =10
+		<if test="deviceFaultSymbol !=null and deviceFaultSymbol !=-1">
+		AND topd.device_fault_symbol=#{deviceFaultSymbol}
+		</if>
+		<if test="sellStartTime !=null and sellStartTime !=''">
+  		AND <![CDATA[ topd.pick_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  		</if>
+  		<if test="sellEndTime !=null and sellEndTime !=''">
+  		AND <![CDATA[ topd.pick_time  <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  		</if>
+  		<if test="shopName !=null and shopName !=''">
+		AND tod.goods_name LIKE '%${shopName}%'
+		</if>
+		<if test="machineName !=null and machineName !=''">
+   		 AND toc.machine_id IN 
+       	( SELECT machine_id from basics_machine where machine_name like '%${machineName}%' )
+       	</if>
+       ) son2 
+       <!-- ORDER BY machineName,areaModelName,orderNum -->
+          limit #{offset},#{limit}
+ </select>
+	<select id="selectAlarmReportCount" resultType="int" parameterType="com.qjkj.qjcsp.entity.AlarmReportSearch">
+	SELECT 
+	   COUNT(1) AS countNum
+	FROM 
+	   (
+		SELECT 
+		topd.order_num,
+		toc.order_id,
+		toc.machine_id,
+		toc.order_child_id,
+		toc.area_model_id,
+		topd.device_fault_symbol,
+		topd.cell_id,
+		topd.pick_time,
+		tod.goods_id,
+		tod.goods_name,
+		(tod.price/tod.goods_num) AS price
+		
+		FROM 
+		tbl_order_child toc,
+		tbl_order_detail tod,
+		tbl_order_pick_detail topd,
+		tbl_item_detail tid
+		WHERE 
+		toc.order_child_id = tod.order_child_id 
+		AND toc.order_child_id = topd.order_child_id 
+		AND topd.cell_id = tid.cell_id
+		AND tod.order_detail_id = tid.order_detail_id
+		AND toc.order_child_status =10
+		<if test="deviceFaultSymbol !=null and deviceFaultSymbol !=-1">
+		AND topd.device_fault_symbol=#{deviceFaultSymbol}
+		</if>
+		<if test="sellStartTime !=null and sellStartTime !=''">
+  		AND <![CDATA[ topd.pick_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  		</if>
+  		<if test="sellEndTime !=null and sellEndTime !=''">
+  		AND <![CDATA[ topd.pick_time  <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  		</if>
+  		<if test="shopName !=null and shopName !=''">
+		AND tod.goods_name LIKE '%${shopName}%'
+		</if>
+		<if test="machineName !=null and machineName !=''">
+   		 AND toc.machine_id IN 
+       	( SELECT machine_id from basics_machine where machine_name like '%${machineName}%' )
+       	</if>
+       ) son2 
+	
+	</select>
+	<select id ="selectAlarmAllExport"  resultType="map" parameterType="com.qjkj.qjcsp.entity.AlarmReportSearch">
+	SELECT 
+	 (SELECT m.machine_name FROM basics_machine m WHERE m.machine_id = son2.machine_id) AS machineName,
+	 (SELECT area_model_name FROM  basics_area_model WHERE area_model_id =son2.area_model_id ) AS  areaModelName,
+	 son2.order_num AS orderNum,
+	 son2.goods_name AS goodsName,
+	 (SELECT cell_num FROM basics_machine_cell WHERE cell_id = son2.cell_id) AS cellNum,
+	  CASE
+  			WHEN son2.device_fault_symbol = '0' THEN "顾客收到"
+  			WHEN son2.device_fault_symbol = '1' THEN "顾客未收"
+  		END deviceFaultSymbol, 
+	 round(son2.price,2) AS costPrice,
+	  son2.pick_time AS alarmTime,
+	 (SELECT m.address FROM basics_machine m WHERE m.machine_id = son2.machine_id) AS machineAdress,
+	 (SELECT DISTINCT bu.user_name FROM tbl_alarm_info tai,basics_users bu
+	  WHERE  bu.user_id = tai.check_user_id AND tai.order_child_id = son2.order_child_id) AS repairName,
+	 (SELECT DISTINCT bu.user_mobile FROM tbl_alarm_info tai,basics_users bu
+	  WHERE  bu.user_id = tai.check_user_id AND tai.order_child_id = son2.order_child_id) AS repairPhone
+	FROM 
+	(
+		SELECT 
+		topd.order_num,
+		toc.order_id,
+		toc.machine_id,
+		toc.order_child_id,
+		toc.area_model_id,
+		topd.device_fault_symbol,
+		topd.cell_id,
+		topd.pick_time,
+		tod.goods_id,
+		tod.goods_name,
+		(tod.price/tod.goods_num) AS price
+		
+		FROM 
+		tbl_order_child toc,
+		tbl_order_detail tod,
+		tbl_order_pick_detail topd,
+		tbl_item_detail tid
+		WHERE 
+		toc.order_child_id = tod.order_child_id 
+		AND toc.order_child_id = topd.order_child_id 
+		AND topd.cell_id = tid.cell_id
+		AND tod.order_detail_id = tid.order_detail_id
+		AND toc.order_child_status =10
+		<if test="deviceFaultSymbol !=null and deviceFaultSymbol !=-1">
+		AND topd.device_fault_symbol=#{deviceFaultSymbol}
+		</if>
+		<if test="sellStartTime !=null and sellStartTime !=''">
+  		AND <![CDATA[ topd.pick_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  		</if>
+  		<if test="sellEndTime !=null and sellEndTime !=''">
+  		AND <![CDATA[ topd.pick_time  <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  		</if>
+  		<if test="shopName !=null and shopName !=''">
+		AND tod.goods_name LIKE '%${shopName}%'
+		</if>
+		<if test="machineName !=null and machineName !=''">
+   		 AND toc.machine_id IN 
+       	( SELECT machine_id from basics_machine where machine_name like '%${machineName}%' )
+       	</if>
+       ) son2 
+       ORDER BY machineName,areaModelName,orderNum
+ </select>
+</mapper>

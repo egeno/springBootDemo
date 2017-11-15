@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GoodsSellReportMapper" >
+	
+	<select id="findAllGoodsSellReportList" parameterType="com.qjkj.qjcsp.entity.GoodsSellReportSearch" resultType="com.qjkj.qjcsp.entity.GoodsSellReportPo">
+	SELECT 
+			tid.goods_id as goodsId,bg.goods_name AS goodsName,
+			bg.retail_price AS unitPrice,
+			<!-- SUM(IF(tid.stock_time IS NOT NULL,1,0))AS putGoodsCount,	 -->
+			 sum(IF(tid.item_status='3',1,0))  AS sellCount,
+			sum(IF(tid.item_status='3',ROUND(tod.price/tod.goods_num*IF(tid.item_status='3',1,0),2),0))  AS sellMoney
+<!--              SUM(tod.price/tod.goods_num*IF(tid.item_status='3',1,0))  AS sellMoney -->
+		FROM tbl_item_detail tid,basics_goods bg,basics_company bc,tbl_order tbo,tbl_order_detail tod
+		WHERE tid.goods_id=bg.goods_id AND bc.company_id=bg.company_id and tid.order_id=tbo.order_id
+AND tid.order_detail_id=tod.order_detail_id	
+			  AND bc.company_id=#{companyId}
+			  <if test="sellStartTime !=null and sellStartTime !=''">
+  				<!-- AND <![CDATA[ tbo.order_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>   -->
+  				AND <![CDATA[ tid.taken_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  			 </if>
+  			 <if test="sellEndTime !=null and sellEndTime !=''">
+  			 <!--    AND <![CDATA[ tbo.order_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>   -->
+  			    	    AND <![CDATA[ tid.taken_time<=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  			   </if>
+  			   <if test="foodName !=null and foodName !=''">
+  			   	AND bg.goods_name like '%${foodName}%'
+  			   </if>
+			  GROUP BY tid.goods_id
+			  order by sellCount desc 
+			  limit #{offset},#{limit}
+	</select>
+	
+<!-- 	<select id="findAllGoodsSellReportOrders" parameterType="com.qjkj.qjcsp.entity.GoodsSellReportSearch" resultType="com.qjkj.qjcsp.entity.GoodsSellReportPo"> -->
+<!-- 		SELECT  -->
+<!-- 			tod.goods_id as goodsId, -->
+<!-- 			COUNT(DISTINCT tod.order_id) AS orderCount -->
+<!-- 	  FROM tbl_order_detail tod  -->
+<!-- 		   LEFT JOIN basics_goods bg ON tod.goods_id = bg.goods_id -->
+<!-- 		   LEFT JOIN basics_company bc ON bc.company_id=tod.company_id -->
+<!-- 		    LEFT JOIN tbl_item_detail tid ON tid.goods_id=bg.goods_id -->
+<!-- 		    AND bc.company_id=#{companyId} -->
+<!-- 		     <if test="sellStartTime !=null and sellStartTime !=''"> -->
+<!--   				AND <![CDATA[ tid.stock_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>   -->
+<!--   			 </if> -->
+<!--   			 <if test="sellEndTime !=null and sellEndTime !=''"> -->
+<!--   			    AND <![CDATA[ tid.stock_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>   -->
+<!--   			   </if> -->
+<!-- 			  GROUP BY tid.goods_id -->
+			  
+<!-- 	</select> -->
+	
+	<select id="findAllGoodsSellReportOrders" parameterType="com.qjkj.qjcsp.entity.GoodsSellReportSearch" resultType="com.qjkj.qjcsp.entity.GoodsSellReportPo">
+		SELECT tod.goods_id as goodsId,COUNT(*)AS orderCount  FROM 
+			  tbl_order_detail tod ,tbl_item_detail tid,tbl_order tbo
+		WHERE tod.order_detail_id=tid.order_detail_id 
+		and tid.order_id=tbo.order_id
+		AND tod.company_id=#{companyId}
+		       <if test="sellStartTime !=null and sellStartTime !=''">
+  				AND <![CDATA[ tbo.order_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  			  </if>
+  			  <if test="sellEndTime !=null and sellEndTime !=''">
+  			    AND <![CDATA[ tbo.order_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  			   </if>
+ 			    <if test="foodName !=null and foodName !=''">
+  			   	AND tod.goods_name like '%${foodName}%'
+  			   </if>
+		       GROUP BY tod.goods_id
+	</select>
+	
+	<select id="findAllGoodsSellReportListExport" parameterType="com.qjkj.qjcsp.entity.GoodsSellReportSearch" resultType="map">
+		SELECT 
+			tid.goods_id as goodsId,bg.goods_name AS goodsName,
+			bg.retail_price AS unitPrice,
+			<!-- SUM(IF(tid.stock_time IS NOT NULL,1,0))AS putGoodsCount,	 -->
+			 sum(IF(tid.item_status='3',1,0))  AS sellCount,
+<!-- 			 IF(tid.item_status='3',ROUND(tod.price/tod.goods_num*sum(IF(tid.item_status='3',1,0)),2),0)  AS sellMoney -->
+           SUM(IF(tid.item_status='3',ROUND(tod.price/tod.goods_num*IF(tid.item_status='3',1,0),2),0)) AS sellMoney
+		FROM tbl_item_detail tid,basics_goods bg,basics_company bc,tbl_order tbo,tbl_order_detail tod
+		WHERE tid.goods_id=bg.goods_id AND bc.company_id=bg.company_id and tid.order_id=tbo.order_id
+        AND tid.order_detail_id=tod.order_detail_id	
+			  AND bc.company_id=#{companyId}
+			  <if test="sellStartTime !=null and sellStartTime !=''">
+  				<!-- AND <![CDATA[ tbo.order_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>   -->
+  				AND <![CDATA[ tid.taken_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  			 </if>
+  			 <if test="sellEndTime !=null and sellEndTime !=''">
+  			 <!--    AND <![CDATA[ tbo.order_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>   -->
+  			    	    AND <![CDATA[ tid.taken_time<=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  			   </if>
+  			    <if test="foodName !=null and foodName !=''">
+  			   	AND bg.goods_name like '%${foodName}%'
+  			   </if>
+			  GROUP BY tid.goods_id
+			  order by sellCount desc
+	</select>
+	
+<!-- 	<select id="findAllGoodsSellReportOrdersExport" parameterType="com.qjkj.qjcsp.entity.GoodsSellReportSearch" resultType="map"> -->
+<!-- 		SELECT  -->
+<!-- 			tod.goods_id as goodsId, -->
+<!-- 			COUNT(DISTINCT tod.order_id) AS orderCount -->
+<!-- 	  FROM tbl_order_detail tod  -->
+<!-- 		   LEFT JOIN basics_goods bg ON tod.goods_id = bg.goods_id -->
+<!-- 		   LEFT JOIN basics_company bc ON bc.company_id=tod.company_id -->
+<!-- 		    LEFT JOIN tbl_item_detail tid ON tid.goods_id=bg.goods_id -->
+<!-- 		    AND bc.company_id=#{companyId} -->
+<!-- 		     <if test="sellStartTime !=null and sellStartTime !=''"> -->
+<!--   				AND <![CDATA[ tid.stock_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>   -->
+<!--   			 </if> -->
+<!--   			 <if test="sellEndTime !=null and sellEndTime !=''"> -->
+<!--   			    AND <![CDATA[ tid.stock_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>   -->
+<!--   			   </if> -->
+<!-- 			  GROUP BY tid.goods_id -->
+<!-- 	</select> -->
+	
+	<select id="findAllGoodsSellReportOrdersExport" parameterType="com.qjkj.qjcsp.entity.GoodsSellReportSearch" resultType="map">
+		SELECT tod.goods_id as goodsId,COUNT(*)AS orderCount  FROM 
+			  tbl_order_detail tod ,tbl_item_detail tid,tbl_order tbo
+		WHERE tod.order_detail_id=tid.order_detail_id 
+		and tid.order_id=tbo.order_id
+		AND tod.company_id=#{companyId}
+		       <if test="sellStartTime !=null and sellStartTime !=''">
+  				AND <![CDATA[ tbo.order_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  			  </if>
+  			  <if test="sellEndTime !=null and sellEndTime !=''">
+  			    AND <![CDATA[ tbo.order_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  			   </if>
+  			   <if test="foodName !=null and foodName !=''">
+  			   	AND tod.goods_name like '%${foodName}%'
+  			   </if>
+		       GROUP BY tod.goods_id
+	</select>
+	
+	
+	<select id="getCompanyIdAndName" parameterType="map" resultType="com.qjkj.qjcsp.entity.CompanyPo">
+		SELECT company_id as companyId,company_name as companyName FROM basics_company
+  		<where> 
+  			1=1 
+  			AND isdel='N'
+  			AND company_status='1'
+ 			<if test="flag==false">
+ 				and company_id=#{companyId}
+ 			</if>
+ 		</where>
+	
+	</select>
+  <!-- 查询每柜销售商品数据 -->
+  <!-- <select id="findListMachineGoodsSell" parameterType="com.qjkj.qjcsp.entity.MachineGoodsSell" resultType="com.qjkj.qjcsp.entity.MachineGoodsSell">
+		SELECT 
+			bm.machine_name as machineName,
+			bm.model_type as modelType,
+			tid.goods_id as goodsId,
+			bg.goods_code as goodsCode,
+			bg.goods_name AS goodsName,
+			bg.retail_price AS unitPrice,
+			COUNT(1) AS putGoodsCount,	
+			SUM(IF(tid.taken_time IS NOT NULL,1,0)) AS sellCount,
+			(bg.retail_price*SUM(IF(tid.item_status = 1,1,0))) AS sellMoney,
+			concat(left(SUM(IF(tid.taken_time IS NOT NULL,1,0)) / COUNT(1) *100,5),'%')AS sellPercent 
+		FROM tbl_item_detail tid,basics_goods bg,basics_company bc,basics_machine bm 
+		WHERE tid.goods_id=bg.goods_id AND bc.company_id=bg.company_id and bm.machine_id =tid.machine_id 
+			  <if test="sellStartTime !=null and sellStartTime !=''">
+ 				AND <![CDATA[ tid.stock_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+ 			  </if>
+ 			 <if test="sellEndTime !=null and sellEndTime !=''">
+ 			    AND <![CDATA[ tid.stock_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+	   		 </if>
+ 			   <if test="machineName !=null and machineName !=''">
+ 			   AND bm.machine_name like '%${machineName}%' 
+ 			   </if>
+ 			    <if test="goodsName !=null and goodsName !=''">
+ 			   AND bg.goods_name like '%${goodsName}%' 
+ 			   </if>
+		      <if test="modelType !=null and modelType !=''">
+ 			   AND bm.model_type = #{modelType} 
+ 			   </if>
+			  AND bc.company_id=#{companyId}
+		  GROUP BY tid.goods_id 
+		  order by sellCount desc 
+	</select> -->
+	<!-- 导出每柜销售数据 -->
+	 <!-- <select id="findListMachineGoodsSellExcept" parameterType="com.qjkj.qjcsp.entity.MachineGoodsSell" resultType="map">
+		SELECT 
+			bm.machine_name as machineName,
+			IF(bm.model_type ='0','制冷','加热') as modelType,
+			tid.goods_id as goodsId,
+			bg.goods_code as goodsCode,
+			bg.goods_name AS goodsName,
+			bg.retail_price AS unitPrice,
+			COUNT(1) AS putGoodsCount,	
+			SUM(IF(tid.taken_time IS NOT NULL,1,0)) AS sellCount,
+			(bg.retail_price*SUM(IF(tid.item_status = 1,1,0))) AS sellMoney,
+			concat(left(SUM(IF(tid.taken_time IS NOT NULL,1,0)) / COUNT(1) *100,5),'%')AS sellPercent 
+		FROM tbl_item_detail tid,basics_goods bg,basics_company bc,basics_machine bm 
+		WHERE tid.goods_id=bg.goods_id AND bc.company_id=bg.company_id and bm.machine_id =tid.machine_id 
+			  <if test="sellStartTime !=null and sellStartTime !=''">
+ 				AND <![CDATA[ tid.stock_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+ 			  </if>
+ 			 <if test="sellEndTime !=null and sellEndTime !=''">
+ 			    AND <![CDATA[ tid.stock_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+	   		 </if>
+ 			   <if test="machineName !=null and machineName !=''">
+ 			   AND bm.machine_name like '%${machineName}%' 
+ 			   </if>
+ 			    <if test="goodsName !=null and goodsName !=''">
+ 			   AND bg.goods_name like '%${goodsName}%' 
+ 			   </if>
+		      <if test="modelType !=null and modelType !=''">
+ 			   AND bm.model_type = #{modelType} 
+ 			   </if>
+			  AND bc.company_id=#{companyId}
+		  GROUP BY tid.goods_id 
+		  order by sellCount desc 
+	</select> -->
+	
+	<!-- <select id="findAllMachineGoodsSellReportOrders" parameterType="com.qjkj.qjcsp.entity.MachineGoodsSell" resultType="com.qjkj.qjcsp.entity.MachineGoodsSell">
+		SELECT tod.goods_id as goodsId,COUNT(*)AS orderCount  FROM 
+			  tbl_order_detail tod ,tbl_item_detail tid
+		WHERE tod.order_detail_id=tid.order_item_id AND tod.company_id=#{companyId}
+		       <if test="sellStartTime !=null and sellStartTime !=''">
+  				AND <![CDATA[ tid.order_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  			  </if>
+  			  <if test="sellEndTime !=null and sellEndTime !=''">
+  			    AND <![CDATA[ tid.order_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  			   </if>
+		       GROUP BY tod.goods_id
+	</select> -->
+	
+	
+	<select id="findPutGoodsCount"  parameterType="java.util.Map" resultType="int">
+	SELECT count(1) FROM tbl_item_detail WHERE goods_id=#{goodsId}
+	  AND company_id=#{companyId}
+	 <if test="sellStartTime !=null and sellStartTime !=''">
+  			  AND <![CDATA[ stock_time >=CONCAT(#{sellStartTime},' 00:00:00')]]>  
+  			 </if>
+  			 <if test="sellEndTime !=null and sellEndTime !=''">
+  			    AND <![CDATA[ stock_time <=CONCAT(#{sellEndTime},' 23:59:59')]]>  
+  			 </if>
+	</select>
+</mapper>

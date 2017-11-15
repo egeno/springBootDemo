@@ -1,0 +1,363 @@
+package com.qjkj.qjcsp.util.alipay.util;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.httpclient.methods.multipart.FilePartSource;
+import org.apache.commons.httpclient.methods.multipart.PartSource;
+
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.TradeFundBill;
+import com.alipay.api.request.AlipayTradeCancelRequest;
+import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeCancelResponse;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
+import com.qjkj.qjcsp.util.Constants;
+import com.qjkj.qjcsp.util.alipay.config.AlipayConfig;
+
+
+
+/* *
+ *类名：AlipayFunction
+ *功能：支付宝接口公用函数类
+ *详细：该类是请求、通知返回两个文件所调用的公用函数核心处理文件，不需要修改
+ *版本：3.3
+ *日期：2012-08-14
+ *说明：
+ *以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+ *该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+ */
+
+public class AlipayCore {
+	
+	private static final String ALIPAY_GATEWAY    = "https://openapi.alipay.com/gateway.do";
+
+	private static final String APP_ID            = "2015092500325353";
+	
+	private static final String PRIVATE_KEY       = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAL4DOWppnQOrUdrJ"
+			+ "irY//d6AiFXMMD5f+JkZadAJZ8KUzCEDvzcEP56g5NNkSx3M3QsODtOq1Vo0fTZy"
+        	+ "l7mDEh/Am25gQ2JLPe+9Il/TuifrM50boSh6dqgt34aA6I8OR1LkpagiU5BCm84q"
+        	+ "Z1wNZ1dhTANujP0BSpvuWx3t1RExAgMBAAECgYEAmpd09ybGIF4aUq72tCCMI6Lf"
+        	+ "SS6/cYATejw64o9EZAM7sQCjadeDC0RL59EJbE1o6b2eQogS3TknRk0lNEF3VAcd"
+        	+ "jcm9wDkFWLS5YGaqV/dx4A23g+VV9nDd0/PKwWNLPOhEOsqGig7KOn6EOlvTkuKq"
+        	+ "08BbuRr4kpBOU1qyQ4ECQQDhxena69z6K8SX+S4AG9F5r3WG5Nb1xs0v1vG3/xta"
+        	+ "Ssbcd79dgzWSPVB7dtGKFLxJIBVpl0fSwHjxIArLvAgFAkEA13OqND4B4oowtGFc"
+        	+ "/7MV3kiLmf/zMw6/V9COjf9vkG93sko9qPXll0Rdwusyq4JRFmpuBfYCC7GsB8oE"
+        	+ "iFsIPQJAD8uR3dAMiLARM/Sp5DYOBK5i0YonA9DhwAwQoyfE2R9MJFZ4W+l3EQEb"
+        	+ "JVgdtsRWm+MTvGxqCPOQQoZUWwaPpQJBAIcPR+Ql9tKHZE6/NihIoG3OtkycqV0Z"
+        	+ "YpNu9t5HAS3e4n8OkSaotvsjbU9yVzoyoBhYMY5lEBU6lKfxWPQNdNUCQFwvoaYi"
+        	+ "+nprb8wb2Zv/dvcOr41mop8hnT+/IzGfXmEKeRml9AXZDqu42ZJECblRuFdNSdSi"
+        	+ "WBFueoC0oK48IyA=";
+	
+	private static final String PUBLIC_KEY        = "";
+	
+	public static final String CHARSET           = "UTF-8";
+	
+	private static final String ALIPAY_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
+    /** 
+     * 除去数组中的空值和签名参数
+     * @param sArray 签名参数组
+     * @return 去掉空值与签名参数后的新签名参数组
+     */
+    public static Map<String, String> paraFilter(Map<String, String> sArray) {
+
+        Map<String, String> result = new HashMap<String, String>();
+
+        if (sArray == null || sArray.size() <= 0) {
+            return result;
+        }
+
+        for (String key : sArray.keySet()) {
+            String value = sArray.get(key);
+            if (value == null || value.equals("") || key.equalsIgnoreCase("sign")
+                || key.equalsIgnoreCase("sign_type")) {
+                continue;
+            }
+            result.put(key, value);
+        }
+
+        return result;
+    }
+
+    /** 
+     * 把数组所有元素排序，并按照“参数=参数值”的模式用“&”字符拼接成字符串
+     * @param params 需要排序并参与字符拼接的参数组
+     * @return 拼接后字符串
+     */
+    public static String createLinkString(Map<String, String> params) {
+
+        List<String> keys = new ArrayList<String>(params.keySet());
+        Collections.sort(keys);
+
+        String prestr = "";
+
+        for (int i = 0; i < keys.size(); i++) {
+            String key = keys.get(i);
+            String value = params.get(key);
+
+            if (i == keys.size() - 1) {//拼接时，不包括最后一个&字符
+                prestr = prestr + key + "=" + value;
+            } else {
+                prestr = prestr + key + "=" + value + "&";
+            }
+        }
+
+        return prestr;
+    }
+
+    /** 
+     * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
+     * @param sWord 要写入日志里的文本内容
+     */
+    public static void logResult(String sWord) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(AlipayConfig.log_path + "alipay_log_" + System.currentTimeMillis()+".txt");
+            writer.write(sWord);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /** 
+     * 生成文件摘要
+     * @param strFilePath 文件路径
+     * @param file_digest_type 摘要算法
+     * @return 文件摘要结果
+     */
+    public static String getAbstract(String strFilePath, String file_digest_type) throws IOException {
+        PartSource file = new FilePartSource(new File(strFilePath));
+    	if(file_digest_type.equals("MD5")){
+    		return DigestUtils.md5Hex(file.createInputStream());
+    	}
+    	else if(file_digest_type.equals("SHA")) {
+    		return DigestUtils.sha256Hex(file.createInputStream());
+    	}
+    	else {
+    		return "";
+    	}
+    }
+    
+    private static AlipayClient alipayClient;
+    
+    public static AlipayClient getAlipayClient(){
+        
+        if(null == alipayClient){
+            alipayClient = new DefaultAlipayClient(ALIPAY_GATEWAY, APP_ID, 
+                PRIVATE_KEY, "json", CHARSET,ALIPAY_PUBLIC_KEY);
+        }
+        return alipayClient;
+    }
+    
+    private static AlipayTradePrecreateResponse excutePrePay(String bizContentJson){
+    	AlipayClient alipayClient = getAlipayClient();
+		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
+		//request.setNotifyUrl(AlipayConfig.notify_url);
+		request.setBizContent(bizContentJson);
+		AlipayTradePrecreateResponse response = null;
+		try {
+			response = alipayClient.execute(request);
+		} catch (AlipayApiException e) {
+		}
+		
+		return response;
+    }
+    
+    private static AlipayTradeQueryResponse excuteQueryPay(String bizContentJson){
+    	AlipayClient alipayClient = getAlipayClient();
+    	AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+
+		request.setBizContent(bizContentJson);
+		AlipayTradeQueryResponse response = null;
+		try {
+			response = alipayClient.execute(request);
+		} catch (AlipayApiException e) {
+		}
+		
+		return response;
+    }
+    
+    private static AlipayTradeCancelResponse excuteCancelPay(String bizContentJson){
+    	AlipayClient alipayClient = getAlipayClient();
+    	AlipayTradeCancelRequest request = new AlipayTradeCancelRequest();
+
+		request.setBizContent(bizContentJson);
+		AlipayTradeCancelResponse response = null;
+		try {
+			response = alipayClient.execute(request);
+		} catch (AlipayApiException e) {
+		}
+		
+		return response;
+    }
+    
+    public static Map<String, String> prePay(String out_trade_no,String total_amount,String placeOrderTime,String subject) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//支付截止时间
+		String time_expire="";
+		try {
+			time_expire = sdf.format(sdf.parse(placeOrderTime).getTime()+ 5*60*1000);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		JSONObject bizContent = new JSONObject();
+		//商户自定义的订单号
+		bizContent.put("out_trade_no", out_trade_no);
+		//订单金额
+		bizContent.put("total_amount", total_amount);
+		bizContent.put("subject", subject);
+		//bizContent.put(key, value);
+		bizContent.put("time_expire", time_expire);
+		//bizContent.put("notify_url", AlipayConfig.notify_url);
+		AlipayTradePrecreateResponse response = excutePrePay(bizContent.toString());
+		if (null != response && response.isSuccess()) {
+			if (response.getCode().equals("10000")) {
+				Map<String, String> returnContent = new HashMap<String, String>();
+				returnContent.put("qrCode", response.getQrCode());
+				returnContent.put("orderNum", response.getOutTradeNo());
+				returnContent.put("placeOrderTime", placeOrderTime);
+				return returnContent;
+			} else {
+                return null;
+			}
+		}
+		return null;
+	}
+    /*
+     * 查询订单
+     */
+    public static  Map<String, String> queryPay(String out_trade_no){
+    	JSONObject bizContent = new JSONObject();
+		bizContent.put("out_trade_no", out_trade_no);
+		AlipayTradeQueryResponse response = excuteQueryPay(bizContent.toString());
+		Map<String, String> returnContent = new HashMap<String, String>();
+		if (null != response) {
+			if (response.isSuccess() && response.getCode().equals("10000")){
+				if(response.getTradeStatus().equalsIgnoreCase("TRADE_SUCCESS")||
+						response.getTradeStatus().equalsIgnoreCase("TRADE_FINISHED")){
+				returnContent.put("tradeNo", response.getTradeNo());
+				returnContent.put("orderNum", response.getOutTradeNo());
+				returnContent.put("tradeStatus", response.getTradeStatus());
+				returnContent.put("total_amount", response.getTotalAmount());
+				Date date = response.getSendPayDate();
+				if(date != null){
+					//returnContent.put("tradeDate", String.valueOf(date.getTime()));
+					returnContent.put("tradeDate", com.qjkj.qjcsp.util.DateFormat.dateFormatYMDHMS(date));
+				}/*else{
+					returnContent.put("tradeDate", com.qjkj.qjcsp.util.DateFormat.dateFormatYMDHMS(new Date()));
+				}*/
+				returnContent.put("flag", Constants.SYMBOL_SUCCESS);
+				
+				}else{
+					returnContent.put("tradeStatus", "WAIT_BUYER_SCAN");
+					returnContent.put("flag", Constants.SYMBOL_WAIT);
+				}
+			}
+			else{
+				returnContent.put("tradeStatus", "ACQ.TRADE_NOT_EXIST");
+				returnContent.put("flag", Constants.SYMBOL_FAILURE);
+			}
+		}
+		return returnContent;
+    }
+    
+    
+    /*
+     * 申请退款
+     * trade_no 支付宝交易流水号
+     * refund_amount 退款金额
+     */
+    public  static void refund(String trade_no,String refund_amount){
+    	JSONObject bizContent=new JSONObject();
+    	bizContent.put("trade_no", trade_no);
+    	bizContent.put("refund_amount", refund_amount);
+    	AlipayClient alipayClient = getAlipayClient();
+    	AlipayTradeRefundRequest request=new AlipayTradeRefundRequest();
+    	request.setBizContent(bizContent.toString());
+    	try {
+			AlipayTradeRefundResponse  response=alipayClient.execute(request);
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
+    }
+    /*
+     * 撤销订单
+     * @param out_trade_no 订单号
+     * @return
+     */
+    public static  Map<String, String> cancelOrder(String out_trade_no){
+    	JSONObject bizContent = new JSONObject();
+		bizContent.put("out_trade_no", out_trade_no);
+		AlipayTradeCancelResponse response = excuteCancelPay(bizContent.toString());
+		//当结果码(code)为10000时，除公共返回参数外，还将以JSON格式返回如下列表中的值。
+		if (null != response) {
+			if (response.isSuccess() && response.getCode().equals("10000")){
+				Map<String, String> returnContent = new HashMap<String, String>();
+				returnContent.put("tradeNo", response.getTradeNo());
+				returnContent.put("orderNum", response.getOutTradeNo());
+				returnContent.put("action", response.getAction());
+				returnContent.put("retry_flag", response.getRetryFlag());
+				returnContent.put("code", response.getCode());
+				returnContent.put("flag", Constants.SYMBOL_SUCCESS);
+				return returnContent;
+			}
+			else{
+				Map<String, String> returnContent = new HashMap<String, String>();
+				returnContent.put("retry_flag", response.getRetryFlag());
+				returnContent.put("code", response.getCode());
+				returnContent.put("flag", Constants.SYMBOL_FAILURE);
+				return returnContent;
+			}
+		}
+		return null;
+    }
+    /**
+     * 取消过期订单
+     * @param orderNum
+     * @return
+     */
+    public static boolean cancelExpiredOrder(String orderNum) {
+    	boolean result = Boolean.FALSE;
+    	JSONObject bizContent = new JSONObject();
+		bizContent.put("out_trade_no", orderNum);
+		AlipayTradeCancelResponse response = excuteCancelPay(bizContent.toString());
+
+		if (null != response) {
+			if (response.isSuccess() && response.getCode().equals("10000")){
+				result = Boolean.TRUE;
+			}
+		}
+		return result;
+    }
+}

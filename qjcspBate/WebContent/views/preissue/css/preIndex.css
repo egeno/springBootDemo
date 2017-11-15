@@ -1,0 +1,651 @@
+.releaseLeftMeal .look{display:block;}
+.preissueBox,.releaseMainDialog{
+	width:98%;
+	height:98%;
+	margin:10px auto;
+}
+.preissueTop,.preissueBottom{
+	width:100%;
+	border:1px solid #bfbfbf;
+	border-radius: 5px;
+	position: relative;
+}
+.preissueTop li{
+	float:left;
+	height:60px;
+	width:12.5%;
+	background:#ebebeb;
+	text-align:center;
+	cursor: pointer;
+}
+
+.Week div{
+	height: 40px;
+    margin-top: 10px;
+    border-right:1px solid #d9d9d9;
+    box-sizing:border-box;
+}
+.lookWeek div{
+	line-height:60px;
+}
+.preissueBottom{
+	margin-top:10px;
+}
+.preissueBottomLeft{
+	width:100px;
+	float: left;
+}
+.preissueBottomLeft .gray,.preissueBottomLeft .white{
+	border-right:1px solid #bfbfbf;
+	border-bottom:1px solid #bfbfbf;
+	height:135px;
+	line-height:135px;
+	text-align:center;
+	cursor: pointer;
+	display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.allname {
+    position: absolute;
+    top: 0;
+    line-height: 133px;
+    background: #fff;
+    padding: 0px 10px;
+    z-index: 9999999;
+}
+.preissueBottomLeft .supper{
+	border-bottom:none;
+}
+.gray{background:url("../image/gray.png");}
+.white{background:url("../image/white.png");}
+.preissueBottomRight{
+	width:11%;
+	position: absolute;
+    right: 0;
+    top:0;
+	background:url("../image/releasebg.png");
+	border-left:1px solid #bfbfbf;
+}
+.preissueBottomRight .releaseBtn{
+	width:75.5%;
+	height:5.5%;
+	border:2px solid #2aa2ed;
+	border-radius: 5px;
+	text-align: center;
+    color:#2aa2ed;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-3%;
+    margin-left:-40%;
+}
+.mm{
+	border-bottom:1px solid #bfbfbf;
+}
+.mm_main{
+	margin:0 auto;
+}
+ul.Meal_main{
+	margin-left: 6px;
+	display:inline-block;
+}
+.mm ul li{
+	height:80px;
+	width: 218px; 
+	position: relative;
+	float:left;
+	cursor: pointer;
+}
+.mealName{position:relative;text-align:center;}
+.mealName .name {
+    width: 95px;
+    /* margin-left: 30px; */
+    margin-top: 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+}
+.mealName .num{
+	line-height: 80px;
+	display:block;
+	width:55px;
+	text-align:center;
+	/* float: right;
+    margin-right: 15px; */
+    position: absolute;
+    right: 15px;
+    top:0px;
+}
+
+.mask{
+	/* background:url('../image/indexmask.png') no-repeat; */
+	/* width:208px; */
+	height: 70px;
+	position: absolute;
+    left: 6px;
+    top: 5px;
+}
+.mask div{
+	width: 50%;
+    float: left;
+    text-align: center;
+    line-height: 70px;
+    cursor: pointer;
+    z-index:100;
+}
+.mealName .delMask div{
+	width:100%;
+	text-align: center;
+	line-height: 70px;
+    cursor: pointer;
+    z-index:100;
+}
+.mealName .delMask div img {
+    width: 55px;
+}
+
+/*µ¯´°*/
+.updateDialog,.deleteDialog,.dateDialog,.deleteSuccessDialog,.deleteFailDialog,.updateFailDialog,.updateSuccessDialog,.inputDialog{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:999;
+	background:gray;
+	filter:alpha(opacity=90);
+    background: rgba(0,0,0,0.5);
+	display:none;
+}
+.deleteSuccessDialog div,.inputDialog div,.deleteFailDialog div,.updateFailDialog div,.updateSuccessDialog div{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -265px;
+    margin-top: -62px;
+}
+.updateDialog_main,.deleteDialog_main{
+	width:430px;
+	height:170px;
+	position:relative;
+	background: url("../image/updatebg.png") no-repeat;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left: -215px;
+    margin-top: -85px; 
+}
+.mealNum {
+    margin-top: 70px;
+    width: 100%;
+}
+.updateDialog_main .updateMealName {
+    position: absolute;
+    left: 20px;
+    font-size: 16px;
+}
+.updateDialog_main input{
+    width: 80px;
+    position: absolute;
+    right: 70px;
+    height: 20px;
+    text-align:center;
+}
+.no,.yes{
+	position:absolute;
+	bottom:0;
+	top: 130px;
+	cursor: pointer;
+}
+.yes{right:0;}
+.deleteDialog_main{
+	background: url("../image/deletebg.png") no-repeat;
+	text-align:center;
+}
+.dateDialog_main{
+	width:602px;
+	height:241px;
+	position:relative;
+	background: url("../image/datebg.png") no-repeat;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left: -301px;
+    margin-top: -120.5px; 
+}
+.deleteDialogText{margin-top:70px;}
+.close{
+	position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+.weekBox{margin-top:40px;}
+.week{
+	float:left;
+	font-size: 14px;
+	cursor: pointer;
+}
+.week div{
+	width: 45px;
+    height: 100px;
+    line-height: 100px;
+    text-align:center;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    color:#b5b5b5;
+    cursor: pointer;
+ }
+ .dateWeek{
+ width:556px;
+ float: right;
+ text-align:center;
+}
+ .dateWeek li {
+    float: left;
+    width:14.285%;
+    height:100px;
+    font-size: 14px;
+    position: relative;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.dateWeek li:nth-child(7){boreder-right:none;}
+.dateWeek li:nth-child(8){boreder-bottom:none;}
+.dateWeek div {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    top: 50%;
+    margin-top: -20px;
+    text-align: center;
+}
+.mm{
+	overflow:auto;
+	height:115px;
+	boxSizing:border-box;
+	padding:10px 0px;
+}
+.bg{
+	position: absolute;
+    top: 0;
+    z-index: -99;
+    width: 100%;
+    height:100%;
+}
+.maskbg{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top: 0;
+	left:0;
+	z-index:-1;
+}
+.indexDel{text-align:center;}
+@media (max-width:1700px){
+	.mealName{font-size:12px;}
+	.mealName .name{font-size:12px;}
+	.mealName .name{margin-left:15px;}
+	.mealName .num{right:2px;}
+}
+@media (max-width:1480px){
+	.mealName .num{right:0px;}
+}
+@media (max-width:1368px){
+	.mealName .num{right:3px;}
+}
+/*·¢²¼Ò³*/
+.releaseMainDialog{
+	display:none;
+	position: relative;
+}
+.releaseTop{
+    width:100%;
+    overflow:auto;
+	top:0px;
+    position:absolute;
+    bottom:70px;
+}
+.releaseLeft{
+	width:24.39%;
+	height: 100%;
+	position:relative;
+	box-sizing: border-box;
+}
+.releaseLeft_top{
+	height:10.25%;
+	width:100%;
+	box-sizing: border-box;
+}
+.ChoiceDate {
+  letter-spacing: 4px;
+  width: 66%;
+  position: absolute;
+  top: 3.5%;
+  left: 15%;
+  font-size:9px;
+}
+.releaseLeft_top img{
+	width:100%;
+	height:100%;
+	z-index:-1;
+}
+.releaseLeft_bottom{
+	width:100%;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background:#ffffff;
+    margin-top:5px;
+    
+}
+.releaseBottom{
+	height:60px;
+	width:100%;
+	background:#f5f5f5;
+	border:1px solid #bfbfbf;
+	boreder-radius:5px;
+	position:absolute;
+    z-index:99;
+    bottom:0;
+    text-align:center;
+}
+.releaseDialogBtn{
+	height:36px;
+	width:136px;
+	border:2px solid #2aa2ed;
+	border-radius: 5px;
+	text-align: center;
+    color:#2aa2ed;
+    line-height: 36px;
+    margin: 0 auto;
+    margin-top: 11px;
+    cursor: pointer;
+}
+.back{
+	width:122px;
+	height:36px;
+	line-height:32px;
+	font-size:16px;
+	border-left:1px solid #bfbfbf;
+	position: absolute;
+    right: 0;
+    top: 13px;
+    cursor: pointer;
+}
+.releaseLeft_bottom_tab li{
+	display: inline-block;
+	/* line-height:50px; */
+    text-align: center;
+    background:#ebebeb;
+    position: relative;
+    border-bottom:1px solid #dfdfdf;
+    cursor: pointer;
+}
+.showname{
+	position: absolute;
+    top:40px;
+    line-height: 40px;
+    background: #fff;
+    padding: 0px 10px;
+    z-index: 9999999;
+    width: 100%;
+    text-align: center;
+    display:none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.releaseLeft_bottom_tab li div{
+	border-right:1px solid #dfdfdf;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+.releaseLeft_bottom_tab .releaseLeft_supper div{border-right:none;}
+.releaseLeft_bottom_tab li.activeli{color:#fff;background:#2aa2ed;}
+.releaseLeft_bottom_tab li.activeli div{border-right:none;}
+@media (max-width:1700px){
+	.ChoiceDate {
+		letter-spacing: 1px;
+		width:58%; 
+		top: 3%;
+	    left: 20%;
+    }
+}
+@media (max-width:1450px){
+	.ChoiceDate {font-size:14px;}
+}
+@media (max-width:1380px){
+	.ChoiceDate {width: 67%;font-size:13px;top:3%}
+}
+@media (max-width:1288px){
+	.ChoiceDate {
+		width: 80%;
+	    font-size: 14px;
+	    top: 3%;
+	    left: 17%;
+    }
+    .releaseLeft_bottom_tab li div{font-size:14px;}
+}
+.releaseLeftMeal{
+	position: relative;
+	padding: 10px;
+	box-sizing:border-box;
+	overflow: auto;
+}
+.releaseLeftMeal li{
+	position: relative;
+	height:70px;
+	padding: 1px;
+	box-sizing: border-box;
+}
+.releaseLeftMeal li img{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+.releaseLeftMeal_main {
+    position: relative;
+    width: 80%;
+    /* height: 40px; */
+    overflow: hidden;
+    margin: auto;
+   /* margin-top: 10px; */
+   /*  line-height: 40px; */
+    line-height: 70px;
+    font-size: 16px;
+}
+.releaseLeftMeal_name{
+	display: inline-block;
+    width: 78%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+   /*  border-right: 1px solid #dfdfdf; */
+}
+.releaseLeftMeal_num {
+    float: right;
+}
+@media (max-width:1700px){
+	.releaseLeftMeal_main{width:90%;}
+	.releaseLeftMeal_name{width:76%}
+}
+@media (max-width:1450px){
+	.releaseLeftMeal_main{width:90%;font-size:14px;}
+}
+@media (max-width:1288px){
+	.releaseLeftMeal_main{font-size:12px;}
+}
+.releaseLeftClear {
+    width: 99.5%;
+    position: absolute;
+    height: 40px;
+    line-height: 40px;
+    bottom: 0;
+    background:#f5f5f5;
+    border-top:1px solid #dfdfdf;
+    border-right:1px solid #dfdfdf;
+    border-bottom:1px solid #dfdfdf;
+    cursor: pointer;
+}
+.clearBtn {
+    width: 85px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    letter-spacing: 5px;
+}
+.releaseRight_meal{box-sizing:border-box;border:1px solid #dfdfdf;border-top:none;border-radius:5px;position: relative;width:100%;height:100%;padding-top: 20px;overflow: auto;cursor: pointer;z-index:1;}
+.releaseRight_meal ul{width: 98%;margin: 0 auto;}
+.releaseRight_meal li{position: relative;width:16.6%;float:left;height: 70px;}
+.releaseRight_meal img{
+	width:100%;
+	height:100%;
+	position:absolute;
+}
+.releaseRight_meal div{
+	position: relative;
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    margin-top: 7%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.releaseRight{position:absolute;right:0;top:0;box-sizing:border-box;}
+.releaseRight_tab li{float:left;box-sizing:border-box;cursor: pointer;height:50px;text-align:center;position: relative;}
+.releaseRight_tab li img{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top: 0;
+    left: 0;
+}
+/* .releaseRight_tab li:nth-child(6){margin-left:0px;} */
+.releaseRight_tab li div{position: relative;width:80%;margin:0 auto;line-height:50px;}
+@media (max-width:1700px){
+	.releaseRight_meal li{font-size:14px;}
+	.releaseRight_meal div{margin-top:10%;width:52%;}
+}
+@media (max-width: 1500px){
+	.releaseRight_meal div {width: 65%;}
+}
+@media (max-width:1300px){
+	.releaseRight_meal li{font-size:12px;}
+	.releaseRight_meal div{margin-top:15%;}
+}
+.releaseLeftMeal li .mask,.look li .mask{
+    /* height: 57px; */
+    height: 63px;
+    position: absolute;
+    left: 6px;
+    top: 0px;
+}
+.releaseLeftMeal .maskbg{
+	width: 101%;
+    height: 63px;
+    z-index: 1;
+    margin-top: 3px;
+}
+.releaseLeftMeal .mask div,.look .mask div{
+	position:absolute;
+	width:50%;
+	height:63px;
+}
+.releaseLeftMeal .delMask div,.look .delMask div{
+	position:absolute;
+	width:100%;
+	height:63px;
+	margin-top: 3px;
+}
+.releaseLeftMeal .mask .releaseUpdate {
+	right:0;
+}
+.releaseLeftMeal .mask div img{
+	width:56px;
+	height:16px;
+	top: 50%;
+    margin-top: -8px;
+    left: 50%;
+    margin-left: -28px
+}
+.releasemDeleteDialog,.releasemUpdateDialog,.releasemInputDialog,.releasemDeleteSuccessDialog,.releasemDeleteFailDialog,.releasemUpdateSuccessDialog,.releasemUpdateFailDialog{
+	display:none;
+	width:100%;
+	height:107.2%;
+	/* height: 109.7%; */
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:999;
+	background:gray;
+	filter:alpha(opacity=90);
+    background: rgba(0,0,0,0.5);
+	border-radius: 5px;
+}
+.releasemDeleteDialog .deleteDialogText {
+    width: 100%;
+    height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.releasemInputDialog div,.releasemDeleteSuccessDialog div,.releasemDeleteFailDialog div,.releasemUpdateFailDialog div,.releasemUpdateSuccessDialog div{
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -265px;
+    margin-top: -62px;
+}
+.releasemreleasemSuccess{
+	display:none;
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:999;
+	background:rgba(0,0,0,0.5);
+}
+.releasemSuccess_main {
+    text-aling: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -265px;
+    margin-top: -62px;
+}
+.nouser{
+	color:#d7d7d7;
+}
+.releaseLeftMeal ul{display:none;}
+
+.preissueBottomMain{
+    overflow-y: auto;
+
+}
+.preissueBottomMain_content{
+	width:99999px;/*js¿ØÖÆ*/
+}
+.mm{position:relative;}
+.preissueBottomContent{
+    float:left;
+    left£º0;
+}
+.releaseLeft_bottom_tab_main{
+	position: relative;
+    width: 100%;
+    overflow: auto;
+}
+.none{display:none;}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsLoginRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsLoginRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="logintime" property="logintime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, customer_id, logintime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_login_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_login_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsLoginRecord" >
+    insert into basics_login_record (id, user_id, customer_id, 
+      logintime)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, 
+      #{logintime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsLoginRecord" >
+    insert into basics_login_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="logintime != null" >
+        logintime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="logintime != null" >
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsLoginRecord" >
+    update basics_login_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="logintime != null" >
+        logintime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsLoginRecord" >
+    update basics_login_record
+    set user_id = #{userId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      logintime = #{logintime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByCustomerId" resultType="com.qjkj.qjcsp.entity.BasicsLoginRecord">
+  		select <include refid="Base_Column_List" />
+   		 from basics_login_record 
+  	  where customer_id = #{customerId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserId" resultType="com.qjkj.qjcsp.entity.BasicsLoginRecord">
+  		select <include refid="Base_Column_List" />
+   		 from basics_login_record 
+  	  where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

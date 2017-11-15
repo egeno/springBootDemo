@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GHotCityMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.GHotCity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="click_num" property="clickNum" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, city_id, click_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from g_hot_city
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_hot_city
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.GHotCity" >
+    insert into g_hot_city (id, city_id, click_num
+      )
+    values (#{id,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, #{clickNum,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.GHotCity" >
+    insert into g_hot_city
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="clickNum != null" >
+        click_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="clickNum != null" >
+        #{clickNum,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.GHotCity" >
+    update g_hot_city
+    <set >
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="clickNum != null" >
+        click_num = #{clickNum,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.GHotCity" >
+    update g_hot_city
+    set city_id = #{cityId,jdbcType=BIGINT},
+      click_num = #{clickNum,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="addOrUpdateHotCity">
+  	INSERT INTO g_hot_city (city_id) VALUES (#{cityId,jdbcType=BIGINT})
+	ON DUPLICATE KEY UPDATE click_num=click_num+1;
+  </insert>
+  
+</mapper>

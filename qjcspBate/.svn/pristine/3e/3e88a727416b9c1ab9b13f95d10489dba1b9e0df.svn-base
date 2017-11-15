@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderPickDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderPickDetail" >
+    <id column="order_pick_id" property="orderPickId" jdbcType="BIGINT" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="cell_id" property="cellId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="pick_time" property="pickTime" jdbcType="TIMESTAMP" />
+    <result column="device_fault_symbol" property="deviceFaultSymbol" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_pick_id, order_detail_id, order_num, machine_id, order_child_id, company_id, item_id, 
+    cell_id, goods_id, pick_time, device_fault_symbol
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_pick_detail
+    where order_pick_id = #{orderPickId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_order_pick_detail
+    where order_pick_id = #{orderPickId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrderPickDetail" >
+    insert into tbl_order_pick_detail (order_pick_id, order_detail_id, order_num, 
+      machine_id, order_child_id, company_id, 
+      item_id, cell_id, goods_id, 
+      pick_time, device_fault_symbol)
+    values (#{orderPickId,jdbcType=BIGINT}, #{orderDetailId,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, 
+      #{machineId,jdbcType=BIGINT}, #{orderChildId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, 
+      #{itemId,jdbcType=VARCHAR}, #{cellId,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, 
+      #{pickTime,jdbcType=TIMESTAMP}, #{deviceFaultSymbol,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrderPickDetail" >
+    insert into tbl_order_pick_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderPickId != null" >
+        order_pick_id,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="pickTime != null" >
+        pick_time,
+      </if>
+      <if test="deviceFaultSymbol != null" >
+        device_fault_symbol,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderPickId != null" >
+        #{orderPickId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellId != null" >
+        #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="pickTime != null" >
+        #{pickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceFaultSymbol != null" >
+        #{deviceFaultSymbol,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrderPickDetail" >
+    update tbl_order_pick_detail
+    <set >
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id = #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellId != null" >
+        cell_id = #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="pickTime != null" >
+        pick_time = #{pickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceFaultSymbol != null" >
+        device_fault_symbol = #{deviceFaultSymbol,jdbcType=CHAR},
+      </if>
+    </set>
+    where order_pick_id = #{orderPickId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrderPickDetail" >
+    update tbl_order_pick_detail
+    set order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      order_child_id = #{orderChildId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      item_id = #{itemId,jdbcType=VARCHAR},
+      cell_id = #{cellId,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      pick_time = #{pickTime,jdbcType=TIMESTAMP},
+      device_fault_symbol = #{deviceFaultSymbol,jdbcType=CHAR}
+    where order_pick_id = #{orderPickId,jdbcType=BIGINT}
+  </update>
+  <select id="selectcountBytopd" resultType="int" parameterType="com.qjkj.qjcsp.entity.TblOrderPickDetail" >
+    select 
+   count(1)
+    from tbl_order_pick_detail
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT} and item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+   <select id="selectCountByOrderNum" resultType="int" >
+   SELECT count(1)-sum(if(device_fault_symbol=1,1,0)) AS count  from tbl_order_pick_detail WHERE order_num=#{orderNum,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCountByOrderChildId" resultType="int" >
+   SELECT count(1)-sum(if(device_fault_symbol=1,1,0)) AS count  from tbl_order_pick_detail WHERE order_child_id = #{orderChildId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAlarmCountByOrderNum" resultType="int" >
+   SELECT count(1) AS count  from tbl_order_pick_detail WHERE device_fault_symbol=1  and order_num=#{orderNum,jdbcType=VARCHAR} 
+  </select>
+  <select id="selectAlarmCountByOrderChildId" resultType="int" >
+   SELECT count(1) AS count  from tbl_order_pick_detail WHERE device_fault_symbol=1  and order_child_id = #{orderChildId,jdbcType=BIGINT}
+  </select>
+  <select id="selectListByOrderDetailId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_pick_detail
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAlarmCellNumByOrderDetailId" resultType="map" parameterType="java.lang.Long" >
+   SELECT b.cell_num AS cellNum FROM tbl_order_pick_detail a,basics_machine_cell b
+    WHERE a.cell_id=b.cell_id AND a.device_fault_symbol='1' AND a.order_detail_id=#{orderDetailId,jdbcType=BIGINT}
+ORDER BY cellNum 
+  </select>
+</mapper>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>评价</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<!-- <link type="text/css" rel="stylesheet" href="../css/goodsEvaluateIndex.css" /> -->
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/goodsEvaluateIndex.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		var orderType=localStorage.getItem("orderType");//订单类型（0预订，1零售）
+		if(orderType==1){
+		    document.write("<link type='text/css' rel='stylesheet' href='../css/goodsEvaluateIndex.css' />");
+		}else{
+			document.write("<link type='text/css' rel='stylesheet' href='../css/NooGoodsEvalute.css' />");
+		}
+		</script>
+	</head>
+	<body>
+		<div class="evaluateIndex_main">
+			<div class="topTitle"><img class="back"  src="../img/images/return2.png" /><em class="goodsName"></em></div>
+			<div class="tophead"><img  class="back" src="../img/images/return2.png" /><em></em></div>
+			<div class="goodImg"><img src="../img/img/banner2.png"></div>
+			<div class="head"  lang="">
+				<p class="goodsName"></p>
+				<p class="start"><img src="../img/img/star1.png" alt="星星"><img src="../img/img/star1.png" alt="星星"><img src="../img/img/star1.png" alt="星星"><img src="../img/img/star1.png" alt="星星"><img src="../img/img/star1.png" alt="星星"><span>剩余:<em class="goodsSurpleNum">10</em>份</span></p>
+				<p class="monery"><span class="head_monery"><label><b>&#165;</b></label><b class="goodsPrice">00.00</b></span><span class="num"><img src="../img/img_reserve/reduce.png" class="min"><span class="buyCount"></span><img src="../img/img_reserve/add-to.png" class="add"></span></p>
+			</div>
+			
+			<div class="description">
+				<h3 class="description_title">菜品描述</h3>
+				<p>暂无信息</p>
+			</div>
+			
+			<div class="ingredients">
+				<h3 class="ingredients_title">食材</h3>
+				<p class="noIngredients">暂无信息</p>
+				<div class="ingredients_box">
+					<!-- <div class="foodTitle">
+						<h3>主料</h3>
+						<ul>
+							<li>
+								<span class='foodName'>草鱼</span><em class='grams'><i>500</i>g</em>
+							</li>
+							<li>
+								<span class='foodName'>海带</span><em class='grams'><i>50</i>g</em>
+							</li>
+						</ul>
+					</div> -->
+				</div>
+			</div>
+			
+			<div class="evaluate">
+				<p class="evaluateTitle">菜品评价(<em>40</em>)<span class="look"><img src="../img/image/cfalse.png" class='check'>只看有内容的评价</span><p class="noEvaluate">暂无评价</p></p>
+				<ul class="evaluateList cle">
+					<!-- <li>
+						<p><span class='listStart'><img src='../img/img/star1.png' alt='星星'><img src='../img/img/star1.png' alt='星星'><img src='../img/img/star1.png' alt='星星'><img src='../img/img/star1.png' alt='星星'><img src='../img/img/star1.png' alt='星星'></span><em class='userName'>林智撒娇开是</em></p>
+						<p class='evaluateList_text'>很好吃！我很喜欢！</p>
+						<p class='evaluateList_info'><span class='evaluateList_time'>2015-12-15</span><span class="evaluateList_name"><img src="../img/img/evaluateList_name.png" class="tt">红烧狮子头套餐</span></p>
+					</li> -->
+				</ul>
+			</div>
+			<div class="showAll">查看全部评价</div>
+			<div style="height:1rem;"></div>
+			<div class="botton">
+				<span class="enterCar"><i class="allCount">0</i><img src="../img/img/car.png" /><em><label>&#165;</label><b>0.00</b></em></span>
+				<span class="go">去选餐</span>
+				<a class="balance" href="javascript:;">去结算</a>
+			</div>
+			
+			
+			<div class="dialog">
+				<div class="car">	<!-- 购物车 -->
+					<h1>您的购物车 <img class="delete" src="../img/img/clear.png" /></h1>
+					<div class="scroll">
+						<!-- <p class="takeTime"><span class="line"></span><span class="text"><em class="data">00-00</em><em class="food">灿灿</em>(取餐时间:<em class="time">00:00-00:00</em>)</span></p> -->
+						<ul>
+							<!--<li>
+								<span class="dishName">红烧狮子头套餐1</span>
+								<span class="dishPrice">&#165;15.00</span>
+								<span class="min">-</span>
+								<span class="buyCount">1</span>
+								<span class="add">+</span>
+							</li>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+

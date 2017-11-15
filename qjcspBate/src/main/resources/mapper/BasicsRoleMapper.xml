@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsRoleMapper">
+	
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsRole">
+		<id column="role_id" property="roleId" jdbcType="BIGINT" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="role_memo" property="roleMemo" jdbcType="VARCHAR" />
+		<result column="role_status" property="roleStatus" jdbcType="CHAR" />
+		<result column="symbol" property="symbol" jdbcType="CHAR" />
+		<result column="special_role_num" property="specialRoleNum" jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		role_id, role_name, company_id, role_memo, role_status, symbol, special_role_num, isdel,
+		create_time,
+		last_mod_time, create_user_id, mod_user_id
+	</sql>
+	
+	<delete id="deleteByRoleId" parameterType="java.lang.Long">
+		DELETE FROM basics_role
+		WHERE role_id = #{roleId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insertRole" parameterType="com.qjkj.qjcsp.entity.BasicsRole">
+		INSERT INTO basics_role (role_name, company_id,
+		role_memo, role_status, symbol, special_role_num,
+		isdel, create_time, last_mod_time,
+		create_user_id, mod_user_id)
+		VALUES (#{roleName,jdbcType=VARCHAR},
+		#{companyId,jdbcType=BIGINT},
+		#{roleMemo,jdbcType=VARCHAR}, #{roleStatus,jdbcType=CHAR}, 
+		#{symbol,jdbcType=CHAR}, #{specialRoleNum,jdbcType=CHAR},
+		#{isdel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{lastModTime,jdbcType=TIMESTAMP},
+		#{createUserId,jdbcType=BIGINT}, #{modUserId,jdbcType=BIGINT})
+	</insert>
+	
+	<update id="updateRole" parameterType="com.qjkj.qjcsp.entity.BasicsRole">
+		UPDATE basics_role
+		SET role_name = #{roleName,jdbcType=VARCHAR},
+		role_memo = #{roleMemo,jdbcType=VARCHAR},
+		role_status = #{roleStatus,jdbcType=CHAR},
+		last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+		mod_user_id = #{modUserId,jdbcType=BIGINT}
+		WHERE role_id = #{roleId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateRoleForDelete" parameterType="java.lang.Long">
+		UPDATE basics_role SET isdel = 'Y'
+		WHERE role_id = #{roleId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateRoleForUsed" parameterType="com.qjkj.qjcsp.entity.BasicsRole">
+		UPDATE basics_role SET role_status = #{roleStatus,jdbcType=CHAR}
+		WHERE role_id = #{roleId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getBasicsRoleByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_role
+		WHERE role_id = #{roleId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="getMerchantManagerRole" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_role
+		WHERE symbol = 'Y' AND isdel = 'N'
+		LIMIT 0,1
+	</select>
+	
+	<select id="findBasicsRoleByCompanyIdForMerchant" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		SELECT
+		*
+		FROM basics_role
+		WHERE company_id = #{companyId,jdbcType=BIGINT} AND isdel = 'N' AND special_role_num != 1
+	</select>
+	
+	<select id="findBasicsRoleByCompanyIdForPlatform" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		SELECT
+		*
+		FROM basics_role
+		WHERE company_id = #{companyId,jdbcType=BIGINT} AND symbol = 'N' AND isdel = 'N' AND special_role_num !='1'
+		
+		<!-- SELECT * FROM basics_role t
+		JOIN basics_company b ON b.company_id = t.company_id
+		WHERE t.isdel = 'N' AND t.special_role_num != 1 AND b.isdel = 'N' -->
+		
+		<!-- SELECT b.company_name companyName,t.role_name roleName, role_memo roleMemo FROM basics_role t
+		JOIN basics_company b ON b.company_id = t.company_id
+		WHERE t.isdel = 'N' AND t.special_role_num != 1 AND b.isdel = 'N' -->
+	</select>
+	
+	<select id="basicsFindRoles" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		SELECT
+		*
+		FROM basics_role
+		WHERE company_id = #{companyId,jdbcType=BIGINT} AND symbol = 'N' AND isdel = 'N'
+		
+	</select>
+	
+	<select id="selectSpecialRoleNum" resultType="java.lang.String" parameterType="java.lang.Long">
+		SELECT 
+		t.special_role_num 
+		FROM basics_role t 
+		WHERE t.symbol = 'N' AND t.isdel = 'N' AND t.role_id = #{roleId,jdbcType=BIGINT}
+	</select>
+	
+	 <select id="getRoleName" resultType="map">
+	  	SELECT DISTINCT bu.user_name as roleName FROM basics_users bu,basics_role br,basics_user_role bur where bu.company_id=br.company_id AND
+		br.role_id=bur.role_id and bu.isdel='N' and br.isdel='N' and br.special_role_num='3' 
+		<if test="companyId !=null and companyId !=''">
+			and bu.company_id=#{companyId} 
+			and br.company_id=#{companyId};
+		</if>
+  	</select>
+  	
+  	<select id="getSpecialRoleNumByUserId" resultType="map">
+  		SELECT br.special_role_num as specialRoleNum,bu.user_name as userName 
+  		from basics_users bu,basics_role br,basics_user_role  bur
+		WHERE  bu.user_id=bur.user_id AND br.role_id=bur.role_id  and bu.isdel='N' AND br.isdel='N' AND bu.user_id=#{userId}
+  	</select>
+  	
+  	<select id="findSpecialNumByMobile" resultType="map">
+  		SELECT u.user_id userId,b.special_role_num specialRoleNum FROM basics_role b 
+		JOIN basics_user_role r ON b.role_id = r.role_id 
+		JOIN basics_users u ON r.user_id = u.user_id
+		WHERE u.user_mobile = #{mobile}
+  	</select>
+  	
+  	<update id="updateIsdel">
+  		UPDATE basics_role b SET b.isdel = 'Y' 
+  		WHERE b.company_id = #{companyId}
+  	</update>
+  	
+</mapper>

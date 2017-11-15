@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--退款/售后</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/refundorsh.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/refundorsh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.touchSlider.js" type="text/javascript" charset="utf-8"></script>  <!-- 滑动 -->
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="main">
+		<div class="order_content">
+			<div class="title">
+				<a href="javascript:void(0);" class="gotoback"><img src="../img/image/return.png" alt="返回" /></a>
+				退款/售后
+				<a href=""><img src="../img/image/del.png" alt="" class="delete"></a>
+				<span class="cancel">取消</span>
+			</div>
+			<div class="splitLine"></div>    <!-- 分割线  --> 
+			<!-- 商品信息  start -->
+			<div class="productinfo">
+				<ul class="pro-ul">
+<!-- 					<li class="pro-li "> -->
+<!-- 						<p class="location"><img src="../img/image/locationimg.jpg" alt="">西湖区万塘路102号西湖科技园3幢1楼<span>退款中</span></p> -->
+<!-- 						<p class="check" num="1"></p> -->
+<!-- 						<div class="leftimg"> -->
+<!-- 							<img src="../img/image/proimg2.jpg" alt=""> -->
+<!-- 						</div> -->
+<!-- 						<div class="right-titinf"> -->
+<!-- 							<p class="date">2016-4-21 12:12:00</p> -->
+<!-- 							<p class="number">数量：3份</p> -->
+<!-- 							<p class="paymoney">共计：22元</p> -->
+<!-- 							<p class="dy-infor">3分钟后订单自动取消</p> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+				</ul>
+			</div>
+			<!-- 商品信息 end-->
+			<p class="nomore">没有更多了</p>
+			<div class="deletebut">
+				<p class="deletebutt">删除</p>   <!-- 删除按钮 -->
+			</div>
+		</div>
+		<div class="dialog none">
+			<div class="npop_up">
+				<div class="pop-top">
+					<p class="ntime">工作时间：每天9:00-23:00</p>
+					<p class="ntel"><a href="tel:4009057571">呼叫：400-905-7571</a></p>
+				</div>
+				<div class="pop-bottom">
+					<p class="ncancel">取消</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+
+</script>

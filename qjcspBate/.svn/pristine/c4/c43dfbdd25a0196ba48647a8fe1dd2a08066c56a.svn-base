@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderRefundLogMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderRefundLog" >
+    <id column="refund_log_id" property="refundLogId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="customer_money" property="customerMoney" jdbcType="DECIMAL" />
+    <result column="refund_money" property="refundMoney" jdbcType="DECIMAL" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    refund_log_id, customer_id, customer_money, refund_money, order_num, create_time, 
+    create_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_refund_log
+    where refund_log_id = #{refundLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_order_refund_log
+    where refund_log_id = #{refundLogId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrderRefundLog" >
+    insert into tbl_order_refund_log (refund_log_id, customer_id, customer_money, 
+      refund_money, order_num, create_time, 
+      create_user_id)
+    values (#{refundLogId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{customerMoney,jdbcType=DECIMAL}, 
+      #{refundMoney,jdbcType=DECIMAL}, #{orderNum,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrderRefundLog" >
+    insert into tbl_order_refund_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="refundLogId != null" >
+        refund_log_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="customerMoney != null" >
+        customer_money,
+      </if>
+      <if test="refundMoney != null" >
+        refund_money,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="refundLogId != null" >
+        #{refundLogId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerMoney != null" >
+        #{customerMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundMoney != null" >
+        #{refundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrderRefundLog" >
+    update tbl_order_refund_log
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerMoney != null" >
+        customer_money = #{customerMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundMoney != null" >
+        refund_money = #{refundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where refund_log_id = #{refundLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrderRefundLog" >
+    update tbl_order_refund_log
+    set customer_id = #{customerId,jdbcType=BIGINT},
+      customer_money = #{customerMoney,jdbcType=DECIMAL},
+      refund_money = #{refundMoney,jdbcType=DECIMAL},
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT}
+    where refund_log_id = #{refundLogId,jdbcType=BIGINT}
+  </update>
+</mapper>

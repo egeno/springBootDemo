@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<meta name="format-detection" content="telephone=no">
+	<title>微信--加盟</title>
+	<link type="text/css" rel="stylesheet" href="../css/common.css" />
+	<link type="text/css" rel="stylesheet" href="../css/join_in.css" />
+	<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/join_in.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+</head>                                     
+<body>
+<div class="tanchuan">
+  <div class="boter">
+   <div class="reter">恭喜您，申请成功！</div>
+   <div class="rett"><p>我们的客服人员会在三个工作日内与您尽快联系，谢谢！</p></div>
+   <div class="hao">好</div>
+  </div>
+</div>
+
+<div class="title"><a href="javascript:void(0);" class="gotoback"><img src="../img/image/return.png" alt="返回" /></a>加盟</div>
+<div class="xline"></div>
+<div class="onepwdbox numbox">
+	<span class="points">选择</span>
+	<!-- <select class="Drop_down_box joinType">
+		<option value="0">公司申请</option>
+		<option value="1">设备租赁</option>
+		<option value="2">设备合作</option>
+		<option value="3">区域代理</option>
+		<option value="4">商户接入</option>
+		<option value="5">众包合作</option>
+	</select> -->
+	<li id="joinTc">
+                    <a class="nav_list joinTc joinType" value='5'>众包合作</a>
+                    <div class="mytc_join" >
+				        <!-- <a  class='clia' value="0">公司申请</a> -->
+				        <a  class='clia' value="5">众包合作</a>
+				        <a  class='clia' value="1">设备租赁</a>
+				        <a  class='clia' value="2">设备销售</a>
+				        <a  class='clia' value="3">区域代理</a>
+				        <a  class='clia' value="4">商户接入</a>
+				        
+                    </div>
+     </li>
+	<p class="onets"></p>
+</div>
+<div class="onepwdbox numbox">
+	<span class="points">手机</span>
+	<input type="text" class="phone phone_user applicantTel" placeholder="请输入手机号" name="tblPhone" maxlength="11">
+	<p class="onets"></p>
+	<span class="phone_wrong">输入有误</span>
+</div>
+<div class="onepwdbox numbox">
+	<span class="points">姓名</span>
+	<input type="text" class="phone your_name applicant" placeholder="请输入姓名" name="name">
+	<p class="onets"></p>
+	<span class="name_wrong">不得为空</span>
+</div>
+<div class="onepwdbox numbox">
+	<span class="points">留言</span>
+	<input type="text" class="phone content" placeholder="请留言" name="content">
+	<p class="onets"></p>
+</div>
+<dl class="protocol">
+    <dt>分享经济的模式，众包人无需投入，全家科技提供平台、技术和设备，众包人只需负责线下配送和地推，即可享受平台的收益分成。</dt>
+    <dt>经营者缴纳押金、租金，自主经营的模式。经营者也可结合自身的业务和资源，通过租赁友吃友喝技术设备，升级销售方式，扩大营收利润。</dt>
+    <dt>经营者一次性买断设备、自主经营的模式。经营者也可在原有传统产业基础上，通过购买友吃友喝技术设备实现产业升级，增强市场核心竞争力。</dt>
+    <dt>全家科技授权代理商在国内某一区域的销售经营。在不影响合作权益前提下，区域代理可根据区域市场特征展开产品销售、租赁、合作以及区域地方特色的O2MO模式经营创收。</dt>
+    <dt>各级各类食品商户，通过申请接入友吃友喝平台，拓宽自身销售渠道，优化提升运营效率，实现“卖得多挣得更多”的目的！</dt>
+    <dt class="show_it">1、手机递交申请后，三个工作日与您联系</dt>
+	<dt class="show_it">2、专业人员介绍产品项目，进一步交流和沟通</dt>
+	<dt class="show_it">3、达成合作协议，提供培训和支持，开启创富之旅</dt>
+</dl>
+<div class="btn">确认提交</div>
+<!-- 设置成功弹窗 -->
+
+
+
+<div class="success none"><img src="../img/image/success.jpg" alt=""></div>
+<span class="phone_error">请输入正确的手机号</span>
+
+</body>
+</html>
+<script type="text/javascript">
+
+</script>

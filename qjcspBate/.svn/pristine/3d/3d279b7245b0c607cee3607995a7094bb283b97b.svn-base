@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomer">
+		<id column="customer_id" property="customerId" jdbcType="BIGINT" />
+		<result column="customer_name" property="customerName"
+			jdbcType="VARCHAR" />
+		<result column="customer_password" property="customerPassword"
+			jdbcType="VARCHAR" />
+		<result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+		<result column="customer_mobile" property="customerMobile"
+			jdbcType="VARCHAR" />
+		<result column="customer_email" property="customerEmail"
+			jdbcType="VARCHAR" />
+		<result column="real_name" property="realName" jdbcType="VARCHAR" />
+		<result column="customer_sex" property="customerSex" jdbcType="CHAR" />
+		<result column="customer_qq" property="customerQq" jdbcType="VARCHAR" />
+		<result column="customer_weixin" property="customerWeixin"
+			jdbcType="VARCHAR" />
+		<result column="customer_money" property="customerMoney"
+			jdbcType="DECIMAL" />
+		<result column="customer_integral" property="customerIntegral"
+			jdbcType="INTEGER" />
+		<result column="customer_level" property="customerLevel"
+			jdbcType="INTEGER" />
+		<result column="customer_type" property="customerType"
+			jdbcType="INTEGER" />
+		<result column="customer_status" property="customerStatus"
+			jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+		<result column="isfirst" property="isfirst" jdbcType="CHAR" />
+		<result column="identifying_code" property="identifyingCode"
+			jdbcType="VARCHAR" />
+		<result column="infocompletesymbol" property="infoCompleteSymbol"
+			jdbcType="CHAR" />
+		<result column="discountusedsymbol" property="discountUsedSymbol"
+			jdbcType="CHAR" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="attention_time" property="attentionTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		customer_id, customer_name, customer_password, pay_password, customer_mobile,
+		customer_email,
+		real_name, customer_sex, customer_qq, customer_weixin, customer_money,
+		customer_integral,
+		customer_level, customer_type, customer_status, isdel, create_time, modify_time,
+		create_user_id, mod_user_id, isfirst, identifying_code, end_time,
+		infocompletesymbol, discountusedsymbol,attention_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		customer_id, customer_name, customer_password, pay_password, customer_mobile,
+		customer_email,
+		real_name, customer_sex, customer_qq, customer_weixin, customer_money,
+		IF(customer_integral IS NULL,"0",customer_integral) AS
+		customer_integral,
+		customer_level, customer_type, customer_status, isdel, create_time, modify_time,
+		create_user_id, mod_user_id, isfirst, identifying_code, end_time,
+		infocompletesymbol, discountusedsymbol,attention_time
+		from tbl_customer
+		where customer_id = #{customerId,jdbcType=BIGINT}
+	</select>
+   <!-- 查询需要推送的用户ID  selectCustomerID -->
+   <!--  <select id="selectCustomerId" resultType="Integer">
+      select customer_id from tbl_customer
+    </select> -->
+    
+	<select id="selectTblCustomerByCustomerIdForUpdate" resultMap="BaseResultMap">
+		select
+		customer_id, customer_name, customer_password, pay_password, customer_mobile,
+		customer_email,
+		real_name, customer_sex, customer_qq, customer_weixin, customer_money,
+		IF(customer_integral IS NULL,"0",customer_integral) AS
+		customer_integral,
+		customer_level, customer_type, customer_status, isdel, create_time, modify_time,
+		create_user_id, mod_user_id, isfirst, identifying_code, end_time,
+		infocompletesymbol, discountusedsymbol,attention_time
+		from tbl_customer
+		where customer_id = #{customerId,jdbcType=BIGINT} for update
+	</select>
+
+	<select id="selectByPrimaryKeyMap" resultType="map"
+		parameterType="java.lang.Long">
+		SELECT
+		CAST(customer_id AS CHAR) AS customerId,
+		CAST(customer_name AS CHAR) AS customerName,
+		CAST(customer_mobile AS CHAR) AS customerMobile,
+		CAST(if(customer_integral is null,"0",customer_integral) AS CHAR) AS customerIntegral,
+		CAST(customer_sex AS CHAR) AS customerSex,
+		if(pay_password is null,'0','1') AS isNewUser
+		FROM tbl_customer
+		WHERE customer_id=#{customerId}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from tbl_customer
+		where customer_id = #{customerId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomer">
+		insert into tbl_customer (customer_id, customer_name,
+		customer_password,
+		pay_password, customer_mobile, customer_email,
+		real_name, customer_sex, customer_qq,
+		customer_weixin, customer_money, customer_integral,
+		customer_level, customer_type, customer_status,
+		isdel, create_time, modify_time,
+		create_user_id, mod_user_id, isfirst,
+		identifying_code, end_time, infocompletesymbol, discountusedsymbol,attention_time)
+		values (#{customerId,jdbcType=BIGINT}, #{customerName,jdbcType=VARCHAR},
+		#{customerPassword,jdbcType=VARCHAR},
+		#{payPassword,jdbcType=VARCHAR}, #{customerMobile,jdbcType=VARCHAR},
+		#{customerEmail,jdbcType=VARCHAR},
+		#{realName,jdbcType=VARCHAR}, #{customerSex,jdbcType=CHAR}, #{customerQq,jdbcType=VARCHAR},
+		#{customerWeixin,jdbcType=VARCHAR}, #{customerMoney,jdbcType=DECIMAL},
+		#{customerIntegral,jdbcType=INTEGER},
+		#{customerLevel,jdbcType=INTEGER}, #{customerType,jdbcType=INTEGER},
+		#{customerStatus,jdbcType=CHAR},
+		#{isdel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+		#{createUserId,jdbcType=BIGINT}, #{modUserId,jdbcType=BIGINT},
+		#{isfirst,jdbcType=CHAR},
+		#{identifyingCode,jdbcType=VARCHAR}, #{endTime,jdbcType=TIMESTAMP}, #{infoCompleteSymbol,jdbcType=CHAR},
+		#{discountUsedSymbol,jdbcType=CHAR},#{attentionTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomer"
+		useGeneratedKeys="true" keyProperty="customerId">
+		insert into tbl_customer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="customerId != null">
+				customer_id,
+			</if>
+			<if test="customerName != null">
+				customer_name,
+			</if>
+			<if test="customerPassword != null">
+				customer_password,
+			</if>
+			<if test="payPassword != null">
+				pay_password,
+			</if>
+			<if test="customerMobile != null">
+				customer_mobile,
+			</if>
+			<if test="customerEmail != null">
+				customer_email,
+			</if>
+			<if test="realName != null">
+				real_name,
+			</if>
+			<if test="customerSex != null">
+				customer_sex,
+			</if>
+			<if test="customerQq != null">
+				customer_qq,
+			</if>
+			<if test="customerWeixin != null">
+				customer_weixin,
+			</if>
+			<if test="customerMoney != null">
+				customer_money,
+			</if>
+			<if test="customerIntegral != null">
+				customer_integral,
+			</if>
+			<if test="customerLevel != null">
+				customer_level,
+			</if>
+			<if test="customerType != null">
+				customer_type,
+			</if>
+			<if test="customerStatus != null">
+				customer_status,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+			<if test="isfirst != null">
+				isfirst,
+			</if>
+			<if test="identifyingCode != null">
+				identifying_code,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="infoCompleteSymbol != null">
+				infocompletesymbol,
+			</if>
+			<if test="discountUsedSymbol != null">
+				discountusedsymbol,
+			</if>
+			<if test="attentionTime != null">
+				attention_time
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="customerId != null">
+				#{customerId,jdbcType=BIGINT},
+			</if>
+			<if test="customerName != null">
+				#{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerPassword != null">
+				#{customerPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="payPassword != null">
+				#{payPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="customerMobile != null">
+				#{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerEmail != null">
+				#{customerEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerSex != null">
+				#{customerSex,jdbcType=CHAR},
+			</if>
+			<if test="customerQq != null">
+				#{customerQq,jdbcType=VARCHAR},
+			</if>
+			<if test="customerWeixin != null">
+				#{customerWeixin,jdbcType=VARCHAR},
+			</if>
+			<if test="customerMoney != null">
+				#{customerMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="customerIntegral != null">
+				#{customerIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="customerLevel != null">
+				#{customerLevel,jdbcType=INTEGER},
+			</if>
+			<if test="customerType != null">
+				#{customerType,jdbcType=INTEGER},
+			</if>
+			<if test="customerStatus != null">
+				#{customerStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="isfirst != null">
+				#{isfirst,jdbcType=CHAR},
+			</if>
+			<if test="identifyingCode != null">
+				#{identifyingCode,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="infoCompleteSymbol != null">
+				#{infoCompleteSymbol,jdbcType=CHAR},
+			</if>
+			<if test="discountUsedSymbol != null">
+				#{discountUsedSymbol,jdbcType=CHAR},
+			</if>
+			<if test="attentionTime != null">
+				#{attentionTime,jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblCustomer">
+		update tbl_customer
+		<set>
+			<if test="customerName != null">
+				customer_name = #{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerPassword != null">
+				customer_password = #{customerPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="payPassword != null">
+				pay_password = #{payPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="customerMobile != null">
+				customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerEmail != null">
+				customer_email = #{customerEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerSex != null">
+				customer_sex = #{customerSex,jdbcType=CHAR},
+			</if>
+			<if test="customerQq != null">
+				customer_qq = #{customerQq,jdbcType=VARCHAR},
+			</if>
+			<if test="customerWeixin != null">
+				customer_weixin = #{customerWeixin,jdbcType=VARCHAR},
+			</if>
+			<if test="customerMoney != null">
+				customer_money = #{customerMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="customerIntegral != null">
+				customer_integral = #{customerIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="customerLevel != null">
+				customer_level = #{customerLevel,jdbcType=INTEGER},
+			</if>
+			<if test="customerType != null">
+				customer_type = #{customerType,jdbcType=INTEGER},
+			</if>
+			<if test="customerStatus != null">
+				customer_status = #{customerStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="isfirst != null">
+				isfirst = #{isfirst,jdbcType=CHAR},
+			</if>
+			<if test="identifyingCode != null">
+				identifying_code = #{identifyingCode,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="infoCompleteSymbol != null">
+				infocompletesymbol = #{infoCompleteSymbol,jdbcType=CHAR},
+			</if>
+			<if test="discountUsedSymbol != null">
+				discountusedsymbol = #{discountUsedSymbol,jdbcType=CHAR},
+			</if>
+			<if test="attentionTime != null">
+				attention_time = #{attentionTime,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		where customer_id = #{customerId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblCustomer">
+		update tbl_customer
+		set customer_name = #{customerName,jdbcType=VARCHAR},
+		customer_password = #{customerPassword,jdbcType=VARCHAR},
+		pay_password = #{payPassword,jdbcType=VARCHAR},
+		customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+		customer_email = #{customerEmail,jdbcType=VARCHAR},
+		real_name = #{realName,jdbcType=VARCHAR},
+		customer_sex = #{customerSex,jdbcType=CHAR},
+		customer_qq = #{customerQq,jdbcType=VARCHAR},
+		customer_weixin = #{customerWeixin,jdbcType=VARCHAR},
+		customer_money = #{customerMoney,jdbcType=DECIMAL},
+		customer_integral = #{customerIntegral,jdbcType=INTEGER},
+		customer_level = #{customerLevel,jdbcType=INTEGER},
+		customer_type = #{customerType,jdbcType=INTEGER},
+		customer_status = #{customerStatus,jdbcType=CHAR},
+		isdel = #{isdel,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		mod_user_id = #{modUserId,jdbcType=BIGINT},
+		isfirst = #{isfirst,jdbcType=CHAR},
+		identifying_code = #{identifyingCode,jdbcType=VARCHAR},
+		end_time = #{endTime,jdbcType=TIMESTAMP},
+		infocompletesymbol = #{infoCompleteSymbol,jdbcType=CHAR},
+		discountusedsymbol = #{discountUsedSymbol,jdbcType=CHAR},
+		attention_time = #{attentionTime,jdbcType=TIMESTAMP},
+		where customer_id = #{customerId,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByMobileNum" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_customer
+		where customer_mobile = #{customerMobile,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByMobileNumCode" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from tbl_customer
+		<where>
+			<if test="mobileNum != null and mobileNum != ''">
+				customer_mobile=#{mobileNum,jdbcType=VARCHAR}
+			</if>
+			<if test="verifyCode != null and verifyCode != ''">
+				and identifying_code=#{verifyCode,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="getCount" resultType="java.lang.Long">
+		SELECT count(*)
+		FROM tbl_customer t
+		JOIN tbl_customer_info tc ON tc.customer_id = t.customer_id
+		<where>
+			t.isdel = 'N'
+			<if test="customerMobile != null and customerMobile != '' ">
+				AND t.customer_mobile like '%${customerMobile}%'
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name like '%${customerName}%'
+			</if>
+			<if
+				test="endDate != null and endDate != '' and startDate != null and startDate != '' ">
+				AND t.create_time BETWEEN #{startDate,jdbcType=TIMESTAMP} AND
+				#{endDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="universityName != null and universityName != '' ">
+				AND tc.university_name like '%${universityName}%'
+			</if>
+		</where>
+
+	</select>
+
+	<select id="findAppUserIntegral" resultMap="BaseResultMap">
+		SELECT *
+		FROM tbl_customer t
+		JOIN tbl_customer_info tc ON tc.customer_id = t.customer_id
+		<where>
+			t.isdel = 'N'
+			<if test="customerMobile != null and customerMobile != '' ">
+				AND t.customer_mobile like '%${customerMobile}%'
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name like '%${customerName}%'
+			</if>
+			<if
+				test="endDate != null and endDate != '' and startDate != null and startDate != '' ">
+				AND t.create_time BETWEEN #{startDate,jdbcType=TIMESTAMP} AND
+				#{endDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="universityName != null and universityName != '' ">
+				AND tc.university_name like '%${universityName}%'
+			</if>
+		</where>
+		ORDER BY t.modify_time DESC
+		limit #{offset},#{limit}
+	</select>
+
+	<update id="update" parameterType="com.qjkj.qjcsp.entity.viewmodel.TblCustomerVo">
+		update tbl_customer
+		<set>
+			<if test="customerName != null">
+				customer_name = #{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerPassword != null">
+				customer_password = #{customerPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="payPassword != null">
+				pay_password = #{payPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="customerMobile != null">
+				customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerEmail != null">
+				customer_email = #{customerEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="customerSex != null">
+				customer_sex = #{customerSex,jdbcType=CHAR},
+			</if>
+			<if test="customerQq != null">
+				customer_qq = #{customerQq,jdbcType=VARCHAR},
+			</if>
+			<if test="customerWeixin != null">
+				customer_weixin = #{customerWeixin,jdbcType=VARCHAR},
+			</if>
+			<if test="customerMoney != null">
+				customer_money = #{customerMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="customerIntegral != null">
+				customer_integral = #{customerIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="customerLevel != null">
+				customer_level = #{customerLevel,jdbcType=INTEGER},
+			</if>
+			<if test="customerType != null">
+				customer_type = #{customerType,jdbcType=INTEGER},
+			</if>
+			<if test="customerStatus != null">
+				customer_status = #{customerStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="isfirst != null">
+				isfirst = #{isfirst,jdbcType=CHAR},
+			</if>
+			<if test="identifyingCode != null">
+				identifying_code = #{identifyingCode,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where customer_id = #{customerId,jdbcType=BIGINT}
+	</update>
+
+	<select id="findCustomerByCustomerId" parameterType="java.lang.Long"
+		resultType="java.util.Map">
+		SELECT
+		CAST(IFNULL(customer_money,'0') AS CHAR) balance
+		,CAST(IFNULL(customer_integral,'0') AS CHAR) integral
+		,'0' coupon
+		,if(pay_password is null,'0','1') payPwdCheck
+		FROM tbl_customer
+		WHERE customer_id=#{customerId}
+	</select>
+
+
+	<select id="findAPPUserInfo" resultMap="BaseResultMap">
+		SELECT *
+		FROM tbl_customer t
+		JOIN tbl_customer_info tc ON tc.customer_id = t.customer_id
+		<where>
+			t.isdel = 'N'
+			<if test="customerId != null and customerId != '' ">
+				AND t.customer_id like '%${customerId}%'
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name like '%${customerName}%'
+			</if>
+		</where>
+		ORDER BY t.modify_time DESC
+		limit #{offset},#{limit}
+	</select>
+
+	<select id="getInfoByCount" resultType="java.lang.Long">
+		SELECT count(*)
+		FROM tbl_customer t
+		JOIN tbl_customer_info tc ON tc.customer_id = t.customer_id
+		<where>
+			t.isdel = 'N'
+			<if test="customerId != null and customerId != '' ">
+				AND t.customer_id like '%${customerId}%'
+			</if>
+			<if test="customerName != null and customerName != '' ">
+				AND t.customer_name like '%${customerName}%'
+			</if>
+		</where>
+	</select>
+
+	<update id="updateIsdel">
+		update tbl_customer
+		<set>
+			isdel = 'Y'
+		</set>
+		where customer_id = #{customer,jdbcType=BIGINT}
+	</update>
+
+	<select id="findActivitySymbolByCustomerId" parameterType="java.lang.Long"
+		resultType="java.lang.Integer">
+		SELECT
+		CASE
+		WHEN infocompletesymbol='0' THEN 1
+		WHEN infocompletesymbol='1' AND
+		discountusedsymbol='0' THEN 2
+		WHEN discountusedsymbol='1' THEN 3
+		END AS SYMBOL
+		FROM tbl_customer WHERE customer_id=#{customerId}
+	</select>
+
+	<update id="updateDiscountUsed">
+		UPDATE tbl_customer
+		SET discountusedsymbol = #{discountUsedSymbol,jdbcType=CHAR}
+		WHERE customer_id = #{customerId,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByCustomerIdCode" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from tbl_customer
+		<where>
+			<if test="customerId != null and customerId != ''">
+				customer_id=#{customerId,jdbcType=VARCHAR}
+			</if>
+			<if test="code != null and code != ''">
+				and identifying_code=#{code,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="exportSearchDaily" resultType="map">
+
+		SELECT t.customer_id customerId,t.customer_name
+		customerName,t.customer_mobile customerMobile,
+		t.customer_sex customerSex,t.customer_money customerMoney,t.customer_integral
+		customerIntegral,
+		tc.building_name buildingName,tc.native_place nativePlace,tc.student_num
+		studentNum,tc.university_name universityName,tc.grade grade
+		FROM tbl_customer t
+		JOIN tbl_customer_info tc ON tc.customer_id = t.customer_id
+		<where>
+			t.isdel = 'N'
+			<if test="customerId != null and customerId != '' ">
+				AND (t.customer_id like '%${customerId}%' OR t.customer_name like '%${customerId}%')
+			</if>
+			<!-- <if test="customerName != null and customerName != '' ">
+				AND t.customer_name like '%${customerName}%'
+			</if> -->
+		</where>
+		ORDER BY t.modify_time DESC
+
+	</select>
+
+	<select id="findCustomerQuestion" parameterType="map"
+		resultType="map">
+		SELECT c.customer_mobile as customermobile,c.customer_name as
+		customername,cq.create_time as createtime,cq.question
+		FROM tbl_customer_question cq,tbl_customer c
+		WHERE c.customer_id = cq.customer_id
+		<if test="customermobile != null and customermobile !='' ">
+			AND c.customer_mobile = #{customermobile}
+		</if>
+		<if test="createtime != null and createtime != ''">
+			AND DATE_FORMAT(cq.create_time, '%Y-%m-%d') = #{createtime}
+		</if>
+		ORDER BY cq.create_time DESC
+		limit #{offset},#{limit}
+	</select>
+	<select id="getQuestionnum" parameterType="map" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS number FROM tbl_customer_question cq,tbl_customer c
+		WHERE c.customer_id = cq.customer_id
+		<if test="customermobile != null and customermobile !='' ">
+			AND c.customer_mobile = #{customermobile}
+		</if>
+		<if test="createtime != null and createtime != ''">
+			AND DATE_FORMAT(cq.create_time, '%Y-%m-%d') = #{createtime}
+		</if>
+	</select>
+	
+	<select id="findCustomerByCustomerWeiXin" resultType="integer">
+		SELECT count(1) FROM tbl_customer t where t.customer_weixin =#{openId};
+	</select>
+	
+	<select id="findCustomerInfoByCustomerWeiXin" resultType="map">
+		SELECT
+		customer_id AS customerId,
+		CAST(customer_name AS CHAR) customerName,
+		CAST(IFNULL(attention_time,'') AS CHAR) attentionTime,
+		customer_mobile AS telphoneNum
+		FROM tbl_customer
+		WHERE customer_weixin=#{openId}
+	</select>
+	<select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		a.customer_name as customerName
+		from tbl_customer a,tbl_order b
+		where a.customer_id=b.customer_id  and b.order_id = #{orderId,jdbcType=BIGINT}
+	</select>
+</mapper>

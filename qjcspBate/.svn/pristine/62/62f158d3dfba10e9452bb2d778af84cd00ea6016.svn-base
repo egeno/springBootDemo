@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.StatisticsMapper">
+	<!-- 商品供销统计报表[分页总数](潘明客2016-01-20) -->
+	<select id="findAllSupllyCount" resultType="java.lang.Long" parameterType="java.util.Map">
+
+		SELECT count(1) FROM(
+			SELECT 1
+			FROM tbl_item_detail   AS tb
+			LEFT JOIN tbl_order  as ord
+			on tb.order_id=ord.order_id 
+			left join basics_goods bg on tb.goods_id=bg.goods_id 
+			WHERE tb.company_id = #{companyId }
+			AND (
+				date_format(tb.stock_time, '%Y-%m-%d') = #{psdate }
+			  	<!-- OR (date_format(ord.order_time, '%Y-%m-%d') = #{psdate } AND item_status = 1)   -->
+			  	OR (date_format(tb.stock_time, '%Y-%m-%d') = #{psdate } AND item_status = 1) 
+				OR (date_format(tb.clean_time, '%Y-%m-%d') = #{psdate } AND item_status = 2)
+			)
+			<if test="foodName != null and foodName !=''">
+				and bg.goods_name like '%${foodName}%'
+			</if>
+			GROUP BY tb.${group }
+		) AS tt
+	</select>
+	
+	
+	<!--  -->
+	<!-- 商品供销统计报表[全部模型的供销总计](潘明客2016-01-20) -->
+	<select id="findAllSupllyByModel" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			bam.area_model_name AS modName,
+			<!-- sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate },1,0)) AS supplyNum,
+			sum(if(tid.item_status = 0,1,0)) AS unsoldNum,
+			sum(if(tid.item_status = 1,1,0)) AS soldNum,
+			sum(if(tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(tid.item_status = 2,1,0)) AS clearNum -->
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') =  #{psdate } ,1,0)) AS supplyNum,
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0,1,0)) AS unsoldNum,
+			SUM(IF(date_format(tid.taken_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(date_format(tid.clean_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 2,1,0)) AS clearNum
+		FROM tbl_item_detail tid
+		LEFT JOIN basics_area_model bam ON bam.area_model_id = tid.area_model_id
+		LEFT JOIN tbl_order  as ord
+			on tid.order_id=ord.order_id 
+		WHERE tid.company_id = #{companyId }
+		AND (
+			  (date_format(tid.taken_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 3)
+			  OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 1)
+        OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0)  
+				OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 2)
+			)
+	<!-- 	AND date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } -->
+ 	<!-- 	AND ( 
+			date_format(tid.stock_time, '%Y-%m-%d') = #{psdate }
+			OR (date_format(ord.order_time, '%Y-%m-%d') = #{psdate } AND item_status = 1) 
+		OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND item_status = 1)
+			OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND item_status = 2)
+		) -->
+		GROUP BY tid.area_model_id
+	</select>
+	 
+	<!-- 每日柜子供销统计报表[柜子的供销总计并以销售数量倒叙排序]-->
+	<select id="findAllSupllyByMachine" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			tid.machine_id AS id,
+			bm.machine_name AS name,
+			<!-- sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate },1,0)) AS supplyNum,
+			sum(if(tid.item_status = 0,1,0)) AS unsoldNum,
+			sum(if(tid.item_status = 1,1,0)) AS soldNum,
+			SUM(IF(tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(tid.item_status = 2,1,0)) AS clearNum -->
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') =  #{psdate } ,1,0)) AS supplyNum,
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0,1,0)) AS unsoldNum,
+			SUM(IF(date_format(tid.taken_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(date_format(tid.clean_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 2,1,0)) AS clearNum
+		FROM tbl_item_detail tid
+		LEFT JOIN basics_machine bm ON bm.machine_id = tid.machine_id
+left JOIN tbl_order tbo on tbo.order_id=tid.order_id
+		WHERE tid.company_id =#{companyId }
+		AND (
+			  (date_format(tid.taken_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 3)
+			  OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 1)
+        OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0)  
+				OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 2)
+			)
+		<!-- AND (
+			date_format(tid.stock_time, '%Y-%m-%d') = #{psdate }
+				OR (date_format(ord.order_time, '%Y-%m-%d') = #{psdate } AND item_status = 1) 
+		OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND item_status = 1)
+			OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND item_status = 2)
+		) -->
+		GROUP BY tid.machine_id ORDER BY soldNum DESC
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	  </select>
+	 
+	 <!-- 每日柜子供销统计报表[每个设备每个模型的供销记录](潘明客2016-01-20) -->
+	 <select id="findAllSupllyByMachineAndModel" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			tid.machine_id AS id,
+			bm.machine_name AS name,
+			bam.area_model_name AS modName,
+		<!-- 	sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate },1,0)) AS supplyNum,
+			sum(if(tid.item_status = 0,1,0)) AS unsoldNum,
+					sum(if(tid.item_status = 1,1,0)) AS soldNum,
+			SUM(IF(tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(tid.item_status = 2,1,0)) AS clearNum -->
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') =  #{psdate } ,1,0)) AS supplyNum,
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0,1,0)) AS unsoldNum,
+			SUM(IF(date_format(tid.taken_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(date_format(tid.clean_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 2,1,0)) AS clearNum
+		FROM tbl_item_detail tid
+		LEFT JOIN basics_machine bm ON bm.machine_id = tid.machine_id
+		LEFT JOIN basics_area_model bam ON bam.area_model_id = tid.area_model_id
+		left JOIN tbl_order tbo on tbo.order_id=tid.order_id
+		WHERE tid.company_id = #{companyId }
+		AND (
+			  (date_format(tid.taken_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 3)
+			  OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 1)
+        OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0)  
+				OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 2)
+			)
+		<!-- AND (
+			date_format(tid.stock_time, '%Y-%m-%d') = #{psdate }
+				OR (date_format(ord.order_time, '%Y-%m-%d') = #{psdate } AND item_status = 1) 
+		OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND item_status = 1)
+			OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND item_status = 2)
+		) -->
+		<if test="list != null and list.size > 0">
+			AND tid.machine_id IN 
+				<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+					#{item.id }
+				</foreach>
+		</if>
+		GROUP BY tid.machine_id,tid.area_model_id
+	</select>
+	
+	 <!--  --> 
+	<!-- 每日商品供销统计报表[商品的供销总计并以销售数量倒叙排序](潘明客2016-01-20) -->
+	<select id="findAllSupllyByGoods" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			tid.goods_id AS id,
+			bg.goods_name AS name,
+		<!-- 	sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate },1,0)) AS supplyNum,
+			sum(if(tid.item_status = 0,1,0)) AS unsoldNum,
+			sum(if(tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(tid.item_status = 2,1,0)) AS clearNum -->
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') =  #{psdate } ,1,0)) AS supplyNum,
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0,1,0)) AS unsoldNum,
+			SUM(IF(date_format(tid.taken_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(date_format(tid.clean_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 2,1,0)) AS clearNum
+		FROM tbl_item_detail tid
+		LEFT JOIN basics_goods bg ON bg.goods_id = tid.goods_id
+		LEFT JOIN tbl_order  as ord
+			on tid.order_id=ord.order_id 
+		WHERE tid.company_id = #{companyId }
+		AND (
+			  (date_format(tid.taken_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 3)
+			  OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 1)
+        OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0)  
+				OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 2)
+			)
+		
+		<!-- AND (
+			date_format(tid.stock_time, '%Y-%m-%d') = #{psdate }
+			OR (date_format(ord.order_time, '%Y-%m-%d') = #{psdate } AND item_status = 1) 
+		OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND item_status = 1)
+			OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND item_status = 2)
+		)  -->
+		<if test="foodName != null and foodName !=''">
+			and bg.goods_name like '%${foodName}%'
+		</if>
+		GROUP BY tid.goods_id ORDER BY soldNum DESC
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+	 
+	 <!--  -->
+	<!-- 每日商品供销统计报表[每个商品每个模型的供销记录](潘明客2016-01-20) -->
+	<select id="findAllSupllyByGoodsAndModel" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			tid.goods_id AS id,
+			bg.goods_name AS name,
+			bam.area_model_name AS modName,
+			<!-- sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate },1,0)) AS supplyNum,
+			sum(if(tid.item_status = 0,1,0)) AS unsoldNum,
+						sum(if(tid.item_status = 1,1,0)) AS soldNum,
+			SUM(IF(tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(tid.item_status = 2,1,0)) AS clearNum -->
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') =  #{psdate } ,1,0)) AS supplyNum,
+			sum(if(date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0,1,0)) AS unsoldNum,
+			SUM(IF(date_format(tid.taken_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 3,1,0)) AS soldNum,
+			sum(if(date_format(tid.clean_time, '%Y-%m-%d') =  #{psdate } AND tid.item_status = 2,1,0)) AS clearNum
+		FROM tbl_item_detail tid
+		LEFT JOIN basics_goods bg ON bg.goods_id = tid.goods_id
+		LEFT JOIN basics_area_model bam ON bam.area_model_id = tid.area_model_id
+		LEFT JOIN tbl_order  as ord
+			on tid.order_id=ord.order_id 
+		WHERE tid.company_id = #{companyId }
+		AND (
+			  (date_format(tid.taken_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 3)
+			  OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 1)
+        OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 0)  
+				OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND tid.item_status = 2)
+			)
+	<!-- 	AND (
+			date_format(tid.stock_time, '%Y-%m-%d') = #{psdate }
+			OR (date_format(ord.order_time, '%Y-%m-%d') = #{psdate } AND item_status = 1) 
+		OR (date_format(tid.stock_time, '%Y-%m-%d') = #{psdate } AND item_status = 1)
+			OR (date_format(tid.clean_time, '%Y-%m-%d') = #{psdate } AND item_status = 2)
+		) -->
+		<if test="foodName != null and foodName !=''">
+			and bg.goods_name like '%${foodName}%'
+		</if>
+		<if test="list != null and list.size > 0">
+			AND tid.goods_id IN 
+				<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+					#{item.id }
+				</foreach>
+		</if>
+		GROUP BY tid.goods_id,tid.area_model_id
+	</select>
+	
+	<select id="findEverydaySales" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+    	machine_name machineName
+		,area_model_name areaModelName
+		,IF(area_model_status='1','是','否') areaModelStatus
+		,(SELECT count(*) FROM tbl_item_detail d,tbl_operate_record_log e WHERE d.supply_batch_num=e.batch_num AND a.machine_id=d.machine_id AND b.area_model_id=d.area_model_id AND e.operate_type='1' AND DATE_FORMAT(d.stock_time,'%Y-%m-%d')=#{searchDate}) operateCount
+		,(SELECT count(*) FROM tbl_item_detail f WHERE a.machine_id=f.machine_id AND b.area_model_id=f.area_model_id AND f.item_status='1' AND DATE_FORMAT(f.taken_time,'%Y-%m-%d')=#{searchDate} AND f.item_status='1') saleCount
+		,(SELECT COUNT(DISTINCT t.order_num) FROM tbl_order t JOIN tbl_item_detail f ON t.order_id = f.order_id WHERE t.machine_id = a.machine_id AND b.area_model_id=f.area_model_id AND DATE_FORMAT(t.pay_time,'%Y-%m-%d')=#{searchDate}) orderCount
+		,CONCAT(left(((SELECT count(*) FROM tbl_item_detail f WHERE a.machine_id=f.machine_id AND b.area_model_id=f.area_model_id AND f.item_status='1' AND DATE_FORMAT(f.taken_time,'%Y-%m-%d')=#{searchDate} AND f.item_status='1')/(SELECT count(*) FROM tbl_item_detail d,tbl_operate_record_log e WHERE d.supply_batch_num=e.batch_num AND a.machine_id=d.machine_id AND b.area_model_id=d.area_model_id AND e.operate_type='1' AND DATE_FORMAT(d.stock_time,'%Y-%m-%d')=#{searchDate})*100),5),'%') sellRate
+    	,IFNULL((SELECT sum(h.retail_price) FROM tbl_item_detail g,basics_goods h WHERE a.machine_id=g.machine_id AND b.area_model_id=g.area_model_id AND g.goods_id=h.goods_id  AND DATE_FORMAT(g.taken_time,'%Y-%m-%d')=#{searchDate} AND g.item_status='1' ),'0.00') saleMoney
+		FROM basics_machine a,basics_area_model b,basics_machine_area_model c WHERE b.area_model_id=c.area_model_id AND c.machine_id=a.machine_id <!-- AND a.machine_name LIKE "%${machineSex}%" -->
+		<!-- <if test="useOrNot !='' and useOrNot != null">
+			AND area_model_status=#{useOrNot}
+		</if> -->
+		AND a.machine_id=#{machineId}
+		union all
+		SELECT
+     	 machineName
+		,'全天' areaModelName
+		,IF(SUM(CAST(z.areaModelStatus AS SIGNED))/count(*)>0,'是','否') areaModelStatus
+		,SUM(z.operateCount) operateCount
+		,SUM(z.saleCount) saleCount
+		,SUM(z.orderCount) orderCount
+		,sellRate
+		,CAST(CAST(SUM(z.saleMoney) AS decimal(10,2)) AS CHAR) saleMoney
+		FROM
+		(SELECT 
+    	 machine_name machineName
+		,area_model_name areaModelName
+		,area_model_status areaModelStatus
+		,(SELECT count(*) FROM tbl_item_detail d,tbl_operate_record_log e WHERE d.supply_batch_num=e.batch_num AND a.machine_id=d.machine_id AND b.area_model_id=d.area_model_id AND e.operate_type='1' AND DATE_FORMAT(d.stock_time,'%Y-%m-%d')=#{searchDate}) operateCount
+		,(SELECT count(*) FROM tbl_item_detail f WHERE a.machine_id=f.machine_id AND b.area_model_id=f.area_model_id AND f.item_status='1' AND DATE_FORMAT(f.taken_time,'%Y-%m-%d')=#{searchDate} AND f.item_status='1') saleCount
+		,(SELECT COUNT(DISTINCT t.order_num) FROM tbl_order t JOIN tbl_item_detail f ON t.order_id = f.order_id WHERE t.machine_id = a.machine_id AND b.area_model_id=f.area_model_id AND DATE_FORMAT(t.pay_time,'%Y-%m-%d')=#{searchDate}) orderCount
+		,CONCAT(left(((SELECT count(*) FROM tbl_item_detail f WHERE a.machine_id=f.machine_id AND b.area_model_id=f.area_model_id AND f.item_status='1' AND DATE_FORMAT(f.taken_time,'%Y-%m-%d')=#{searchDate} AND f.item_status='1')/(SELECT count(*) FROM tbl_item_detail d,tbl_operate_record_log e WHERE d.supply_batch_num=e.batch_num AND a.machine_id=d.machine_id AND b.area_model_id=d.area_model_id AND e.operate_type='1' AND DATE_FORMAT(d.stock_time,'%Y-%m-%d')=#{searchDate})*100),5),'%') sellRate
+    	,IFNULL((SELECT sum(h.retail_price) FROM tbl_item_detail g,basics_goods h WHERE a.machine_id=g.machine_id AND b.area_model_id=g.area_model_id AND g.goods_id=h.goods_id  AND DATE_FORMAT(g.taken_time,'%Y-%m-%d')=#{searchDate} AND g.item_status='1' ),'0.00') saleMoney
+		FROM basics_machine a,basics_area_model b,basics_machine_area_model c WHERE b.area_model_id=c.area_model_id AND c.machine_id=a.machine_id <!-- AND a.machine_name LIKE "%${machineSex}%" --> 
+		<!-- <if test="useOrNot !='' and useOrNot != null">
+			AND area_model_status=#{useOrNot}
+		</if> -->
+		AND a.machine_id=#{machineId}) z
+	</select> 
+</mapper>

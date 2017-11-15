@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--首页</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/index.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.touchSlider.js" type="text/javascript" charset="utf-8"></script>  <!-- 滑动 -->
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a1F62NERECgnHtjcFHdNGBuaIUcdEPU5"></script> -->
+		<script src="../js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		document.write("<scr"+"ipt type='text/javascript' src='http://api.map.baidu.com/api?v=2.0&ak=a1F62NERECgnHtjcFHdNGBuaIUcdEPU5'><"+"/script>");
+		</script>
+		<script>
+		$(window).load(function(){
+			map();
+			//setDiv_Center($('.indexTitle')) //如果不能定位或位置不会移动就开启
+			/*GPS定位*/
+			function map()
+			{
+				var geolocation = new BMap.Geolocation();
+				geolocation.getCurrentPosition(function(r){
+					if(this.getStatus() == BMAP_STATUS_SUCCESS){
+						var mk = new BMap.Marker(r.point);
+						var lng = r.point.lng;
+						localStorage.setItem("lng",lng);  //经度
+						//localStorage.setItem("lng",120.126465);  //经度
+						var lat = r.point.lat;
+						localStorage.setItem("lat",lat);  //纬度
+						//localStorage.setItem("lat",30.287865);  //纬度
+						aa(lng,lat);
+						//aa(120.126465,30.287865);
+						//alert('您的位置：'+lng+','+lat);
+					}
+					else {
+						//alert('failed'+this.getStatus());
+					}        
+				},{enableHighAccuracy: true})
+				//关于状态码
+				//BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+				//BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
+				//BMAP_STATUS_UNKNOWN_LOCATION	位置结果未知。对应数值“2”。
+				//BMAP_STATUS_UNKNOWN_ROUTE	导航结果未知。对应数值“3”。
+				//BMAP_STATUS_INVALID_KEY	非法密钥。对应数值“4”。
+				//BMAP_STATUS_INVALID_REQUEST	非法请求。对应数值“5”。
+				//BMAP_STATUS_PERMISSION_DENIED	没有权限。对应数值“6”。(自 1.1 新增)
+				//BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
+				//BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
+				// 百度地图API功能
+				function aa(lng,lat)
+				{
+					var point = new BMap.Point(lng,lat);
+					var gc = new BMap.Geocoder();
+					gc.getLocation(point, function(rs){
+					   var addComp = rs.addressComponents;
+					   $(".topTitle").empty();
+					   $(".indexTitle").empty();
+					   if(localStorage.getItem('check_change_address')!=null && localStorage.getItem('check_change_address')!=''){
+						  // $(".indexTitle").append("<img class='location' src='../img/img/title.png' />"+localStorage.getItem('check_change_address')+"<img class='sign' src='../img/img/title2.png' />");
+						   $(".topTitle").append("<img class='location' src='../img/img/titleCover.png' />"+localStorage.getItem('check_change_address')+"<img class='sign' src='../img/img/titleCover2.png' />");
+
+					   }else{
+					   $(".topTitle").append("<img class='location' src='../img/img/titleCover.png' />"+addComp.district+addComp.street+addComp.streetNumber+"<img class='sign' src='../img/img/titleCover2.png' />");
+					   }
+					   if(localStorage.getItem('check_change_address')!=null && localStorage.getItem('check_change_address')!=''){
+						   $(".indexTitle").append("<img class='location' src='../img/img/title.png' />"+localStorage.getItem('check_change_address')+"<img class='sign' src='../img/img/title2.png' />");
+
+					   }else{
+						   $(".indexTitle").append("<img class='location' src='../img/img/title.png' />"+addComp.district+addComp.street+addComp.streetNumber+"<img class='sign' src='../img/img/title2.png' />");
+					   }
+					   //center();
+					   //setDiv_Center($('.indexTitle'))
+					   var province = addComp.province;
+					   localStorage.setItem("district",addComp.district);
+					   localStorage.setItem("province",province);
+					   //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+					   var city=addComp.city;
+					   localStorage.setItem("city",city);
+					});
+				}
+			}
+		});
+		</script>
+	</head>
+	<body>
+		<div class="index_main">
+			<div class="topTitle"><img class="location" src="../img/img/titleCover.png" />西湖国际科技大厦<img class="sign" src="../img/img/titleCover2.png" /></div>
+			<!-- 广告 start-->
+			<div class="main_visual" id="main_visual">
+				<div class="flicking_con">
+					<a href="#"></a>
+					<a href="#"></a>
+					<a href="#"></a>
+					<a href="#"></a>
+				</div>
+				<div class="main_image">
+					<ul>
+						<li>
+							<img src="../img/image/net_err_banner.png" />
+						</li>
+						<li>
+							<img src="../img/image/net_err_banner.png" />
+						</li>
+						<li>
+							<img src="../img/image/net_err_banner.png" />
+						</li>
+						<li>
+							<img src="../img/image/net_err_banner.png" />
+						</li>
+					</ul>
+					<a href="javascript:;" id="btn_prev"></a>
+					<a href="javascript:;" id="btn_next"></a>
+				</div>
+				<div class="indexTitle"><img class="location" src="../img/img/title.png" />西湖国际科技大厦<img class="sign" src="../img/img/title2.png" /></div>
+			</div>
+			<!-- 广告  end-->
+			<!-- 余额、积分、订单以及预订  start-->
+			<div class="indexNav">
+				<ul>
+					<li><a><img src="../img/img/reserve.png" alt="预订" /><span>预订</span></a></li>
+					<li><a href="../view/Ordertab.html"><img src="../img/img/order.png" alt="订单" /><span>订单</span></a></li>
+					<li><a><img src="../img/img/retail_home.png" alt="余额" /><span>零售</span></a></li>
+					<!-- <li><a><img src="../img/img/integral.png" alt="积分" /><span>积分</span></a></li>
+					<li><a><img src="../img/img/order.png" alt="订单" /><span>订单</span></a></li> -->
+				</ul>
+			</div>
+			<!-- 余额、积分、订单以及预订  end-->
+			<!-- 分割线   start-->
+			<div class="splitLine"></div>
+			<!-- 分割线   end-->
+			<!-- 附近餐柜  start -->
+			<div class="index_cabinet">
+					<p class="xuangui">选柜点餐</p>
+				<ul>
+					<!-- <li><a href="javascript:;">
+						<div class="cabinet_left"><img src="../img/img/cabinet.png" /></div>
+						<div class="cabinet_right">
+							<h3>西湖区万塘路102号西湖国际科技大厦</h3>
+							<span class="index_info">
+								<span class="stars"><img src="../img/img/stars.png" /></span>
+								<span class="sales">月售<em>3502</em></span>
+								<span class="palce">工商大学</span>
+								<span class="surplus"><img src="../img/img/surplus.png" /><em>15<em>份</span>
+								<span class="distance"><img src="../img/img/distance.png" /><em>500<em>km</span>
+							</span>
+						</div>
+					</a></li> -->
+				</ul>
+			</div>
+			<!-- 附近餐柜  end -->
+			<!-- 底部导航  start -->
+			<div class="foot">
+				<ul>
+					<li class="active"><a href="javascript:;"><img class="one" src="../img/img/foot_index.png" alt="首页"/><img class="two" src="../img/img/foot_indexActive.png" alt="首页"/><span>首页</span></a></li>
+					<li><a href="guanyu.html"><img class="one" src="../img/img/about_index.png" alt="关于"/><img class="two" src="../img/img/about_indexActive.png" alt="关于"/><span>关于</span></a></li>
+					<li><a href="join_in.html"><img class="one" src="../img/img/join_index.png" alt="加盟"/><img class="two" src="../img/img/join_indexActive.png" alt="加盟"/><span>加盟</span></a></li>
+					<li><a href="Application.html"><img class="one" src="../img/img/apply_index.png" alt="申请"/><img class="two" src="../img/img/apply_indexActive.png" alt="申请"/><span>申请</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_my.png" alt="我的"/><img class="two" src="../img/img/foot_myActive.png" alt="我的"/><span>我的</span></a></li>
+				</ul>
+			</div>
+			<!-- 底部导航  end-->
+		</div>
+	</body>
+</html>

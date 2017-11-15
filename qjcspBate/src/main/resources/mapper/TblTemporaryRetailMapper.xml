@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblTemporaryRetailMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblTemporaryRetail" >
+    <id column="temporary_id" property="temporaryId" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="issue_id" property="issueId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+     <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="cell_id" property="cellId" jdbcType="VARCHAR" />
+    <result column="cell_row" property="cellRow" jdbcType="SMALLINT" />
+    <result column="cell_column" property="cellColumn" jdbcType="SMALLINT" />
+    <result column="cell_num" property="cellNum" jdbcType="INTEGER" />
+    <result column="temporary_date" property="temporaryDate" jdbcType="DATE" />
+    <result column="isdel" property="isdel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    temporary_id,order_id,order_child_id, machine_id, goods_id, area_model_id, order_detail_id, cell_id, cell_row, 
+    cell_column, cell_num, temporary_date,issue_id,isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_temporary_retail
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_temporary_retail
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblTemporaryRetail" >
+    insert into tbl_temporary_retail (temporary_id,issue_id, machine_id, goods_id, 
+      area_model_id, order_detail_id, cell_id, 
+      cell_row, cell_column, cell_num, 
+      temporary_date,order_id,order_child_id,isdel)
+    values (#{temporaryId,jdbcType=BIGINT},#{issueId,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{areaModelId,jdbcType=BIGINT}, #{orderDetailId,jdbcType=BIGINT}, #{cellId,jdbcType=VARCHAR}, 
+      #{cellRow,jdbcType=SMALLINT}, #{cellColumn,jdbcType=SMALLINT}, #{cellNum,jdbcType=INTEGER}, 
+      #{temporaryDate,jdbcType=DATE},#{orderId,jdbcType=BIGINT},#{orderChildId,jdbcType=BIGINT},#{isdel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblTemporaryRetail" >
+    insert into tbl_temporary_retail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="temporaryId != null" >
+        temporary_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+       <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="cellRow != null" >
+        cell_row,
+      </if>
+      <if test="cellColumn != null" >
+        cell_column,
+      </if>
+      <if test="cellNum != null" >
+        cell_num,
+      </if>
+      <if test="temporaryDate != null" >
+        temporary_date,
+      </if>
+      <if test="issueId != null" >
+        issue_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="temporaryId != null" >
+        #{temporaryId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="cellId != null" >
+        #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellRow != null" >
+        #{cellRow,jdbcType=SMALLINT},
+      </if>
+      <if test="cellColumn != null" >
+        #{cellColumn,jdbcType=SMALLINT},
+      </if>
+      <if test="cellNum != null" >
+        #{cellNum,jdbcType=INTEGER},
+      </if>
+      <if test="temporaryDate != null" >
+        #{temporaryDate,jdbcType=DATE},
+      </if>
+      <if test="issueId != null" >
+        #{issueId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblTemporaryRetail" >
+    update tbl_temporary_retail
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+           isdel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="cellId != null" >
+        cell_id = #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellRow != null" >
+        cell_row = #{cellRow,jdbcType=SMALLINT},
+      </if>
+      <if test="cellColumn != null" >
+        cell_column = #{cellColumn,jdbcType=SMALLINT},
+      </if>
+      <if test="cellNum != null" >
+        cell_num = #{cellNum,jdbcType=INTEGER},
+      </if>
+      <if test="temporaryDate != null" >
+        temporary_date = #{temporaryDate,jdbcType=DATE},
+      </if>
+      <if test="issueId != null" >
+        issue_id = #{issueId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblTemporaryRetail" >
+    update tbl_temporary_retail
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      area_model_id = #{areaModelId,jdbcType=BIGINT},
+      order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      cell_id = #{cellId,jdbcType=VARCHAR},
+      cell_row = #{cellRow,jdbcType=SMALLINT},
+      cell_column = #{cellColumn,jdbcType=SMALLINT},
+      cell_num = #{cellNum,jdbcType=INTEGER},
+      temporary_date = #{temporaryDate,jdbcType=DATE},
+      issue_id = #{issueId,jdbcType=BIGINT},
+      isdel = #{isdel,jdbcType=VARCHAR}
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </update>
+  
+  <delete id="delByOrderDetailId">
+     DELETE FROM tbl_temporary_retail
+  	 WHERE order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="delByOrderId">
+     DELETE FROM tbl_temporary_retail
+  	 WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <update id="updByOrderId">
+     update tbl_temporary_retail set isdel='Y'
+  	 WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <select id="getCount" resultType="integer">
+	  SELECT COUNT(1) FROM tbl_temporary_retail t where t.issue_id=#{issueId} and t.goods_id=#{goodsId} ;
+  </select>
+  
+  <delete id="delTemporaryRetailByReplenishment">
+  	DELETE FROM tbl_temporary_retail
+  	WHERE 
+  	machine_id = #{machineId,jdbcType=BIGINT}
+  	AND area_model_id = #{areaModelId,jdbcType=BIGINT}
+  	AND cell_num = #{cellNum,jdbcType=INTEGER}
+  	AND temporary_date = #{temporaryDate,jdbcType=DATE}
+  </delete> 
+  
+  <select id="getTemporaryRetailByReplenishment" resultMap="BaseResultMap">
+  	SELECT
+  	<include refid="Base_Column_List"></include>
+  	FROM tbl_temporary_retail
+  	WHERE
+  	machine_id = #{machineId,jdbcType=BIGINT}
+  	AND area_model_id = #{areaModelId,jdbcType=BIGINT}
+  	AND cell_num = #{cellNum,jdbcType=INTEGER}
+  	AND temporary_date = #{temporaryDate,jdbcType=DATE}
+  </select> 
+  
+  <delete id="delByOrderChildId">
+   delete from tbl_temporary_retail where order_child_id=#{orderChildId}
+  </delete>
+  <!-- 查询预订销售数量 -->
+  <select id="queryTemporaryRetailSaleCount" resultType="map">
+	SELECT a.goodsId as goodsId,a.goodsName as goodsName,a.ydCount as ydCount,IF(b.lsCount is NULL,0,b.lsCount) as lsCount 
+	,(ydCount+IF(b.lsCount is NULL,0,b.lsCount))as sumCount
+	FROM (SELECT b.goods_name as goodsName ,COUNT(1)as ydCount,t.goods_id as goodsId
+	FROM tbl_temporary_retail t INNER JOIN basics_goods b ON t.goods_id=b.goods_id 
+	AND b.company_id =#{companyId}  AND b.isdel='N'
+	<if test="areaModelId != null">
+		AND t.area_model_id=#{areaModelId}
+	</if>
+	<if test="machineId != null">
+		 AND t.machine_id =#{machineId}
+	</if>
+	<if test="temporaryDate != null and  temporaryDate != ''">
+		 AND DATE_FORMAT(t.temporary_date,"%Y-%m-%d") =#{temporaryDate}
+	</if>
+	GROUP BY t.goods_id) a LEFT JOIN 
+	(SELECT COUNT(1)as lsCount,t.goods_id as goodsId
+	FROM tbl_goods_retail_temporary t INNER JOIN basics_goods b ON t.goods_id=b.goods_id  
+	AND b.company_id =#{companyId}  AND b.isdel='N'
+	<if test="areaModelId != null">
+		AND t.area_model_id=#{areaModelId}
+	</if>
+	<if test="machineId != null">
+		 AND t.machine_id =#{machineId}
+	</if>
+	<if test="temporaryDate != null and  temporaryDate != ''">
+		 AND DATE_FORMAT(t.temporary_date,"%Y-%m-%d") =#{temporaryDate}
+	</if>
+	GROUP BY t.goods_id) b ON a.goodsId = b.goodsId  ORDER BY a.goodsId ASC
+  </select>
+  
+  <select id="queryTemporaryRetailSaleCount1" resultType="map">
+	SELECT a.goodsId as goodsId,a.goodsName as goodsName,a.lsCount as lsCount,IF(b.ydCount is 
+	NULL,0,b.ydCount) as ydCount 
+	,(lsCount+IF(b.ydCount is NULL,0,lsCount))as sumCount
+	FROM (
+	SELECT COUNT(1)as lsCount,t.goods_id as goodsId,b.goods_name as goodsName
+	FROM tbl_goods_retail_temporary t INNER JOIN basics_goods b ON t.goods_id=b.goods_id  
+	AND b.company_id =#{companyId}  AND b.isdel='N'
+	<if test="areaModelId != null">
+		AND t.area_model_id=#{areaModelId}
+	</if>
+	<if test="machineId != null">
+		 AND t.machine_id =#{machineId}
+	</if>
+ 	<if test="temporaryDate != null and  temporaryDate != ''">
+		 AND DATE_FORMAT(t.temporary_date,"%Y-%m-%d") =#{temporaryDate}
+	</if>
+	GROUP BY t.goods_id
+	) a LEFT JOIN 
+	(SELECT b.goods_name as goodsName ,COUNT(1)as ydCount,t.goods_id as goodsId
+	FROM tbl_temporary_retail t INNER JOIN basics_goods b ON t.goods_id=b.goods_id 
+	AND b.company_id =#{companyId}  AND b.isdel='N'
+	<if test="areaModelId != null">
+		AND t.area_model_id=#{areaModelId}
+	</if>
+	<if test="machineId != null">
+		 AND t.machine_id =#{machineId}
+	</if>
+ 	<if test="temporaryDate != null and  temporaryDate != ''">
+		 AND DATE_FORMAT(t.temporary_date,"%Y-%m-%d") =#{temporaryDate}
+	</if>
+	GROUP BY t.goods_id) b ON a.goodsId = b.goodsId  ORDER BY a.goodsId ASC;
+  </select>
+  
+  
+  <select id="getRetailNum" resultType="java.lang.Integer">
+  	SELECT count(*) FROM tbl_temporary_retail t 
+	WHERE t.machine_id = #{machineId}
+  </select>
+    
+  <select id="getOrderCellNum" resultType="int">
+  	SELECT COUNT(1) AS orderCellNum 
+  	FROM tbl_temporary_retail
+	WHERE 
+	machine_id=#{machineId,jdbcType=BIGINT} 
+	AND area_model_id=#{areaModelId,jdbcType=BIGINT} 
+	AND temporary_date=#{temporaryDate,jdbcType=DATE}
+  </select>
+  
+  <select id="getEffectiveNum" resultType="int">
+     select count(1) AS effectiveNum 
+     from 
+     basics_machine_cell where cell_status in (0,1) 
+     and machine_id =#{machineId} 
+  </select>
+  
+  <!-- Gekko 删除7天前的数据 -->
+  <delete id="delExpireTemporary">
+	   delete from tbl_temporary_retail  where  datediff(curdate(), temporary_date)>=7
+  </delete>
+    <delete id="delExpireTemporary1">
+	   delete from tbl_goods_retail_temporary  where  datediff(curdate(), temporary_date)>=7
+  </delete>
+  <!-- Gekko end 删除7天前的数据 -->
+  
+  
+  <select id="temporaryRetailCount" resultType="integer">
+  	SELECT COUNT(1) FROM tbl_temporary_retail ttr WHERE ttr.goods_id =#{goodsId} AND ttr.temporary_date >= CURDATE();
+  </select>
+</mapper>

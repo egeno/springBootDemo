@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblRechargeMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblRecharge">
+		<id column="recharge_id" property="rechargeId" jdbcType="BIGINT" />
+		<result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+		<result column="mode_num" property="modeNum" jdbcType="CHAR" />
+		<result column="customer_id" property="customerId" jdbcType="BIGINT" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+		<result column="real_money" property="realMoney" jdbcType="DECIMAL" />
+		<result column="activity_money" property="activityMoney"
+			jdbcType="DECIMAL" />
+		<result column="order_status" property="orderStatus" jdbcType="CHAR" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+		<result column="pay_order_num" property="payOrderNum" jdbcType="VARCHAR" />
+		<result column="balance_amount_sign" property="balanceAmountSign" jdbcType="CHAR" />
+		<result column="balance_amount" property="balanceAmount" jdbcType="DECIMAL" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		recharge_id, order_num, mode_num, customer_id, mobile, total_money, real_money,
+		activity_money,
+		order_status, order_time, pay_time, pay_order_num, isdel
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_recharge
+		where recharge_id = #{rechargeId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from tbl_recharge
+		where recharge_id = #{rechargeId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblRecharge">
+		insert into tbl_recharge (recharge_id, order_num, mode_num,
+		customer_id, mobile, total_money,
+		real_money, activity_money, order_status,
+		order_time, pay_time, pay_order_num,
+		isdel)
+		values (#{rechargeId,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR},
+		#{modeNum,jdbcType=CHAR},
+		#{customerId,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DECIMAL},
+		#{realMoney,jdbcType=DECIMAL}, #{activityMoney,jdbcType=DECIMAL},
+		#{orderStatus,jdbcType=CHAR},
+		#{orderTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{payOrderNum,jdbcType=VARCHAR},
+		#{isdel,jdbcType=CHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblRecharge">
+		insert into tbl_recharge
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rechargeId != null">
+				recharge_id,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="modeNum != null">
+				mode_num,
+			</if>
+			<if test="customerId != null">
+				customer_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="totalMoney != null">
+				total_money,
+			</if>
+			<if test="realMoney != null">
+				real_money,
+			</if>
+			<if test="activityMoney != null">
+				activity_money,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="orderTime != null">
+				order_time,
+			</if>
+			<if test="payTime != null">
+				pay_time,
+			</if>
+			<if test="payOrderNum != null">
+				pay_order_num,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rechargeId != null">
+				#{rechargeId,jdbcType=BIGINT},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="modeNum != null">
+				#{modeNum,jdbcType=CHAR},
+			</if>
+			<if test="customerId != null">
+				#{customerId,jdbcType=BIGINT},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="totalMoney != null">
+				#{totalMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="realMoney != null">
+				#{realMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="activityMoney != null">
+				#{activityMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=CHAR},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payTime != null">
+				#{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payOrderNum != null">
+				#{payOrderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblRecharge">
+		update tbl_recharge
+		<set>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="modeNum != null">
+				mode_num = #{modeNum,jdbcType=CHAR},
+			</if>
+			<if test="customerId != null">
+				customer_id = #{customerId,jdbcType=BIGINT},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="totalMoney != null">
+				total_money = #{totalMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="realMoney != null">
+				real_money = #{realMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="activityMoney != null">
+				activity_money = #{activityMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=CHAR},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payTime != null">
+				pay_time = #{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payOrderNum != null">
+				pay_order_num = #{payOrderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+		</set>
+		where recharge_id = #{rechargeId,jdbcType=BIGINT}
+	</update>
+	<update id="updateSignRecharges" parameterType="list">
+		update tbl_recharge
+		set balance_amount_sign ='1'
+		where recharge_id in
+		<foreach collection="rechargeList" item="recharge" index="index" open="(" separator="," close=")">
+			#{recharge.rechargeId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblRecharge">
+		update tbl_recharge
+		set order_num = #{orderNum,jdbcType=VARCHAR},
+		mode_num = #{modeNum,jdbcType=CHAR},
+		customer_id = #{customerId,jdbcType=BIGINT},
+		mobile = #{mobile,jdbcType=VARCHAR},
+		total_money = #{totalMoney,jdbcType=DECIMAL},
+		real_money = #{realMoney,jdbcType=DECIMAL},
+		activity_money = #{activityMoney,jdbcType=DECIMAL},
+		order_status = #{orderStatus,jdbcType=CHAR},
+		order_time = #{orderTime,jdbcType=TIMESTAMP},
+		pay_time = #{payTime,jdbcType=TIMESTAMP},
+		pay_order_num = #{payOrderNum,jdbcType=VARCHAR},
+		isdel = #{isdel,jdbcType=CHAR}
+		where recharge_id = #{rechargeId,jdbcType=BIGINT}
+	</update>
+
+	<select id="findAllrechargeList" parameterType="map" resultType="map">
+		SELECT tr.order_num AS orderNum,
+		(CASE WHEN (tr.mode_num='1') THEN '支付宝'
+		WHEN (tr.mode_num ='2' ) THEN '微信'
+		ELSE '' END) AS modeNum,
+		tc.customer_name AS userName,
+		tr.mobile AS mobile,
+		tr.total_money AS totalMoney,
+		tr.real_money AS realMoney,
+		tr.activity_money AS activityMoney,
+		(CASE WHEN (tr.order_status='0') THEN '待付款'
+		WHEN (tr.order_status ='7' ) THEN '已支付'
+		WHEN (tr.order_status ='2') THEN '已取消'
+		ELSE '' END) AS orderStatus,
+		CAST(order_time AS CHAR) AS orderTime,
+		CAST(pay_time AS CHAR) AS payTime,
+		CAST(pay_order_num AS CHAR) AS payOrderNum
+		FROM tbl_recharge tr,tbl_customer tc
+		<where>
+			1=1
+			AND tr.isdel='N'
+			AND tr.customer_id=tc.customer_id
+			<if test="orderNum !=null and orderNum !=''">
+				and tr.order_num like '%${orderNum}%'
+			</if>
+			<if test="userName !=null and userName !=''">
+				and tc.customer_name like '%${userName}%'
+
+			</if>
+			<if test="modeNum !=null and modeNum !=''">
+				and tr.mode_num=#{modeNum}
+			</if>
+			<if test="orderStatus !=null and orderStatus !=''">
+				and tr.order_status=#{orderStatus}
+			</if>
+		</where>
+		ORDER BY tr.order_time DESC
+		limit #{offset},#{limit}
+	</select>
+	<select id="selectTblRechargeByOrderNum" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		from tbl_recharge
+		where order_num = #{orderNum}
+	</select>
+	<select id="findTblRechargeByCustomerId" parameterType="java.lang.Long"
+		resultType="map">
+		SELECT
+		CAST(recharge_id AS CHAR) orderId
+		,CAST(total_money AS CHAR) totalMoney
+		,CAST(real_money AS CHAR) money
+		,CAST(activity_money AS CHAR) activityMoney
+		,CAST(order_status AS CHAR) orderStatus
+		FROM tbl_recharge
+		WHERE customer_id=#{customerId}
+	</select>
+
+	<select id="rechargeStatistics" parameterType="map" resultType="map">
+		SELECT SUM(total_money) AS totalMoney, SUM(real_money) AS realMoney
+		,SUM(activity_money) AS activityMoney FROM tbl_recharge
+		<where>
+			1=1
+			AND pay_time IS NOT NULL
+			<if test="rechargeStartTime !=null and rechargeStartTime !=''">
+				AND <![CDATA[ pay_time >=#{rechargeStartTime}]]>
+			</if>
+			<if test="rechargeEndTime !=null and rechargeEndTime !=''">
+				AND <![CDATA[ pay_time <=#{rechargeEndTime}]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectAllRechargeAndRechargeShopLog" resultType="map">
+		SELECT * FROM (SELECT
+		b.customer_name customerName,
+		'充值' shopStyle,
+		CAST(a.total_money AS CHAR) totalMoney,
+		CAST(a.real_money AS CHAR) realMoney,
+		CAST(a.activity_money AS CHAR) activityMoney,
+		date_format(
+		a.pay_time,
+		'%Y-%m-%d %H:%i:%s'
+		) payTime
+		FROM
+		tbl_recharge a,
+		tbl_customer b
+		WHERE
+		a.customer_id = b.customer_id
+		AND a.order_status = '7'
+		<if test="customerName !=null and customerName!=''">
+		AND b.customer_name LIKE '%${customerName}%'
+		</if>
+		<if test="startTime != null and startTime != '' ">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+		</if>
+		UNION ALL
+		SELECT
+		c.customer_name customerName,
+		'消费' shopStyle,
+		CAST(b.total_money AS
+		CHAR) totalMoney,
+		CAST(b.real_money AS CHAR) realMoney,
+		CAST(b.discount_money AS CHAR) activityMoney,
+		date_format(
+		b.pay_time,
+		'%Y-%m-%d %H:%i:%s'
+		) payTime
+		FROM
+		tbl_customer_balance_shopping_log a,
+		tbl_order b,
+		tbl_customer c
+		WHERE
+		a.order_num = b.order_num
+		AND a.customer_id = c.customer_id 
+		AND b.order_num='3'
+		<if test="customerName !=null and customerName!=''">
+		AND c.customer_name LIKE '%${customerName}%'
+		</if>
+		<if test="startTime != null and startTime != '' ">
+		AND date_format(b.pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+		AND date_format(b.pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+		</if>
+		) aa  LIMIT #{offset},#{limit}
+	</select>
+	
+	<select id="selectAllRechargeAndRechargeShopLogCount" resultType="java.lang.Long">
+	SELECT COUNT(*) FROM (SELECT
+		b.customer_name customerName,
+		'充值' shopStyle,
+		CAST(a.total_money AS CHAR) totalMoney,
+		CAST(a.real_money AS CHAR) realMoney,
+		CAST(a.activity_money AS CHAR) activityMoney,
+		date_format(
+		a.pay_time,
+		'%Y-%m-%d %H:%i:%s'
+		) payTime
+		FROM
+		tbl_recharge a,
+		tbl_customer b
+		WHERE
+		a.customer_id = b.customer_id
+		AND a.order_status = '7'
+		<if test="customerName !=null and customerName!=''">
+		AND b.customer_name LIKE '%${customerName}%'
+		</if>
+		<if test="startTime != null and startTime != '' ">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+		</if>
+		UNION ALL
+		SELECT
+		c.customer_name customerName,
+		'消费' shopStyle,
+		CAST(b.total_money AS
+		CHAR) totalMoney,
+		CAST(b.real_money AS CHAR) realMoney,
+		CAST(b.discount_money AS CHAR) activityMoney,
+		date_format(
+		b.pay_time,
+		'%Y-%m-%d %H:%i:%s'
+		) payTime
+		FROM
+		tbl_customer_balance_shopping_log a,
+		tbl_order b,
+		tbl_customer c
+		WHERE
+		a.order_num = b.order_num
+		AND a.customer_id = c.customer_id 
+		AND b.order_num='3'
+		<if test="customerName !=null and customerName!=''">
+		AND c.customer_name LIKE '%${customerName}%'
+		</if>
+		<if test="startTime != null and startTime != '' ">
+		AND date_format(b.pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+		AND date_format(b.pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+		</if>
+		) aa
+	</select>
+	
+	<select id="findTblRechargeByRechargeIdForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_recharge
+		where recharge_id = #{rechargeId,jdbcType=BIGINT} for update
+	</select>
+
+	<select id="findAllrechargeListCount" parameterType="map" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM tbl_recharge tr,tbl_customer tc
+		<where>
+			1=1
+			AND tr.isdel='N'
+			AND tr.customer_id=tc.customer_id
+			<if test="orderNum !=null and orderNum !=''">
+				and tr.order_num like '%${orderNum}%'
+			</if>
+			<if test="userName !=null and userName !=''">
+				and tc.customer_name like '%${userName}%'
+
+			</if>
+			<if test="modeNum !=null and modeNum !=''">
+				and tr.mode_num=#{modeNum}
+			</if>
+			<if test="orderStatus !=null and orderStatus !=''">
+				and tr.order_status=#{orderStatus}
+			</if>
+		</where>
+		ORDER BY tr.order_time DESC
+	</select>
+	    <!-- //Gekko 结算相关start -->
+	<select id="findRechargeForOrderByCustomerId"  resultMap="BaseResultMap">
+	 select
+		*
+		from tbl_recharge
+		where customer_id = #{customerId}
+		<if test="startTime != null and startTime != '' ">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{startTime}
+		</if>
+		AND isdel='N'
+		AND order_status ='7'
+		AND balance_amount_sign is null
+		ORDER BY order_time 
+	</select>
+	<select id="findlastRechargeForOrderByCustomerId"  resultMap="BaseResultMap">
+	 select
+		*
+		from tbl_recharge
+		where customer_id = #{customerId}
+		AND balance_amount_sign='1'
+		AND order_status ='7'
+		AND isdel='N'
+		ORDER BY order_time 
+		LIMIT 0,1
+	</select>
+	<select id="findAllrechargeList1" parameterType="map" resultType="map">
+		SELECT a.order_num AS orderNum,
+		(CASE WHEN (a.mode_num='1') THEN '支付宝'
+		WHEN (a.mode_num ='2' ) THEN '微信'
+		ELSE '' END) AS modeNum,
+		tc.customer_name AS userName,
+		tc.mobile AS mobile,
+		a.total_money AS totalMoney,
+		a.real_money AS realMoney,
+		a.activity_money AS activityMoney,
+		(CASE WHEN (a.order_status='0') THEN '待付款'
+		WHEN (a.order_status ='7' ) THEN '已支付'
+		WHEN (a.order_status ='2') THEN '已取消'
+		ELSE '' END) AS orderStatus,
+		CAST(a.order_time AS CHAR) AS orderTime,
+		CAST(a.pay_time AS CHAR) AS payTime,
+		CAST(a.pay_order_num AS CHAR) AS payOrderNum
+		FROM tbl_recharge a, 
+		LEFT JOIN tbl_customer tc a ON a.customer_id=tc.customer_id
+		where
+			1=1
+			AND isdel='N'
+			AND order_status ='7'
+			<if test="orderNum !=null and orderNum !=''">
+				and a.order_num like '%${orderNum}%'
+			</if>
+			<if test="userName !=null and userName !=''">
+				and tc.customer_name like '%${userName}%'
+			</if>
+			<if test="modeNum !=null and modeNum !=''">
+				and a.mode_num=#{modeNum}
+			</if>
+			<if test="startTime != null and startTime != '' ">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+		</if>
+		<if test="endTime != null and endTime!=''">
+		AND date_format(a.pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+		</if>
+		ORDER BY order_time 
+		limit #{offset},#{limit}
+	</select>
+	<!-- //结算相关end -->
+	<!-- Gekko 收支明细 -->
+	<select id="findReceiptAndExpenditureCount" parameterType="map" resultType="java.lang.Long">
+	select count(*) from v_recharge_shop_order
+	where 1=1
+	<if test="orderNum !=null and orderNum !=''">
+				and order_num like '%${orderNum}%'
+			</if>
+			<if test="customerId !=null and customerId !=''">
+				and customer_id like '%${customerId}%'
+			</if>
+			<if test="orderType !=null and orderType !=''">
+				and order_type=#{orderType}
+			</if>
+			<if test="orderStatus !=null and orderStatus !=''">
+				and order_status=#{order_status,jdbcType=CHAR}
+			</if>
+			<if test="startTime != null and startTime != '' ">
+			AND date_format(pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+			</if>
+			<if test="endTime != null and endTime!=''">
+			AND date_format(pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+			</if>
+	</select>
+	<!-- 收支总额统计    （备用 ！！！与下面的方法可以搭配使用） -->
+	<select id="sumReceiptAndExpenditure" parameterType="map"
+	resultType="map">
+	select sum(total_money) as totalMoney,
+	v.total_money AS totalMoney,
+	(
+	CASE
+	WHEN (v.order_type = '0') THEN
+	'充值总额'
+	WHEN (v.order_type = '1') THEN
+	'消费总额'
+	ELSE
+	'未知类型'
+	END
+	) AS orderType
+	from v_recharge_shop_order
+	1 = 1
+	<if test="orderNum !=null and orderNum !=''">
+				and order_num like '%${orderNum}%'
+			</if>
+			<if test="customerId !=null and customerId !=''">
+				and customer_id like '%${customerId}%'
+			</if>
+			<if test="orderType !=null and orderType !=''">
+				and order_type=#{orderType}
+			</if>
+			<if test="orderStatus !=null and orderStatus !=''">
+				and order_status=#{order_status,jdbcType=CHAR}
+			</if>
+			<if test="startTime != null and startTime != '' ">
+			AND date_format(pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+			</if>
+			<if test="endTime != null and endTime!=''">
+			AND date_format(pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+			</if>
+	GROUP BY order_type
+</select>
+	<select id="findReceiptAndExpenditure" parameterType="map" resultType="map">
+	SELECT
+	v.order_num AS orderNum,
+	v.order_child_num AS orderChildNum,
+	v.customer_id AS customerId,
+	v.customer_name AS customerName,
+	v.mobile AS mobile,
+	(
+		CASE
+		WHEN (v.order_status = '0') THEN
+			'待付款'
+		WHEN (v.order_status = '1') THEN
+			'已支付(待取货)'
+		WHEN (v.order_status = '2') THEN
+			'已取消'
+		WHEN (v.order_status = '3') THEN
+			'已取货(待评论)'
+		WHEN (v.order_status = '4') THEN
+			'取货超时'
+		WHEN (v.order_status = '5') THEN
+			'待退款'
+		WHEN (v.order_status = '6') THEN
+			'交易关闭'
+		WHEN (v.order_status = '7') THEN
+			'已完成'
+		ELSE
+			'未知状态'
+		END
+	) AS orderStatus,
+	v.pay_time AS payTime,
+	v.total_money AS totalMoney,
+	(
+		CASE
+		WHEN (v.order_type = '0') THEN
+			'充值订单'
+		WHEN (v.order_type = '1') THEN
+			'消费订单'
+		ELSE
+			'未知类型'
+		END
+	) AS orderType,
+	(
+		CASE
+		WHEN (v.pay_mode = '1') THEN
+			'支付宝'
+		WHEN (v.pay_mode = '2') THEN
+			'微信'
+		WHEN (v.pay_mode = '3') THEN
+			'余额支付'
+		ELSE
+			''
+		END
+	) AS payMode
+FROM
+	v_recharge_shop_order v
+WHERE
+	1 = 1
+	<if test="orderNum !=null and orderNum !=''">
+				and order_num like '%${orderNum}%'
+			</if>
+			<if test="customerId !=null and customerId !=''">
+				and customer_id like '%${customerId}%'
+			</if>
+			<if test="orderType !=null and orderType !=''">
+				and order_type=#{orderType}
+			</if>
+			<if test="orderStatus !=null and orderStatus !=''">
+				and order_status=#{order_status,jdbcType=CHAR}
+			</if>
+			<if test="startTime != null and startTime != '' ">
+			AND date_format(pay_time,'%Y-%m-%d %H:%i:%s')>= #{startTime}
+			</if>
+			<if test="endTime != null and endTime!=''">
+			AND date_format(pay_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+			</if>
+		ORDER BY v.pay_time 
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+	<!-- end 收支明细 -->
+</mapper>

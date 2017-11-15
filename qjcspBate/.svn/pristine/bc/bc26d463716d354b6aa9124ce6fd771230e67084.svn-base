@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--地址定位</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/search.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/search.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="bg">
+		<div class="search_content">
+			<!-- 搜索框  start -->
+			<div class="top">
+				<div class="search">
+					<img class="searchSign" src="../img/img/search.png" alt="搜索" />
+					<input type="text" placeholder="浙江工商大学" />
+					<img class="clear" src="../img/img/close.png" alt="清除" />
+				</div>
+				<a href="index.html" class="cancel">取消</a>
+			</div>
+			<!-- 搜索框  end -->
+			
+			<!-- 相关地址  start -->
+			<div class="relevant">
+				<div class="address">
+					<h1>浙江工商大学(下沙校区)</h1>
+					<p>浙江省杭州市江干区下沙高校园区学正路18号</p>
+				</div>
+				<div class="address">
+					<h1>浙江工商大学(下沙校区)</h1>
+					<p>浙江省杭州市江干区下沙高校园区学正路18号</p>
+				</div>
+			</div>
+			<!-- 相关地址  end -->
+		</div>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblReplenishmentPrintMapper" >
+<select id="findByCount" parameterType="map" resultType="java.lang.Long">
+  	SELECT
+  		count(1)	
+  	FROM v_goods_retail_temporary v
+  	WHERE 1=1
+  	AND v.company_id=#{companyId,jdbcType=CHAR}
+  	<if test="machineId != null and machineId != '' and machineId != '-1' ">
+  			AND v.machine_id = #{machineId,jdbcType=CHAR}
+  		</if>
+  		<if test="areaModelId != null and areaModelId != '' and areaModelId != '-1' ">
+  			AND v.area_model_id = #{areaModelId,jdbcType=CHAR}
+  		</if>
+  		<if test="temporaryDate != null and temporaryDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{temporaryDate,jdbcType=TIMESTAMP}) = UNIX_TIMESTAMP(v.temporary_date) ]]>
+  		</if>
+  		  <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if> 
+  	</select>
+ <select id="findByList" parameterType="map" resultType="map">
+ SELECT
+ v.machine_name as machineName,
+ v.address,
+ v.cell_num as cellNum,
+ v.goods_name as goodsName
+ FROM v_goods_retail_temporary v
+ WHERE 1=1
+ AND v.company_id=#{companyId,jdbcType=CHAR}
+  	<if test="machineId != null and machineId != '' and machineId != '-1' ">
+  			AND v.machine_id = #{machineId,jdbcType=CHAR}
+  		</if>
+  		<if test="areaModelId != null and areaModelId != '' and areaModelId != '-1' ">
+  			AND v.area_model_id = #{areaModelId,jdbcType=CHAR}
+  		</if>
+  		<if test="temporaryDate != null and temporaryDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{temporaryDate,jdbcType=TIMESTAMP}) = UNIX_TIMESTAMP(v.temporary_date) ]]>
+  		</if>
+  		ORDER BY machineName,cellNum
+  		  <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if> 
+		
+ </select>
+</mapper>

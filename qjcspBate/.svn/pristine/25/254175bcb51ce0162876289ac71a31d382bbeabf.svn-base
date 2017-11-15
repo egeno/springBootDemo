@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsUserRoleLogMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsUserRoleLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="operation" property="operation" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="operation_user_id" property="operationUserId" jdbcType="BIGINT" />
+    <result column="operation_time" property="operationTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operation, user_id, role_id, operation_user_id, operation_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLogKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_user_role_log
+    where id = #{id,jdbcType=BIGINT}
+      and operation = #{operation,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLogKey" >
+    delete from basics_user_role_log
+    where id = #{id,jdbcType=BIGINT}
+      and operation = #{operation,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLog" >
+    insert into basics_user_role_log (id, operation, user_id, 
+      role_id, operation_user_id, operation_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{operation,jdbcType=CHAR}, #{userId,jdbcType=BIGINT}, 
+      #{roleId,jdbcType=BIGINT}, #{operationUserId,jdbcType=BIGINT}, #{operationTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLog" >
+    insert into basics_user_role_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="operationUserId != null" >
+        operation_user_id,
+      </if>
+      <if test="operationTime != null" >
+        operation_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="operationUserId != null" >
+        #{operationUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operationTime != null" >
+        #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLog" >
+    update basics_user_role_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="operationUserId != null" >
+        operation_user_id = #{operationUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operationTime != null" >
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+      and operation = #{operation,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLog" >
+    update basics_user_role_log
+    set user_id = #{userId,jdbcType=BIGINT},
+      role_id = #{roleId,jdbcType=BIGINT},
+      operation_user_id = #{operationUserId,jdbcType=BIGINT},
+      operation_time = #{operationTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+      and operation = #{operation,jdbcType=CHAR}
+  </update>
+  
+  <update id="updateOperation0">
+    UPDATE basics_user_role_log t 
+    SET t.operation = 0,
+    t.operation_user_id = #{operationUserId,jdbcType=BIGINT},
+    t.operation_time = SYSDATE()
+    WHERE t.user_id = #{userId,jdbcType=VARCHAR} 
+  </update>
+  
+  <select id="getCount" resultType="java.lang.Integer">
+  	SELECT count(*) FROM basics_user_role_log t 
+  	WHERE t.role_id = #{roleId,jdbcType=BIGINT} 
+    AND t.user_id = #{userId,jdbcType=BIGINT}   
+  </select>
+  
+  <update id="updateOperation1" parameterType="com.qjkj.qjcsp.entity.BasicsUserRoleLog">
+    UPDATE basics_user_role_log t 
+	<set >
+	  <if test="operation != null" >
+        operation = #{operation,jdbcType=BIGINT},
+      </if>		
+      <if test="operationUserId != null" >
+        operation_user_id = #{operationUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operationTime != null" >
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+	WHERE t.role_id = #{roleId,jdbcType=BIGINT} 
+    AND t.user_id = #{userId,jdbcType=BIGINT}   
+  </update>
+</mapper>

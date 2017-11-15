@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BalancePayMapper" >
+ 	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrder" >
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="real_money" property="realMoney" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="discount_rule_id" property="discountRuleId" jdbcType="BIGINT" />
+    <result column="discount_money" property="discountMoney" jdbcType="DECIMAL" />
+    <result column="last_pay_time" property="lastPayTime" jdbcType="TIMESTAMP" />
+    <result column="pay_mode" property="payMode" jdbcType="VARCHAR" />
+    <result column="pay_order_num" property="payOrderNum" jdbcType="VARCHAR" />
+    <result column="pay_mode_order_num" property="payModeOrderNum" jdbcType="VARCHAR" />
+    <result column="account_number" property="accountNumber" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_status" property="payStatus" jdbcType="CHAR" />
+    <result column="pay_number" property="payNumber" jdbcType="VARCHAR" />
+    <result column="compelete_time" property="compeleteTime" jdbcType="TIMESTAMP" />
+    <result column="faild_msg" property="faildMsg" jdbcType="VARCHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="mode_num" property="modeNum" jdbcType="CHAR" />
+  </resultMap>
+ 
+   <sql id="Base_Column_List" >
+    order_id, order_num, customer_id, mobile, machine_id, company_id, order_time, 
+    total_money, real_money, order_status, discount_rule_id, discount_money, last_pay_time, 
+    pay_mode, pay_order_num, pay_mode_order_num, account_number, pay_time, pay_status, 
+    pay_number, compelete_time, faild_msg, isdel, 
+    mode_num
+  </sql>
+  <select id="getTblOrder" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+ 	
+ 	<select id="getUserBalance" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+ 	   SELECT customer_money 
+ 	   		FROM tbl_customer tc
+ 	  		WHERE tc.customer_id=#{customerId} 
+ 	</select>
+ 	
+ 	<update id="updateBalanceForStatus">
+ 		update tbl_customer tc,tbl_order tor,tbl_pending_order tpo
+ 		set  tc.customer_money=(IF(tc.customer_money IS NULL ,0,tc.customer_money)-#{realMoney}),
+ 			 tor.order_status='1',
+ 			 tpo.pending_type_num='3',
+ 			 tor.pay_mode='3'
+ 		where 
+ 		      tc.customer_id=tor.customer_id 
+ 		 and  tpo.order_num=tor.order_num
+ 		 and  tor.order_num=#{orderNum}
+ 	</update>
+ 	
+	<insert id="insertCustomerbalanceshoppinglog">
+		INSERT INTO tbl_customer_balance_shopping_log (customer_id,pay_time,real_money,order_num)
+		VALUES(#{customerId},NOW(),#{realMoney},#{orderNum})
+	</insert>
+	
+	<select id="checkHasUser" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM tbl_customer WHERE customer_id=#{customerId} AND pay_password=#{password}
+	</select>
+	
+	<select id="getUserRealMoney" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+		SELECT real_money FROM tbl_order WHERE order_num=#{orderNum}
+	</select>
+	
+	<select id="getorderStauts" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT order_status FROM tbl_order WHERE order_num=#{orderNum}
+	</select>
+	
+<!-- 	<update id="updateCustomerVerifyCode"> -->
+<!-- 		update tbl_order set identifying_code=#{verifyCode} where order_num=#{orderNum} -->
+	
+<!-- 	</update> -->
+	<update id="updateOrderChildStatus">
+		UPDATE tbl_order_child SET order_child_status = '1' WHERE order_id =#{orderId}
+	
+	</update>
+	<update id="updateOrderChildCode">
+		UPDATE tbl_order_child SET identifying_code =#{verifyCode}  WHERE order_child_id =#{orderChildId}
+	
+	</update>
+	<select id="selectOrderChildByOrderid" resultType="java.lang.Long">
+	   SELECT order_child_id FROM tbl_order_child WHERE order_id =#{orderId}
+	</select>
+	
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsAlarmsMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsAlarms" >
+    <id column="alarm_code" property="alarmCode" jdbcType="VARCHAR" />
+    <result column="alarm_name" property="alarmName" jdbcType="VARCHAR" />
+    <result column="alarm_level" property="alarmLevel" jdbcType="CHAR" />
+    <result column="alarm_operation" property="alarmOperation" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    alarm_code, alarm_name, alarm_level, alarm_operation
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_alarms
+    where alarm_code = #{alarmCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from basics_alarms
+    where alarm_code = #{alarmCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsAlarms" >
+    insert into basics_alarms (alarm_code, alarm_name, alarm_level, 
+      alarm_operation)
+    values (#{alarmCode,jdbcType=VARCHAR}, #{alarmName,jdbcType=VARCHAR}, #{alarmLevel,jdbcType=CHAR}, 
+      #{alarmOperation,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsAlarms" >
+    insert into basics_alarms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alarmCode != null" >
+        alarm_code,
+      </if>
+      <if test="alarmName != null" >
+        alarm_name,
+      </if>
+      <if test="alarmLevel != null" >
+        alarm_level,
+      </if>
+      <if test="alarmOperation != null" >
+        alarm_operation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alarmCode != null" >
+        #{alarmCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmName != null" >
+        #{alarmName,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLevel != null" >
+        #{alarmLevel,jdbcType=CHAR},
+      </if>
+      <if test="alarmOperation != null" >
+        #{alarmOperation,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsAlarms" >
+    update basics_alarms
+    <set >
+      <if test="alarmName != null" >
+        alarm_name = #{alarmName,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmLevel != null" >
+        alarm_level = #{alarmLevel,jdbcType=CHAR},
+      </if>
+      <if test="alarmOperation != null" >
+        alarm_operation = #{alarmOperation,jdbcType=CHAR},
+      </if>
+    </set>
+    where alarm_code = #{alarmCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsAlarms" >
+    update basics_alarms
+    set alarm_name = #{alarmName,jdbcType=VARCHAR},
+      alarm_level = #{alarmLevel,jdbcType=CHAR},
+      alarm_operation = #{alarmOperation,jdbcType=CHAR}
+    where alarm_code = #{alarmCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GoodsMachineMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderChild">
+		<id column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+		<result column="order_child_num" property="orderChildNum"
+			jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="BIGINT" />
+		<result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+		<result column="order_child_status" property="orderChildStatus"
+			jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="identifying_code" property="identifyingCode"
+			jdbcType="VARCHAR" />
+		<result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="check_state" property="checkState" jdbcType="CHAR" />
+		<result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+		<result column="refund_money" property="refundMoney" jdbcType="DECIMAL" />
+		<result column="order_preissue_last_refund_time" property="orderPreissueLastRefundTime"
+			jdbcType="TIMESTAMP" />
+		<!-- <result column="retail_id" property="retailId" jdbcType="BIGINT" /> -->
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		order_child_id, order_child_num, order_id, area_model_id,
+		order_child_status, isdel,
+		identifying_code,
+		begin_time, end_time,
+		check_state,
+		check_time,refund_money,order_preissue_last_refund_time
+	</sql>
+
+	<!-- 根据设备id得到该设备的菜品评价分值 -->
+	<select id="getMachineGoodsAvgSore" parameterType="java.lang.Long"
+		resultType="java.lang.Long">
+
+		SELECT ROUND(AVG(evaluate_score)) FROM
+		tbl_order_item_evaluate WHERE
+		machine_id=#{machineId} AND evaluate_memo
+		IS NOT NULL OR
+		TRIM(evaluate_memo)!='';
+	</select>
+
+	<select id="getGoodsCommentsWithContentByMachineId"
+		parameterType="java.lang.Long" resultType="java.util.Map">
+		SELECT DISTINCT
+		CAST(toie.goods_id AS CHAR) AS goodsId,
+		toie.goods_name AS
+		goodsName,CAST(toie.evaluate_score AS CHAR) AS grade,
+		tc.customer_name
+		AS nickName,toie.evaluate_memo AS commentContent,
+		DATE_FORMAT(toie.evaluate_time,'%Y-%m-%d %H:%i:%s') AS commentDate
+		FROM
+		tbl_order_item_evaluate toie
+		LEFT JOIN tbl_order tod ON
+		toie.order_id=tod.order_id
+		LEFT JOIN tbl_customer tc ON
+		tod.customer_id=tc.customer_id
+		WHERE toie.machine_id=#{machineId} AND
+		toie.evaluate_memo IS NOT NULL AND
+		TRIM(toie.evaluate_memo)!=''
+		ORDER BY
+		toie.evaluate_time DESC;
+	</select>
+
+	<select id="selectEffectiveNum" resultType="java.lang.Integer">
+		SELECT count(*) FROM
+		tbl_item_detail t WHERE 
+		t.goods_id =
+		#{goodsId,jdbcType=BIGINT}
+		and
+		t.item_status = 0
+	</select>
+
+	<select id="selectEvaluateScore" resultType="java.lang.Integer">
+		SELECT
+		t.evaluate_score FROM tbl_order_item_evaluate t
+		WHERE t.goods_id =
+		#{goodsId,jdbcType=BIGINT}
+		AND t.machine_id =
+		#{machineId,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByOrderIdOrderByBeginTime" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_order_child
+		where order_id = #{orderId,jdbcType=BIGINT}
+		ORDER
+		BY begin_time ASC
+
+	</select>
+
+	<select id="getClearCellNumList" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT tid.cell_id AS cellId,bmc.cell_num AS cellNum,
+		if(tid.item_status>0,1,0) as itemStatus,
+		bmc.row_num as cellRow,
+		bmc.col_num as cellColumn
+		FROM
+		tbl_item_detail tid LEFT JOIN basics_machine_cell bmc ON
+		tid.item_id=bmc.item_id
+		WHERE 
+		tid.machine_id=#{machineId}
+		AND tid.goods_id=#{goodsId}
+		AND bmc.cell_status='1'
+		ORDER BY bmc.cell_num ASC
+	</select>
+	
+	<select id="getGoodsSurpleNum" resultType="java.lang.Long"
+		parameterType="java.util.Map">
+		SELECT COUNT(1)
+		FROM
+		tbl_item_detail tid LEFT JOIN basics_machine_cell bmc ON
+		tid.item_id=bmc.item_id
+		WHERE 
+		tid.machine_id=#{machineId}
+		AND tid.goods_id=#{goodsId}
+		AND bmc.cell_status='1'
+	</select>
+
+	<!-- 2.3.10 根据菜品id号和设备id号获取该设备下有评论内容的菜品评价数量 -->
+	<select id="getGoodsCommentsWithContentByPGM" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT COUNT(1) FROM tbl_order_item_evaluate toie WHERE
+		machine_id=#{machineId} AND goods_id=#{goodsId}
+		AND toie.evaluate_memo
+		IS NOT NULL AND TRIM(toie.evaluate_memo)!=''
+		GROUP BY goods_id;
+	</select>
+
+	<!--2.3.10 根据菜品id号和设备id号获取该设备下的有评论的商品评价信息 -->
+	<select id="getGoodsCommentsWithMachineIdGoodsIdHasComment"
+		parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT  CAST(toie.goods_id AS CHAR) AS goodsId ,toie.goods_name AS
+		goodsName,
+		CAST(toie.evaluate_score AS CHAR) AS grade,
+		tc.customer_name AS nickName,toie.evaluate_memo AS commentContent,
+		DATE_FORMAT(toie.evaluate_time,'%Y-%m-%d %H:%i:%s') AS commentDate
+		FROM
+		tbl_order_item_evaluate toie
+		LEFT JOIN tbl_order_detail tid ON toie.order_detail_id=tid.order_detail_id
+		LEFT JOIN tbl_order tod ON toie.order_id=tod.order_id
+		LEFT JOIN tbl_customer tc ON tod.customer_id=tc.customer_id
+		WHERE toie.machine_id=#{machineId} AND toie.goods_id=#{goodsId}
+		AND toie.evaluate_memo IS NOT NULL AND TRIM(toie.evaluate_memo)!=''
+		ORDER BY toie.evaluate_time DESC;
+	</select>
+	
+	<select id="queryMachineByUser" resultType="map">
+		SELECT 
+		bum.machine_id AS machineId, 
+		bm.machine_name AS machineName,
+		bm.address 
+		FROM basics_user_machine bum, basics_machine bm
+		WHERE 
+		user_id=#{userId} 
+		AND special_role_num=#{specialRoleNum}
+		AND bum.machine_id=bm.machine_id
+	</select>
+	
+	<select id="queryMachineByMerSys" resultType="map">
+		SELECT
+		m.machine_id AS machineId, 
+		m.machine_name AS machineName,
+		m.address 
+		FROM
+		basics_machine m,
+		(
+			SELECT 
+			company_id 
+			FROM basics_users 
+			WHERE user_id=#{userId,jdbcType=BIGINT}
+		) u
+		WHERE 
+		m.company_id=u.company_id 
+		AND machine_status=1
+		AND isdel='N' 
+	</select>
+	
+	<select id="queryGoodsList" resultType="map">
+		SELECT
+		g.goods_name AS goodsName,
+		CAST(COUNT(dc.goods_id) AS CHAR) AS goodsNum
+		FROM
+		basics_goods g,
+		(
+			SELECT
+			d.goods_id 
+			FROM
+			tbl_item_detail d,
+			(
+			SELECT 
+			item_id 
+			FROM
+			basics_machine_cell
+			WHERE 
+			machine_id=#{machineId,jdbcType=BIGINT} 
+			AND cell_status=1 
+			) c
+		WHERE d.item_id=c.item_id AND item_status=0 
+		) dc
+		WHERE g.goods_id=dc.goods_id
+		GROUP BY dc.goods_id
+	</select>
+	
+	<select id="queryGoodsListByMer" resultType="map">
+	SELECT
+	gdc.goodsName,
+	gdc.goodsNum
+	FROM
+	(
+		SELECT 
+		u.user_name AS companyName
+		FROM
+		basics_users u
+		WHERE 
+		u.user_id=#{userId} 
+	) cu,
+	(
+		SELECT
+		g.goods_name AS goodsName,
+		CAST(COUNT(dc.goods_id) AS CHAR) AS goodsNum,
+		SUBSTRING_INDEX(SUBSTRING_INDEX(g.goods_name,'(',-1),')',1) AS companyName
+		FROM
+		basics_goods g,
+		(
+			SELECT
+			d.goods_id 
+			FROM
+			tbl_item_detail d,
+			(
+				SELECT 
+				item_id 
+				FROM
+				basics_machine_cell
+				WHERE 
+				machine_id=#{machineId} 
+				AND cell_status=1 
+			) c
+			WHERE d.item_id=c.item_id AND item_status=0 
+		) dc
+		WHERE g.goods_id=dc.goods_id
+		GROUP BY dc.goods_id
+	) gdc
+	WHERE cu.companyName=gdc.companyName
+	</select>
+	<!-- 获取不同角色的可查看设备 -->
+	<select id="getMachineInfo" resultType="map">
+		SELECT grt.machine_id AS machineId,grt.machine_name AS machineName,grt.address AS address 
+		FROM v_goods_retail_temporary grt WHERE 
+		grt.company_id=#{companyId}
+		<!-- <if test="areaModelId !=null and areaModelId != ''">
+			AND grt.area_model_id =#{areaModelId}
+		</if> -->
+		<if test="specialRoleNum ==1 and machineList.size() > 0 ">
+			AND grt.machine_id in (
+			<foreach collection="machineList" item="item" index="index"
+			separator=",">
+			#{item.machineId}
+			</foreach>
+			)
+		</if>
+		<if test="specialRoleNum ==1 and machineList.size() == 0 ">
+			AND grt.machine_id ='' 
+		</if>
+		<if test="specialRoleNum ==3">
+			AND	SUBSTRING_INDEX(SUBSTRING_INDEX(grt.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		 GROUP BY grt.machine_id
+	</select>
+	
+	<select id="getGoodsReplenishment" resultType="map">
+		SELECT grt.goods_id AS goodId,grt.goods_name AS goodsName,COUNT(grt.goods_id) AS goodsNum FROM v_goods_retail_temporary grt WHERE 1=1
+		<if test="timeType !=null and timeType !='' and timeType !='-1' ">
+			AND grt.time_type=#{timeType} 
+		</if>  
+		<if test="specialRoleNum ==3">
+			AND	SUBSTRING_INDEX(SUBSTRING_INDEX(grt.goods_name,'(',-1),')',1)=#{userName}
+		</if>
+		AND  grt.temporary_date = DATE_FORMAT(now(),'%Y-%m-%d')
+		AND grt.machine_id=#{machineId} GROUP BY grt.goods_id
+	</select>
+	<select id="GridNums" resultType="map">
+	   SELECT CAST(b.cell_Num AS CHAR) AS cellNum from (
+		SELECT cell_num 
+		FROM tbl_temporary_retail WHERE machine_id = #{machineId,jdbcType=BIGINT} 
+		AND goods_id = #{goodsId,jdbcType=BIGINT} 
+		<if test="timeType != -1">
+			AND  area_model_id in (SELECT area_model_id FROM basics_area_model WHERE company_id = #{companyId,jdbcType=BIGINT}  AND time_type = #{timeType,jdbcType=BIGINT})  
+		</if>
+		AND temporary_date = DATE_FORMAT(now(),'%Y-%m-%d')
+		AND isdel ='N' 
+		UNION
+		SELECT cell_num 
+		FROM tbl_goods_retail_temporary WHERE machine_id = #{machineId,jdbcType=BIGINT}
+		AND goods_id =  #{goodsId,jdbcType=BIGINT} 
+		<if test="timeType != -1">
+			AND  area_model_id in (SELECT area_model_id FROM basics_area_model WHERE company_id = #{companyId,jdbcType=BIGINT}  AND time_type = #{timeType,jdbcType=BIGINT})  
+		</if>
+		AND temporary_date = DATE_FORMAT(now(),'%Y-%m-%d')
+		AND isdel ='N' ) b
+		ORDER BY b.cell_Num 
+	</select>
+</mapper>

@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+html,body,div,ul,ol,li,p,h3,h4,span,input,textarea,select,option,table,tr,td,h2,h1,dl,dt,dd,
+h5{padding:0;margin:0;box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}
+body{font-family: "微软雅黑","microsoft yahei";max-width:100%;height:100%;margin:0 auto;min-width:3.2rem;color:#fff;-moz-text-size-adjust:none;-webkit-text-size-adjust:none;text-size-adjust:none;font-size: 14px;-webkit-overflow-scrolling: touch; /* ios5+ */}
+img{border:0 none;}
+html{font-size:100px;}
+ul,li{list-style-type:none;}
+input,textarea{outline: none;background:none;border:0 none;border-radius:0;}
+a{text-decoration:none;}
+ 
+.main{
+	width:98%;
+	margin:0 auto;
+	margin-top:0.3rem;
+	border-bottom: 1px solid #BFBFBF;
+}
+.main h1{
+	font-size:0.32rem;
+	color:#1A1A1A;
+}
+.main ul{
+	margin-top:0.1rem;
+	margin-bottom:0.25rem;
+}
+.main ul li{
+	/*font-size:30px;*/
+	font-size:0.3rem;
+	line-height: 0.5rem;
+	margin-left: 0.6rem;
+	color:#4D4D4D;
+	
+}
+.main ul .list{
+	list-style: initial;
+}
+.all{margin-bottom: 3.8rem;}

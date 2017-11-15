@@ -1,0 +1,10 @@
+.Selected_pictures{ width:1020px; margin:0 auto; padding:0 30px;}
+.Selected_a{ width:1020px; padding-top:20px;}
+.Selected_ab{ width:225px; height:225px; position:relative;}
+.Selected_ab img{ border:2px solid #fff;}
+.Selected_ac{ width:30px; height:25px; position:absolute;  right:10px; top:10px;}
+.Selected_ac a{ width:30px; height:25px; background: url(../img/icon_img.png) no-repeat -8px -381px; display:block}
+.Selected_ad img{border:2px solid #e02e42;}
+.Selected_ae{ padding-left:0}
+.Selected_af{ float:left; padding-right:30px; padding-bottom:20px;}
+.Selected_ag{ padding-right:0}

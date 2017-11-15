@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.OrderPickSearchMapper" >
+ 	
+ 	<resultMap type="com.qjkj.qjcsp.entity.pick.PickPo" id="BasePickResult">
+ 		<id column="order_pick_id" property="orderPickId"/>
+ 		<result column="machine_name" property="machineName"/>
+ 		<result column="order_num" property="orderNum"/>
+ 		<result column="pick_time" property="pickTime"/>
+ 		<result column="goods_name" property="goodsName"/>
+ 	</resultMap>
+ 	
+ 	
+ 	
+ 	<select id="getMachine" parameterType="map" resultType="com.qjkj.qjcsp.entity.pick.OrderPickSearch">
+ 		SELECT machine_id AS machineId,machine_name AS machineName FROM basics_machine 
+ 		where company_id=#{companyId}
+ 	</select>
+ 	
+ <select id="findAllPickCount" parameterType="com.qjkj.qjcsp.entity.pick.OrderPickSearch" resultType="java.lang.Integer">
+  	SELECT COUNT(*)  
+  		FROM tbl_order_pick_detail topd,basics_goods bg,basics_machine bm 
+  	<where>
+  		1=1
+  		AND topd.machine_id=bm.machine_id 
+  		AND topd.goods_id=bg.goods_id
+<!--   		<if test="isUserofQJKJ==false"> -->
+  			AND topd.company_id=#{companyId}
+<!--   		</if> -->
+  		
+  		<if test="orderNum !=null and orderNum !=''">
+  			AND topd.order_num like '%${orderNum}%'
+  		</if>
+  		
+  		<if test="goodsName !=null and goodsName !=''">
+  			AND bg.goods_name like '%${goodsName}%'
+  		</if>
+  		<if test="machineId !=null and machineId!=''">
+  			AND topd.machine_id = #{machineId}
+  		</if>
+  		<if test="pickStartTime !=null and pickStartTime !=''">
+  			AND <![CDATA[ topd.pick_time >=CONCAT(#{pickStartTime},' 00:00:00')]]>  
+  		</if>
+  		<if test="pickEndTime !=null and pickEndTime !=''">
+  			AND <![CDATA[ topd.pick_time <=CONCAT(#{pickEndTime},' 23:59:59')]]>  
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="findAllpickList" parameterType="com.qjkj.qjcsp.entity.pick.OrderPickSearch" resultMap="BasePickResult">
+  		SELECT topd.order_pick_id,bm.machine_name,
+  		topd.order_num,topd.pick_time,bg.goods_name 
+		FROM tbl_order_pick_detail topd,basics_goods bg,basics_machine bm 
+  	<where>
+  		1=1
+  		AND topd.machine_id=bm.machine_id 
+  		AND topd.goods_id=bg.goods_id
+<!--   		<if test="isUserofQJKJ==false"> -->
+  			AND topd.company_id=#{companyId}
+<!--   		</if> -->
+  		
+  		<if test="orderNum !=null and orderNum !=''">
+  			AND topd.order_num like '%${orderNum}%'
+  		</if>
+  		
+  		<if test="goodsName !=null and goodsName !=''">
+  			AND bg.goods_name like '%${goodsName}%'
+  		</if>
+  		<if test="machineId !=null and machineId!=''">
+  			AND topd.machine_id = #{machineId}
+  		</if>
+  		<if test="pickStartTime !=null and pickStartTime !=''">
+  			AND <![CDATA[ topd.pick_time >=CONCAT(#{pickStartTime},' 00:00:00')]]>  
+  		</if>
+  		<if test="pickEndTime !=null and pickEndTime !=''">
+  			AND <![CDATA[ topd.pick_time <=CONCAT(#{pickEndTime},' 23:59:59')]]>  
+  		</if>
+  	</where>
+  	order by topd.pick_time DESC
+  	limit #{offset},#{limit}
+  </select>
+
+</mapper>

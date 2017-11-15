@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BateMachineMapper">
+	
+	<select id="getMachinebyDeviceCode" parameterType="java.lang.String" resultType="com.qjkj.qjcsp.entity.BasicsMachine">
+		SELECT machine_id  AS  machineId, company_id AS companyId ,area_model_id  AS areaModelId 
+		FROM basics_machine 
+		WHERE device_code=#{deviceCode}
+	</select>
+
+	<insert id="insertOperateRecording" parameterType="map">
+    INSERT INTO tbl_operate_record_log 
+      (record_id, batch_num, user_id, 
+      machine_id, device_code, operate_type, 
+      operate_mode, operate_time)
+    VALUES 
+      (#{recordId,jdbcType=VARCHAR}, #{batchNum,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{machineId,jdbcType=BIGINT}, #{deviceCode,jdbcType=VARCHAR}, #{operateType,jdbcType=CHAR}, 
+      #{operateMode,jdbcType=CHAR}, #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+   <update id="updateAreaModelIdIfDifferent">
+  	UPDATE basics_machine
+  	SET area_model_id = #{areaModelId,jdbcType=BIGINT}
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getValidTimes" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	SELECT valid_times
+  	FROM basics_goods
+  	WHERE goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  
+  <insert id="insertSelectiveTblItemDetail" parameterType="com.qjkj.qjcsp.entity.TblItemDetail">
+    insert into tbl_item_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="deviceCode != null" >
+        device_code,
+      </if>
+      <if test="supplyBatchNum != null" >
+        supply_batch_num,
+      </if>
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="rowNum != null" >
+        row_num,
+      </if>
+      <if test="colNum != null" >
+        col_num,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="itemStatus != null" >
+        item_status,
+      </if>
+      <if test="stockTime != null" >
+        stock_time,
+      </if>
+      <if test="expireTime != null" >
+        expire_time,
+      </if>
+      <if test="cleanTime != null" >
+        clean_time,
+      </if>
+      <if test="takenTime != null" >
+        taken_time,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderItemId != null" >
+        order_item_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="clearBatchNum != null" >
+        clear_batch_num,
+      </if>
+      <if test="itemType != null">
+      	item_type,
+      
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null" >
+        #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyBatchNum != null" >
+        #{supplyBatchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cellId != null" >
+        #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="rowNum != null" >
+        #{rowNum,jdbcType=SMALLINT},
+      </if>
+      <if test="colNum != null" >
+        #{colNum,jdbcType=SMALLINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="itemStatus != null" >
+        #{itemStatus,jdbcType=CHAR},
+      </if>
+      <if test="stockTime != null" >
+        #{stockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanTime != null" >
+        #{cleanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takenTime != null" >
+        #{takenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemId != null" >
+        #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if> 
+      <if test="clearBatchNum != null" >
+        #{clearBatchNum,jdbcType=VARCHAR},
+      </if>
+       <if test="itemType != null">
+      	 #{itemType,jdbcType=VARCHAR},
+      </if>     
+    </trim> 
+  </insert>
+  
+  
+  <update id="supplingUpdateCell">
+  	UPDATE basics_machine_cell
+  	SET item_id = #{itemId,jdbcType=VARCHAR}, cell_status = #{cellStatus,jdbcType=CHAR}
+    WHERE cell_id = #{cellId,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="cleaningUpdateItemDetail">
+  	UPDATE tbl_item_detail d, basics_machine_cell c 
+  	SET d.item_status = #{itemStatus,jdbcType=CHAR}, d.clean_time = #{cleanTime,jdbcType=TIMESTAMP},
+  		c.cell_status = #{cellStatus,jdbcType=CHAR}, d.clear_batch_num = #{clearBatchNum,jdbcType=VARCHAR},
+  		c.item_id = null
+  	WHERE c.cell_id = #{cellId,jdbcType=VARCHAR} AND c.item_id = d.item_id
+  </update>
+
+</mapper>

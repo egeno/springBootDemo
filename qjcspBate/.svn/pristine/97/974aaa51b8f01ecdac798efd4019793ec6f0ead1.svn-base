@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--订单详情</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/about.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="main">
+        <div class="aboutWe">
+        	<div class="title"><a href="javascript:void(0);" class="gotoback"><img src="../img/image/return.png" alt="返回" /></a>众包项目</div>
+        	<div class="aboutbg"><img src="../img/imgbig/DC96B7CC5472103D6563D30C9EC35ADD.png" alt="众包项目"><img src="../img/imgbig/980D47E46D9E2441E35AE08B644D28C7.png" alt="众包项目"><img src="../img/imgbig/B0A4684B6ED6E27331A3D83F5568453F.png" alt="众包项目"><img src="../img/imgbig/BC12A6FAB2379A916BDFDA390502053E.png" alt="众包项目"></div>
+        </div>
+	</body>
+</html>
+<script type="text/javascript">
+
+</script>

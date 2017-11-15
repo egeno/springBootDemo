@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomerQuestion" >
+    <id column="question_id" property="questionId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="question_type" property="questionType" jdbcType="INTEGER" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="response" property="response" jdbcType="VARCHAR" />
+    <result column="question_status" property="questionStatus" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="answer_time" property="answerTime" jdbcType="TIMESTAMP" />
+    <result column="answer_user_id" property="answerUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    question_id, customer_id, mobile, question_type, question, response, question_status, 
+    create_time, modify_time, mod_user_id, answer_time, answer_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_question
+    where question_id = #{questionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_customer_question
+    where question_id = #{questionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomerQuestion" >
+    insert into tbl_customer_question (question_id, customer_id, mobile, 
+      question_type, question, response, 
+      question_status, create_time, modify_time, 
+      mod_user_id, answer_time, answer_user_id
+      )
+    values (#{questionId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, 
+      #{questionType,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{response,jdbcType=VARCHAR}, 
+      #{questionStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{modUserId,jdbcType=BIGINT}, #{answerTime,jdbcType=TIMESTAMP}, #{answerUserId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerQuestion" >
+    insert into tbl_customer_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="questionType != null" >
+        question_type,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="response != null" >
+        response,
+      </if>
+      <if test="questionStatus != null" >
+        question_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="answerTime != null" >
+        answer_time,
+      </if>
+      <if test="answerUserId != null" >
+        answer_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="response != null" >
+        #{response,jdbcType=VARCHAR},
+      </if>
+      <if test="questionStatus != null" >
+        #{questionStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="answerTime != null" >
+        #{answerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="answerUserId != null" >
+        #{answerUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerQuestion" >
+    update tbl_customer_question
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        question_type = #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="response != null" >
+        response = #{response,jdbcType=VARCHAR},
+      </if>
+      <if test="questionStatus != null" >
+        question_status = #{questionStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="answerTime != null" >
+        answer_time = #{answerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="answerUserId != null" >
+        answer_user_id = #{answerUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where question_id = #{questionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblCustomerQuestion" >
+    update tbl_customer_question
+    set customer_id = #{customerId,jdbcType=BIGINT},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=INTEGER},
+      question = #{question,jdbcType=VARCHAR},
+      response = #{response,jdbcType=VARCHAR},
+      question_status = #{questionStatus,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      mod_user_id = #{modUserId,jdbcType=BIGINT},
+      answer_time = #{answerTime,jdbcType=TIMESTAMP},
+      answer_user_id = #{answerUserId,jdbcType=BIGINT}
+    where question_id = #{questionId,jdbcType=BIGINT}
+  </update>
+</mapper>

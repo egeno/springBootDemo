@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblMachineAreaModelMostSaleLogMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSaleLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="machine_area_model_most_sale_id" property="machineAreaModelMostSaleId" jdbcType="BIGINT" />
+    <result column="operate_user_id" property="operateUserId" jdbcType="BIGINT" />
+    <result column="operate_type" property="operateType" jdbcType="CHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_area_model_most_sale_id, operate_user_id, operate_type, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_machine_area_model_most_sale_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_machine_area_model_most_sale_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSaleLog" >
+    insert into tbl_machine_area_model_most_sale_log (id, machine_area_model_most_sale_id, operate_user_id, 
+      operate_type, operate_time)
+    values (#{id,jdbcType=BIGINT}, #{machineAreaModelMostSaleId,jdbcType=BIGINT}, #{operateUserId,jdbcType=BIGINT}, 
+      #{operateType,jdbcType=CHAR}, #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSaleLog" >
+    insert into tbl_machine_area_model_most_sale_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineAreaModelMostSaleId != null" >
+        machine_area_model_most_sale_id,
+      </if>
+      <if test="operateUserId != null" >
+        operate_user_id,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineAreaModelMostSaleId != null" >
+        #{machineAreaModelMostSaleId,jdbcType=BIGINT},
+      </if>
+      <if test="operateUserId != null" >
+        #{operateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=CHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSaleLog" >
+    update tbl_machine_area_model_most_sale_log
+    <set >
+      <if test="machineAreaModelMostSaleId != null" >
+        machine_area_model_most_sale_id = #{machineAreaModelMostSaleId,jdbcType=BIGINT},
+      </if>
+      <if test="operateUserId != null" >
+        operate_user_id = #{operateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=CHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSaleLog" >
+    update tbl_machine_area_model_most_sale_log
+    set machine_area_model_most_sale_id = #{machineAreaModelMostSaleId,jdbcType=BIGINT},
+      operate_user_id = #{operateUserId,jdbcType=BIGINT},
+      operate_type = #{operateType,jdbcType=CHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

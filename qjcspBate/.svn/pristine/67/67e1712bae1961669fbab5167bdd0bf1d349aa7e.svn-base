@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsJoininfoMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsJoininfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+    <result column="applicant_tel" property="applicantTel" jdbcType="VARCHAR" />
+    <result column="join_type" property="joinType" jdbcType="CHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, applicant, applicant_tel, join_type, content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_joininfo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_joininfo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsJoininfo" >
+    insert into basics_joininfo (id, applicant, applicant_tel, 
+      join_type, content)
+    values (#{id,jdbcType=BIGINT}, #{applicant,jdbcType=VARCHAR}, #{applicantTel,jdbcType=VARCHAR}, 
+      #{joinType,jdbcType=CHAR}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsJoininfo" >
+    insert into basics_joininfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applicant != null" >
+        applicant,
+      </if>
+      <if test="applicantTel != null" >
+        applicant_tel,
+      </if>
+      <if test="joinType != null" >
+        join_type,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantTel != null" >
+        #{applicantTel,jdbcType=VARCHAR},
+      </if>
+      <if test="joinType != null" >
+        #{joinType,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsJoininfo" >
+    update basics_joininfo
+    <set >
+      <if test="applicant != null" >
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantTel != null" >
+        applicant_tel = #{applicantTel,jdbcType=VARCHAR},
+      </if>
+      <if test="joinType != null" >
+        join_type = #{joinType,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsJoininfo" >
+    update basics_joininfo
+    set applicant = #{applicant,jdbcType=VARCHAR},
+      applicant_tel = #{applicantTel,jdbcType=VARCHAR},
+      join_type = #{joinType,jdbcType=CHAR},
+      content = #{content,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 查询手机号是否已经申请过合作 -->
+  <select id="checkIsSend" resultType="integer">
+  	SELECT COUNT(1) FROM basics_joininfo WHERE applicant_tel=#{applicantTel} AND join_type=#{joinType};
+  </select>
+  
+  
+  <select id="findJoinInfoCount" parameterType="com.qjkj.qjcsp.entity.BasicsJoininfo" resultType="java.lang.Integer">
+  	SELECT COUNT(*)  
+  		FROM basics_joininfo  bj
+  	where
+  		1=1
+  		<if test="applicant !=null and applicant !=''">
+  			AND bj.applicant like '%${applicant}%'
+  		</if> 		
+  		<if test="applicantTel !=null and applicantTel !=''">
+  			AND bj.applicant_tel like '%${applicantTel}%'
+  		</if>
+  </select> 
+  
+  <select id="findJoinInfoList" parameterType="com.qjkj.qjcsp.entity.BasicsJoininfo" resultType="map">
+  	select 
+		bj.id,
+		bj.applicant,
+		bj.applicant_tel as applicantTel,
+		bj.join_type as joinType,
+		bj.content
+		FROM basics_joininfo  bj
+  	where
+  		1=1	 		
+  		<if test="applicant !=null and applicant !=''">
+  			AND bj.applicant like '%${applicant}%'
+  		</if> 		
+  		<if test="applicantTel !=null and applicantTel !=''">
+  			AND bj.applicant_tel like '%${applicantTel}%'
+  		</if>
+  	  limit #{offset},#{limit} 
+  </select>
+  
+</mapper>

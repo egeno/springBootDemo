@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--订单确认</title>
+		<link type="text/css" rel="stylesheet" href="../css/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/orderRetail.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/orderRetail.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body class="main">
+		<div class="dialog">
+			<div class="dialog_null dialog_box">
+				<h3>温馨提示</h3>
+				<p>您购买的套餐数量不足！</p>
+				<div class="know">知道了</div>
+			</div>
+		</div>
+		<div class="dialog">
+			<div class="priceChange dialog_box">
+				<h3>温馨提示</h3>
+				<p>哎呦！价格变了，确认下新价格吧^_^</p>
+				<div class="priceChange_know">知道了</div>
+			</div>
+		</div>
+		<div class="order_content">
+			<div class="title"><a href="javascript:void(0);" class="backpave"><img src="../img/image/return.png" alt="返回" /></a>订单确认</div>
+			<div class="splitLine"></div>    <!-- 分割线  --> 
+			<!-- 取餐地址  start -->
+			<div class="takePlace">
+				<h1>取餐地址</h1>
+				<p>西湖区万塘路西湖国际综合楼302号</p>
+			</div>
+			<!-- 取餐地址  end -->
+			<div class="splitLine"></div>    <!-- 分割线  --> 
+			<!-- 红包  start -->
+			<!-- <div class="packet">
+				<h1>红包</h1>
+				<img src="../img/images/to.png" />
+				<p>暂无可用红包</p>
+			</div> -->
+			<!-- 红包  end -->
+			<div class="splitLine"></div>	 <!-- 分割线  --> 
+			<!-- 手机号  start -->
+			<div class="phone">
+				<h1>手机号</h1>
+				<p></p>
+			</div>
+			<!-- 手机号  end -->
+			<div class="splitLine"></div>	 <!-- 分割线  -->
+			<!-- 订单列表  start -->
+			<div class="orderList">
+				<h1>
+					<!-- <span>03-16</span>
+					<span>中餐  (取餐时间：10:00-12:30)</span> -->
+				</h1>
+				<!--套餐不足时-->
+				<!-- <p>
+					<span class="goodsName">红烧狮子头套餐饭<img src="../img/image/careful.png" alt="套餐不足"></span>
+					<span class="goodsCount">x1</span>
+					<span class="goodsPrice">&#165;<em>15.00</em></span>
+				</p> -->
+				<!--套餐足够时-->
+				<!-- <p>
+					<span class="goodsName">红烧狮子头套餐饭</span>
+					<span class="goodsCount">x1</span>
+					<span class="goodsPrice">&#165;<em>15.00</em></span>
+				</p> -->
+			</div>
+			<!--<div class="orderList">
+				<h1>
+					<span>03-17</span>
+					<span>晚餐  (取餐时间：16:00-18:30)</span>
+				</h1>
+				<p>
+					<span class="goodsName">红烧狮子头套餐饭</span>
+					<span class="goodsCount">x1</span>
+					<span class="goodsPrice">&#165;<em>15.00</em></span>
+				</p>
+				<p>
+					<span class="goodsName">红烧狮子头套餐饭</span>
+					<span class="goodsCount">x1</span>
+					<span class="goodsPrice">&#165;<em>15.00</em></span>
+				</p>
+			</div>-->
+			<div class="splitLine order"></div>	 <!-- 分割线  -->
+			<!-- 订单列表  end -->
+			<!-- 优惠  start -->
+			<div class="discount">
+				<!-- <h1>优惠</h1>
+				<div class="discount_down">
+					<p><img src="../img/image/reduce.png" alt="减" />优惠减免<span class="reduceMoney fr"><em>0</em>元</span></p>
+				</div> -->
+				<p class="shouldpay">待支付<span>&yen<em>0</em></span></p>
+			</div>
+			<!-- 优惠  end -->
+			<!-- 提交订单  start -->
+			<div class="order_bottom">
+				<!-- <span class="discountMoney">已优惠&yen<em>0</em></span> -->
+				<span class="orderMoney"><em>&#165;<i>0</i></em><span>待支付</span></span>
+				<span class="orderSubmit"><a href="javascript:void(0);">提交订单</a></span>
+			</div>
+			<!-- 提交订单  start -->
+			
+		</div>
+		
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<meta name="format-detection" content="telephone=no">
+	<title>评价详情</title>
+	<link type="text/css" rel="stylesheet" href="../css/common.css" />
+	<link type="text/css" rel="stylesheet" href="../css/goodsEvaluateInfo.css" />
+	<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/goodsEvaluateInfo.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div class="evaluateInfo_main">
+	<ul class="evaluateInfo_box">
+		<!-- <li class="info">
+			<div class="info_title">
+				<span class="goodsName">红烧狮子头套餐饭</span><span>(店家)</span>
+				<span class="start"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"></span>
+			</div>
+			<p class="text">傻就可获得健康撒谎发空就按很快就复活点就开始放假卡双待后方可阿斯顿和经典款撒谎发科技萨达和啥的疯狂拉升的积分卡拉斯加打开了房就开始拉到就付款了圣诞节饭圣诞节疯狂了送大家分开垃圾的顺口溜</p>
+			<p class="time"><span class="check">待审核</span><span class="date">2015-12-15</span></p>
+		</li>
+		<li class="info">
+			<div class="info_title">
+				<span class="goodsName">红烧狮子头套餐饭</span><span>(店家)</span>
+				<span class="start"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"></span>
+			</div>
+			<p class="text">傻就可获得健康撒谎发空就按很快就复活点就开始放假卡双待后方可阿斯顿和经典款撒谎发科技萨达和啥的疯狂拉升的积分卡拉斯加打开了房就开始拉到就付款了圣诞节饭圣诞节疯狂了送大家分开垃圾的顺口溜</p>
+			<p class="time"><span class="check">待审核</span><span class="date">2015-12-15</span></p>
+		</li>
+		<li class="info">
+			<div class="info_title">
+				<span class="goodsName">红烧狮子头套餐饭</span><span>(店家)</span>
+				<span class="start"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"></span>
+			</div>
+			<p class="text">傻就可获得健康撒谎发空就按很快就复活点就开始放假卡双待后方可阿斯顿和经典款撒谎发科技萨达和啥的疯狂拉升的积分卡拉斯加打开了房就开始拉到就付款了圣诞节饭圣诞节疯狂了送大家分开垃圾的顺口溜</p>
+			<p class="time"><span class="check">待审核</span><span class="date">2015-12-15</span></p>
+		</li>
+		<li class="info">
+			<div class="info_title">
+				<span class="goodsName">红烧狮子头套餐饭</span><span>(店家)</span>
+				<span class="start"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"></span>
+			</div>
+			<p class="text">傻就可获得健康撒谎发空就按很快就复活点就开始放假卡双待后方可阿斯顿和经典款撒谎发科技萨达和啥的疯狂拉升的积分卡拉斯加打开了房就开始拉到就付款了圣诞节饭圣诞节疯狂了送大家分开垃圾的顺口溜</p>
+			<p class="time"><span class="check">待审核</span><span class="date">2015-12-15</span></p>
+		</li>
+		<li class="info">
+			<div class="info_title">
+				<span class="goodsName">红烧狮子头套餐饭</span><span>(店家)</span>
+				<span class="start"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"><img src="../img/imgbig/star2x.png" alt="星星"></span>
+			</div>
+			<p class="text">傻就可获得健康撒谎发空就按很快就复活点就开始放假卡双待后方可阿斯顿和经典款撒谎发科技萨达和啥的疯狂拉升的积分卡拉斯加打开了房就开始拉到就付款了圣诞节饭圣诞节疯狂了送大家分开垃圾的顺口溜</p>
+			<p class="time"><span class="check">待审核</span><span class="date">2015-12-15</span></p>
+		</li> -->
+	</ul>
+	<div class="footer">
+		<img src="../img/imgbig/return1402x.png" alt="" class='go_back'>
+		<p class="slide_up">
+			<img src="../img/imgbig/up2x.png" alt="" >
+			<span>上滑查看更多</span>
+		</p>
+	</div>
+</div>
+</body>
+</html>

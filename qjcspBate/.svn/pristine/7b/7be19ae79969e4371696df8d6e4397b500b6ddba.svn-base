@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblIssueMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblIssue">
+		<id column="issue_id" property="issueId" jdbcType="BIGINT" />
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+		<result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="issue_num" property="issueNum" jdbcType="INTEGER" />
+		<result column="issue_time" property="issueTime" jdbcType="TIMESTAMP" />
+		<result column="sell_start_time" property="sellStartTime"
+			jdbcType="TIMESTAMP" />
+		<result column="sell_end_time" property="sellEndTime" jdbcType="TIMESTAMP" />
+		<result column="reserver_end_time" property="reserverEndTime"
+			jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		issue_id, goods_id,area_model_id,company_id,issue_num,
+		issue_time,
+		sell_start_time, sell_end_time, reserver_end_time,
+		create_time, create_user_id, mod_time, mod_user_id, isdel
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_issue
+		where issue_id = #{issueId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		tbl_issue
+		where issue_id = #{issueId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblIssue">
+		insert into tbl_issue
+		(issue_id,
+		goods_id,area_model_id,company_id,issue_num,
+		issue_time,
+		sell_start_time, sell_end_time,
+		reserver_end_time, create_time,
+		create_user_id,
+		mod_time, mod_user_id, isdel
+		)
+		values
+		(#{issueId,jdbcType=BIGINT},
+		#{goodsId,jdbcType=BIGINT},#{areaModelId,jdbcType=BIGINT},#{companyId,jdbcType=BIGINT},#{issueNum,jdbcType=INTEGER},
+		#{issueTime,jdbcType=TIMESTAMP}, #{sellStartTime,jdbcType=TIMESTAMP},
+		#{sellEndTime,jdbcType=TIMESTAMP},
+		#{reserverEndTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT},
+		#{modTime,jdbcType=TIMESTAMP}, #{modUserId,jdbcType=BIGINT},
+		#{isdel,jdbcType=CHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblIssue">
+		insert into tbl_issue
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="issueId != null">
+				issue_id,
+			</if>
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+			<if test="areaModelId != null">
+				area_model_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="issueNum != null">
+				issue_num,
+			</if>
+			<if test="issueTime != null">
+				issue_time,
+			</if>
+			<if test="sellStartTime != null">
+				sell_start_time,
+			</if>
+			<if test="sellEndTime != null">
+				sell_end_time,
+			</if>
+			<if test="reserverEndTime != null">
+				reserver_end_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="modTime != null">
+				mod_time,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="issueId != null">
+				#{issueId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				#{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="issueNum != null">
+				#{issueNum,jdbcType=INTEGER},
+			</if>
+			<if test="issueTime != null">
+				#{issueTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellStartTime != null">
+				#{sellStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellEndTime != null">
+				#{sellEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reserverEndTime != null">
+				#{reserverEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modTime != null">
+				#{modTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblIssue">
+		update tbl_issue
+		<set>
+			<if test="goodsId != null">
+				goods_id = #{goodsId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				area_model_id = #{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="issueNum != null">
+				issue_num = #{issueNum,jdbcType=INTEGER},
+			</if>
+			<if test="issueTime != null">
+				issue_time = #{issueTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellStartTime != null">
+				sell_start_time = #{sellStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellEndTime != null">
+				sell_end_time = #{sellEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reserverEndTime != null">
+				reserver_end_time =
+				#{reserverEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modTime != null">
+				mod_time = #{modTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+		</set>
+		where issue_id = #{issueId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblIssue">
+		update tbl_issue
+		set goods_id = #{goodsId,jdbcType=BIGINT},
+		area_model_id =
+		#{areaModelId,jdbcType=BIGINT},
+		company_id =
+		#{companyId,jdbcType=BIGINT},
+		issue_num = #{issueNum,jdbcType=INTEGER},
+		issue_time = #{issueTime,jdbcType=TIMESTAMP},
+		sell_start_time =
+		#{sellStartTime,jdbcType=TIMESTAMP},
+		sell_end_time =
+		#{sellEndTime,jdbcType=TIMESTAMP},
+		reserver_end_time =
+		#{reserverEndTime,jdbcType=TIMESTAMP},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_user_id =
+		#{createUserId,jdbcType=BIGINT},
+		mod_time =
+		#{modTime,jdbcType=TIMESTAMP},
+		mod_user_id =
+		#{modUserId,jdbcType=BIGINT},
+		isdel = #{isdel,jdbcType=CHAR}
+		where
+		issue_id = #{issueId,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectIssueByDateAndCompany" resultType="map">
+		SELECT
+		a.issue_id issueId
+		,c.goods_name goodsName,
+		a.issue_num issueNum
+		FROM
+		tbl_issue a,
+		basics_goods c
+		WHERE
+		a.goods_id=c.goods_id
+		AND a.isdel='N'
+		AND c.isdel='N'
+		AND a.area_model_id = #{areaModelId}
+		AND
+		DATE_FORMAT(a.issue_time,"%Y-%m-%d")=#{nowDate}
+	</select>
+
+
+<select id="selectIssueByDateAndStore" resultType="map">
+		SELECT CAST(b.issue_id AS CHAR) issueId
+		,CAST(b.goods_id AS CHAR) goodsId
+		,a.goods_icon goodsIcon
+		,a.goods_name goodsName,
+		SUBSTRING_INDEX(a.goods_name,'(',1) AS shortGoodsName,
+		SUBSTRING_INDEX(SUBSTRING(a.goods_name,LOCATE('(', a.goods_name)+1),')',1) AS storeName,
+		CAST(a.retail_price AS CHAR) retailPrice
+		,IFNULL(CAST((SELECT AVG(evaluate_score) FROM tbl_order_item_evaluate e WHERE a.goods_id=e.goods_id) AS CHAR),'0') goodsGrade
+		FROM tbl_issue b,basics_goods a
+		WHERE b.goods_id=a.goods_id
+		AND b.isdel='N'
+		AND a.isdel='N'
+		AND DATE_FORMAT(b.issue_time,'%Y-%m-%d')=#{selectDate}
+		AND b.company_id=#{companyId}
+		AND b.area_model_id=#{areaModelId}
+		<if test="storeNames != null">
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(a.goods_name,'(',-1),')',1) in 
+		<foreach collection="storeNames" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+         </foreach> 
+         </if>     
+	ORDER BY goodsId ASC
+	</select>
+	<select id="selectIssueByNames" resultType="Long">
+		SELECT goods_id FROM basics_goods 
+	    WHERE 1=1 
+		<if test="storeNames != null">
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1) in 
+		<foreach collection="storeNames" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+         </foreach> 
+         </if>
+	</select>
+	<select id="selectByGidAndAmid" parameterType="com.qjkj.qjcsp.entity.TblIssue"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_issue
+		where goods_id=#{goodsId} and
+		area_model_id=#{areaModelId} and
+		date_format(issue_time,'%Y-%m-%d')=date_format(#{issueTime},'%Y-%m-%d')
+	</select>
+
+	<insert id="insertSelectiveFormatDate" parameterType="com.qjkj.qjcsp.entity.TblIssue">
+		insert into tbl_issue
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="issueId != null">
+				issue_id,
+			</if>
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+			<if test="areaModelId != null">
+				area_model_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="issueNum != null">
+				issue_num,
+			</if>
+			<if test="issueTime != null">
+				issue_time,
+			</if>
+			<if test="sellStartTime != null">
+				sell_start_time,
+			</if>
+			<if test="sellEndTime != null">
+				sell_end_time,
+			</if>
+			<if test="reserverEndTime != null">
+				reserver_end_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="modTime != null">
+				mod_time,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="issueId != null">
+				#{issueId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				#{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="issueNum != null">
+				#{issueNum,jdbcType=INTEGER},
+			</if>
+			<if test="issueTime != null">
+				date_format(#{issueTime},'%Y-%m-%d'),
+			</if>
+			<if test="sellStartTime != null">
+				#{sellStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellEndTime != null">
+				#{sellEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reserverEndTime != null">
+				#{reserverEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modTime != null">
+				#{modTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="selectIssueByDate" resultType="map">
+		SELECT CAST(b.issue_id AS CHAR) issueId
+		,CAST(b.goods_id AS CHAR) goodsId
+		,a.goods_icon goodsIcon
+		,a.goods_name goodsName,
+		SUBSTRING_INDEX(a.goods_name,'(',1) AS shortGoodsName,
+		SUBSTRING_INDEX(SUBSTRING(a.goods_name,LOCATE('(', a.goods_name)+1),')',1) AS storeName,
+		CAST(a.retail_price AS CHAR) retailPrice
+		,IFNULL(CAST((SELECT AVG(evaluate_score) FROM tbl_order_item_evaluate e WHERE a.goods_id=e.goods_id) AS CHAR),'0') goodsGrade
+		FROM tbl_issue b,basics_goods a
+		WHERE b.goods_id=a.goods_id
+		AND b.isdel='N'
+		AND a.isdel='N'
+		AND DATE_FORMAT(b.issue_time,'%Y-%m-%d')=#{selectDate}
+		AND b.company_id=#{companyId}
+		AND b.area_model_id=#{areaModelId}
+	</select>
+	
+	<select id="selectIsSelectIssueByDate" resultType="map">
+	SELECT
+		c.goods_name goodsName
+		,c.goods_id goodsId 
+		,a.issue_id issueId FROM
+		tbl_issue a,
+		basics_goods c WHERE
+		a.goods_id=c.goods_id
+		AND a.isdel='N'
+		AND c.isdel='N'
+		AND c.company_id =#{companyId}
+		AND a.company_id =#{companyId}
+		AND a.area_model_id = #{areaModelId}
+		AND DATE_FORMAT(a.issue_time,"%Y-%m-%d")=#{selectDate}
+	</select>
+	
+	<select id="findSurplusPreissueNum" resultType="int">
+		SELECT
+			CAST((select count(*) from basics_machine_cell e where e.machine_id=a.machine_id and e.cell_status in('0','1')) - IFNULL((
+				SELECT
+				 count(*)
+				FROM
+				tbl_temporary_retail b
+				WHERE
+				b.machine_id=a.machine_id
+				AND b.area_model_id = #{areaModelId}
+				AND b.temporary_date =#{selectDate}
+			),0) AS CHAR) num
+		FROM
+			basics_machine a
+		WHERE
+			a.machine_id =#{machineId}
+	</select>
+	<select id="findPreissueByIssueIdAndPreissueDate" resultType="int"> 
+		SELECT COUNT(*) from tbl_temporary_retail where issue_id=#{issueId}
+	</select>
+	
+	<select id="findSupplyEndTimeByAreaModelId" resultType="string">
+	  select DATE_FORMAT(retail_supply_end_time,'%T') supplyEndTime from basics_model_clean_goods where area_model_id=#{areaModelId}
+	</select>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.ThisMachineOfGoodsMapper" >
+  <select id="getGoodsInfoByMachineId" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT bg.goods_id AS goodsId,bg.goods_name AS goodsName
+    FROM basics_goods bg
+    LEFT JOIN  basics_goods_category bgc ON bg.goods_category_id=bgc.goods_category_id
+    WHERE
+	bgc.goods_category_id=#{goodsCategoryId}
+	AND
+    bg.goods_id IN
+    (SELECT tgam.goods_id FROM
+    tbl_goods_area_model tgam
+    WHERE tgam.area_model_id=#{areaModelId})
+  </select>
+  <select id="getCategoryByMachineId" resultType="java.lang.Long" parameterType="java.util.Map">
+    SELECT DISTINCT  bg.goods_category_id AS goodsCategoryId
+    FROM basics_goods bg
+    WHERE bg.goods_id IN
+    (SELECT tgam.goods_id FROM
+    tbl_goods_area_model tgam
+    WHERE tgam.area_model_id=#{areaModelId})
+  </select>
+  <select id="getCategoryNameByMachineId" resultType="java.lang.String" parameterType="java.util.Map">
+    SELECT DISTINCT  bgc.goods_category_name AS goodsCategoryName
+    FROM basics_goods_category bgc
+    WHERE bgc.goods_category_id=#{goodsCategoryId}
+  </select>
+
+
+</mapper>

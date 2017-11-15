@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qjkj.qjcsp.mapper.TblGoodsIngredientsTypeMapper">
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblGoodsIngredientsType">
+    <id column="ingredients_type_id" jdbcType="BIGINT" property="ingredientsTypeId" />
+    <result column="ingredients_type_name" jdbcType="VARCHAR" property="ingredientsTypeName" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="isdel" jdbcType="CHAR" property="isdel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ingredients_type_id, ingredients_type_name, goods_id, isdel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_goods_ingredients_type
+    where ingredients_type_id = #{ingredientsTypeId,jdbcType=BIGINT}
+  </select>
+  <select id="selectTypeByName" parameterType="java.lang.String" resultType="Int">
+    select 
+    count(1) as num
+    from tbl_goods_ingredients_type
+    where 
+    isdel ='N' 
+    AND  ingredients_type_name= #{ingredientsTypeName}
+    AND  goods_id =#{goodsId}
+    <if test="ingredientsTypeId !=null and ingredientsTypeId !=''">
+		AND ingredients_type_id !=#{ingredientsTypeId}
+	</if> 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_goods_ingredients_type
+    where ingredients_type_id = #{ingredientsTypeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblGoodsIngredientsType">
+    insert into tbl_goods_ingredients_type (ingredients_type_id, ingredients_type_name, 
+      goods_id, isdel)
+    values (#{ingredientsTypeId,jdbcType=BIGINT}, #{ingredientsTypeName,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=BIGINT}, #{isdel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective"  parameterType="com.qjkj.qjcsp.entity.TblGoodsIngredientsType"  useGeneratedKeys="true" keyProperty="ingredientsTypeId">
+  <!--  useGeneratedKeys="true" keyProperty="ingredientsTypeId" -->
+    insert into tbl_goods_ingredients_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+     
+      <if test="ingredientsTypeName != null">
+        ingredients_type_name,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ingredientsTypeName != null">
+        #{ingredientsTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+   
+    
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsIngredientsType">
+    update tbl_goods_ingredients_type
+    <set>
+      <if test="ingredientsTypeName != null">
+        ingredients_type_name = #{ingredientsTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where ingredients_type_id = #{ingredientsTypeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblGoodsIngredientsType">
+    update tbl_goods_ingredients_type
+    set ingredients_type_name = #{ingredientsTypeName,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      isdel = #{isdel,jdbcType=CHAR}
+    where ingredients_type_id = #{ingredientsTypeId,jdbcType=BIGINT}
+  </update>
+   <select id="selectByGoodsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_goods_ingredients_type
+    where goods_id = #{goodsId,jdbcType=BIGINT} and isdel='N'
+  </select> 
+  
+  <!-- 逻辑删除 -->
+	<update id="delIngredientsType" parameterType="java.lang.Long">
+		UPDATE
+		tbl_goods_ingredients_type
+		SET  isdel = 'Y'
+		WHERE ingredients_type_id = #{ingredientsTypeId,jdbcType=BIGINT}
+	</update>	
+</mapper>

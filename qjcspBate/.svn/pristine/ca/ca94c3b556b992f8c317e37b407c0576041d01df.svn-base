@@ -1,0 +1,102 @@
+.top{
+	height: 0.9rem;
+	line-height: 0.9rem;
+	background-color: #fff;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	text-align: center;
+}
+.top img{
+	width: 0.26rem;
+	height: 0.44rem;
+	vertical-align: bottom;
+	margin-top: 0.2rem;
+	margin-left: 0.2rem;
+	float: left;
+}
+.info{
+	color: #1a1a1a;
+	font-size: 0.36rem;
+    display: inline-block;
+}
+.finish{
+	color:#ff8420;
+	float: right;
+	margin-right: 0.2rem;
+}
+.bottom{
+	background-color: #fff;
+	margin-top: 0.2rem;
+}
+.bottom p{
+	height: 0.98rem;
+	line-height: 0.98rem;
+	border-bottom: solid #E4E4E4 0.02rem;
+	font-size: 0.34rem;
+}
+.bottom p em{
+	float: left;
+	color: #1a1a1a;
+	width: 35%;
+	padding-left: 5%;
+}
+.bottom p input{
+	float: right;
+	color: #D8D8D8;
+	width: 60%;
+	text-align: left;
+	height: 0.98rem;
+	font-size: 0.34rem;
+}
+.bottom .sex{
+	width: 2.9rem;
+	height: 0.5rem;
+	display: inline-block;
+	border: #2E91FB 0.02rem solid;
+	border-radius: 0.05rem;
+	margin-top: 0.2rem;
+}
+.bottom .sex em{
+	height: 0.5rem;
+	line-height: 0.5rem;
+	text-align: center;
+	width: 50%;
+	padding-left:0px;
+}
+.checked{
+	background-color: #2E91FB;
+}
+
+
+/* 弹窗 */
+.dialog_clear h3{
+	margin-top: 0.3rem;
+}
+.dialog_clear p{
+	margin-bottom: 0.2rem;
+}
+.dialog_clear{
+	width:4.7rem;
+	height:2.23rem;
+	margin-left:-2.35rem;
+}
+.btn{
+	border-top: 1px solid #d8d8d8;
+	height:0.83rem;
+	line-height:0.83rem;
+}
+.btn span{
+	float:left;
+	text-align: center;
+	font-size:0.3rem;
+	color:#2e91fb;
+	font-weight:bold;
+	width:49.9%;
+}
+.btn span.sure{
+	border-right:1px solid #d8d8d8;
+}
+
+
+
+
+

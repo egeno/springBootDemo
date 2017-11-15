@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsMachineCellMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsMachineCell" >
+    <id column="cell_id" property="cellId" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+<!-- <result column="device_code" property="deviceCode" jdbcType="VARCHAR" /> -->
+    <result column="row_num" property="rowNum" jdbcType="SMALLINT" />
+    <result column="col_num" property="colNum" jdbcType="SMALLINT" />
+    <result column="cell_num" property="cellNum" jdbcType="INTEGER" />
+    <result column="cell_status" property="cellStatus" jdbcType="CHAR" />
+    <result column="item_id" property="itemId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cell_id, machine_id, row_num, col_num, cell_status, item_id,cell_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_machine_cell
+    where cell_id = #{cellId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from basics_machine_cell
+    where cell_id = #{cellId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsMachineCell" >
+    insert into basics_machine_cell (cell_id, machine_id, 
+      row_num, col_num, cell_status, 
+      item_id, goods_id, stock_time, 
+      expire_time,cell_num)
+    values (#{cellId,jdbcType=VARCHAR}, #{machineId,jdbcType=BIGINT}, 
+      #{rowNum,jdbcType=SMALLINT}, #{colNum,jdbcType=SMALLINT}, #{cellStatus,jdbcType=CHAR}, 
+      #{itemId,jdbcType=VARCHAR},#{cellNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachineCell" >
+    insert into basics_machine_cell
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="rowNum != null" >
+        row_num,
+      </if>
+      <if test="colNum != null" >
+        col_num,
+      </if>
+      <if test="cellStatus != null" >
+        cell_status,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="cellNum != null" >
+        cell_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cellId != null" >
+        #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="rowNum != null" >
+        #{rowNum,jdbcType=SMALLINT},
+      </if>
+      <if test="colNum != null" >
+        #{colNum,jdbcType=SMALLINT},
+      </if>
+      <if test="cellStatus != null" >
+        #{cellStatus,jdbcType=CHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellNum != null" >
+        #{cellNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachineCell" >
+    update basics_machine_cell
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="rowNum != null" >
+        row_num = #{rowNum,jdbcType=SMALLINT},
+      </if>
+      <if test="colNum != null" >
+        col_num = #{colNum,jdbcType=SMALLINT},
+      </if>
+      <if test="cellStatus != null" >
+        cell_status = #{cellStatus,jdbcType=CHAR},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellNum != null" >
+        cell_num = #{cellNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cell_id = #{cellId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsMachineCell" >
+    update basics_machine_cell
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      row_num = #{rowNum,jdbcType=SMALLINT},
+      col_num = #{colNum,jdbcType=SMALLINT},
+      cell_status = #{cellStatus,jdbcType=CHAR},
+      item_id = #{itemId,jdbcType=VARCHAR},
+      cell_num = #{cellNum,jdbcType=INTEGER}
+    where cell_id = #{cellId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getUsefulGoodsNum" parameterType="map" resultType="int">
+    SELECT COUNT(1) FROM basics_machine_cell c ,tbl_item_detail d
+	WHERE c.item_id = d.item_id AND d.item_status = '0' 
+	AND c.machine_id = #{machineId,jdbcType=BIGINT} AND d.item_type = '1'
+	AND d.goods_id = #{goodsId,jdbcType=BIGINT}
+<!-- 	AND <![CDATA[ UNIX_TIMESTAMP(#{pickTime,jdbcType=TIMESTAMP}) < UNIX_TIMESTAMP(d.expire_time) ]]> -->
+  </select>
+  
+ <select id="getUsefulGoodsItemId" parameterType="map" resultType="java.lang.String">
+	SELECT d.item_id FROM basics_machine_cell c ,tbl_item_detail d
+	WHERE c.item_id = d.item_id AND d.item_status = '0' 
+	AND c.machine_id = #{machineId,jdbcType=BIGINT} 
+	AND d.goods_id = #{goodsId,jdbcType=BIGINT} 
+<!-- 	AND <![CDATA[ UNIX_TIMESTAMP(#{pickTime,jdbcType=TIMESTAMP}) < UNIX_TIMESTAMP(d.expire_time) ]]> -->
+<!-- 	ORDER BY d.expire_time -->
+	LIMIT #{goodsNum, jdbcType=INTEGER} 
+  </select>
+  
+<!--   <select id="getCellId" parameterType="map">
+  	SELECT cell_id
+  	FROM basics_machine_cell
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+    AND device_code = #{deviceCode,jdbcType=VARCHAR}
+    AND	row_num = #{cellRow,jdbcType=SMALLINT}
+    AND col_num = #{cellColumn,jdbcType=SMALLINT}
+  </select> -->
+  
+ <!--  <update id="cleaningUpdateItemDetail">
+  	UPDATE tbl_item_detail d, basics_machine_cell c 
+  	SET d.item_status = #{itemStatus,jdbcType=CHAR}, d.clean_time = #{cleanTime,jdbcType=TIMESTAMP},
+  		c.cell_status = #{cellStatus,jdbcType=CHAR}, d.clear_batch_num = #{clearBatchNum,jdbcType=VARCHAR},
+  		c.item_id = null
+  	WHERE c.cell_id = #{cellId,jdbcType=VARCHAR} AND c.item_id = d.item_id
+  </update>
+  
+  <select id="queryCellbyMachineId" resultMap="BaseResultMap">
+  	SELECT
+  		<include refid="Base_Column_List"></include>
+  	FROM basics_machine_cell
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+  </select>
+  
+  <update id="updateCellChangeModel">
+  	UPDATE basics_machine_cell
+  	SET goods_id = #{goodsId,jdbcType=BIGINT}
+  	WHERE cell_id = #{cellId,jdbcType=VARCHAR}
+  </update>
+  
+  
+  某台设备的当前模型的所有格子的状态
+  <select id="findNoAllotCellsByDeviceCode" parameterType="java.lang.String" resultType="java.util.Map">
+  	SELECT 
+  	'' cellId
+ 	,'' itemId
+ 	,CAST(row_num AS CHAR) cellRow
+ 	,CAST(col_num AS CHAR) cellColumn
+ 	,'-1' cellStatus
+ 	,'' itemStatus
+ 	,'' goodsId
+ 	,'' goodsName
+ 	FROM basics_machine_cell 
+ 	WHERE device_code=#{deviceCode}
+ 	AND concat(row_num,col_num) NOT  IN (select concat(d.row_num,d.column_num) 
+ 	FROM basics_machine a,basics_area c,basics_area_cell d
+	 WHERE  a.area_model_id=c.area_model_id
+ 	and c.area_id = d.area_id
+ 	and a.device_code=#{deviceCode}) 
+ 	SELECT * FROM (SELECT 
+  	'' cellId
+ 	,'' itemId
+ 	,CAST(row_num AS CHAR) cellRow
+ 	,CAST(col_num AS CHAR) cellColumn
+ 	,'-1' cellStatus
+ 	,'' itemStatus
+ 	,'' goodsId
+ 	,'' goodsName
+ 	,'0' isCurrentOrder
+ 	FROM basics_machine_cell 
+ 	WHERE device_code=#{deviceCode}
+ 	AND concat(row_num,col_num) NOT  IN (select concat(d.row_num,d.column_num) 
+ 	FROM basics_machine a,basics_area c,basics_area_cell d
+	 WHERE  a.area_model_id=c.area_model_id
+ 	and c.area_id = d.area_id
+ 	and a.device_code=#{deviceCode}) 
+  	UNION ALL
+  	SELECT
+  	CAST(d.cell_id as CHAR) cellId
+ 	,CAST(ifnull(d.item_id,'') AS CHAR) itemId
+ 	,CAST(d.row_num AS CHAR) cellRow
+ 	,CAST(d.col_num AS CHAR) cellColumn
+ 	,'0' cellStatus
+ 	,'' itemStatus
+ 	,CAST(b.goods_id AS CHAR) goodsId
+	,e.goods_name goodsName
+	,'0' isCurrentOrder
+ 	FROM basics_machine a,basics_area b,basics_area_cell c,basics_machine_cell d,basics_goods e
+ 	WHERE a.area_model_id=b.area_model_id
+    AND  b.area_id=c.area_id
+ 	AND  c.column_num =d.col_num
+	AND  c.row_num =d.row_num
+ 	AND  d.machine_id=a.machine_id
+ 	AND  b.goods_id=e.goods_id
+ 	AND  d.cell_status='0'
+ 	AND  a.device_code=#{deviceCode}
+  	UNION ALL 
+  	SELECT
+ 	 CAST(d.cell_id AS CHAR) cellId
+ 	,CAST(f.item_id AS CHAR) itemId
+ 	,CAST(d.row_num AS CHAR) cellRow
+ 	,CAST(d.col_num AS CHAR) cellColumn
+ 	,CAST(d.cell_status AS char) cellStatus
+ 	,CASE 
+ 	   WHEN f.expire_time>=now() AND f.order_id IS NULL THEN '1'
+ 	   WHEN f.expire_time&lt;now() AND f.order_id IS NULL THEN '2'
+ 	   WHEN f.order_id IS NOT NULL THEN '3'
+ 	 END itemStatus
+  	 ,CAST(e.goods_id AS CHAR) goodsId
+ 	 ,e.goods_name goodsName
+ 	 ,'0' isCurrentOrder
+	 FROM basics_machine a,basics_area b,basics_area_cell c,basics_machine_cell d,basics_goods e,tbl_item_detail f
+	 WHERE a.area_model_id=b.area_model_id
+ 	 AND  b.area_id=c.area_id
+ 	 AND  c.column_num =d.col_num
+ 	 AND  c.row_num =d.row_num
+	 AND  d.machine_id=a.machine_id
+	 AND  b.goods_id=e.goods_id
+	 AND  d.item_id =f.item_id
+	 AND  d.cell_status='1'
+	 AND  a.device_code=#{deviceCode}) z ORDER BY CAST(z.cellRow AS SIGNED) DESC,CAST(z.cellColumn AS SIGNED) ASC
+  </select>
+  已分配格子状态为空置
+  <select id="findAllotAndNullCellStatusCellsByDeviceCode" parameterType="java.lang.String" resultType="java.util.Map">
+  	SELECT
+  	CAST(d.cell_id as CHAR) cellId
+ 	,ifnull(d.item_id,'') itemId
+ 	,CAST(d.row_num AS CHAR) cellRow
+ 	,CAST(d.col_num AS CHAR) cellColumn
+ 	,'0' cellStatus
+ 	,'' itemStatus
+ 	,CAST(b.goods_id AS CHAR) goodsId
+	,e.goods_name goodsName
+ 	FROM basics_machine a,basics_area b,basics_area_cell c,basics_machine_cell d,basics_goods e
+ 	WHERE a.area_model_id=b.area_model_id
+    AND  b.area_id=c.area_id
+ 	AND  c.column_num =d.col_num
+	AND  c.row_num =d.row_num
+ 	AND  d.machine_id=a.machine_id
+ 	AND  b.goods_id=e.goods_id
+ 	AND  d.cell_status='0'
+ 	AND  a.device_code=#{deviceCode}
+  </select>
+  已分配格子状态 1 单品状态为 0
+  <select id="findAllotAndNoSaleGoodsCellsByDeviceCode" parameterType="java.lang.String" resultType="java.util.Map">
+ 	 SELECT
+ 	 CAST(d.cell_id AS CHAR) cellId
+ 	,f.item_id itemId
+ 	,CAST(d.row_num AS CHAR) cellRow
+ 	,CAST(d.col_num AS CHAR) cellColumn
+ 	,CAST(d.cell_status AS char) cellStatus
+ 	,CASE 
+ 	   WHEN f.expire_time>=now() AND f.order_id IS NULL THEN '1'
+ 	   WHEN f.expire_time&lt;now() AND f.order_id IS NULL THEN '2'
+ 	   WHEN f.order_id IS NOT NULL THEN '3'
+ 	 END itemStatus
+ 	,e.goods_name goodsName
+	 FROM basics_machine a,basics_area b,basics_area_cell c,basics_machine_cell d,basics_goods e,tbl_item_detail f
+	 WHERE a.area_model_id=b.area_model_id
+ 	 AND  b.area_id=c.area_id
+ 	 AND  c.column_num =d.col_num
+ 	 AND  c.row_num =d.row_num
+	 AND  d.machine_id=a.machine_id
+	 AND  b.goods_id=e.goods_id
+	 AND  d.item_id =f.item_id
+	 AND  d.cell_status='1'
+	 AND  a.device_code=#{deviceCode}
+  </select>
+  
+  要切换的模型和设备的格子状态
+  <select id="findWillAllotCelllsByDeviceCodeAndAreaModelId" parameterType="java.util.Map" resultType="java.util.Map">
+  	  SELECT * FROM (SELECT
+ 	 CAST(h.cell_id AS CHAR) cellId
+	 ,'' itemId
+ 	 ,CAST(c.row_num AS CHAR) cellRow
+	 ,CAST(c.column_num AS CHAR) cellColumn
+	 ,'0' cellStatus
+	 ,'' itemStatus
+	 ,CAST(d.goods_id AS CHAR) goodsId
+	 ,d.goods_name goodsName
+	 ,'0' isCurrentOrder
+	 FROM basics_machine a,basics_area b,basics_area_cell c,basics_goods d,basics_machine_area_model g,basics_machine_cell h
+	 WHERE a.machine_id=g.machine_id
+	 AND g.area_model_id=b.area_model_id
+	 AND b.area_id=c.area_id
+	 AND b.goods_id=d.goods_id
+	 AND a.machine_id=h.machine_id 
+	 AND c.row_num=h.row_num
+  	 AND c.column_num=h.col_num
+ 	 AND a.device_code=#{deviceCode}
+ 	 AND g.area_model_id=#{areaModelId}
+ 	 UNION ALL 
+ 	 SELECT 
+  	CAST(cell_id AS CHAR) cellID
+ 	,'' itemId
+ 	,CAST(row_num AS CHAR) cellRow
+ 	,CAST(col_num AS CHAR) cellColumn
+ 	,'-1' cellStatus
+ 	,'' itemStatus
+ 	,'' goodsId
+ 	,'' goodsName
+ 	,'0' isCurrentOrder
+ 	FROM basics_machine_cell h
+ 	WHERE h.device_code=#{deviceCode}
+ 	AND concat(h.row_num,h.col_num) NOT IN(SELECT concat(c.row_num,c.column_num)
+ 	FROM basics_machine a,basics_area b,basics_area_cell c,basics_goods d,basics_machine_area_model g
+ 	WHERE a.machine_id=g.machine_id
+ 	AND b.area_model_id=g.area_model_id 
+ 	AND b.area_id=c.area_id
+ 	AND b.goods_id=d.goods_id
+ 	AND a.device_code=#{deviceCode}
+ 	AND g.area_model_id=#{areaModelId})) z ORDER BY CAST(z.cellRow AS SIGNED) DESC,CAST(z.cellColumn AS SIGNED) ASC
+  </select>
+  <select id="findCellCountByCellStatusIsNullByMachineId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM basics_machine_cell 
+  	WHERE cell_status ='1'
+  	AND machine_id=#{machineId}
+  </select> -->
+  <!-- 要切换的模型的设备的未分配的格子 -->
+  <!-- <select id="findNotAlllotCellsByDeviceCodeAndAreaModelId" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT 
+  	cell_id cellID
+ 	,'' itemId
+ 	,CAST(row_num AS CHAR) cellRow
+ 	,CAST(col_num AS CHAR) cellColumn
+ 	,'-1' cellStatus
+ 	,'' itemStatus
+ 	,'' goodsId
+ 	,'' goodsName
+ 	FROM basics_machine_cell 
+ 	WHERE device_code=#{deviceCode} 
+ 	AND concat(row_num,col_num) NOT  IN(SELECT concat(c.row_num,c.column_num)
+ 	FROM basics_machine a,basics_area b,basics_area_cell c,basics_goods d,basics_area_model f,basics_machine_area_model g
+ 	WHERE a.machine_id=g.machine_id
+ 	AND f.area_model_id=g.area_model_id 
+ 	AND f.area_model_id=b.area_model_id
+ 	AND b.area_id=c.area_id
+ 	AND b.goods_id=d.goods_id
+ 	AND a.device_code=#{deviceCode}
+ 	AND f.area_model_id=#{areaModelId})
+  </select> -->
+  <!--  2.2.7.	获取补货格子列表 -->
+  <select id="getOperateCellsNum" resultType="map">
+  	SELECT mc.cell_id as cellId ,mc.row_num as cellRow,mc.col_num as  cellColumn
+ 	FROM basics_machine_cell mc  LEFT JOIN basics_machine bm on bm.machine_id=mc.machine_id 
+	where mc.cell_status='0' and  bm.device_code=#{deviceCode} ORDER BY mc.row_num,mc.col_num asc LIMIT 0,#{limit};
+  </select>
+  
+  <select id="getNotEmptyCells" resultType="map">
+   select cell_id cellId from basics_machine_cell where cell_status='1' and item_id is not null and machine_id=#{machineId}
+  </select>
+  
+  <update id="updateMachineCell">
+  	UPDATE basics_machine_cell
+  	SET item_id = #{itemId,jdbcType=VARCHAR}, cell_status = #{cellStatus,jdbcType=CHAR}
+    WHERE cell_id = #{cellId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findCellCountByCellStatusIsNullByMachineId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM basics_machine_cell 
+  	WHERE cell_status ='1'
+  	AND machine_id=#{machineId}
+  </select>
+  
+  <insert id="addMachineCellByList" parameterType="list">
+  	INSERT INTO basics_machine_cell 
+  	(cell_id, machine_id, row_num, col_num, cell_status,cell_num)
+  	VALUES
+  	<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.cellId,jdbcType=VARCHAR}, #{item.machineId,jdbcType=BIGINT},  
+      #{item.rowNum,jdbcType=SMALLINT}, #{item.colNum,jdbcType=SMALLINT}, #{item.cellStatus,jdbcType=CHAR}, #{item.cellNum,jdbcType=INTEGER})	
+	</foreach>
+  </insert>
+  
+  <delete id="delMachineCellByMachineId">
+  	DELETE FROM basics_machine_cell 
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+  </delete>    
+  <!-- 获取指定设备的所有可用格子数量 -->
+  <select id="getMachineCellNum" resultType="integer">
+  	SELECT COUNT(1) FROM basics_machine_cell b where b.machine_id=#{machineId} and b.cell_status in('0','1');
+  </select>
+  <select id="getAlarmCellNumByDeviceCode" resultType="map" parameterType="java.lang.Long">
+  SELECT tod.order_detail_id AS orderDetailId,
+tid.item_id AS itemId,
+tid.goods_id AS goodsId,
+bmc.cell_id AS cellId,
+bmc.cell_num AS cellNum
+ FROM tbl_order_detail tod
+LEFT JOIN tbl_order_child toc ON tod.order_child_id=toc.order_child_id
+LEFT JOIN tbl_item_detail tid ON tod.order_detail_id=tid.order_detail_id
+LEFT JOIN basics_machine_cell bmc ON tid.cell_id=bmc.cell_id
+WHERE tod.order_child_id=#{orderChildId,jdbcType=BIGINT} AND tid.item_status='1'
+  </select>
+  
+    <select id="getAlarmCellNumByidCode" resultType="map" parameterType="java.lang.String">
+  SELECT tod.order_detail_id AS orderDetailId,
+tid.item_id AS itemId,
+tid.goods_id AS goodsId,
+bmc.cell_id AS cellId,
+bmc.cell_num AS cellNum
+ FROM tbl_order_detail tod
+LEFT JOIN tbl_order_child toc ON tod.order_child_id=toc.order_child_id
+LEFT JOIN tbl_item_detail tid ON tod.order_detail_id=tid.order_detail_id
+LEFT JOIN basics_machine_cell bmc ON tid.cell_id=bmc.cell_id
+WHERE toc.identifying_code=#{idCode,jdbcType=VARCHAR} AND toc.order_child_status IN(1,10)
+  </select>
+</mapper>

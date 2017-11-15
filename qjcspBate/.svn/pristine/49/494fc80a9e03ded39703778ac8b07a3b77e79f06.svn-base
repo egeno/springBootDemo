@@ -1,0 +1,1029 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrder" >
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="mode_num" property="modeNum" jdbcType="CHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="real_money" property="realMoney" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="discount_rule_id" property="discountRuleId" jdbcType="BIGINT" />
+    <result column="discount_money" property="discountMoney" jdbcType="DECIMAL" />
+    <result column="last_pay_time" property="lastPayTime" jdbcType="TIMESTAMP" />
+    <result column="pay_mode" property="payMode" jdbcType="VARCHAR" />
+    <result column="pay_order_num" property="payOrderNum" jdbcType="VARCHAR" />
+    <result column="pay_mode_order_num" property="payModeOrderNum" jdbcType="VARCHAR" />
+    <result column="account_number" property="accountNumber" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_status" property="payStatus" jdbcType="CHAR" />
+    <result column="pay_number" property="payNumber" jdbcType="VARCHAR" />
+    <result column="compelete_time" property="compeleteTime" jdbcType="TIMESTAMP" />
+    <result column="faild_msg" property="faildMsg" jdbcType="VARCHAR" />
+    <result column="customer_delete" property="customerDelete" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="order_type" property="orderType" jdbcType="CHAR" />
+     <result column="total_num" property="totalNum" jdbcType="CHAR" />
+  </resultMap>
+  
+  <resultMap id="orderDetailsMap" type="com.qjkj.qjcsp.entity.TblOrder" >
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="mode_num" property="modeNum" jdbcType="CHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="real_money" property="realMoney" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="discount_rule_id" property="discountRuleId" jdbcType="BIGINT" />
+    <result column="discount_money" property="discountMoney" jdbcType="DECIMAL" />
+    <result column="last_pay_time" property="lastPayTime" jdbcType="TIMESTAMP" />
+    <result column="pay_mode" property="payMode" jdbcType="VARCHAR" />
+    <result column="pay_order_num" property="payOrderNum" jdbcType="VARCHAR" />
+    <result column="pay_mode_order_num" property="payModeOrderNum" jdbcType="VARCHAR" />
+    <result column="account_number" property="accountNumber" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_status" property="payStatus" jdbcType="CHAR" />
+    <result column="pay_number" property="payNumber" jdbcType="VARCHAR" />
+    <result column="compelete_time" property="compeleteTime" jdbcType="TIMESTAMP" />
+    <result column="faild_msg" property="faildMsg" jdbcType="VARCHAR" />
+    <result column="customer_delete" property="customerDelete" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="order_type" property="orderType" jdbcType="CHAR" />
+    <result column="total_num" property="totalNum" jdbcType="CHAR" />
+  </resultMap>
+
+<resultMap id="BaseResultListMap" type="com.qjkj.qjcsp.entity.TblOrderVo" >  
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="area_model_id" property="areaModelId" jdbcType="VARCHAR" />    
+    <result column="user_type" property="specialRroleNum" jdbcType="SMALLINT" />
+    <result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+</resultMap>
+
+
+  <sql id="Base_Column_List" >
+    order_id, order_num, machine_id, company_id, mobile, customer_id, mode_num, order_time, 
+    total_money, real_money, order_status, discount_rule_id, discount_money, last_pay_time, 
+    pay_mode, pay_order_num, pay_mode_order_num, account_number, pay_time, pay_status, 
+    pay_number, compelete_time, faild_msg, customer_delete, isdel, order_type
+  </sql>
+  
+   <select id="selectListOrderDetail"  resultType="map">
+    select tor.order_Num  as orderNum ,bm.machine_name as machineName ,
+    bu.user_code  as merchantName,tor.total_money as totalPrice ,tor.order_Status  as orderStatus
+    from  tbl_order tor 
+    LEFT JOIN  basics_machine  bm on tor.machine_id=bm.machine_id
+    LEFT JOIN basics_users bu on  tor.company_id=bu.company_id
+    where tor.order_num=#{orderNum} 
+   </select> 
+  
+ 
+ <select id="selectBasicsGoods" resultMap="BaseResultMap" parameterType="java.lang.String">
+ select bg.goods_name,count(bg.goods_id) dishAreaNum,sum(bg.retail_price)  from basics_goods bg
+ LEFT JOIN tbl_item_detail tid on tid.goods_id=bg.goods_id 
+ LEFT JOIN tbl_order tod  on tid.order_id=tod.order_id
+ where tod.order_num=#{orderNum,jdbcType=VARCHAR}
+  </select>
+   
+  
+  <select id="getOrderStatusbyOrderNum" resultType="java.lang.String">
+  	SELECT order_status FROM tbl_order
+  	WHERE order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  
+ 
+   
+   <!--  查询订单明细和下单数量 -->
+   <select id="selectOrderDetailsByOrderNum" resultMap="orderDetailsMap" parameterType="java.lang.String" >
+    select 
+    sum(detail.goods_num) totalNum,
+    ord.order_id, ord.order_num, ord.machine_id, ord.company_id,
+    ord.mobile, ord.customer_id, ord.mode_num, ord.order_time, 
+    ord.total_money, ord.real_money, ord.order_status, ord.discount_rule_id, 
+    ord.discount_money, ord.last_pay_time, 
+    ord.pay_mode, ord.pay_order_num, ord.pay_mode_order_num, ord.account_number, ord.pay_time, 
+    ord.pay_status, 
+    ord.pay_number, ord.compelete_time, ord.faild_msg, 
+    ord.customer_delete, ord.isdel, ord.order_type
+    from 
+    tbl_order ord,tbl_order_child child,tbl_order_detail detail 
+    where ord.order_id=child.order_id 
+    and 
+    child.order_child_id=detail.order_child_id
+    and ord.order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+   
+   
+   
+   
+   <!--  查询订单明细 -->
+  <select id="selectByOrderNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_order
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+
+  </select>
+  <select id="findByCount" parameterType="map" resultType="java.lang.Long">
+  	SELECT
+  		count(1)	
+  	FROM tbl_order o 
+	LEFT JOIN tbl_order_child toc ON o.order_id=toc.order_id 
+	LEFT JOIN tbl_order_detail tod ON toc.order_child_id =tod.order_child_id 
+  	LEFT JOIN basics_company c ON o.company_id = c.company_id
+  	LEFT JOIN tbl_order_mode m ON o.mode_num = m.mode_num
+  	LEFT JOIN basics_machine bm ON o.machine_id = bm.machine_id
+  	WHERE 1 = 1
+  		<if test="companyId != null and companyId != '' ">
+  			AND tod.company_id = #{companyId}
+  		</if>
+  		<if test="companyName != null and companyName != '' ">
+  			AND tod.goods_name like '%${companyName}%'
+  		</if>
+  		<if test="orderType != null and orderType != '-1' ">
+	  			AND o.order_type = '${orderType}'
+	  	</if>
+  		<if test="orderNum != null and orderNum != '' ">
+  			AND o.order_num like '%${orderNum}%'
+  		</if>
+  		<if test="modeNum != null and modeNum != '' and modeNum != '-1' ">
+  			AND o.mode_num = #{modeNum,jdbcType=CHAR}
+  		</if>
+  		<if test="mobile != null and mobile != '' ">
+  			AND o.mobile like '%${mobile}%'
+  		</if>
+  		<if test="startDate != null and startDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{startDate,jdbcType=TIMESTAMP}) <= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="endDate != null and endDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{endDate,jdbcType=TIMESTAMP}) >= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="orderStatus != null and orderStatus != '' and orderStatus != '-1' ">
+	  			AND o.order_status = #{orderStatus,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="orderChildStatus != null and orderChildStatus != '' and orderChildStatus != '-1' ">
+	  			AND toc.order_child_status = #{orderChildStatus,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="payMode != null and payMode != '' and payMode != '-1' ">
+	  			AND o.pay_mode = #{payMode,jdbcType=VARCHAR}
+	  	</if>
+	    <if test="order != null and order != ''" >
+	       	ORDER by ${order} ${sort}
+	    </if>
+	    <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if>  		
+  </select>
+    
+  <select id="findByList" parameterType="map" resultType="map">
+	   	SELECT 
+		  	c.company_name AS companyName, bm.machine_name AS machineName, o.order_num AS orderNum,
+		  	m.mode_num AS modeNum, o.mobile, DATE_FORMAT(o.order_time, '%Y-%m-%d %H:%i:%s') AS orderTime, 
+		  	tod.price AS totalMoney, o.discount_money AS discountMoney, if(toc.order_child_status in(2,0),0,tod.price) AS realMoney,
+		  	DATE_FORMAT(o.pay_time, '%Y-%m-%d %H:%i:%s') AS payTime, o.pay_number AS payNumber,
+		  	o.pay_mode AS payMode,o.order_status AS orderStatus,toc.order_child_status AS orderChildStatus, c.back_no AS backNo, c.card_name AS cardName,
+		  	c.card_no AS cardNo,o.order_type orderType,if(toc.order_child_status=9,tod.price,0) refoundMoney,if(toc.order_child_status in(2,9,0),0,tod.price)  actualMoney	,
+			tod.goods_name AS goodsName,round(tod.price/tod.goods_num,2) AS unitPrice
+			FROM tbl_order o 
+		  	LEFT JOIN tbl_order_child toc ON o.order_id=toc.order_id 
+			LEFT JOIN tbl_order_detail tod ON toc.order_child_id =tod.order_child_id 
+		  	LEFT JOIN basics_company c ON o.company_id = c.company_id
+		  	LEFT JOIN tbl_order_mode m ON o.mode_num = m.mode_num
+		  	LEFT JOIN basics_machine bm ON o.machine_id = bm.machine_id
+	  	WHERE 1 = 1 
+	  	<if test="companyId != null and companyId != '' ">
+  			AND tod.company_id = #{companyId}
+  		</if>
+  		<if test="companyName != null and companyName != '' ">
+  			AND tod.goods_name like '%${companyName}%'
+  		</if>
+  		<if test="orderType != null and orderType != '-1' ">
+	  			AND o.order_type = '${orderType}'
+	  	</if>
+  		<if test="orderNum != null and orderNum != '' ">
+  			AND o.order_num like '%${orderNum}%'
+  		</if>
+  		<if test="modeNum != null and modeNum != '' and modeNum != '-1' ">
+  			AND o.mode_num = #{modeNum,jdbcType=CHAR}
+  		</if>
+  		<if test="mobile != null and mobile != '' ">
+  			AND o.mobile like '%${mobile}%'
+  		</if>
+  		<if test="startDate != null and startDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{startDate,jdbcType=TIMESTAMP}) <= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="endDate != null and endDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{endDate,jdbcType=TIMESTAMP}) >= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="orderStatus != null and orderStatus != '' and orderStatus != '-1' ">
+	  			AND o.order_status = #{orderStatus,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="orderChildStatus != null and orderChildStatus != '' and orderChildStatus != '-1' ">
+	  			AND toc.order_child_status = #{orderChildStatus,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="payMode != null and payMode != '' and payMode != '-1' ">
+	  			AND o.pay_mode = #{payMode,jdbcType=VARCHAR}
+	  	</if>
+	    <if test="order != null and order != ''" >
+	       	ORDER by ${order} ${sort}
+	    </if>
+	    <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if>
+  </select>
+
+
+<select id="findByfinancial" parameterType="map" resultType="map">
+	  
+	  		SELECT 
+		  	 bm.machine_name AS machineName, o.order_num AS orderNum,
+		  	m.mode_num AS modeNum, o.mobile, DATE_FORMAT(o.order_time, '%Y-%m-%d %H:%i:%s') AS orderTime, 
+
+		  	tod.price AS totalMoney, o.discount_money AS discountMoney, if(toc.order_child_status in(2,0),0,tod.price) AS realMoney,
+
+		  	DATE_FORMAT(o.pay_time, '%Y-%m-%d %H:%i:%s') AS payTime, o.pay_number AS payNumber,
+
+		  	o.pay_mode AS payMode, o.order_status AS orderStatus,toc.order_child_status AS orderChildStatus, c.back_no AS backNo, c.card_name AS cardName,
+		  	c.card_no AS cardNo,o.order_type orderType,if(toc.order_child_status=9,tod.price,0) refoundMoney,if(toc.order_child_status in(2,9,0),0,tod.price)  actualMoney	,
+			tod.goods_name AS goodsName,round(tod.price/tod.goods_num,2) AS unitPrice
+			FROM tbl_order o 
+		  	LEFT JOIN tbl_order_child toc ON o.order_id=toc.order_id 
+			LEFT JOIN tbl_order_detail tod ON toc.order_child_id =tod.order_child_id 
+		  	LEFT JOIN basics_company c ON o.company_id = c.company_id
+		  	LEFT JOIN tbl_order_mode m ON o.mode_num = m.mode_num
+		  	LEFT JOIN basics_machine bm ON o.machine_id = bm.machine_id
+	  	WHERE 1 = 1 
+	    <if test="companyId != null and companyId != '' ">
+  			AND tod.company_id = #{companyId}
+  		</if> 
+  		<!-- <if test="companyName != null and companyName != '' ">
+  			AND tod.goods_name like '%${companyName}%'
+  		</if> -->
+  		<if test="orderType != null and orderType != '-1' ">
+	  			AND o.order_type = '${orderType}'
+	  	</if>
+  		<if test="orderNum != null and orderNum != '' ">
+  			AND o.order_num like '%${orderNum}%'
+  		</if>
+  		<if test="modeNum != null and modeNum != '' and modeNum != '-1' ">
+  			AND o.mode_num = #{modeNum,jdbcType=CHAR}
+  		</if>
+  		<if test="mobile != null and mobile != '' ">
+  			AND o.mobile like '%${mobile}%'
+  		</if>
+  		<if test="startDate != null and startDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{startDate,jdbcType=TIMESTAMP}) <= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="endDate != null and endDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{endDate,jdbcType=TIMESTAMP}) >= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="orderStatus != null and orderStatus != '' and orderStatus != '-1' ">
+	  			AND o.order_status = #{orderStatus,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="orderChildStatus != null and orderChildStatus != '' and orderChildStatus != '-1' ">
+	  			AND toc.order_child_status = #{orderChildStatus,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="payMode != null and payMode != '' and payMode != '-1' ">
+	  			AND o.pay_mode = #{payMode,jdbcType=VARCHAR}
+	  	</if>
+	  	
+	    <if test="order != null and order != ''" >
+	       	ORDER by ${order} ${sort}
+	    </if>
+	    <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrder" >
+    insert into tbl_order (order_id, order_num, machine_id, 
+      company_id, mobile, customer_id, 
+      mode_num, order_time, total_money, 
+      real_money, order_status, discount_rule_id, 
+      discount_money, last_pay_time, pay_mode, 
+      pay_order_num, pay_mode_order_num, account_number, 
+      pay_time, pay_status, pay_number, 
+      compelete_time, faild_msg, customer_delete, 
+      isdel, order_type
+      )
+    values (#{orderId,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, #{machineId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{customerId,jdbcType=BIGINT}, 
+      #{modeNum,jdbcType=CHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{totalMoney,jdbcType=DECIMAL}, 
+      #{realMoney,jdbcType=DECIMAL}, #{orderStatus,jdbcType=CHAR}, #{discountRuleId,jdbcType=BIGINT}, 
+      #{discountMoney,jdbcType=DECIMAL}, #{lastPayTime,jdbcType=TIMESTAMP}, #{payMode,jdbcType=VARCHAR}, 
+      #{payOrderNum,jdbcType=VARCHAR}, #{payModeOrderNum,jdbcType=VARCHAR}, #{accountNumber,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{payStatus,jdbcType=CHAR}, #{payNumber,jdbcType=VARCHAR}, 
+      #{compeleteTime,jdbcType=TIMESTAMP}, #{faildMsg,jdbcType=VARCHAR}, #{customerDelete,jdbcType=CHAR}, 
+      #{isdel,jdbcType=CHAR}, #{orderType,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrder" useGeneratedKeys="true" keyProperty="orderId">
+    insert into tbl_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="modeNum != null" >
+        mode_num,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="realMoney != null" >
+        real_money,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="discountRuleId != null" >
+        discount_rule_id,
+      </if>
+      <if test="discountMoney != null" >
+        discount_money,
+      </if>
+      <if test="lastPayTime != null" >
+        last_pay_time,
+      </if>
+      <if test="payMode != null" >
+        pay_mode,
+      </if>
+      <if test="payOrderNum != null" >
+        pay_order_num,
+      </if>
+      <if test="payModeOrderNum != null" >
+        pay_mode_order_num,
+      </if>
+      <if test="accountNumber != null" >
+        account_number,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="payNumber != null" >
+        pay_number,
+      </if>
+      <if test="compeleteTime != null" >
+        compelete_time,
+      </if>
+      <if test="faildMsg != null" >
+        faild_msg,
+      </if>
+      <if test="customerDelete != null" >
+        customer_delete,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="modeNum != null" >
+        #{modeNum,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="realMoney != null" >
+        #{realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="discountRuleId != null" >
+        #{discountRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="discountMoney != null" >
+        #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="lastPayTime != null" >
+        #{lastPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMode != null" >
+        #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNum != null" >
+        #{payOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payModeOrderNum != null" >
+        #{payModeOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNumber != null" >
+        #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="payNumber != null" >
+        #{payNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="compeleteTime != null" >
+        #{compeleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="faildMsg != null" >
+        #{faildMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="customerDelete != null" >
+        #{customerDelete,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrder" >
+    update tbl_order
+    <set >
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="modeNum != null" >
+        mode_num = #{modeNum,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="realMoney != null" >
+        real_money = #{realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="discountRuleId != null" >
+        discount_rule_id = #{discountRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="discountMoney != null" >
+        discount_money = #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="lastPayTime != null" >
+        last_pay_time = #{lastPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMode != null" >
+        pay_mode = #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNum != null" >
+        pay_order_num = #{payOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payModeOrderNum != null" >
+        pay_mode_order_num = #{payModeOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNumber != null" >
+        account_number = #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="payNumber != null" >
+        pay_number = #{payNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="compeleteTime != null" >
+        compelete_time = #{compeleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="faildMsg != null" >
+        faild_msg = #{faildMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="customerDelete != null" >
+        customer_delete = #{customerDelete,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=CHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrder" >
+    update tbl_order
+    set order_num = #{orderNum,jdbcType=VARCHAR},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      mode_num = #{modeNum,jdbcType=CHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      real_money = #{realMoney,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=CHAR},
+      discount_rule_id = #{discountRuleId,jdbcType=BIGINT},
+      discount_money = #{discountMoney,jdbcType=DECIMAL},
+      last_pay_time = #{lastPayTime,jdbcType=TIMESTAMP},
+      pay_mode = #{payMode,jdbcType=VARCHAR},
+      pay_order_num = #{payOrderNum,jdbcType=VARCHAR},
+      pay_mode_order_num = #{payModeOrderNum,jdbcType=VARCHAR},
+      account_number = #{accountNumber,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_status = #{payStatus,jdbcType=CHAR},
+      pay_number = #{payNumber,jdbcType=VARCHAR},
+      compelete_time = #{compeleteTime,jdbcType=TIMESTAMP},
+      faild_msg = #{faildMsg,jdbcType=VARCHAR},
+      customer_delete = #{customerDelete,jdbcType=CHAR},
+      isdel = #{isdel,jdbcType=CHAR},
+      order_type = #{orderType,jdbcType=CHAR}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <!-- 获取总订单的相关数据 -->
+  <select id="getOrderTypeAndorderId" resultType="map">
+  	SELECT o.order_type as orderType,o.order_id as orderId, (o.total_money -o.real_money) as disMoney
+	,o.order_num as orderNum,o.customer_id as customerId,o.mobile as mobile,o.machine_id as machineId,
+	o.company_id as companyId,o.order_time as orderTime
+	 FROM tbl_order o where o.isdel='N' and o.customer_delete='N' and o.customer_id =#{customerId} and o.order_num =#{orderNum} ;
+  </select>
+  <select id="getPayModebyOrderNum" resultType="java.lang.String">
+  	SELECT pay_mode FROM tbl_order
+  	WHERE order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 修改总订单状态 -->
+  <update id="updateOrderStatusByOrderId">
+  	update tbl_order set order_status='5' where order_id = #{orderId,jdbcType=BIGINT};
+  </update>
+  
+  <update id="updateOrderStatus">
+  	UPDATE tbl_order 
+  	<set>
+  		<if test="orderStatus != null">
+  			order_status = #{orderStatus,jdbcType=CHAR},
+  		</if>
+  		<if test="compeleteTime != null">
+  			compelete_time = #{compeleteTime,jdbcType=TIMESTAMP}
+  		</if>
+  	</set>
+  	<where>
+  		<if test="orderNum != null">
+  			AND order_num = #{orderNum,jdbcType=VARCHAR}
+  		</if>
+  	</where>
+  </update>
+  
+   <select id="searchOrder" resultMap="BaseResultMap">
+  	SELECT * FROM tbl_order t 
+  	WHERE t.order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="cancelUnpaidOrder">
+   	UPDATE tbl_order tblo, tbl_order_child tbloc
+  	SET 
+  	tblo.order_status = #{orderStatus,jdbcType=CHAR},
+  	tbloc.order_child_status = #{orderStatus,jdbcType=CHAR},
+  	tblo.compelete_time = NOW()
+  	WHERE tblo.order_id = tbloc.order_id AND tblo.order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getOrderIdbyOrderNum" resultType="java.lang.Long">
+  	SELECT order_id FROM tbl_order
+  	WHERE order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryOrderByOrderId" resultMap="BaseResultMap">
+   	SELECT
+ 	<include refid="Base_Column_List" />
+    FROM tbl_order
+    WHERE order_id = #{orderId,jdbcType=BIGINT} FOR UPDATE;
+  </select>
+  
+    <select id="getAddressByOrderId" resultType="String">
+  	SELECT bm.address 
+  	FROM tbl_order tblo, basics_machine bm 
+	WHERE 
+	tblo.machine_id = bm.machine_id 
+	AND tblo.order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <!-- 查询 -->
+  <select id="exportExcelList" parameterType="map" resultType="map">
+   		SELECT
+  		c.company_name AS companyName, bm.machine_name AS machineName, o.order_num AS orderNum,toc.order_child_num AS orderChildNum, 
+  		CASE
+  			WHEN m.mode_num = '0' THEN "设备端"
+  			WHEN m.mode_num = '1' THEN "安卓端"
+  			WHEN m.mode_num = '2' THEN "IOS端"
+  			WHEN m.mode_num = '3' THEN "微信端"
+  		END modeName, 
+  		CASE
+  			WHEN o.pay_mode = '0' THEN "闪付"
+  			WHEN o.pay_mode = '1' THEN "支付宝"
+  			WHEN o.pay_mode = '2' THEN "微信支付"
+  			WHEN o.pay_mode = '3' THEN "余额支付"  			
+  		END payMode, 
+  		
+
+  		
+  		CASE
+
+  			WHEN o.order_status = '0' THEN "待付款"
+  			WHEN o.order_status = '1' THEN "已支付(待取货)"
+  			WHEN o.order_status = '2' THEN "已取消"
+  			WHEN o.order_status = '3' THEN "已取货(待评论)"
+  			WHEN o.order_status = '4' THEN "取货超时"
+  			WHEN o.order_status = '5' THEN "待退款"
+  			WHEN o.order_status = '6' THEN "交易关闭"
+  			WHEN o.order_status = '7' THEN "完成"
+  		END orderStatus,
+  		CASE
+  			WHEN toc.order_child_status = '0' THEN "待付款"
+  			WHEN toc.order_child_status = '1' THEN "已支付(待取货)"
+  			WHEN toc.order_child_status = '2' THEN "已取消"
+  			WHEN toc.order_child_status = '3' THEN "已取货(待评论)"
+  			WHEN toc.order_child_status = '4' THEN "取货超时"
+  			WHEN toc.order_child_status = '5' THEN "待退款"
+  			WHEN toc.order_child_status = '6' THEN "交易关闭"
+  			WHEN toc.order_child_status = '7' THEN "完成"
+  			WHEN toc.order_child_status = '8' THEN "退款失败"
+  			WHEN toc.order_child_status = '9' THEN "退款成功"
+  			WHEN toc.order_child_status = '10' THEN "设备故障"
+  		END orderChildStatus,
+  		CASE
+  			WHEN o.order_type = '0' THEN "预订"
+  			WHEN o.order_type = '1' THEN "零售"
+  		END orderType,  
+  		o.mobile, DATE_FORMAT(o.order_time, '%Y-%m-%d %H:%i:%s') AS orderTime, 
+  		d.price AS totalMoney, IF(o.discount_money IS NULL,0.00,o.discount_money) AS discountMoney, 
+  		if(toc.order_child_status in(2,0),0,d.price)  realMoney, DATE_FORMAT(o.pay_time, '%Y-%m-%d %H:%i:%s') AS payTime, 
+  		o.pay_number AS payNumber, c.back_no AS backNo, c.card_name AS cardName, c.card_no AS cardNo,
+		g.goods_name AS goodsName, g.goods_id AS goodsId, d.goods_num AS goodsNum, round(d.price/d.goods_num,2) AS price
+  			,if(toc.order_child_status=9,d.price,0) refoundMoney,if(toc.order_child_status in(2,9,0),0,d.price)  actualMoney	
+  	FROM tbl_order o
+  	LEFT JOIN tbl_order_child toc ON o.`order_id` = toc.`order_id`
+  	LEFT JOIN tbl_order_detail d ON d.order_child_id = toc.order_child_id
+  	LEFT JOIN basics_company c ON o.company_id = c.company_id
+  	LEFT JOIN tbl_order_mode m ON o.mode_num = m.mode_num
+  	LEFT JOIN basics_machine bm ON o.machine_id = bm.machine_id
+  	LEFT JOIN basics_goods g ON g.goods_id = d.goods_id
+  	WHERE 1=1 
+  		<if test="companyName != null and companyName != '' ">
+  			AND d.goods_name LIKE '%${companyName}%'
+  		</if>
+  		<if test="companyId != null and companyId != '' ">
+  			AND d.company_id = ${companyId}
+  		</if>
+  		<if test="orderNum != null and orderNum != '' ">
+  			AND o.order_num LIKE '%${orderNum}%'
+  		</if>
+  		<if test="orderType != null and orderType != '-1' ">
+	  			AND o.order_type = '${orderType}'
+	  	</if>
+  		<if test='modeNum != null and modeNum != "" and modeNum != "-1"'>
+  			AND o.mode_num = #{modeNum,jdbcType=CHAR}
+  		</if>
+  		<if test="mobile != null and mobile != '' ">
+  			AND o.mobile LIKE '%${mobile}%'
+  		</if>
+  		<if test="startDate != null and startDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{startDate,jdbcType=TIMESTAMP}) <= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test="endDate != null and endDate != '' ">
+  			AND <![CDATA[ UNIX_TIMESTAMP(#{endDate,jdbcType=TIMESTAMP}) >= UNIX_TIMESTAMP(o.order_time) ]]>
+  		</if>
+  		<if test='orderStatus != null and orderStatus != "" and orderStatus != "-1"'>
+  			AND o.order_status = #{orderStatus,jdbcType=VARCHAR}
+  		</if>
+  		<if test="orderChildStatus != null and orderChildStatus != '' and orderChildStatus != '-1' ">
+	  			AND toc.order_child_status = #{orderChildStatus,jdbcType=VARCHAR}
+	  	</if>
+	  		<if test="payMode != null and payMode != '' and payMode != '-1' ">
+	  			AND o.pay_mode = #{payMode,jdbcType=VARCHAR}
+	  	</if>
+	    <if test="order != null and order != ''" >
+	       	ORDER by ${order} ${sort}
+	    </if>
+	    <if test="offset != null and limit != null">
+			LIMIT #{offset},#{limit}
+		</if>   		
+  </select>
+  
+  <select id="selectByMachineId" resultType="map">
+  	SELECT * FROM tbl_order_child t WHERE t.machine_id = #{machineId}
+  </select>
+  <!-- 商户、补货人员 -->
+  <select id="queryOrderByUser"  resultType="map"> 
+ 	SELECT 
+	o.order_id AS orderId,
+	o.order_num AS orderNum,
+	m.machine_name AS machineName,
+	o.order_status  AS orderStatus
+	FROM
+	tbl_order o,
+	(
+		SELECT 
+		bm.machine_id,
+		bm.machine_name
+		FROM 
+		basics_user_machine bum
+		LEFT JOIN basics_machine bm ON bm.machine_id=bum.machine_id
+		WHERE 
+		bum.user_id=#{userId} 
+		AND bum.special_role_num=#{specialRoleNum}
+		<if test="machineId != null">
+			AND bum.machine_id=#{machineId}
+		</if> 
+	) m
+	WHERE 
+	o.machine_id=m.machine_id
+	AND o.order_status=1
+	<if test="startDate != null">
+		<![CDATA[AND TO_DAYS(o.order_time) >= TO_DAYS(#{startDate})]]>
+	</if>
+	<if test="endDate != null">
+		<![CDATA[AND TO_DAYS(o.order_time) <= TO_DAYS(#{endDate})]]>
+	</if>     
+
+
+	<!-- SELECT
+	o.order_id AS orderId,
+	o.order_num AS orderNum,
+	m.machine_name AS machineName,
+	o.order_status  AS orderStatus
+	FROM
+	tbl_order o,     
+	(
+		SELECT order_id,(SELECT machine_name FROM basics_machine WHERE machine_id = tt.machine_id) AS machine_name FROM tbl_order_child tt WHERE order_child_id IN (	       	        
+			SELECT  order_child_id FROM tbl_order_detail WHERE 
+			SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1) = (
+			   SELECT user_name FROM basics_users WHERE user_id = #{userId}
+			)
+		)		
+	) m
+	WHERE 
+    o.order_id = m.order_id 
+	AND o.order_status=1
+	<if test="startDate != null">
+		<![CDATA[AND TO_DAYS(o.order_time) >= TO_DAYS(#{startDate})]]>
+	</if>
+	<if test="endDate != null">
+		<![CDATA[AND TO_DAYS(o.order_time) <= TO_DAYS(#{endDate})]]>
+	</if>
+	group by o.order_id -->
+  </select> 
+  
+  <!-- 众包商 -->
+  <select id="queryOrderByMerSys"  resultType="map"> 
+	SELECT
+	o.order_id AS orderId,
+	o.order_num AS orderNum,
+	bmuc.machine_name AS machineName,
+	o.order_status  AS orderStatus
+	FROM
+	tbl_order o,
+	(
+		SELECT
+		bm.machine_id,
+		bm.machine_name
+		FROM
+		basics_machine bm,
+		(
+			SELECT
+			c.company_id
+			FROM
+			basics_users u
+			LEFT JOIN basics_company c ON u.company_id=c.company_id
+			WHERE u.user_id=#{userId}
+		) uc
+		WHERE 
+		bm.company_id=uc.company_id
+		AND bm.machine_status=1
+		AND bm.isdel='N'
+		<if test="machineId != null">
+			AND bm.machine_id=#{machineId}
+		</if> 
+	) bmuc
+	WHERE 
+	o.machine_id=bmuc.machine_id
+	AND o.order_status=1
+	<if test="startDate != null">
+		<![CDATA[AND TO_DAYS(o.order_time) >= TO_DAYS(#{startDate})]]>
+	</if>
+	<if test="endDate != null">
+		<![CDATA[AND TO_DAYS(o.order_time) <= TO_DAYS(#{endDate})]]>
+	</if>
+  </select>
+  
+  <select id="queryOrderChild" resultType="map">
+  	SELECT
+	c.order_child_id AS orderChildId,
+	m.area_model_name AS areaModelName
+	FROM
+	tbl_order_child c
+	LEFT JOIN basics_area_model m ON m.area_model_id=c.area_model_id
+	WHERE c.order_child_status in(1,3,10) AND c.order_id=#{orderId}
+  </select>
+  
+  <!--众包商  -->
+  <select id="queryOrderDetail" resultType="map">
+  
+  	<!--零售价减单价  SELECT
+	d.goods_name AS goodsName,
+	CAST(d.goods_num  AS CHAR)AS dishAreaNum,
+	CAST(d.price AS CHAR) AS itemFee,
+	d.profit
+	FROM
+	tbl_order_detail d,
+	tbl_order_child c
+	WHERE 
+	c.order_child_id=#{orderChildId} 
+	AND d.order_child_id=c.order_child_id
+	ORDER BY c.order_time DESC -->
+	
+	<!-- 零售价乘以10% -->
+	SELECT
+	d.goods_name AS goodsName,
+	CAST(d.goods_num  AS CHAR)AS dishAreaNum,
+	CAST(d.price AS CHAR) AS itemFee,
+	(d.price)*0.1 AS profit,
+	d.goods_num*d.price AS profits,
+	SUBSTRING_INDEX(SUBSTRING_INDEX(d.goods_name,'(',-1),')',1) AS companyName
+	FROM
+	tbl_order_detail d,
+	tbl_order_child c
+	WHERE 
+	c.order_child_id=#{orderChildId} 
+	AND d.order_child_id=c.order_child_id
+	ORDER BY c.order_time DESC
+  </select>  
+  <!-- 商户 -->
+  <select id="queryOrderDetailByMer" resultType="map">	
+	<!--商户   总金额，算成本价  -->
+	<!--  SELECT
+	dc.goodsName,
+	dc.dishAreaNum,
+	dc.itemFee,
+	dc.profit,
+	dc.companyName
+	FROM
+	(
+		SELECT
+		u.user_name AS companyName
+		FROM
+		basics_users u
+		WHERE u.user_id=#{userId}
+	) bu,
+	(
+	SELECT
+	d.goods_name AS goodsName,
+	CAST(d.goods_num  AS CHAR)AS dishAreaNum,
+	CAST(d.cost_price AS CHAR) AS itemFee,
+	d.cost_price*d.goods_num  AS profit,
+	SUBSTRING_INDEX(SUBSTRING_INDEX(d.goods_name,'(',-1),')',1) AS companyName
+	FROM
+	tbl_order_detail d,
+	tbl_order_child c,
+	basics_goods b
+	WHERE 
+	c.order_child_id=#{orderChildId} 
+	AND d.order_child_id=c.order_child_id
+	AND d.goods_id=b.goods_id
+	ORDER BY c.order_time DESC
+	) dc
+	WHERE bu.companyName=dc.companyName  
+	 -->
+  SELECT
+	dc.goodsName,
+	dc.dishAreaNum,
+	dc.itemFee,
+	dc.profit,
+	dc.companyName
+	FROM
+	(
+		SELECT
+		u.user_name AS companyName
+		FROM
+		basics_users u
+		WHERE u.user_id=#{userId}
+	) bu,
+	(
+	SELECT
+	d.goods_name AS goodsName,
+	CAST(d.goods_num  AS CHAR)AS dishAreaNum,
+	CAST(d.cost_price AS CHAR) AS itemFee,
+	d.cost_price*d.goods_num  AS profit,
+	SUBSTRING_INDEX(SUBSTRING_INDEX(d.goods_name,'(',-1),')',1) AS companyName
+	FROM
+	tbl_order_detail d,
+	tbl_order_child c,
+	basics_goods b
+	WHERE 
+	c.order_child_id=#{orderChildId} 
+	AND d.order_child_id=c.order_child_id
+	AND d.goods_id=b.goods_id
+	AND 
+		SUBSTRING_INDEX(SUBSTRING_INDEX(d.goods_name,'(',-1),')',1) = (
+				   SELECT user_name FROM basics_users WHERE user_id =#{userId}
+		)
+	ORDER BY c.order_time DESC
+	) dc
+	WHERE bu.companyName=dc.companyName 
+  </select>
+  
+   <select id="selectOrderByMachineId" resultType="map" parameterType="java.lang.Long">
+   SELECT toc.order_child_id AS orderChildId,
+o.order_num AS orderNum  
+FROM tbl_order_child toc
+LEFT JOIN tbl_alarm_info tai ON toc.order_child_id=tai.order_child_id
+LEFT JOIN tbl_order o ON o.order_id=toc.order_id
+WHERE tai.machine_id=#{machineId,jdbcType=BIGINT}
+ ORDER BY alarm_id
+ DESC LIMIT 0,1
+   </select>
+    <select id="selectOrderByIdCode" resultType="map" parameterType="java.lang.String">
+   SELECT toc.order_child_id AS orderChildId,
+o.order_num AS orderNum,
+toc.machine_id AS machineId  
+FROM tbl_order_child toc
+LEFT JOIN tbl_order o ON toc.order_id=o.order_id
+WHERE toc.identifying_code=#{idCode,jdbcType=VARCHAR} AND toc.order_child_status IN(1,10)
+   </select>
+    <select id="selectorderIdByorderChildId" resultType="java.lang.Long"  parameterType="java.lang.Long">
+   SELECT order_id AS orderId FROM tbl_order_child  WHERE  order_child_id=#{orderChildId}
+   </select>
+  <select id="selectCountByorderId" resultType="int"  parameterType="java.lang.Long">
+   SELECT count(1) FROM tbl_order_child WHERE order_child_status=5 and order_id=#{orderId}
+   </select>
+</mapper>

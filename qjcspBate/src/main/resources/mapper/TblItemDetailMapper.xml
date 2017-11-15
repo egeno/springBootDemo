@@ -1,0 +1,337 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblItemDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblItemDetail" >
+    <id column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="supply_batch_num" property="supplyBatchNum" jdbcType="VARCHAR" />
+    <result column="clear_batch_num" property="clearBatchNum" jdbcType="VARCHAR" />
+    <result column="cell_id" property="cellId" jdbcType="VARCHAR" />
+    <result column="item_status" property="itemStatus" jdbcType="CHAR" />
+    <result column="item_type" property="itemType" jdbcType="CHAR" />
+    <result column="stock_time" property="stockTime" jdbcType="TIMESTAMP" />
+    <result column="clean_time" property="cleanTime" jdbcType="TIMESTAMP" />
+    <result column="taken_time" property="takenTime" jdbcType="TIMESTAMP" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    item_id,order_id, area_model_id, company_id, goods_id, machine_id, supply_batch_num, clear_batch_num, 
+    cell_id, item_status, item_type, stock_time, clean_time, taken_time, order_detail_id, order_child_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_item_detail
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_item_detail
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblItemDetail" >
+    insert into tbl_item_detail (item_id,order_id, area_model_id, company_id, 
+      goods_id, machine_id, supply_batch_num, 
+      clear_batch_num, cell_id, item_status, 
+      item_type, stock_time, clean_time, 
+      taken_time, order_detail_id, order_child_id)
+    values (#{itemId,jdbcType=VARCHAR},#{orderId,jdbcType=BIGINT},, #{areaModelId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, 
+      #{goodsId,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{supplyBatchNum,jdbcType=VARCHAR}, 
+      #{clearBatchNum,jdbcType=VARCHAR}, #{cellId,jdbcType=VARCHAR}, #{itemStatus,jdbcType=CHAR}, 
+      #{itemType,jdbcType=CHAR}, #{stockTime,jdbcType=TIMESTAMP}, #{cleanTime,jdbcType=TIMESTAMP}, 
+      #{takenTime,jdbcType=TIMESTAMP}, #{orderDetailId,jdbcType=BIGINT}, #{orderChildId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblItemDetail" >
+    insert into tbl_item_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="supplyBatchNum != null" >
+        supply_batch_num,
+      </if>
+      <if test="clearBatchNum != null" >
+        clear_batch_num,
+      </if>
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="itemStatus != null" >
+        item_status,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="stockTime != null" >
+        stock_time,
+      </if>
+      <if test="cleanTime != null" >
+        clean_time,
+      </if>
+      <if test="takenTime != null" >
+        taken_time,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="supplyBatchNum != null" >
+        #{supplyBatchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="clearBatchNum != null" >
+        #{clearBatchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cellId != null" >
+        #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemStatus != null" >
+        #{itemStatus,jdbcType=CHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=CHAR},
+      </if>
+      <if test="stockTime != null" >
+        #{stockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanTime != null" >
+        #{cleanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takenTime != null" >
+        #{takenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblItemDetail" >
+    update tbl_item_detail
+    <set >
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="supplyBatchNum != null" >
+        supply_batch_num = #{supplyBatchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="clearBatchNum != null" >
+        clear_batch_num = #{clearBatchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cellId != null" >
+        cell_id = #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemStatus != null" >
+        item_status = #{itemStatus,jdbcType=CHAR},
+      </if>
+      <if test="itemType != null" >
+        item_type = #{itemType,jdbcType=CHAR},
+      </if>
+      <if test="stockTime != null" >
+        stock_time = #{stockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanTime != null" >
+        clean_time = #{cleanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takenTime != null" >
+        taken_time = #{takenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id = #{orderChildId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblItemDetail" >
+    update tbl_item_detail
+    set area_model_id = #{areaModelId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      machine_id = #{machineId,jdbcType=BIGINT},
+      supply_batch_num = #{supplyBatchNum,jdbcType=VARCHAR},
+      clear_batch_num = #{clearBatchNum,jdbcType=VARCHAR},
+      cell_id = #{cellId,jdbcType=VARCHAR},
+      item_status = #{itemStatus,jdbcType=CHAR},
+      item_type = #{itemType,jdbcType=CHAR},
+      stock_time = #{stockTime,jdbcType=TIMESTAMP},
+      clean_time = #{cleanTime,jdbcType=TIMESTAMP},
+      taken_time = #{takenTime,jdbcType=TIMESTAMP},
+      order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      order_child_id = #{orderChildId,jdbcType=BIGINT}
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findItemDetailCountByAreaModelId" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	SELECT COUNT(*) FROM tbl_item_detail WHERE area_model_id=#{areaModelId}
+  </select>
+  
+  <update id="updateItemDetailbyItemIdList">
+	UPDATE tbl_item_detail 
+	SET item_status = #{itemStatus,jdbcType=CHAR}, order_id = #{orderId,jdbcType=BIGINT},
+      	order_child_id = #{orderChildId,jdbcType=BIGINT},order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+	WHERE item_id IN 
+	<foreach collection="itemIdList" item="itemId" open="(" close=")" separator=",">
+		#{itemId}
+	</foreach>
+  </update>
+  
+  <update id="unlockItemByOrderId">
+     UPDATE tbl_item_detail 
+  	 SET item_status = #{itemStatus}, order_id = NULL, 
+  	 order_detail_id = NULL, order_child_id = NULL
+  	 WHERE order_id = #{orderId}
+  </update>
+  
+  <update id="unlockItemByOrderChildId">
+     UPDATE tbl_item_detail 
+  	 SET item_status = #{itemStatus}, order_id = NULL, 
+  	 order_detail_id = NULL, order_child_id = NULL
+  	 WHERE order_child_id = #{orderChildId}
+  </update>
+  
+  <update id="updateItemByOrderChildId">
+     UPDATE tbl_item_detail tid, basics_machine_cell bmc
+  	 SET tid.item_status = #{itemStatus}, bmc.cell_status = #{cellStatus}, 
+  	 bmc.item_id = NULL, tid.taken_time = NOW()
+  	 WHERE tid.order_child_id = #{orderChildId,jdbcType=BIGINT} AND tid.item_id=bmc.item_id
+  </update>
+  <update id="updateItemByitemId">
+     UPDATE tbl_item_detail tid, basics_machine_cell bmc
+  	 SET tid.item_status = #{itemStatus}, bmc.cell_status = #{cellStatus}, 
+  	 bmc.item_id = NULL, tid.taken_time = NOW()
+  	 WHERE tid.item_id = #{itemId,jdbcType=VARCHAR} AND tid.item_id=bmc.item_id
+  </update>
+  
+  <select id="findItemDetailBydeviceCodeAndOrderNum" resultType="map">
+  		<!-- SELECT
+		a.order_num orderNum
+		,CAST(b.order_child_id AS CHAR) orderChildId
+		,CAST(c.order_detail_id AS CHAR) orderDetailId
+		,CAST(d.goods_id AS CHAR) goodsId
+		,CAST(d.item_id AS CHAR) itemId
+		,CAST(e.cell_id AS CHAR) cellId
+		,CAST(e.row_num AS CHAR) cellRow
+		,CAST(e.col_num AS CHAR) cellColumn
+		,c.goods_name goodsName
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_detail c,
+		tbl_item_detail d,
+		basics_machine_cell e
+		WHERE
+		a.order_id = b.order_id
+		AND b.order_child_id = c.order_child_id
+		AND b.order_child_id=d.order_child_id
+		AND d.item_id=e.item_id
+		AND c.order_detail_id=#{orderDetailId}
+		AND e.machine_id=#{machineId} -->
+  		SELECT
+		a.order_num orderNum
+		,CAST(b.order_child_id AS CHAR) orderChildId
+		,CAST(c.order_detail_id AS CHAR) orderDetailId
+		,CAST(d.goods_id AS CHAR) goodsId
+		,CAST(d.item_id AS CHAR) itemId
+		,CAST(e.cell_id AS CHAR) cellId
+		,CAST(e.row_num AS CHAR) cellRow
+		,CAST(e.col_num AS CHAR) cellColumn
+		,c.goods_name goodsName
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_detail c,
+		tbl_item_detail d,
+		basics_machine_cell e
+		WHERE
+		a.order_id = b.order_id
+		AND b.order_child_id = c.order_child_id
+		AND c.order_child_id = d.order_child_id
+		AND b.order_child_id=d.order_child_id
+		AND d.item_id=e.item_id
+		AND c.order_detail_id=d.order_detail_id 
+		AND d.order_detail_id=#{orderDetailId}
+		AND d.machine_id=#{machineId}
+		GROUP BY d.item_id;
+	</select>
+	
+	<select id="selectRepeatOrder" resultMap="BaseResultMap">
+		SELECT * FROM tbl_item_detail t 
+		JOIN tbl_order_child i ON t.order_child_id = i.order_child_id
+		WHERE i.machine_id = #{machineId} AND i.identifying_code = #{idCode} 
+	</select>
+<!-- 	得到订单的商品购买数量 和  补货数量     如果相同说明完成补货-->
+	<select id="selectBuyNumAndReplenishmentNum" resultType="map">
+	    select 
+        CAST(sum(goods_num) AS CHAR) as gNum,
+        CAST((select count(1) from tbl_item_detail where order_child_id = toc.order_child_id) AS CHAR) as bNum
+        from tbl_order_child toc,tbl_order_detail tod
+        where toc.order_child_id = tod.order_child_id and toc.order_child_num =#{orderChildNum,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByOrderDetailId" resultMap="BaseResultMap">
+	   select 
+  *
+    from tbl_item_detail
+    where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+    and item_status='1'
+    </select>
+     <select id="selectCountByOrderId" resultType="int">
+SELECT count(1) from tbl_item_detail WHERE item_status!=3  and order_child_id in(
+select order_child_id from tbl_order_child where order_child_status in(3,10) and order_id=#{orderId})
+    </select>
+	    <select id="selectCountByOrderChildId" resultType="int">
+SELECT count(1) from tbl_item_detail WHERE item_status!=3  and order_child_id =#{orderChildId}
+    </select>
+</mapper>

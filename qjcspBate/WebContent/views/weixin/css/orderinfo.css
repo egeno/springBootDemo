@@ -1,0 +1,371 @@
+body{color:#2f2f2f;/*overflow:hidden;height:100%;*/background:#f5f5f5;}
+/*
+ * 订单信息
+ */
+.splitLine{
+	background:#f5f5f5;
+	height:0.2rem;
+	border-bottom:1px solid #d8d8d8;
+    border-top:1px solid #d8d8d8;
+}
+.goodsPrice{
+	float:right;
+}
+.order_content{
+	padding-bottom:0.2rem;
+}
+.returnFoodResult{
+	border-top:1px solid #d8d8d8;
+	background:#fff;
+}
+.returnMain{
+	padding-left:0.24rem;
+}
+.returnText{
+	height:1.3rem;
+	position: relative;
+}
+.returnText img{
+	position: absolute;
+	width:0.55rem;
+	height:0.57rem;
+	top:0.3rem ;
+}
+.returnText .textInfo{
+	width:100%;
+	padding-left:0.8rem;
+	border-bottom:1px solid #d8d8d8;
+	padding-top:0.2rem;
+	padding-bottom: 0.2rem;
+}
+.linktitle{
+	line-height: 0.5rem;
+    height: 0.5rem;
+    padding-left: 0.24rem;
+    color: #fd8432;
+}
+.linktitle img{
+    height: 0.3rem;
+    width: 0.3rem;
+    vertical-align: middle;
+    margin-right: 0.1rem;
+    margin-top: -0.1rem;
+}
+.linktitle span{
+    float: right;
+    padding-right: 0.3rem;
+    color: #444;
+}
+.returnFoodOver .textInfo{
+	border:none;
+	padding-bottom:0px;
+}
+.returnFoodBar{
+	height:1.3rem;
+}
+.returnFoodBar img{
+	width:100%;
+/* 	height:1.3rem;	 */
+}
+.textInfo h3{
+	font-size:0.34rem;
+	font-weight: 400;
+	padding-bottom: 0.05rem;
+}
+.returnFoodFinish .FinishText h3{
+	padding-bottom: 0px;
+	line-height:0.85rem;
+}
+.textInfo p{
+	font-size:0.24rem;
+	color:#bfbfbf;
+	height:0.26rem;
+}
+.returnFoodFail_Bar{
+	height:1.3rem;
+}
+.returnFoodReason{
+	padding-left:0.24rem;
+	background:#fff;
+}
+.returnFoodReason h1{
+	border-bottom:1px solid #d8d8d8;
+	text-indent:0.06rem;
+	font-size:0.32rem;
+	color:#444;
+	height:0.85rem;
+	line-height:0.9rem;
+	font-weight:normal;
+}
+.returnFoodReason p{
+	text-indent:0.06rem;
+	height:0.85rem;
+	line-height:0.9rem;
+	color:#ccc;
+	font-size:0.26rem;
+}
+.orderList{
+	background:#fff;
+}
+.orderList h1{
+	height:0.5rem;
+	line-height:0.55rem;
+	border-bottom:1px solid #d8d8d8;
+	background:#e6e6e6;
+	font-size:0.24rem;
+	color:#808080;
+	font-weight:normal;
+}
+.orderList h1 span{
+	margin-left:0.15rem;
+}
+.orderList p{
+	margin-left:0.25rem;
+	text-indent:0.06rem;
+	height:0.85rem;
+	line-height:0.9rem;
+	border-top:1px solid #d8d8d8;
+}
+.orderList p span{
+	font-size:0.32rem;
+	color:#444;
+	display:inline-block;
+	height: 0.85rem;
+	overflow: hidden;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.goodsName{
+	width:58%;
+}
+.goodsName img{
+	width:0.35rem;
+	height:0.35rem;
+	vertical-align: sub;
+	margin-left: 0.15rem;
+}
+.goodsCount{
+	width:10%;
+	text-align:center;
+	margin-right:2%;
+}
+.goodsPrice{
+	width:25%;
+	text-align:center;
+}
+.order_bottom{
+	position:fixed;
+	bottom:0;
+	background:#3d3d3d;
+	min-width: 3.2rem;
+	max-width: 6.4rem;
+	width:100%;
+	z-index:999;
+	height:1rem;
+	overflow:hidden;
+}
+.order_bottom span{
+	display:inline-block;
+}
+.orderMoney{
+	font-family:"微软雅黑";
+	width:4.4rem;
+	float:left;
+	font-size:0.26rem;
+	color:#fff;
+	line-height:1rem;
+	text-align:right;
+}
+.orderMoney span{
+	float:right;
+}
+.orderMoney em{
+	float:right;
+	font-size:0.38rem;
+	display:inline-block;
+	margin-left:0.1rem;
+	margin-right:0.3rem;
+}
+.orderMoney i{
+	margin-left:0.1rem;
+}
+.orderSubmit a{
+	width:2rem;
+	float:right;
+	text-align:center;
+	background:#fd8432;
+	color:#fff;
+	font-size:0.34rem;
+	height:1rem;
+	line-height:1rem;
+}
+.order{
+	height:0.32rem;
+}
+/*优惠*/
+.discount{
+	font-size:0.32rem;
+	padding-left:0.25rem;
+	background:#fff;
+}
+.discount p{
+	line-height: 0.9rem;
+	border-top: 1px solid #d8d8d8;
+	padding-left: 0.1rem;
+}
+.discount_down{
+	color:#fd8432;
+}
+.reduceMoney{
+	color:#fd8432;
+	margin-right:0.25rem;
+	float:right;
+}
+.totalMoney{
+/* 	color:#fd8432; */
+	margin-right:0.25rem;
+	float: right;
+}
+.discount_WaitPay p,.discount_refundMoney p{
+	border:none;
+}
+.discount_refundMoney .button{
+	padding: 0.15rem 0px;
+    display: inline-block;
+    width: 100%;
+}
+.discount .button{
+	height:0.9rem;
+}
+.button .refund{
+	width: 1.78rem;
+    height: 0.68rem;
+    border: 2px solid #fd8432;
+    color: #fd8432;
+    border-radius: 0.05rem;
+    text-align: center;
+    line-height: 0.68rem;
+    font-size: 0.31rem;
+    display: inline-block;
+    margin-right: 0.24rem;
+    cursor: pointer;
+    float: right;
+}
+.discount_WaitPay .payTime{
+	color:#fd8432;
+	font-size: 0.24rem;
+	border:none;
+	text-align: right;
+	margin-right: 0.24rem;
+	line-height: 0.55rem;
+	height:0.55rem;
+}
+.cancelOrder{
+	width:1.78rem;
+	height:0.68rem;
+	border:2px solid #808080;
+	color:#808080;
+	border-radius: 0.05rem;
+	text-align: center;
+	line-height: 0.68rem;
+	font-size:0.31rem;
+	display: inline-block;
+	margin-right: 0.2rem;
+	cursor: pointer;
+	float:right;
+}
+.pay{
+	width:1.78rem;
+	height:0.68rem;
+	border:2px solid #fd8432;
+	color:#fd8432;
+	border-radius: 0.05rem;
+	text-align: center;
+	line-height: 0.68rem;
+	font-size:0.31rem;
+	display: inline-block;
+	margin-right: 0.24rem;
+	cursor: pointer;
+	float:right;
+}
+/*订单详细信息*/
+.orderInfo{
+	padding-left:0.24rem;
+	color:#454545;
+	border-bottom:1px solid #d8d8d8;
+	background:#fff;
+	padding-bottom: 0.2rem;
+}
+.orderInfo h1{
+	border-bottom:1px solid #d8d8d8;
+	font-size:0.34rem;
+	color:#444;
+	height:0.8rem;
+	line-height:0.8rem;
+	font-weight:normal;
+}
+.orderInfo p{font-size:0.28rem;line-height: 0.5rem;}
+
+/*取消订单弹窗*/
+.dialog .dialog_box{
+	width:4.75rem;
+	height:2.25rem;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1.125rem;
+    margin-left: -2.2375rem;
+}
+.dialog .dialog_box h3{
+	margin-top: 0.3rem;
+}
+.dialog_box .yesNo{
+	position: absolute;
+    bottom: 0px;
+    line-height: 0.75rem;
+    text-align: center;
+    width: 100%;
+    color: #2e91fb;
+    font-size: 0.34rem;
+    border-top: 1px solid #d8d8d8;
+}
+.dialog_box .yesNo span{
+	width:50%;
+	color:#2e91fb;
+	display:inline-block;
+	height:0.75rem;
+	text-align: center;
+}
+.dialog_box .yesNo span:last-child{
+	border-left:1px solid #c7c7c7;
+}
+.dialog .dialog_rated{
+	width:4rem;
+	height:5.40rem;
+	background:#fff;
+	position: absolute;
+	top:50%;
+	left:50%;
+    margin-top: -2.70rem;
+    margin-left: -2rem;
+    border-radius:0.2rem;
+}
+.dialog_rated img{margin-bottom: -5px;}
+.dialog_rated h1{
+	font-size:0.25rem;
+	font-weight: 400;
+	line-height:0.94rem;
+	width:3.25rem;
+	margin: 0 auto;
+	border-top: 1px solid #d8d8d8;
+	cursor: pointer;
+}
+.dialog_rated .perfect{
+	color:#fc563d;
+}
+.daipingjia{
+	cursor:pointer;
+}
+.pingjia{
+	cursor:pointer;
+}

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsUserMachineMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsUserMachine" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="special_role_num" property="specialRoleNum" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, machine_id,special_role_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_user_machine
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_user_machine
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsUserMachine" >
+    insert into basics_user_machine (id, user_id, machine_id, 
+      special_role_num)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, 
+      #{specialRoleNum,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsUserMachine" >
+    insert into basics_user_machine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="specialRoleNum != null" >
+        special_role_num,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="specialRoleNum != null" >
+        #{specialRoleNum,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsUserMachine" >
+    update basics_user_machine
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="specialRoleNum != null" >
+        special_role_num = #{specialRoleNum,jdbcType=CHAR},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsUserMachine" >
+    update basics_user_machine
+    set user_id = #{userId,jdbcType=BIGINT},
+    	special_role_num = #{specialRoleNum,jdbcType=CHAR},
+      machine_id = #{machineId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getMaitenance" parameterType="long" resultMap="BaseResultMap">
+  	SELECT 
+	*
+	FROM basics_user_machine 
+  	WHERE machine_id = #{machineId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="delUserMachine" >
+    delete from basics_user_machine
+    where user_id = #{userId,jdbcType=BIGINT} 
+    AND special_role_num = #{specialRoleNum,jdbcType=CHAR}
+  </delete>
+  
+  <select id="judgeExist" resultType="java.lang.Integer">
+  	SELECT 
+	count(*)
+	FROM basics_user_machine 
+  	WHERE user_id = #{userId,jdbcType=BIGINT}
+  	AND special_role_num = #{specialRoleNum,jdbcType=CHAR}
+  </select>
+  
+  <select id="isExistbyDeviceCodeAndMobileNum" resultType="int">
+  	SELECT 
+	count(1)
+	FROM basics_user_machine m
+	LEFT JOIN basics_users u
+	ON m.user_id = u.user_id
+  	WHERE m.machine_id = #{machineId,jdbcType=BIGINT}
+  	AND u.user_mobile =  #{mobileNum,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findByMobileNumUserId" resultMap="BaseResultMap">
+		SELECT 
+		* 
+		FROM basics_user_machine t 
+		JOIN basics_users b ON b.user_id = t.user_id
+		WHERE t.machine_id = #{machineId,jdbcType=BIGINT}
+		AND b.user_mobile = #{mobileNum,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="judgeByUserIdSpecialRoleNum" resultType="java.lang.Integer">
+		SELECT count(*) 
+		FROM basics_user_machine t 
+		WHERE t.user_id = #{userId,jdbcType=VARCHAR} 
+		AND t.special_role_num = #{result,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryUserbyDeviceCodeAndMobile" resultMap="BaseResultMap">
+  	SELECT
+  		m.user_id, m.machine_id, m.special_role_num 
+  	FROM basics_user_machine m
+  	LEFT JOIN basics_users u on m.user_id=u.user_id
+  	WHERE m.machine_id = #{machineId,jdbcType=BIGINT}
+  	AND u.user_mobile = #{mobileNum,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findMachineUserByUserId" resultType="map">
+  select machine_id machineId from basics_user_machine where special_role_num='1' and user_id=#{userId}
+  </select>
+  
+  <select id="findmerchantNameListByMachineIds" resultType="map">
+   select distinct a.goodsName goodsName from (select goods_id goodsId,SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1) goodsName from v_goods_retail_temporary where machine_id in 
+   <foreach collection="map" index="index" item="item" open="(" separator="," close=")">
+            #{item.machineId}
+         </foreach> 
+   group by goods_id) a
+  </select>
+</mapper>

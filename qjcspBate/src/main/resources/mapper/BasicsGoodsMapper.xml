@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsGoodsMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsGoods">
+		<id column="goods_id" property="goodsId" jdbcType="BIGINT" />
+		<result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="goods_category_id" property="goodsCategoryId"
+			jdbcType="BIGINT" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goods_icon" property="goodsIcon" jdbcType="VARCHAR" />
+		<result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+		<result column="valid_times" property="validTimes" jdbcType="INTEGER" />
+		<result column="longth" property="longth" jdbcType="DECIMAL" />
+		<result column="width" property="width" jdbcType="DECIMAL" />
+		<result column="hight" property="hight" jdbcType="DECIMAL" />
+		<result column="goods_memo" property="goodsMemo" jdbcType="VARCHAR" />
+		<result column="goods_status" property="goodsStatus" jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+
+	</resultMap>
+	
+   <!-- <resultMap id="goodsMap" type="com.qjkj.qjcsp.entity.BasicsGoodsVo">
+        <id column="goods_id" property="goodsId" jdbcType="BIGINT" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+	    <result column="goods_id" property="dishAreaNum" jdbcType="BIGINT" /> 
+		<result column="retail_price" property="itemFee" jdbcType="DECIMAL" />
+    </resultMap>  -->
+    
+    
+	<resultMap id="BaseResultMap2" type="com.qjkj.qjcsp.entity.MachineAreaPo">
+		<result column="area_id" property="areaId" />
+		<result column="area_name" property="areaName" />
+		<result column="area_goods_num" property="areaGoodNum" />
+		<result column="area_model_id" property="areaModelId" />
+		<result column="area_model_name" property="areaModelName" />
+		<result column="goods_id" property="goodId" />
+		<result column="goods_name" property="goodName" />
+		<result column="area_memo" property="areaMemo" />
+		<result column="area_status" property="areaStatus" />
+		<result column="min_num" property="minNum" />
+		<result column="company_id" property="companyId" />
+		<result column="machine_id" property="machineId" />
+		<result column="machine_name" property="machineName" />
+		<result column="area_model_type" property="areaModelType" />
+		<result column="area_model_row" property="areaModelRow" />
+		<result column="area_model_column" property="areaModelColumn" />
+		<result column="area_model_memo" property="areaModelMemo" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapVo" type="com.qjkj.qjcsp.entity.viewmodel.BasicsGoodsVo">
+		<id column="goods_id" property="goodsId" jdbcType="BIGINT" />
+		<result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="goods_category_id" property="goodsCategoryId"
+			jdbcType="BIGINT" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goods_icon" property="goodsIcon" jdbcType="VARCHAR" />
+		<result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+		<result column="valid_times" property="validTimes" jdbcType="INTEGER" />
+		<result column="longth" property="longth" jdbcType="DECIMAL" />
+		<result column="width" property="width" jdbcType="DECIMAL" />
+		<result column="hight" property="hight" jdbcType="DECIMAL" />
+		<result column="goods_memo" property="goodsMemo" jdbcType="VARCHAR" />
+		<result column="goods_status" property="goodsStatus" jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+		<result column="category_name" property="categoryName"
+			jdbcType="VARCHAR" />
+		<result column="create_time_str" property="createTimeStr"
+			jdbcType="VARCHAR" />
+		<result column="last_mod_time_str" property="lastModTimeStr"
+			jdbcType="VARCHAR" />
+		<result column="creater" property="creater" jdbcType="VARCHAR" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		goods_id, goods_code, company_id, goods_category_id,
+		goods_name, goods_icon,
+		cost_price,
+		retail_price, valid_times, longth,
+		width, hight, goods_memo, goods_status, isdel,
+		create_time,
+		last_mod_time, create_user_id, mod_user_id
+	</sql>
+	
+	<!-- 查询商品 -->
+ <select id="selectBasicsGoods" resultType="map">
+   select bg.goods_name  as goodsName,count(bg.goods_id) dishAreaNum,sum(bg.retail_price) itemFee 
+   from basics_goods bg
+   LEFT JOIN tbl_item_detail tid on tid.goods_id=bg.goods_id 
+   LEFT JOIN tbl_order tod  on tid.order_id=tod.order_id
+   where tod.order_num=#{orderNum} 
+</select>
+	 
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from basics_goods
+		where goods_id = #{goodsId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		basics_goods
+		where goods_id = #{goodsId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsGoods">
+		insert into basics_goods
+		(goods_id, goods_code, company_id,
+		goods_category_id, goods_name,
+		goods_icon,
+		cost_price, retail_price, valid_times,
+		longth, width, hight,
+		goods_memo, goods_status, isdel,
+		create_time, last_mod_time,
+		create_user_id,
+		mod_user_id)
+		values (#{goodsId,jdbcType=BIGINT},
+		#{goodsCode,jdbcType=VARCHAR},
+		#{companyId,jdbcType=BIGINT},
+		#{goodsCategoryId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR},
+		#{goodsIcon,jdbcType=VARCHAR},
+		#{costPrice,jdbcType=DECIMAL},
+		#{retailPrice,jdbcType=DECIMAL},
+		#{validTimes,jdbcType=INTEGER},
+		#{longth,jdbcType=DECIMAL}, #{width,jdbcType=DECIMAL},
+		#{hight,jdbcType=DECIMAL},
+		#{goodsMemo,jdbcType=VARCHAR},
+		#{goodsStatus,jdbcType=CHAR},
+		#{isdel,jdbcType=CHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{lastModTime,jdbcType=TIMESTAMP},
+		#{createUserId,jdbcType=BIGINT},
+		#{modUserId,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsGoods">
+		insert into basics_goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+			<if test="goodsCode != null">
+				goods_code,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="goodsCategoryId != null">
+				goods_category_id,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="goodsIcon != null">
+				goods_icon,
+			</if>
+			<if test="costPrice != null">
+				cost_price,
+			</if>
+			<if test="retailPrice != null">
+				retail_price,
+			</if>
+			<if test="validTimes != null">
+				valid_times,
+			</if>
+			<if test="longth != null">
+				longth,
+			</if>
+			<if test="width != null">
+				width,
+			</if>
+			<if test="hight != null">
+				hight,
+			</if>
+			<if test="goodsMemo != null">
+				goods_memo,
+			</if>
+			<if test="goodsStatus != null">
+				goods_status,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModTime != null">
+				last_mod_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsCode != null">
+				#{goodsCode,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsCategoryId != null">
+				#{goodsCategoryId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsIcon != null">
+				#{goodsIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="costPrice != null">
+				#{costPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="retailPrice != null">
+				#{retailPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="validTimes != null">
+				#{validTimes,jdbcType=INTEGER},
+			</if>
+			<if test="longth != null">
+				#{longth,jdbcType=DECIMAL},
+			</if>
+			<if test="width != null">
+				#{width,jdbcType=DECIMAL},
+			</if>
+			<if test="hight != null">
+				#{hight,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsMemo != null">
+				#{goodsMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsStatus != null">
+				#{goodsStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModTime != null">
+				#{lastModTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsGoods">
+		update basics_goods
+		<set>
+			<if test="goodsCode != null">
+				goods_code = #{goodsCode,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsCategoryId != null">
+				goods_category_id = #{goodsCategoryId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsIcon != null">
+				goods_icon = #{goodsIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="costPrice != null">
+				cost_price = #{costPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="retailPrice != null">
+				retail_price = #{retailPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="validTimes != null">
+				valid_times = #{validTimes,jdbcType=INTEGER},
+			</if>
+			<if test="longth != null">
+				longth = #{longth,jdbcType=DECIMAL},
+			</if>
+			<if test="width != null">
+				width = #{width,jdbcType=DECIMAL},
+			</if>
+			<if test="hight != null">
+				hight = #{hight,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsMemo != null">
+				goods_memo = #{goodsMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsStatus != null">
+				goods_status = #{goodsStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModTime != null">
+				last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where goods_id = #{goodsId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsGoods">
+		update
+		basics_goods
+		set goods_code = #{goodsCode,jdbcType=VARCHAR},
+		company_id
+		= #{companyId,jdbcType=BIGINT},
+		goods_category_id =
+		#{goodsCategoryId,jdbcType=BIGINT},
+		goods_name =
+		#{goodsName,jdbcType=VARCHAR},
+		goods_icon =
+		#{goodsIcon,jdbcType=VARCHAR},
+		cost_price =
+		#{costPrice,jdbcType=DECIMAL},
+		retail_price =
+		#{retailPrice,jdbcType=DECIMAL},
+		valid_times =
+		#{validTimes,jdbcType=INTEGER},
+		longth = #{longth,jdbcType=DECIMAL},
+		width = #{width,jdbcType=DECIMAL},
+		hight = #{hight,jdbcType=DECIMAL},
+		goods_memo = #{goodsMemo,jdbcType=VARCHAR},
+		goods_status =
+		#{goodsStatus,jdbcType=CHAR},
+		isdel = #{isdel,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_mod_time =
+		#{lastModTime,jdbcType=TIMESTAMP},
+		create_user_id =
+		#{createUserId,jdbcType=BIGINT},
+		mod_user_id =
+		#{modUserId,jdbcType=BIGINT}
+		where goods_id =
+		#{goodsId,jdbcType=BIGINT}
+	</update>
+	<select id="getGoodsList" parameterType="com.qjkj.qjcsp.entity.BasicsGoods"
+		resultType="map">
+		select bg.goods_id as gid,gam.area_model_id as amid,bg.goods_name as
+		gname
+		from basics_goods bg,basics_goods_category
+		gbc,tbl_goods_area_model gam
+		where
+		bg.goods_category_id=gbc.goods_category_id
+		and bg.goods_id
+		=gam.goods_id and bg.isdel='N' and bg.goods_status='1'
+		and gbc.goods_category_status='1' 
+		and gbc.isdel='N' and bg.company_id=#{companyId} and gbc.company_id
+		=#{companyId}
+		<if test="goodsCategoryId != null and goodsCategoryId != ''">
+			and gbc.goods_category_id=#{goodsCategoryId}
+		</if>
+		<if test="goodsId != null and goodsId != ''">
+			and gam.area_model_id=#{goodsId}
+		</if>
+			and bg.goods_id not in 
+			(SELECT c.goods_id goodsId FROM tbl_issue a, basics_goods c WHERE
+			a.goods_id=c.goods_id AND a.isdel='N' AND c.isdel='N' and c.goods_status='1'
+			<if test="goodsId != null and goodsId != ''">
+			AND a.area_model_id = #{goodsId}
+			</if>
+			AND DATE_FORMAT(a.issue_time,"%Y-%m-%d")=#{goodsMemo})
+	</select>
+	<select id="getAllGoodsList" parameterType="long" resultType="map">
+		select bg.goods_id as gid, bg.goods_name as gname from basics_goods bg,basics_goods_category bc
+		where bg.goods_category_id=bc.goods_category_id and bc.goods_category_status='1' and bc.isdel='N' and
+		bg.isdel='N' and bg.goods_status='1' and bg.company_id=#{companyId}
+		<if test="goodsCategoryId != null and goodsCategoryId != ''">
+			and bg.goods_category_id=#{goodsCategoryId}
+		</if>
+	</select>
+
+
+	<!-- 查询所有的分区信息 -->
+	<select id="findAllareaList" parameterType="java.util.HashMap"
+		resultMap="BaseResultMap2">
+		<!-- SELECT ba.area_id,ba.area_name,ba.area_goods_num,ba.area_model_id, 
+			bam.area_model_name,ba.goods_id,ba.area_memo,bg.goods_name, ba.area_status,ba.min_num,ba.company_id 
+			FROM basics_area_model bam,basics_area ba,basics_goods bg WHERE ba.goods_id=bg.goods_id 
+			AND ba.area_model_id=bam.area_model_id AND ba.isdel='N' AND bg.isdel='N' 
+			AND bg.goods_status='1' AND bam.area_model_status='1' AND bam.isdel='N' AND 
+			ba.company_id=#{companyId} <if test="areaModelName!=null and areaModelName!=''"> 
+			and bam.area_model_name like '%${areaModelName}%' </if> ORDER BY ba.area_model_id,ba.area_status 
+			DESC limit #{offset},#{limit} -->
+		SELECT * FROM basics_area_model t
+		WHERE t.company_id =
+		#{companyId,jdbcType=BIGINT} AND t.isdel = 'N'
+		<if test="search != null and search !=''">
+			and t.area_model_name like '%${search}%'
+		</if>
+		order by create_time DESC
+		limit #{offset},#{limit}
+	</select>
+
+	<!-- 查询所有的分区信息条数 -->
+	<select id="findAllareaListCount" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		<!-- SELECT count(1) FROM basics_area_model bam,basics_area ba,basics_goods 
+			bg <where> 1=1 AND ba.goods_id=bg.goods_id AND ba.area_model_id=bam.area_model_id 
+			AND ba.isdel='N' AND bg.isdel='N' AND bg.goods_status='1' AND bam.area_model_status='1' 
+			AND bam.isdel='N' and ba.company_id=#{companyId} <if test="areaModelName!=null 
+			and areaModelName!=''"> and bam.area_model_name like '%${areaModelName}%' 
+			</if> </where> -->
+		SELECT count(*) FROM basics_area_model t
+		WHERE t.company_id =
+		#{companyId,jdbcType=BIGINT} AND t.isdel = 'N'
+		<if test="search != null and search !=''">
+			and t.area_model_name like '%${search}%'
+		</if>
+	</select> 
+	
+	<select id="findByCount" resultType="java.lang.Long"
+		parameterType="map">
+		SELECT
+		count(1)
+		FROM
+		basics_goods g
+		WHERE
+		1 = 1 AND g.isdel = 'N'
+		<if test="goodsId != null">
+			AND g.goods_id = #{goodsId,jdbcType=BIGINT}
+		</if>
+		<if test="goodsCode != null">
+			AND g.goods_code = #{goodsCode,jdbcType=VARCHAR}
+		</if>
+		<if test="companyId != null">
+			AND g.company_id = #{companyId,jdbcType=BIGINT}
+		</if>
+		<if test="goodsCategoryId != null">
+			AND g.goods_category_id =
+			#{goodsCategoryId,jdbcType=BIGINT}
+		</if>
+		<if test="goodsName != null">
+			AND g.goods_name = #{goodsName,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsIcon != null">
+			AND g.goods_icon = #{goodsIcon,jdbcType=VARCHAR}
+		</if>
+		<if test="costPrice != null">
+			AND g.cost_price = #{costPrice,jdbcType=DECIMAL}
+		</if>
+		<if test="retailPrice != null">
+			AND g.retail_price = #{retailPrice,jdbcType=DECIMAL}
+		</if>
+		<if test="validTimes != null">
+			AND g.valid_times = #{validTimes,jdbcType=INTEGER}
+		</if>
+		<if test="longth != null">
+			AND g.longth = #{longth,jdbcType=DECIMAL}
+		</if>
+		<if test="width != null">
+			AND g.width = #{width,jdbcType=DECIMAL}
+		</if>
+		<if test="hight != null">
+			AND g.hight = #{hight,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsMemo != null">
+			AND g.goods_memo = #{goodsMemo,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsStatus != null">
+			AND g.goods_status = #{goodsStatus,jdbcType=CHAR}
+		</if>
+		<if test="isdel != null">
+			AND g.isdel = #{isdel,jdbcType=CHAR}
+		</if>
+		<if test="createTime != null">
+			AND g.create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastModTime != null">
+			AND g.last_mod_time = #{lastModTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createUserId != null">
+			AND g.create_user_id = #{createUserId,jdbcType=BIGINT}
+		</if>
+		<if test="modUserId != null">
+			AND g.mod_user_id = #{modUserId,jdbcType=BIGINT}
+		</if>
+		<if test="foodName != null and foodName !=''">
+			AND g.goods_name like '%${foodName}%'
+		</if>
+	</select>
+
+	<select id="findByList" resultMap="BaseResultMapVo"
+		parameterType="map">
+		SELECT
+		g.goods_id, g.goods_code, g.company_id, g.goods_category_id,
+		g.goods_name,
+		g.goods_icon,
+		g.cost_price, g.retail_price, g.valid_times,
+		g.longth, g.width, g.hight,
+		g.goods_memo, g.goods_status,
+		g.isdel,
+		date_format(g.create_time, '%Y-%m-%d %H:%i:%s') as createTimeStr,
+		date_format(g.last_mod_time, '%Y-%m-%d %H:%i:%s') as lastModTimeStr,
+		(SELECT u.user_account FROM basics_users u WHERE u.user_id =
+		g.create_user_id) as creater,
+		(SELECT u.user_account FROM basics_users
+		u WHERE u.user_id = g.mod_user_id)
+		as modifier,
+		c.goods_category_name as
+		categoryName
+		FROM
+		basics_goods g
+		LEFT JOIN
+		basics_goods_category c
+		ON
+		g.goods_category_id = c.goods_category_id
+		WHERE
+		1 = 1 AND g.isdel = 'N'
+		<if test="goodsId != null">
+			AND g.goods_id = #{goodsId,jdbcType=BIGINT}
+		</if>
+		<if test="goodsCode != null">
+			AND g.goods_code = #{goodsCode,jdbcType=VARCHAR}
+		</if>
+		<if test="companyId != null">
+			AND g.company_id = #{companyId,jdbcType=BIGINT}
+		</if>
+		<if test="goodsCategoryId != null">
+			AND g.goods_category_id =
+			#{goodsCategoryId,jdbcType=BIGINT}
+		</if>
+		<if test="goodsName != null">
+			AND g.goods_name = #{goodsName,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsIcon != null">
+			AND g.goods_icon = #{goodsIcon,jdbcType=VARCHAR}
+		</if>
+		<if test="costPrice != null">
+			AND g.cost_price = #{costPrice,jdbcType=DECIMAL}
+		</if>
+		<if test="retailPrice != null">
+			AND g.retail_price = #{retailPrice,jdbcType=DECIMAL}
+		</if>
+		<if test="validTimes != null">
+			AND g.valid_times = #{validTimes,jdbcType=INTEGER}
+		</if>
+		<if test="longth != null">
+			AND g.longth = #{longth,jdbcType=DECIMAL}
+		</if>
+		<if test="width != null">
+			AND g.width = #{width,jdbcType=DECIMAL}
+		</if>
+		<if test="hight != null">
+			AND g.hight = #{hight,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsMemo != null">
+			AND g.goods_memo = #{goodsMemo,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsStatus != null">
+			AND g.goods_status = #{goodsStatus,jdbcType=CHAR}
+		</if>
+		<if test="createTime != null">
+			AND g.create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastModTime != null">
+			AND g.last_mod_time = #{lastModTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createUserId != null">
+			AND g.create_user_id = #{createUserId,jdbcType=BIGINT}
+		</if>
+		<if test="modUserId != null">
+			AND g.mod_user_id = #{modUserId,jdbcType=BIGINT}
+		</if>
+		<if test="foodName != null and foodName !=''">
+			AND g.goods_name like '%${foodName}%'
+		</if>
+		<if test="order != null and order != ''">
+			order by ${order} ${sort}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<!-- 2.2.8. 获取清货商品列表 -->
+	<select id="getClearGoodsList" resultType="map">
+		SELECT
+		g.goods_id AS goodsId,
+		g.goods_name AS goodsName,
+		g.goods_icon AS goodsImage,
+		count(1) AS goodsSurpleNum
+		FROM
+		tbl_item_detail d,
+		basics_machine_cell c,
+		basics_machine m,
+		basics_goods g
+		WHERE
+		d.item_id = c.item_id
+		AND
+		d.machine_id= m.machine_id 
+		AND
+		d.area_model_id = m.area_model_id
+		AND d.goods_id = g.goods_id
+		AND c.cell_status = '1'
+		AND m.isdel = 'N'
+		AND g.isdel
+		= 'N'
+		AND m.device_code = #{deviceCode}
+		<if test="userName !=null and userName!= ''">
+		AND g.goods_name LIKE '%${userName}%'
+		</if>
+		GROUP BY g.goods_id
+	</select>
+
+	<select id="getGoodsCountbyCategoryId" parameterType="java.lang.Long"
+		resultType="int">
+		SELECT count(1)
+		FROM basics_goods
+		WHERE goods_status = '1'
+		AND isdel = 'N' AND goods_category_id =
+		#{goodsCategoryId,jdbcType=BIGINT}
+	</select>
+
+	<update id="deleteBasicsGoodsbyId" parameterType="java.lang.Long">
+		UPDATE
+		basics_goods
+		SET goods_status = '0', isdel = 'Y'
+		WHERE goods_id =
+		#{goodsId,jdbcType=BIGINT}
+	</update>
+
+	<!-- <select id="findGoodsVOByDeviceCodeAndPickTime" resultType="java.util.Map"
+		parameterType="java.util.Map">
+
+		SELECT
+		CAST(c.goods_id AS CHAR) goodsId
+		,c.goods_name goodsName
+		,c.goods_icon goodsImage
+		,CAST(c.retail_price AS CHAR) goodsPrice
+		,CAST((SELECT COUNT(*) FROM tbl_item_detail d,basics_machine_cell e
+		where
+		b.goods_id =d.goods_id AND e.item_id=d.item_id AND
+		a.machine_id=d.machine_id AND item_status='0' AND d.stock_time &lt;=
+		#{pickTime,jdbcType=TIMESTAMP} AND d.expire_time &gt;=
+		#{pickTime,jdbcType=TIMESTAMP} ) AS CHAR) goodsCount
+		,CAST((SELECT
+		AVG(evaluate_score) FROM tbl_order_item_evaluate e WHERE
+		b.goods_id=e.goods_id) AS CHAR) goodsGrade
+		FROM basics_machine
+		a,basics_area b,basics_goods c,basics_area_cell d
+		WHERE
+		a.area_model_id=b.area_model_id
+		AND b.area_id=d.area_id
+		AND
+		b.goods_id=c.goods_id
+		AND b.isdel='N'
+		AND a.isdel='N'
+		AND c.isdel='N'
+		<if test="deviceCode!=null">
+			AND a.device_code=#{deviceCode,jdbcType=VARCHAR}
+		</if>
+		GROUP BY b.goods_id ORDER BY CAST(goodsCount AS SIGNED) DESC
+	</select> -->
+
+	<select id="findGoodsVOByDeviceCodeAndPickTime2" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT
+		CAST(a.goods_id AS CHAR) goodsId,
+		b.goods_name goodsName,
+		SUBSTRING_INDEX(b.goods_name,'(',1) AS shortGoodsName,
+		SUBSTRING_INDEX(SUBSTRING(b.goods_name,LOCATE('(', b.goods_name)+1),')',1) AS storeName,
+		b.goods_icon goodsImage,
+		CAST(b.retail_price AS CHAR) goodsPrice,
+		CAST(count(*) AS CHAR) goodsCount,
+		CAST(IFNULL((SELECT AVG(evaluate_score) FROM tbl_order_item_evaluate e WHERE
+		a.goods_id=e.goods_id),'0') AS CHAR) goodsGrade
+		FROM
+		tbl_item_detail a,
+		basics_goods b,
+		basics_machine_cell c
+		WHERE
+		a.item_id = c.item_id
+		AND a.goods_id = b.goods_id
+		AND a.machine_id = #{machineId}
+		AND a.area_model_id =#{modelId}
+		AND a.item_type='1'
+		AND a.item_status='0'
+		AND c.cell_status='1'
+		AND b.isdel='N'
+	    AND a.stock_time &lt;=#{orderTime,jdbcType=VARCHAR}
+		<!-- AND d.expire_time &gt;=#{orderTime} -->
+		group by a.goods_id ORDER BY count(*) DESC
+	</select>
+	<select id="findAllGoodsByCompanyId" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_goods WHERE goods_status=1 AND isdel='N' AND company_id =
+		#{companyId}
+	</select>
+	
+	<select id="selectGoodsDetail" resultType="map">
+		<!-- SELECT t.goods_id,goods_name FROM basics_goods t 
+		JOIN basics_goods_category b ON b.goods_category_id = t.goods_category_id
+		WHERE t.isdel = 'N' AND t.company_id = #{companyId}
+		AND t.goods_id NOT IN (SELECT goods_id FROM tbl_goods_retail_num m WHERE m.machine_Id = #{mId})
+		<if test="goodsCategoryId!=0">
+			AND t.goods_category_id = #{goodsCategoryId}
+		</if> -->
+		
+		
+		<!-- SELECT t.goods_id,goods_name FROM basics_goods t 
+		JOIN basics_goods_category b ON b.goods_category_id = t.goods_category_id
+		JOIN tbl_goods_area_model m ON m.goods_id = t.goods_id
+		WHERE t.isdel = 'N' AND t.company_id = #{companyId}
+		AND t.goods_id NOT IN (SELECT goods_id FROM tbl_goods_retail_num m WHERE m.machine_Id = #{mId} AND m.area_model_id = #{areaModelId} AND m.isdel = 'N')
+		AND t.isdel = 'N' AND b.goods_category_status = 1 AND b.isdel = 'N'
+		<if test="goodsCategoryId!=0">
+			AND t.goods_category_id = #{goodsCategoryId}
+		</if>
+		<if test="areaModelId!=0">
+			AND m.area_model_id = #{areaModelId}
+		</if>
+		GROUP BY t.goods_id -->
+		
+		SELECT * FROM 
+
+		(SELECT t.goods_id,goods_name FROM basics_goods t 
+		JOIN basics_goods_category b ON b.goods_category_id = t.goods_category_id
+		JOIN tbl_goods_area_model m ON m.goods_id = t.goods_id
+		WHERE t.isdel = 'N' AND t.company_id = #{companyId}
+		AND t.isdel = 'N' AND b.goods_category_status = 1 AND b.isdel = 'N'
+		<if test="goodsCategoryId!=0">
+			AND t.goods_category_id = #{goodsCategoryId}
+		</if>
+		<if test="areaModelId!=0">
+			AND m.area_model_id = #{areaModelId}
+		</if>
+		GROUP BY t.goods_id) a WHERE a.goods_id NOT IN (SELECT goods_id FROM tbl_goods_retail_num m WHERE m.machine_Id = #{mId} AND m.area_model_id = #{areaModelId} AND m.isdel = 'N' AND m.replenishment_time = #{time})
+		
+	</select>
+	
+	<select id="selectGoodsDetailOld" resultType="map">
+		SELECT t.goods_id,goods_name FROM basics_goods t 
+		JOIN basics_goods_category b ON b.goods_category_id = t.goods_category_id
+		JOIN tbl_goods_area_model g ON g.goods_id = t.goods_id
+		WHERE t.isdel = 'N' AND t.company_id = #{companyId} AND g.area_model_id = #{areaModelId} AND t.isdel = 'N' AND b.goods_category_status = 1 AND b.isdel = 'N'
+		<if test="goodsCategoryId!=0">
+			AND t.goods_category_id = #{goodsCategoryId}
+		</if>
+	</select>
+	
+	<select id="checkGoodIsExisted" resultType="integer">
+		SELECT COUNT(1) FROM basics_goods g where g.isdel='N' AND g.goods_name =#{goodName}
+		<if test="goodId !=null and goodId !=''">
+			AND g.goods_id !=#{goodId}
+		</if> 
+	</select>
+	
+	<select id="findAllReplementByMerchantNameAndCompanyId" resultType="map">
+	select goods_name goodsName,
+	CAST(count(*) AS CHAR) goodsNum 
+	from v_goods_retail_temporary 
+	where company_id=#{companyId} 
+	<!-- <if test="areaModelId!=null">
+	and area_model_id=#{areaModelId}
+	</if> -->
+	and temporary_date=DATE_FORMAT(now(),'%Y-%m-%d')
+	<if test="timeType !=null and timeType !='' and timeType !='-1' ">
+	and time_type=#{timeType}
+	</if>
+	and SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1)=#{merchantName} 
+	group by goods_id
+	</select>
+	<!-- 判断选中的菜品是否能添加到柜子中 -->
+	<select id="checkGoodsToMachine" resultType="integer">
+		SELECT COUNT(1) FROM DUAL 
+	    WHERE 1=1 
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(#{foodName},'(',-1),')',1) in ( select 
+  		a.user_name
+		 from basics_users a,basics_user_machine b
+   		 where a.user_id=b.user_id and a.isdel='N' and b.machine_id = #{machineId} and b.special_role_num = #{specialRoleNum})
+	</select>
+</mapper>

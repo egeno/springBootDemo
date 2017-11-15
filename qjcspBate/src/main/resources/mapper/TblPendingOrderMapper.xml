@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblPendingOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblPendingOrder" >
+    <id column="pending_id" property="pendingId" jdbcType="BIGINT" />
+    <result column="pending_type_num" property="pendingTypeNum" jdbcType="CHAR" />
+    <result column="mode_num" property="modeNum" jdbcType="CHAR" />
+    <result column="order_type" property="orderType" jdbcType="CHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+    <result column="pay_order_num" property="payOrderNum" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="last_pay_time" property="lastPayTime" jdbcType="TIMESTAMP" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pending_id, pending_type_num, mode_num, order_type, company_id, order_id, order_num, 
+    order_child_id, pay_order_num, order_time, last_pay_time, begin_time, end_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_pending_order
+    where pending_id = #{pendingId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_pending_order
+    where pending_id = #{pendingId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblPendingOrder" >
+    insert into tbl_pending_order (pending_id, pending_type_num, mode_num, 
+      order_type, company_id, order_id, 
+      order_num, order_child_id, pay_order_num, 
+      order_time, last_pay_time, begin_time, 
+      end_time)
+    values (#{pendingId,jdbcType=BIGINT}, #{pendingTypeNum,jdbcType=CHAR}, #{modeNum,jdbcType=CHAR}, 
+      #{orderType,jdbcType=CHAR}, #{companyId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, 
+      #{orderNum,jdbcType=VARCHAR}, #{orderChildId,jdbcType=BIGINT}, #{payOrderNum,jdbcType=VARCHAR}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{lastPayTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblPendingOrder" >
+    insert into tbl_pending_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pendingId != null" >
+        pending_id,
+      </if>
+      <if test="pendingTypeNum != null" >
+        pending_type_num,
+      </if>
+      <if test="modeNum != null" >
+        mode_num,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+      <if test="payOrderNum != null" >
+        pay_order_num,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="lastPayTime != null" >
+        last_pay_time,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pendingId != null" >
+        #{pendingId,jdbcType=BIGINT},
+      </if>
+      <if test="pendingTypeNum != null" >
+        #{pendingTypeNum,jdbcType=CHAR},
+      </if>
+      <if test="modeNum != null" >
+        #{modeNum,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=CHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="payOrderNum != null" >
+        #{payOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPayTime != null" >
+        #{lastPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblPendingOrder" >
+    update tbl_pending_order
+    <set >
+      <if test="pendingTypeNum != null" >
+        pending_type_num = #{pendingTypeNum,jdbcType=CHAR},
+      </if>
+      <if test="modeNum != null" >
+        mode_num = #{modeNum,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=CHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id = #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="payOrderNum != null" >
+        pay_order_num = #{payOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPayTime != null" >
+        last_pay_time = #{lastPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pending_id = #{pendingId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblPendingOrder" >
+    update tbl_pending_order
+    set pending_type_num = #{pendingTypeNum,jdbcType=CHAR},
+      mode_num = #{modeNum,jdbcType=CHAR},
+      order_type = #{orderType,jdbcType=CHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      order_child_id = #{orderChildId,jdbcType=BIGINT},
+      pay_order_num = #{payOrderNum,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      last_pay_time = #{lastPayTime,jdbcType=TIMESTAMP},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
+    where pending_id = #{pendingId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAllTblPendingOrderList" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List"></include>
+  	FROM tbl_pending_order ORDER BY pending_type_num 
+  </select>
+  
+  <delete id="deleteByOrderId">
+  	DELETE FROM tbl_pending_order
+  	WHERE order_id = #{orderId,jdbcType=BIGINT}
+  </delete>  
+    
+  <delete id="deleteByOrderChildId">
+  	DELETE FROM tbl_pending_order
+  	WHERE order_child_id = #{orderChildId,jdbcType=BIGINT}
+  </delete>    
+  
+  <select id="queryPendingOrderByOrderNum" parameterType="String" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List"></include> 
+  	FROM tbl_pending_order WHERE order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deletebyOrderNum">
+  	DELETE FROM tbl_pending_order
+  	WHERE order_num = #{orderNum,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="changePaidOrderToTakenOrder" parameterType="list">
+    INSERT INTO tbl_pending_order (pending_type_num, mode_num, 
+      order_type, company_id, order_id, 
+      order_num, order_child_id, pay_order_num, 
+      order_time, last_pay_time, begin_time, 
+      end_time)
+    VALUES 
+    <foreach collection="takenOrderList" item="takenOrder" separator=",">
+    (#{takenOrder.pendingTypeNum,jdbcType=CHAR}, #{takenOrder.modeNum,jdbcType=CHAR}, 
+      #{takenOrder.orderType,jdbcType=CHAR}, #{takenOrder.companyId,jdbcType=BIGINT}, #{takenOrder.orderId,jdbcType=BIGINT}, 
+      #{takenOrder.orderNum,jdbcType=VARCHAR}, #{takenOrder.orderChildId,jdbcType=BIGINT}, #{takenOrder.payOrderNum,jdbcType=VARCHAR}, 
+      #{takenOrder.orderTime,jdbcType=TIMESTAMP}, #{takenOrder.lastPayTime,jdbcType=TIMESTAMP}, #{takenOrder.beginTime,jdbcType=TIMESTAMP}, 
+      #{takenOrder.endTime,jdbcType=TIMESTAMP})
+  	</foreach>
+  </insert>
+  
+</mapper>

@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.order.app.OrderAppMapper" >  
+  
+    <!-- 订单明细评价表 -->
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.order.OrderComment" >
+    <result column="order_id"   property="orderId" jdbcType="BIGINT" />
+    <result column="order_num"  property="orderNum" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+  	<result column="company_id" property="companyId" jdbcType="BIGINT" />
+  	<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+  	<result column="evaluate_time" property="evaluateTime" jdbcType="TIMESTAMP" />
+  	<result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT"/>
+  	<result column="order_detail_num" property="orderDetailNum" jdbcType="VARCHAR"/>
+  	<result column="evaluate_ score" property="evaluateScore" jdbcType="INTEGER"/>
+  	<result column="evaluate_memo" property="evaluateMemo" jdbcType="VARCHAR"/>
+  </resultMap>
+  <!-- 订单设备评价表-->
+  <resultMap type="com.qjkj.qjcsp.entity.order.OrderDeviceEvaluate" id="BaseOrderDeviceEvaluate">
+  	 <result column="order_id"   property="orderId" jdbcType="BIGINT" />
+    <result column="order_num"  property="orderNum" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+  	<result column="company_id" property="companyId" jdbcType="BIGINT" />
+  	<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+  	<result column="evaluate_time" property="evaluateTime" jdbcType="TIMESTAMP" />
+  	<result column="evaluate_ score" property="evaluateScore" jdbcType="INTEGER"/>
+  	<result column="evaluate_memo" property="evaluateMemo" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  
+  <!-- 2.3.14.	根据登录用户id和订单状态获取相应条件订单列表 -->
+  <select id="getOrdersByStatus" parameterType="map" resultType="map">	
+ 		select cast(o.order_id as char) as orderId,
+		cast(o.order_num as char) as orderNum,
+		cast(bm.machine_id as char)as machineId,
+		cast(bm.machine_icon as char)as machineIcon,
+		cast(bm.address as char)as address,
+		cast(o.total_money as char)as totalFee,
+		cast(sum(tod.goods_num) as char)as itemCount,
+		cast(o.order_status as char)as orderStatus,
+		cast(o.order_time as char)as orderDate,
+		DATE_FORMAT(now(),'%Y-%m-%d %T')systemTime,
+		cast(o.order_type as char) as orderType,
+		cast(toc.end_time as char) as takenEndTime 
+		 from basics_machine bm,tbl_order o,tbl_order_child toc,tbl_order_detail tod 
+		where bm.machine_id = o.machine_id and o.order_id=toc.order_id 
+		and toc.order_child_id =tod.order_child_id and bm.machine_id=tod.machine_id
+		and o.customer_id=#{customerId} 
+		<if test='orderStatus =="5"'>
+    		and o.order_status IN (5,6) 
+    	</if>
+    	<if test='orderStatus =="-1"'>
+    		and toc.order_child_status IN (0,1,2,3,4,7,10) 
+    		and o.order_status IN (0,1,2,3,4,7,10) 
+    	</if>
+    	<if test='orderStatus =="3"'>
+    		and toc.order_child_status =3
+    	</if>
+    	<if test='orderStatus !="5" and orderStatus !="-1" and orderStatus !="3"'    >
+    		and toc.order_child_status=#{orderStatus}
+    	</if>
+		and o.customer_delete='N' 
+		and o.isdel='N' 
+		and toc.isdel='N' 
+		group by o.order_id 
+		ORDER BY 
+		<!-- CASE 
+		WHEN (o.order_status ='0') THEN o.order_status 
+		WHEN (o.order_status ='1') THEN o.order_status 
+		ELSE 'NULL' END --> 
+		o.order_status ASC,o.order_time DESC
+  </select>
+  
+  <!-- 根据orderId获取所有子订单 -->
+  <select id="getOrderChildByOrderId" parameterType="long" resultType="map">
+  		SELECT oc.order_child_status as orderChildStatus FROM tbl_order_child oc where oc.order_id=#{orderId} and oc.isdel='N';
+  </select>
+  <!-- 根据customerid查询出用户所有的订单信息 -->
+   <select id="getAllOrderByCustomerId" parameterType="long" resultType="map">
+   	SELECT o.order_id as orderid,o.order_status as orderstatus,o.order_type as ordertype
+ 	from tbl_order o where o.isdel='N' and o.customer_id=#{customerid} 
+   </select>
+   
+  <update id="updateOrderStatus" parameterType="map">
+  	 	UPDATE tbl_order SET order_status='5' WHERE customer_id=#{customerId} and order_num=#{orderNum}
+  </update>
+  
+  <!-- 订单评论完之后，修改订单状态 -->
+  <update id="afterCommentUpdateOrderStatus" parameterType="java.lang.String">
+  	    UPDATE tbl_order SET order_status='7' WHERE order_num=#{orderNum}
+  </update>
+
+  <select id="getOrderStatusForRefund" parameterType="java.lang.String" resultType="java.lang.String">
+  	SELECT (CASE 
+
+		      WHEN (tor.finance_check_time IS NOT NULL) THEN '9'
+		      WHEN (tor.business_check_result =5 ) THEN '5'
+ 		      WHEN (tor.business_check_result =-2) THEN '8'
+ 		      WHEN (tor.business_check_result =1) THEN '5'
+ 		ELSE '5' END) AS  orderStatus FROM tbl_order_refund tor WHERE tor.order_num=#{order_num}
+	</select>	
+ 		
+  <select id="getCustomerOrders" parameterType="map" resultType="map">
+    	select o.order_id as orderId,
+		o.order_num as orderNum,
+		bm.machine_id as machineId,
+		bm.machine_icon as machineIcon,
+		bm.address as address,
+		o.total_money as totalFee,
+		cast(sum(tod.goods_num)as char) as itemCount,
+		o.order_status as orderStatus,
+		o.order_time as orderDate,
+		o.order_type as orderType,cast(toc.order_child_id as char) AS orderChildId
+		 from basics_machine bm,tbl_order o,tbl_order_child toc,tbl_order_detail tod 
+		where bm.machine_id = o.machine_id and o.order_id=toc.order_id 
+		and toc.order_child_id =tod.order_child_id and bm.machine_id=tod.machine_id
+		and o.customer_id=#{customerId}  
+		and o.order_status ='1'
+		and o.customer_delete='N' 
+		group by o.order_id 
+		ORDER BY o.order_status,o.order_time DESC
+  </select>
+  
+  
+  <select id="getOrderStatusForAlam" parameterType="java.lang.Long" resultType="java.lang.Long">
+<!--   	SELECT tai.order_num FROM tbl_alarm_info tai WHERE tai.order_num=#{order_num} -->
+       SELECT tai.order_child_id FROM tbl_alarm_info tai WHERE tai.order_child_id=#{orderChildId} limit 0,1
+  </select>
+  
+  
+   <!-- 根据用户id得到待付款数量 -->
+  <select id="getReadyPayCount" parameterType="java.lang.Integer" resultType="java.lang.String">
+  	SELECT CAST(COUNT(DISTINCT o.order_id) AS CHAR) AS count  FROM tbl_order o,tbl_order_child c WHERE o.order_id=c.order_id AND customer_delete='N' and c.isdel='N'  AND c.order_child_status=0 and customer_id=#{customerId}
+  </select>
+  <!-- 根据用户id得到待取餐数量 -->
+  <select id="getReadyPickCount" parameterType="java.lang.Integer" resultType="java.lang.String">
+  SELECT CAST(COUNT(DISTINCT tor.order_id) AS CHAR) AS COUNT FROM tbl_order tor,tbl_order_child tocr
+		WHERE tor.order_id = tocr.order_id AND tocr.order_child_status='1' AND tor.order_status='1' 
+		AND tor.customer_delete='N' AND tor.isdel='N' AND tocr.isdel='N' AND tor.customer_id = #{customerId}
+<!--   	SELECT CAST(COUNT(1) AS CHAR) AS count FROM tbl_order WHERE order_status='1' AND customer_delete='N' and isdel='N'  and customer_id=#{customerId} -->
+  </select>
+   <!-- 根据用户id得到待评价数量 -->
+  <select id="getReadyCommentCount" parameterType="java.lang.Integer" resultType="java.lang.String">
+  SELECT count(DISTINCT(a.order_id)) AS count FROM tbl_order a, tbl_item_detail b,tbl_order_child c
+ WHERE 
+a.order_id=b.order_id and c.order_id=a.order_id AND c.order_child_status =3 AND
+ order_status='1' AND customer_delete='N' and a.isdel='N' and customer_id=#{customerId}
+AND b.item_status=3
+AND a.order_id not in (
+  SELECT c.order_id FROM tbl_goods_evaluate c WHERE a.order_id=c.order_id
+) and a.order_id not in (
+    SELECT DISTINCT order_id FROM tbl_item_detail WHERE item_status != 3 AND order_id IN(
+		  SELECT order_id FROM tbl_order WHERE customer_id =#{customerId}
+		)
+)and a.order_id not in(
+    select order_id from tbl_order_child where order_id in(
+        SELECT order_id FROM tbl_order WHERE customer_id =#{customerId}
+    ) and order_child_status = 1
+)
+  	<!-- SELECT count(DISTINCT(a.order_id)) AS count FROM tbl_order a, tbl_item_detail b,tbl_order_child c
+ WHERE 
+a.order_id=b.order_id and c.order_id=a.order_id AND c.order_child_status in(3,10) AND
+ order_status='1' AND customer_delete='N' and a.isdel='N' and customer_id=#{customerId}
+AND b.item_status=3
+AND a.order_id not in (SELECT c.order_id FROM tbl_goods_evaluate c WHERE a.order_id=c.order_id) -->
+  </select>
+  <!-- 得到该用户的所有的订单数量 -->
+  <select id="getOrderAmountNum" resultType="java.lang.String">
+  	SELECT CAST(COUNT(1) AS CHAR) AS count FROM tbl_order WHERE  customer_delete='N' and isdel='N'  and customer_id=#{customerId}
+  </select>
+  
+   <!-- 根据用户id得到退款数量 -->
+  <select id="getReadyDealCount" parameterType="java.lang.Integer" resultType="java.lang.String">
+  	 SELECT CAST(COUNT(1) AS CHAR) AS count FROM tbl_order tor WHERE tor.customer_id=#{customerId} AND tor.order_status IN (5,6) AND tor.customer_delete='N' and isdel='N';
+  </select>
+  
+   <!-- 提交订单评论 插入的是订单明细评价表-->
+  <insert id="insertOrderComment" parameterType="com.qjkj.qjcsp.entity.order.OrderComment">
+  
+	INSERT INTO tbl_order_item_evaluate(order_detail_id,order_id,order_num,machine_id,
+	company_id,order_time,evaluate_time,order_detail_num,goods_id,goods_name,evaluate_score,
+	evaluate_memo
+	)VALUES
+	<foreach collection="list" item="item"  index="index" separator=",">     
+        (
+        #{item.orderDetailId},#{item.orderId},#{item.orderNum},
+       	#{item.machineId},#{item.companyId},#{item.orderTime},
+        #{item.evaluateTime},#{item.orderDetailNum},#{item.goodsId},
+        #{item.goodsName},#{item.evaluateScore},#{item.evaluateMemo}
+        )    
+    </foreach> 
+  
+  </insert>
+  
+   <select id="getOrderDeviceEvaluate" parameterType="java.lang.String" resultMap="BaseOrderDeviceEvaluate">
+  	SELECT order_id,order_num,machine_id,company_id,order_time 
+  	FROM tbl_order
+  	WHERE order_NUM=#{orderNum}
+  </select>
+  
+  
+  <insert id="insertOrderDeviceEvaluate" parameterType="com.qjkj.qjcsp.entity.order.OrderDeviceEvaluate">
+  	 INSERT INTO tbl_order_device_evaluate(
+  	 	order_id,order_num,machine_id,
+  	 	company_id,order_time,evaluate_time,
+  	 	evaluate_score,evaluate_memo
+  	 )
+  	 VALUES(
+  	 	#{orderId},#{orderNum},#{machineId},
+  	 	#{companyId},#{orderTime},#{evaluateTime},
+  	 	#{evaluateScore},#{evaluateMemo}
+  	 )
+  </insert>
+  
+  <!-- 根据客户id和订单号查找订单的信息 -->
+  <select id="getOrderInfo" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+	SELECT tor.* , tore.order_detail_id,tore.order_detail_num,tore.goods_id,tore.goods_name 
+  	FROM tbl_order tor , tbl_order_child oc,tbl_order_detail tore WHERE  
+	tor.order_id=oc.order_id and oc.order_child_id =tore.order_child_id 
+	AND tor.customer_id=#{customerId} AND tor.order_num=#{orderNum};
+  </select>
+  
+  
+    <!-- 订单删除 -->
+  <update id="customerOrderDelete" parameterType="map">
+  	UPDATE tbl_order SET customer_delete='Y',isdel='Y' 
+  	WHERE customer_id=#{customerId} 
+  		  AND order_num IN
+  		  <foreach collection="orderNums" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+         </foreach>
+  </update>
+  
+  <!-- 通过订单号查询所有的订单id -->
+  <select id="getAllOrderIdByOrderNums" parameterType="map" resultType="map">
+  		select order_id as orderId from tbl_order where order_num in 
+  		 <foreach collection="orderNums" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+         </foreach>
+  </select>
+  
+     <!-- 子订单删除 -->
+  <update id="customerChildOrderDelete" parameterType="map">
+  	UPDATE tbl_order_child SET isdel='Y' 
+  	WHERE order_id IN 
+  		  <foreach collection="orderIds" index="index" item="item" open="(" separator="," close=")">
+            #{item.orderId}
+         </foreach>
+  </update>
+  <!--  2：补货人员,3：商户, 实时订单-->
+  <select id="queryRealTimeTblOrder" resultType="map">
+  	SELECT 
+	t.order_id AS orderId,
+	t.order_num AS orderNum,
+	m.machine_name AS machineName,
+    t.real_money AS orderTotalPrice, 
+	t.order_type AS orderType
+	FROM 
+	basics_machine m,
+	(
+		SELECT 
+		tblo.order_id, tblo.order_num, tblo.machine_id,tblo.real_money, tblo.order_time,
+		tblo.order_type  
+		FROM
+		tbl_order tblo,
+		(
+			SELECT machine_id FROM basics_user_machine WHERE user_id=#{userId} AND special_role_num=#{specialRoleNum}
+		) bum
+		WHERE tblo.machine_id=bum.machine_id AND TO_DAYS(tblo.order_time)=TO_DAYS(NOW())
+	) t
+	WHERE 
+	m.machine_id=t.machine_id
+	<if test="machineId != null">
+		AND t.machine_id=#{machineId}
+	</if>
+	ORDER BY t.order_time DESC;
+  </select>
+  <!--4众包商实时订单  -->
+  <select id="queryRealTimeTblOrderByMerSys" resultType="map">
+	SELECT 
+	tblo.order_id AS orderId,
+	tblo.order_num AS orderNum,
+	mu.machine_name AS machineName,
+	tblo.real_money AS orderTotalPrice,
+	tblo.order_type   AS orderType
+	FROM 
+	tbl_order tblo,
+	(
+		SELECT 
+		machine_id, machine_name 
+		FROM
+		basics_machine m,
+		(
+			SELECT 
+			company_id
+			FROM
+			basics_users
+			WHERE user_id=#{userId}
+		) u
+		WHERE m.company_id=u.company_id AND m.machine_status=1 AND m.isdel='N'
+	) mu
+	WHERE tblo.machine_id=mu.machine_id AND TO_DAYS(tblo.order_time)=TO_DAYS(NOW())
+	<if test="machineId != null">
+		AND mu.machine_id=#{machineId}
+	</if>
+	ORDER BY tblo.order_time DESC;
+  </select>
+  
+  
+  <!--补货人员，众包商零售  -->
+  <select id="queryRealTimeGoodsList" resultType="map">
+  	SELECT
+	id.goods_name AS goodsName,
+	'1' AS goodsNum,
+	<!-- CAST(id.retail_rice AS CHAR) AS retailPrice, -->
+	id.retail_rice  AS retailPrice,
+	CAST(c.cell_num AS CHAR) AS cellNum,
+	id.order_child_status AS orderDetailStatus
+	FROM
+	basics_machine_cell c,
+	(
+		SELECT 
+		i.cell_id,
+		d.goods_name,
+		d.retail_rice,
+		d.order_child_status
+		FROM
+		tbl_item_detail i,
+		(
+			SELECT 
+			tod.order_detail_id,
+			tod.goods_name,
+			CAST(tod.price/tod.goods_num AS DECIMAL(10,2)) AS retail_rice,
+			toc.order_child_status
+			FROM 
+			tbl_order_detail tod,
+			(
+				SELECT 
+				order_child_id,
+				order_child_status
+				FROM 
+				tbl_order_child
+				WHERE 
+<!-- 				order_child_status!=2
+				AND order_id=#{orderId} -->
+				order_id=#{orderId}
+				AND area_model_id IN (SELECT area_model_id FROM basics_area_model 
+				WHERE 
+				isdel='N'
+				<if test="timeType != '-1'">
+					AND time_type=#{timeType}
+				</if>
+				)
+			) toc
+			WHERE tod.order_child_id=toc.order_child_id
+		) d
+		WHERE i.order_detail_id=d.order_detail_id
+	) id
+	WHERE c.cell_id=id.cell_id ORDER BY c.cell_num
+  </select>
+  
+  <!--补货人员，众包商预订  -->
+  <select id="queryRealTimeGoodsListBooking" resultType="map">
+  	SELECT
+	id.goods_name AS goodsName,
+	'1' AS goodsNum,
+	<!-- CAST(id.retail_rice AS CHAR) AS retailPrice, -->
+	id.retail_rice  AS retailPrice,
+	CAST(c.cell_num AS CHAR) AS cellNum,
+	id.order_child_status AS orderDetailStatus
+	FROM
+	basics_machine_cell c,
+	(
+		SELECT 
+		i.cell_id,
+		d.goods_name,
+		d.retail_rice,
+		d.order_child_status
+		FROM
+		tbl_temporary_retail i,
+		(
+			SELECT 
+			tod.order_detail_id,
+			tod.goods_name,
+			CAST(tod.price/tod.goods_num AS DECIMAL(10,2)) AS retail_rice,
+			toc.order_child_status
+			FROM 
+			tbl_order_detail tod,
+			(
+				SELECT 
+				order_child_id,
+				order_child_status
+				FROM 
+				tbl_order_child
+				WHERE 
+				order_id=#{orderId}
+				AND area_model_id IN (SELECT area_model_id FROM basics_area_model 
+				WHERE 
+				isdel='N'
+				<if test="timeType != '-1'">
+					AND time_type=#{timeType}
+				</if>
+				)
+			) toc
+			WHERE tod.order_child_id=toc.order_child_id
+		) d
+		WHERE i.order_detail_id=d.order_detail_id
+	) id
+	WHERE c.cell_id=id.cell_id ORDER BY c.cell_num
+  </select>
+  
+  
+  
+  
+  <!-- 商户零售 -->
+  <select id="queryRealTimeGoodsListByMer" resultType="map">
+	SELECT 
+	cid.goodsName,
+	cid.goodsNum,
+	cid.retailPrice,
+	cid.cellNum,
+	cid.orderDetailStatus
+	FROM
+	(
+		SELECT
+		u.user_name AS companyName
+		FROM
+		basics_users u
+		WHERE u.user_id=#{userId}
+	) uc, 
+	(  	
+	  	SELECT
+		id.goods_name AS goodsName,
+		id.company_name AS companyName,
+		'1' AS goodsNum,
+		<!-- CAST(id.retail_rice AS CHAR) AS retailPrice, -->
+		id.retail_rice  AS retailPrice,
+		CAST(c.cell_num AS CHAR) AS cellNum,
+		id.order_child_status AS orderDetailStatus
+		FROM
+		basics_machine_cell c,
+		(
+			SELECT 
+			i.cell_id,
+			d.goods_name,
+			d.company_name,
+			d.retail_rice,
+			d.order_child_status
+			FROM
+			tbl_item_detail i,
+			(
+				SELECT 
+				tod.order_detail_id,
+				tod.goods_name,
+				SUBSTRING_INDEX(SUBSTRING_INDEX(tod.goods_name,'(',-1),')',1) AS company_name,
+				<!-- CAST(tod.price/tod.goods_num AS DECIMAL(10,2)) AS retail_rice, -->
+				tod.cost_price  AS retail_rice, 
+				toc.order_child_status
+				FROM 
+				tbl_order_detail tod,
+				(
+					SELECT 
+					order_child_id,
+					order_child_status
+					FROM 
+					tbl_order_child
+					WHERE 
+					order_id=#{orderId}
+					AND area_model_id IN (SELECT area_model_id FROM basics_area_model 
+					WHERE 
+					isdel='N'
+					<if test="timeType != '-1'">
+						AND time_type=#{timeType}
+					</if>
+					)
+				) toc
+				WHERE tod.order_child_id=toc.order_child_id
+			) d
+			WHERE i.order_detail_id=d.order_detail_id
+		) id
+		WHERE c.cell_id=id.cell_id ORDER BY c.cell_num
+	) cid
+	WHERE uc.companyName=cid.companyName
+  </select>
+  
+  <!--商户预订  -->
+  <select id="queryRealTimeGoodsListByBooking" resultType="map">
+	SELECT 
+	cid.goodsName,
+	cid.goodsNum,
+	cid.retailPrice,
+	cid.cellNum,
+	cid.orderDetailStatus
+	FROM
+	(
+		SELECT
+		u.user_name AS companyName
+		FROM
+		basics_users u
+		WHERE u.user_id=#{userId}
+	) uc, 
+	(  	
+	  	SELECT
+		id.goods_name AS goodsName,
+		id.company_name AS companyName,
+		'1' AS goodsNum,
+	<!-- 	CAST(id.retail_rice AS CHAR) AS retailPrice, -->
+		id.retail_rice  AS retailPrice,
+		CAST(c.cell_num AS CHAR) AS cellNum,
+		id.order_child_status AS orderDetailStatus
+		FROM
+		basics_machine_cell c,
+		(
+			SELECT 
+			i.cell_id,
+			d.goods_name,
+			d.company_name,
+			d.retail_rice,
+			d.order_child_status
+			FROM
+			tbl_temporary_retail i,
+			(
+				SELECT 
+				tod.order_detail_id,
+				tod.goods_name,
+				SUBSTRING_INDEX(SUBSTRING_INDEX(tod.goods_name,'(',-1),')',1) AS company_name,
+				<!-- CAST(tod.price/tod.goods_num AS DECIMAL(10,2)) AS retail_rice, -->
+				tod.cost_price  AS retail_rice,
+				toc.order_child_status
+				FROM 
+				tbl_order_detail tod,
+				(
+					SELECT 
+					order_child_id,
+					order_child_status
+					FROM 
+					tbl_order_child
+					WHERE 
+					order_id=#{orderId}
+					AND area_model_id IN (SELECT area_model_id FROM basics_area_model 
+					WHERE 
+					isdel='N'
+					<if test="timeType != '-1'">
+						AND time_type=#{timeType}
+					</if>
+					)
+				) toc
+				WHERE tod.order_child_id=toc.order_child_id
+			) d
+			WHERE i.order_detail_id=d.order_detail_id
+		) id
+		WHERE c.cell_id=id.cell_id ORDER BY c.cell_num
+	) cid
+	WHERE uc.companyName=cid.companyName
+  </select>
+  
+  <select id="queryTblOrderGoods" resultType="map">
+  
+select  bam.area_model_id arraModelId,bam.area_model_name arraModelName,tbloe.num
+from  basics_area_model  bam,
+		SELECT 
+		tblo.order_id, tblo.order_num , tblo.machine_id,tblo.order_time,tblo.company_id
+		FROM
+		tbl_order tblo,
+		(
+			SELECT machine_id FROM basics_user_machine WHERE user_id=#{userId} AND special_role_num=#{specialRoleNum}
+		) bum
+		WHERE tblo.machine_id=bum.machine_id 
+		
+		<if test="startDate != null">
+				AND tblo.order_time &gt;=#{startDate}				
+		</if>
+		<if test="endDate != null">
+				AND tblo.order_time &lt;=#{endDate}			
+		</if>
+	) t
+	WHERE bam.company_id=t.company_id  
+
+  </select>
+  
+ 
+ <select id="queryGoodsComplete" resultType="map">
+ 
+ select count(bgs.goods_id) as totalDishAreaNum,((bgs.retail_price)*count(bgs.goods_id)) as profit,
+bba.areaModelId as areaModelId,bba.orderNum
+from basics_goods bgs,
+(select  bam.area_model_id areaModelId,bam.area_model_name areaModelName,bg.goods_name goodsName,count(bg.goods_id) dishAreaNum,bg.goods_id as goodsId,
+t.orderNum as orderNum
+from  basics_area_model  bam,
+(
+		SELECT 
+		tblo.order_id, tblo.order_num  as orderNum, tblo.machine_id,tblo.order_time,tblo.company_id as companyId
+		FROM
+		tbl_order tblo,
+		(
+			SELECT machine_id FROM basics_user_machine
+			WHERE user_id=#{userId} AND special_role_num=#{specialRoleNum}
+		) bum
+		WHERE tblo.machine_id=bum.machine_id 
+		<if test="startDate != null">
+				AND tblo.order_time &gt;=#{startDate}				
+		</if>
+		<if test="endDate != null">
+				AND tblo.order_time &lt;=#{endDate}			
+		</if>
+		<if test="machineId != null">
+				AND bum.machine_id =#{machineId}				
+		</if>	
+		
+	) t,basics_goods bg
+	WHERE bam.company_id=t.companyId
+	) bba
+where bgs.goods_id=bba.goodsId
+ 
+  
+<!-- select  bam.area_model_id areaModelId,bam.area_model_name areaModelName,bg.goods_name goodsName,count(bg.goods_id) dishAreaNum
+from  basics_area_model  bam,
+(
+		SELECT 
+		tblo.order_id, tblo.order_num, tblo.machine_id,tblo.order_time,tblo.company_id as companyId
+		FROM
+		tbl_order tblo,
+		(
+			SELECT machine_id FROM basics_user_machine
+			WHERE user_id=#{userId} AND special_role_num=#{specialRoleNum}
+		) bum
+		WHERE tblo.machine_id=bum.machine_id 
+		
+		<if test="startDate != null">
+				AND tblo.order_time >=#{startDate}				
+		</if>
+		<if test="endDate != null">
+				AND tblo.order_time >=#{endDate}			
+		</if>
+		<if test="machineId != null">
+				AND bum.machine_id >=#{machineId}				
+		</if>	
+		
+	) t,basics_goods bg
+	WHERE 
+	bam.company_id=t.companyId -->
+  
+  </select>
+  
+  
+<select id="queryGoodsComplete2" resultType="map">
+select count(bgs.goods_id) as totalDishAreaNum,((bgs.retail_price)*count(bgs.goods_id)) as profit,bba.areaModelId as areaModelId,
+bba.orderNum
+from basics_goods bgs,
+(select  bam.area_model_id areaModelId,count(bg.goods_id) dishAreaNum,bg.goods_id as goodsId,t.orderNum as orderNum
+from  basics_area_model  bam,
+(
+		SELECT 
+		tblo.order_id, tblo.order_num as orderNum , tblo.machine_id,tblo.order_time,tblo.company_id as companyId
+		FROM
+		tbl_order tblo,
+		(
+			SELECT company_id as companyId FROM basics_users
+			WHERE user_id=#{userId} 
+		) bum
+		WHERE tblo.company_id=bum.companyId 
+	   <if test="startDate != null">
+				AND tblo.order_time &gt;=#{startDate}				
+		</if>
+		<if test="endDate != null">
+				AND tblo.order_time &lt;=#{endDate}			
+		</if>
+		<if test="machineId != null">
+				AND tblo.machine_id=#{machineId}				
+		</if>		 
+	) t,basics_goods bg
+	WHERE bam.company_id=t.companyId
+	) bba
+    where bgs.goods_id=bba.goodsId
+  </select>
+  
+  
+</mapper>

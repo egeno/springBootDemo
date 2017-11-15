@@ -1,0 +1,286 @@
+
+.index_main{
+	padding-bottom:1.3rem;
+}
+
+/* banner  start */
+.main_visual {
+	height: 3.22rem;
+	overflow: hidden;
+	position: relative;
+}
+
+.main_image {
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.main_image ul {
+	width: 999999px;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.main_image li {
+	float: left;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.main_image li img {
+	width: 100%;
+	height: 100%;
+}
+
+/*.main_image li span {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.main_image li a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}*/
+
+div.flicking_con {
+    position: absolute;
+    bottom: 0.1rem;
+    left: 50%;
+    z-index: 999;
+    height: 0.15rem;
+    width: 1.5rem;
+    margin-left: -0.6rem;
+}
+
+div.flicking_con a {
+	float: left;
+    width: 0.125rem;
+    height: 0.125rem;
+    padding: 0;
+    display: block;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.7);
+    margin-right: 0.25rem;
+}
+
+div.flicking_con a.on {
+	background-color: rgba(255,130,32,1);
+	border-radius: 50%;
+}
+/* banner  end */
+.indexTitle{
+	color: #fff;
+    font-size: 0.34rem;
+    position: relative;
+    top: -2.8rem;
+    z-index: 1;
+    padding: 0.1rem 0.2rem;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    max-width: 4.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0 auto;
+   text-align: center;
+}
+.topTitle{
+	background:#fff;
+	height:0.6rem;
+	line-height:0.6rem;
+	position:fixed;
+	top:0;
+	min-width: 3.2rem;
+	max-width: 6.4rem;
+	width:100%;
+	z-index:9999;
+	font-size:0.32rem;
+	color:#1a1a1a;
+	text-align:center;
+	display:none;
+}
+.indexTitle img.location,
+.topTitle img.location{
+	width:0.24rem;
+	height:0.28rem;
+	margin-right:0.07rem;
+}
+.indexTitle img.sign,
+.topTitle img.sign{
+	width:0.12rem;
+	height:0.21rem;
+	margin-left:0.11rem;
+}
+.indexNav{
+	width:100%;
+	height: 2.0rem;
+    padding: 0.25rem 0;
+	background:#fff;
+}
+.indexNav ul{
+	overflow:hidden;
+}
+.indexNav li{
+	float:left;
+	width:33.3%;
+	text-align:center;
+}
+.indexNav li img{
+	width:0.99rem;
+	height:0.99rem;
+}
+.indexNav li span{
+	display:block;
+	font-size:0.30rem;
+	color:#2f2f2f;
+	margin-top:0.10rem;
+}
+.xuangui{
+	font-size: 0.288rem;
+    width: 6.4rem;
+    height: 0.68rem;
+    line-height: 0.68rem;
+    text-indent: 0.2rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+.index_cabinet{
+	background:#fff;
+}
+.index_cabinet h1{
+	font-size:0.32rem;
+	color:#888;
+	height:0.8rem;
+	line-height:0.8rem;
+	border-bottom:1px solid #dddddd;
+	text-indent:0.25rem;
+}
+.index_cabinet li{
+	padding:0.25rem 0.1rem 0.2rem;
+	border-bottom:1px solid #dddddd;
+	overflow:hidden;
+}
+.cabinet_left{
+	float:left;
+	width:1.88rem;
+	margin-left: 0.1rem;
+}
+.cabinet_left img{
+	width:1.88rem;
+	height:1.42rem;
+	border-radius: 0.15rem;
+}
+h3{
+	margin-left: 0.2rem;
+}
+.cabinet_right{
+	float:left;
+	width:3.9rem;
+	position:relative;
+	height:1.42rem;
+}
+.cabinet_right h3{
+	color:#1a1a1a;
+	font-size:0.28rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width:100%;
+	border-bottom:1px solid #dddddd;
+	margin-bottom:4px;
+	font-weight:normal;
+}
+
+.cabinet_right span{
+	display:inline-block;
+}
+.stars img{
+	width:0.26rem;
+	height:0.24rem;
+}
+.sales{
+	color:#b2b2b2;
+	font-size:0.24rem;
+	margin-left:0.1rem;
+}
+.palce{
+	
+    color: #fff;
+    font-size: 0.26rem;
+    background: #5bbdfc;
+    padding: 0.0rem 0.1rem;
+    border-radius: 5px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 0.36rem;
+    max-width: 2.475rem;
+    line-height: 0.36rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    top: .42rem;
+}
+.index_info{
+
+	position: relative;
+    top: 0.2rem;
+    right: -.2rem;
+}
+.surplus{
+	font-size:0.26rem;
+	color:#b2b2b2;
+	line-height:0.28rem;
+	position:absolute;
+	left:2.65rem;
+	
+}
+.distance{
+	
+	line-height: 0.3rem;
+    margin-left: 0.3rem;
+    font-size: 0.24rem;
+    width: 1.5rem;
+    position: relative;
+    top: 0.18rem;
+    left:2.65rem;
+    color:#b2b2b2;
+}
+.surplus em,.distance em{
+	display:inline-block;
+	margin-top:-0.03rem;
+}
+.surplus img,.distance img{
+	width:0.28rem;
+	height:0.28rem;
+	margin-right:0.05rem;
+	float:left;
+}
+.surplus{
+	
+	line-height: 0.3rem;
+    margin-left: 0.3rem;
+    font-size: 0.24rem;
+    position: absolute;
+}
+
+.distance i{
+   max-width: 35px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+

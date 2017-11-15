@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerLockMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomerLock" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="lock_start_time" property="lockStartTime" jdbcType="TIMESTAMP" />
+    <result column="lock_end_time" property="lockEndTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, lock_start_time, lock_end_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_lock
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_customer_lock
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomerLock" >
+    insert into tbl_customer_lock (id, customer_id, lock_start_time, 
+      lock_end_time)
+    values (#{id,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{lockStartTime,jdbcType=TIMESTAMP}, 
+      #{lockEndTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerLock" >
+    insert into tbl_customer_lock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="lockStartTime != null" >
+        lock_start_time,
+      </if>
+      <if test="lockEndTime != null" >
+        lock_end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="lockStartTime != null" >
+        #{lockStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockEndTime != null" >
+        #{lockEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerLock" >
+    update tbl_customer_lock
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="lockStartTime != null" >
+        lock_start_time = #{lockStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockEndTime != null" >
+        lock_end_time = #{lockEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblCustomerLock" >
+    update tbl_customer_lock
+    set customer_id = #{customerId,jdbcType=BIGINT},
+      lock_start_time = #{lockStartTime,jdbcType=TIMESTAMP},
+      lock_end_time = #{lockEndTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_lock
+    where customer_id = #{customerId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByCustomerId" parameterType="java.lang.String" >
+    delete from tbl_customer_lock
+    where customer_id = #{customerId,jdbcType=VARCHAR}
+  </delete>
+</mapper>

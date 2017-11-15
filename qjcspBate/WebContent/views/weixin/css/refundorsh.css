@@ -1,0 +1,258 @@
+body{color:#2f2f2f;/*overflow:hidden;height:100%;*/}
+.delete{
+	float: right!important;
+	padding-right: 0.1rem;
+	width: 0.3rem!important;
+	height: 0.35rem!important;
+}
+.cancel{
+	color: #ff8420;
+	font-size: 0.28rem;
+	font-family: "Microsoft Yahei";
+	display: none;
+	float: right;
+}
+.splitLine{
+	background:#f5f5f5;
+	height:0.2rem;
+    border-top:1px solid #d8d8d8;
+}
+.productinfo{
+	height:0.85rem;
+	line-height:0.9rem;
+	position: relative;
+	height: auto;
+	overflow: hidden;
+}
+.pro-liclick{
+	cursor:pointer;
+}
+.pro-ul .pro-li{
+	height: auto;
+	overflow: hidden;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #ccc;
+	padding: 0.17rem 0.3rem 0.15rem;
+	position: relative;
+	margin-bottom: 0.15rem;
+	background:#fff;
+}
+.pro-ul .pro-li .location{
+	font-family: "Microsoft Yahei";
+	font-size: 0.26rem;
+	color: #000;
+	height: 0.33rem;
+	line-height: 0.33rem;
+	margin-bottom: 0.15rem;
+}
+.location img{
+	display: block;
+	float: left;
+	width: 0.27rem;
+	height: 0.3rem;
+	padding-right: 0.1rem;
+}
+.location em{
+	width: 4.4rem;
+    display: block;
+    height: 0.33rem;
+    float: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.location span{
+	font-family: "Microsoft Yahei";
+	font-size: 0.24rem;
+	color: #fcaf23;
+	display: block;
+	float: right;
+}
+.leftimg{
+	width: 1.5rem;
+	height: 1.65rem;
+	display: block;
+	float: left;
+	padding-top: 0.15rem;
+	border-top: 1px solid #e6e6e6;
+}
+.leftimg img{
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius:7px;
+    -moz-border-radius:7px;
+    -khtml-border-radius:7px;
+    overflow: hidden;
+}
+.right-titinf{
+	border-top: 1px solid #e6e6e6;
+	display: block;
+	float: left;
+	padding-left: 0.2rem;
+	width: 4.3rem;
+	padding-top: 0.15rem;
+}
+.right-titinf .date{
+	font-size: 0.24rem;
+	color: #b1b1b1;
+	font-family: "SimSun";
+	height: 0.26rem;
+	line-height: 0.26rem;
+	margin-bottom: 0.18rem;
+}
+.right-titinf .number{
+	font-size: 0.24rem;
+	color: #000;
+	font-family: "SimSun";
+	height: 0.26rem;
+	line-height: 0.26rem;
+	margin-bottom: 0.16rem;
+}
+.right-titinf .paymoney{
+	font-size: 0.24rem;
+	color: #000;
+	font-family: "SimSun";
+	height: 0.26rem;
+	line-height: 0.26rem;
+	margin-bottom: 0.15rem;
+}
+.right-titinf .dy-infor{
+	font-size: 0.22rem;
+	color: #b2b2b2;
+	font-family: "SimSun";
+	height: 0.26rem;
+	line-height: 0.26rem;
+}
+.right-titinf .zkefu{
+	width: 1.2rem;
+	height: 0.6rem;
+	background: #ff8420;
+	line-height: 0.6rem;
+	text-align: center;
+	color: #fff;
+	display: block;
+	border-radius:7px;
+	-moz-border-radius:7px;
+    -khtml-border-radius:7px;
+    overflow: hidden;
+    position: absolute;
+    right: 0.15rem;
+    bottom: 0.15rem;
+}
+.nomore{
+	clear: both;
+	width: 100%;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	text-align: center;
+	overflow: hidden;
+}
+.deletebut{
+	width: 5.9rem;
+	height: 0.8rem;
+	background: #fff;
+	color: #fff;
+	font-size: 0.36rem;
+	font-family: "Microsoft Yahei";
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	margin-left: -2.95rem;
+	text-align: center;
+	line-height: 0.8rem;
+	border-radius:9px;
+	-moz-border-radius:9px;
+    -khtml-border-radius:9px;
+    cursor:pointer;
+    display:none;
+}
+.deletebutt{
+	width: 5.9rem;
+	height: 0.8rem;
+	background: rgba(255,132,32,0.5);
+	color: #fff;
+	font-size: 0.36rem;
+	font-family: "Microsoft Yahei";
+	position: fixed;
+	bottom: 2px;
+	left: 50%;
+	margin-left: -2.95rem;
+	text-align: center;
+	line-height: 0.8rem;
+	border-radius:9px;
+	-moz-border-radius:9px;
+    -khtml-border-radius:9px;
+    cursor:pointer
+}
+.check{
+	width: 0.5rem;
+	height: 1.5rem;
+	margin-right: 0.3rem;
+	background: url("../img/image/checked_no.png") no-repeat center center;
+	background-size: 100% auto;
+	float: left;
+	cursor:pointer;
+	display: none;
+	cursor:pointer;
+}
+.checked{
+	background: url("../img/image/checked.png") no-repeat center center;
+	background-size: 100% auto;
+}
+.npop_up{
+	position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+.pop-top{
+	background: #fff;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    margin-bottom: 0.3rem;
+}
+.ntime{
+	font-size: 0.24rem;
+    color: #b1b1b1;
+    font-family: "SimSun";
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+.ntel{
+	font-family: "Microsoft Yahei";
+    font-size: 0.24rem;
+    color: #fcaf23;
+    text-align: center;
+    font-weight: bold;
+    height: 1rem;
+    line-height: 1rem;
+}
+.ntel a{
+	color: #fcaf23;
+	display:block;
+}
+.ntel a:hover{
+	color: #fcaf23;
+}
+.pop-bottom{
+	background: #fff;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+}
+.ncancel{
+	font-family: "Microsoft Yahei";
+    font-size: 0.32rem;
+    color: #38f;
+    text-align: center;
+    height: 1rem;
+    line-height: 1rem;
+}

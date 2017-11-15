@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblMachineAreaModelMostSaleMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="most_sale_num" property="mostSaleNum" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_id, area_model_id, most_sale_num, create_user_id, create_time, mod_user_id, 
+    mod_time, isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_machine_area_model_most_sale
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_machine_area_model_most_sale
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale" >
+    insert into tbl_machine_area_model_most_sale (id, machine_id, area_model_id, 
+      most_sale_num, create_user_id, create_time, 
+      mod_user_id, mod_time, isdel
+      )
+    values (#{id,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{areaModelId,jdbcType=BIGINT}, 
+      #{mostSaleNum,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modUserId,jdbcType=BIGINT}, #{modTime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale" >
+    insert into tbl_machine_area_model_most_sale
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="mostSaleNum != null" >
+        most_sale_num,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="modTime != null" >
+        mod_time,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="mostSaleNum != null" >
+        #{mostSaleNum,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale" >
+    update tbl_machine_area_model_most_sale
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="mostSaleNum != null" >
+        most_sale_num = #{mostSaleNum,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale" >
+    update tbl_machine_area_model_most_sale
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      area_model_id = #{areaModelId,jdbcType=BIGINT},
+      most_sale_num = #{mostSaleNum,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      mod_user_id = #{modUserId,jdbcType=BIGINT},
+      mod_time = #{modTime,jdbcType=TIMESTAMP},
+      isdel = #{isdel,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 根据设备Id获取模型名和最高销售数量 -->
+  <select id="getMostSalsInfoByMachineId" resultType="map">
+  	SELECT am.area_model_name as areaModelName,ms.most_sale_num as mostSaleNum ,ms.machine_id as machineId,
+  	am.area_model_id as areaModelId 
+	FROM tbl_machine_area_model_most_sale ms ,basics_area_model am where ms.area_model_id =am.area_model_id 
+	AND  ms.isdel='N' AND am.isdel='N' AND am.company_id =#{companyId} and am.area_model_id=#{areaModelId} and ms.machine_id=#{machineId}
+	 ORDER BY am.area_model_id ASC;
+  </select>
+  <select id="getAllMachineAreaModel" resultType="map">
+  	SELECT b.area_model_name as areaModelName,'0' as mostSaleNum,am.machine_id as machineId
+	,am.area_model_id as areaModelId
+	FROM basics_machine_area_model am,basics_area_model b  
+	where am.area_model_id=b.area_model_id and b.isdel='N' and b.company_id=#{companyId} ORDER BY b.area_model_id ASC;
+  </select>
+  <!-- 按设备ID和模型ID查询数量 -->
+  <select id="getMostSaleCount" resultType="int" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale">
+  	SELECT COUNT(1) FROM tbl_machine_area_model_most_sale tm where tm.machine_id=#{machineId} and tm.area_model_id=#{areaModelId};
+  </select>
+  <!-- 根据设备id和模型ID修改数据 -->
+  <update id="updateMostSaleByIds" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale">
+	update tbl_machine_area_model_most_sale t 
+	<set>
+	 t.most_sale_num =#{mostSaleNum} 
+	</set>
+	where t.machine_id=#{machineId} and t.area_model_id=#{areaModelId}
+  </update>
+  <select id="getByIds" parameterType="com.qjkj.qjcsp.entity.TblMachineAreaModelMostSale" resultType="long">
+  	SELECT tm.id FROM tbl_machine_area_model_most_sale tm where tm.machine_id=#{machineId} and tm.area_model_id=#{areaModelId};
+  </select>
+  <select id="getMahcineAreaModelMostNumList" resultType="map">
+   select a.machine_id machineId,a.area_model_id areaModelId,a.most_sale_num mostSaleNum,c.area_model_name as areaModelName from tbl_machine_area_model_most_sale a,basics_machine b,basics_area_model c where a.machine_id=b.machine_id and a.area_model_id=c.area_model_id and b.company_id=#{companyId}
+  </select>
+  
+  <select id="getMostSaleNum" resultType="Integer">
+  	SELECT most_sale_num 
+  	FROM tbl_machine_area_model_most_sale
+	WHERE 
+	machine_id=#{machineId,jdbcType=BIGINT} 
+	AND area_model_id=#{areaModelId,jdbcType=BIGINT}
+	AND isdel='N'
+  </select>
+
+  <select id="getMostSaleByMachineIdAndAreaModelId" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from tbl_machine_area_model_most_sale
+	WHERE 
+	machine_id=#{machineId,jdbcType=BIGINT} 
+	AND area_model_id=#{areaModelId,jdbcType=BIGINT}
+	AND isdel='N'
+  </select>
+  <select id="getNewMostSaleNum" resultMap="BaseResultMap">
+  	SELECT 
+	<include refid="Base_Column_List" />
+  	FROM tbl_machine_area_model_most_sale
+	WHERE 
+	machine_id=#{machineId,jdbcType=BIGINT} 
+	AND area_model_id=#{areaModelId,jdbcType=BIGINT}
+	AND isdel='N'
+  </select>
+  
+  <update id="deleteByMachineIdAndAreaModelId">
+  	update tbl_machine_area_model_most_sale set isdel='Y' where machine_id=#{machineId} and area_model_id=#{areaModelId}
+  </update>
+</mapper>

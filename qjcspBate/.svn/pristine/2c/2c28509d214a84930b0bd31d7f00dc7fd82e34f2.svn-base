@@ -1,0 +1,137 @@
+.title{background:rgba(255,255,255,0);}
+.warpbg{
+    width: 6.4rem;
+    height: auto;
+    background: url("../img/image/testbg.jpg") no-repeat 0 0;
+    background-size: 100%;
+}
+input{
+	height: 0.36rem;
+	display: block;
+	border-radius:0.05rem;
+    -moz-border-radius:0.05rem;
+    -khtml-border-radius:0.05rem;
+    font-family: "SimSun";
+    font-size: 0.28rem;
+    color: #fff;
+    float: left;
+}
+input::-webkit-input-placeholder{ 
+    color: #fff; 
+} 
+input:-moz-placeholder{ 
+    color: #fff; 
+} 
+input::-moz-placeholder{ 
+    color: #fff; 
+} 
+input:-ms-input-placeholder{ 
+    color: #fff; 
+} 
+
+.twopwd{
+    width: 3.1rem;
+}
+.content{
+    margin-top: 3.3rem;
+}
+.onepwdbox{
+    position: relative;
+    width: 5.9rem;
+    height: 0.36rem;
+    margin: 0 auto 0.28rem 0.3rem;
+    padding-left: 0.8rem;
+    background: url("../img/image/phone.png") no-repeat 0.3rem 0;
+    background-size: auto 100%;
+}
+.twopwdbox{
+    position: relative;
+    width: 5.9rem;
+    height: 0.36rem;
+    margin: 0.3rem auto 0.28rem 0.3rem;
+    padding-left: 0.8rem;
+    background: url("../img/image/phoneyz.png") no-repeat 0.3rem 0;
+    background-size: auto 100%;
+}
+.line{
+    border-bottom: 0.02rem solid #fff;
+    width: 5.9rem;
+    margin: 0 auto;
+}
+.hqyzm{
+    width:2rem;
+    font-size:0.26rem;
+    color:#fff;
+    height:0.7rem;
+    line-height: 0.7rem;
+    text-align: center;
+    background-color: #ffc490;
+    margin-top: -0.1rem;
+    border-radius: 0.1rem;
+    cursor:pointer;
+    float: right;
+}
+.btn{
+	width:5.98rem;
+	font-size:0.36rem;
+	color:#fff;
+	height:1rem;
+	line-height: 1rem;
+	text-align: center;
+	background: rgba(255,132,32,0.5);
+	margin: 3.6rem auto 0;
+	border-radius: 0.1rem;
+	cursor:pointer;
+}
+.agree{
+    text-align: center;
+    font-size: 0.26rem;
+    color: #666;
+    height: 0.8rem;
+    line-height: 0.8rem;
+}
+.agree span{
+    color:#ff8400;
+}
+.agree .ccheck{
+    display: inline-block;
+    width: 0.32rem;
+    height: 0.32rem;
+    background: url("../img/image/cfalse.png") no-repeat 0 0;
+    background-size: 100%;
+    vertical-align: sub;
+}
+.agree .cchecked{
+    background: url("../img/image/ctrue.png") no-repeat 0 0;
+    background-size: 100%;
+}
+.imgyz{
+    width: 1.8rem;  
+    height: 2rem;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    margin: -1rem 0 0 -0.9rem;
+    z-index: 2;
+}
+.imgyz img{
+    width: 1.8rem;  
+    height: 2rem;
+}
+.yzok{
+    background: url("../img/image/yzok.png");
+    background-size: 100%;
+}
+.yzno{
+    background: url("../img/image/yzno.png");
+    background-size: 100%;
+}
+.gray{position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.5);z-index: 1;}
+.close{
+    display: none;
+    float: right;
+}
+.close img{
+    width: 0.35rem;
+    height: 0.35rem;
+}

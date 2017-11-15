@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsUserRoleMapper" >
+
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsUserRole" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="symbol" property="symbol" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    a.id, a.user_id, a.role_id, b.role_name
+  </sql>
+  
+  <delete id="deleteUserRoleRelByUserId" parameterType="java.lang.Long" >
+    DELETE FROM basics_user_role
+    WHERE user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteUserRoleRelByRoleId" parameterType="java.lang.Long" >
+    DELETE FROM basics_user_role
+    WHERE role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsUserRole" >
+    INSERT INTO basics_user_role (id, user_id, role_id)
+    VALUES (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
+  </insert>
+  
+  <select id="findBasicsUserRoleByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM basics_user_role a,basics_role b
+    WHERE a.role_id = b.role_id AND a.user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findRoleIdByUserId" resultType="java.lang.Integer" >
+	SELECT b.role_id 
+	FROM basics_user_role t 
+	JOIN basics_role b ON b.role_id = t.role_id
+	WHERE t.user_id = #{userId,jdbcType=INTEGER}
+	AND b.special_role_num = #{specialRoleNum,jdbcType=	VARCHAR}
+  </select>
+  
+  <select id="findBasicsUserRoleByRoleId" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	SELECT bur.user_id
+  	FROM basics_user_role bur
+		INNER JOIN basics_users bu ON bu.user_id = bur.user_id
+  		WHERE bur.role_id=#{roleId} and bu.isdel = 'N'
+  </select>
+   <select id="getSpecialRoleNum" resultType="String" >
+<!--      SELECT COUNT(1) AS num FROM basics_role WHERE isdel = 'N' AND special_role_num = 3 AND role_id IN ( -->
+<!-- 		SELECT role_id FROM basics_user_role WHERE user_id =#{userId} -->
+<!-- 	 ) -->
+        SELECT special_role_num AS specialRoleNum FROM basics_user_machine WHERE user_id=#{userId} AND machine_id=#{machineId}
+   </select>
+   
+   
+   <select id="getSpecialRoleNumByUserId" resultType="string">
+   	select special_role_num from basics_user_role a,basics_role b where a.role_id=b.role_id and a.user_id=#{userId}
+   </select>
+</mapper>

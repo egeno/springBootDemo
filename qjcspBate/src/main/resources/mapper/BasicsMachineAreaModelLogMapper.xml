@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsMachineAreaModelLogMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsMachineAreaModelLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="operation_user_id" property="operationUserId" jdbcType="BIGINT" />
+    <result column="operation" property="operation" jdbcType="CHAR" />
+    <result column="operation_time" property="operationTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_id, area_model_id, operation_user_id, operation, operation_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_machine_area_model_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_machine_area_model_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsMachineAreaModelLog" >
+    insert into basics_machine_area_model_log (id, machine_id, area_model_id, 
+      operation_user_id, operation, operation_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{areaModelId,jdbcType=BIGINT}, 
+      #{operationUserId,jdbcType=BIGINT}, #{operation,jdbcType=CHAR}, #{operationTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachineAreaModelLog" >
+    insert into basics_machine_area_model_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="operationUserId != null" >
+        operation_user_id,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="operationTime != null" >
+        operation_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="operationUserId != null" >
+        #{operationUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=CHAR},
+      </if>
+      <if test="operationTime != null" >
+        #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachineAreaModelLog" >
+    update basics_machine_area_model_log
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="operationUserId != null" >
+        operation_user_id = #{operationUserId,jdbcType=BIGINT},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=CHAR},
+      </if>
+      <if test="operationTime != null" >
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsMachineAreaModelLog" >
+    update basics_machine_area_model_log
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      area_model_id = #{areaModelId,jdbcType=BIGINT},
+      operation_user_id = #{operationUserId,jdbcType=BIGINT},
+      operation = #{operation,jdbcType=CHAR},
+      operation_time = #{operationTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

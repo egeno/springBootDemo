@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerDiscountActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomerDiscountActivity" >
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="effect_symbol" property="effectSymbol" jdbcType="CHAR" />
+    <result column="discount_money" property="discountMoney" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  
+  
+  
+  
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomerDiscountActivity" >
+    insert into tbl_customer_discount_activity (start_time, end_time, effect_symbol, 
+      discount_money, create_time, last_mod_time, 
+      create_user_id, mod_user_id)
+    values (#{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME}, #{effectSymbol,jdbcType=CHAR}, 
+      #{discountMoney,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{lastModTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=BIGINT}, #{modUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerDiscountActivity" >
+    insert into tbl_customer_discount_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="startTimeStr != null" >
+        start_time,
+      </if>
+      <if test="endTimeStr != null" >
+        end_time,
+      </if>
+      <if test="effectSymbol != null" >
+        effect_symbol,
+      </if>
+      <if test="discountMoney != null" >
+        discount_money,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="startTimeStr != null" >
+        #{startTimeStr,jdbcType=TIME},
+      </if>
+      <if test="endTimeStr != null" >
+        #{endTimeStr,jdbcType=TIME},
+      </if>
+      <if test="effectSymbol != null" >
+        #{effectSymbol,jdbcType=CHAR},
+      </if>
+      <if test="discountMoney != null" >
+        #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="findAllDiscountActivityList" parameterType="com.qjkj.qjcsp.entity.TblCustomerDiscountActivity" resultType="com.qjkj.qjcsp.entity.TblCustomerDiscountActivity">
+    SELECT 
+           CAST(start_time AS CHAR) AS startTimeStr, CAST(end_time AS CHAR )AS endTimeStr,
+      	   effect_symbol AS effectSymbol,discount_money AS discountMoney, 
+           CAST(tda.create_time AS CHAR) AS createTimeStr,CAST(tda.last_mod_time AS CHAR) AS lastModTimeStr,
+           bu.user_name AS createUserName,
+           bus.user_name AS modUserName
+       
+	FROM   tbl_customer_discount_activity tda 
+       	   LEFT JOIN basics_users bu ON tda.create_user_id=bu.user_id
+           LEFT JOIN basics_users bus ON tda.mod_user_id=bus.user_id
+  </select>
+  
+
+  <select id="getCount" resultType="java.lang.Integer">
+  	SELECT COUNT(1) FROM tbl_customer_discount_activity
+  </select>
+
+  <select id="findValidActivity" resultType="java.math.BigDecimal">
+    SELECT discount_money discountMoney FROM tbl_customer_discount_activity WHERE start_time &lt;=now() AND end_time >=now() AND effect_symbol='1'
+  </select>
+
+  
+  <update id="updateDiscountActivity" parameterType="com.qjkj.qjcsp.entity.TblCustomerDiscountActivity">
+  	update tbl_customer_discount_activity
+  	<set>
+	  	 	<if test="startTimeStr !=null and startTimeStr !=''">
+	  	 			start_time=#{startTimeStr},
+	  	 	</if>
+	  	 	<if test="endTimeStr !=null and endTimeStr !=''">
+	  	 			end_time=#{endTimeStr},
+	  	 	</if>
+	  	 	<if test="effectSymbol !=null and effectSymbol !=''">
+	  	 			effect_symbol=#{effectSymbol},
+	  	 	</if>
+	  	 	
+	  	 	<if test="discountMoney !=null and discountMoney !=''">
+	  	 			discount_money=#{discountMoney},
+	  	 	</if>
+	  	 	<if test="lastModTime !=null and lastModTime !=''">
+	  	 		last_mod_time=#{lastModTime},
+	  	 	
+	  	 	</if>
+	  	 	<if test="modUserId !=null and modUserId !=''">
+	  	 		mod_user_id=#{modUserId}
+	  	 	
+	  	 	</if>
+  	</set>
+  </update>
+  
+</mapper>

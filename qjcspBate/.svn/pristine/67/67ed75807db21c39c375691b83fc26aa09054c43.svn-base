@@ -1,0 +1,82 @@
+$(function(){
+	//var companyIdVal=$("#companyId").val();
+	$('#Partition').datagrid({
+		url:"orderRefund/findAllRefundFinanceList",
+		width:'auto',
+		title:'财务人员确认',
+		fit:true,
+		toolbar:'#tool',
+		rownumbers:true,
+		singleSelect:true,
+		striped:'true',
+		scrollbarSize:0,/*滚动条所占的宽度*/
+		fitColumns:true,
+		pagination:true,/*分页*/
+		pageSize:10,
+		pageList:[10,20,30,40,50],
+		pageNumber:1,
+		beforePageText:'第',
+		afterPageText:'页-共{pages}页',
+		displayMsg:'当前显示{from}-{to}  共{total}条记录',
+		queryParams:{
+        	companyId:$("#companyId").val(),       
+		},
+		columns: [  
+	        [
+	        {field:'companyId',/*数据库需要的字段*/title:'商户名称',align:'center',width:100,hidden:true,fitColumns: true,},
+	        {field:'orderRefundId',/*数据库需要的字段*/title:'退款id号',align:'center',width:100,hidden:true,fitColumns: true,},
+	        {field:'companyName',/*数据库需要的字段*/title:'商户名称',align:'center',width:100,fitColumns: true,},
+			{field:'machineId',/*数据库需要的字段*/title:'设备号',align:'center',width:100,fitColumns: true,},
+			{field:'orderNum',/*数据库需要的字段*/title:'订单号码',align:'center',width:100,fitColumns: true,},
+			{field:'orderTime',/*数据库需要的字段*/title:'下单时间',align:'center',fitColumns: true,},
+			{field:'mobile',/*数据库需要的字段*/title:'手机号',align:'center',width:100,fitColumns: true,},
+			{field:'refundApplyTime',/*数据库需要的字段*/title:'退款申请日期',align:'center',fitColumns: true,},
+			{field:'refundStatus',/*数据库需要的字段*/title:'退款状态',align:'center',width:100,fitColumns: true,
+				formatter:function(value,row){
+//					alert(row.businessCheckResult);
+          		  	if(row.financeCheckTime!=null){
+          		  		return "退款成功";
+          		  	}else if(row.businessCheckResult!=null){
+          		  		if(row.businessCheckResult=='5'){
+          		  			 return "退款中"
+          		  			}else if(row.businessCheckResult=='-2'){
+          		  				return "退款失败";
+          		  		}else if(row.businessCheckResult=='1'){
+          		  				return "退款中";
+          		  			}
+          		  		}
+          		  		
+          		  	}
+						
+          		  
+			
+			},
+			{field:'businessUserName',/*数据库需要的字段*/title:'预审人员',align:'center',width:100,fitColumns: true,},
+			{field:'businessCheckResult',/*数据库需要的字段*/title:'预审结果',align:'center',width:100,fitColumns: true,
+				formatter:function(value,row){
+//					alert(row.businessCheckResult);
+          		  	if(row.businessCheckResult=='5'){
+          		  		return "待审核";
+          		  	}else if(row.businessCheckResult=='1'){
+          		  		
+          		  			 return "已通过"
+          		  			
+          		  		}else if(row.businessCheckResult=='-2'){
+          		  				return "未通过";
+          		  			}
+          		  		}
+			
+			},
+			{field:'financeUserName',/*数据库需要的字段*/title:'财务确认人员',align:'center',width:100,fitColumns: true,},
+			{field:'financeCheckTime',/*数据库需要的字段*/title:'财务确认时间',align:'center',width:100,fitColumns: true,},
+			]
+        ],
+          
+
+	});
+});
+/*重置样式*/
+$(function(){
+	$('#Partition').datagrid('resize');
+	$('.datagrid-cell-group').eq(0).css({'text-align':'center'});
+});

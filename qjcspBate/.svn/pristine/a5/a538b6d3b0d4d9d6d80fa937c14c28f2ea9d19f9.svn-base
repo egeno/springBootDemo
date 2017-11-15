@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/refund.css" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<title></title>
+	</head>
+	<body>
+		
+		<div class="top">
+			<img src="../img/imagey/return2.png" />
+			<span>退款说明</span>			
+		</div>
+		
+		<div class="explain_kuang">
+			<div class="explain_kuanga">Q1:怎么获得优惠券？</div>
+			<div class="explain_kuangb">
+				<div class="explain_kuangb_d"><img src="../img/imagey/dian.png"/></div>
+				<div class="explain_kuangb_wz">代金券可以在一次消费中抵扣一部分消费金额,每笔订单限用一张代金券.</div>
+			</div>
+			
+			
+			<div class="explain_kuangb">
+				<div class="explain_kuangb_d"><img src="../img/imagey/dian.png"/></div>
+				<div class="explain_kuangb_wz">充值优惠券可点击购买相应充值券,进行余额的充值.</div>
+			</div>
+			<div class="xian"></div>
+		</div>
+	</body>
+</html>

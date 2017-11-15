@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<title>微信--发现</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/find.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="find_content">
+			<div class="title">发现</div>
+			<div class="expect"><img src="../img/img/find.png" /></div>
+		</div>
+		<!-- 底部导航  start -->
+			<div class="foot">
+				<ul>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_index.png" alt="首页"/><img class="two" src="../img/img/foot_indexActive.png" alt="首页"/><span>首页</span></a></li>
+					<li class="active"><a href="javascript:;"><img class="one" src="../img/img/foot_find.png" alt="关于"/><img class="two" src="../img/img/foot_findActive.png" alt="关于"/><span>关于</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_find.png" alt="加盟"/><img class="two" src="../img/img/foot_findActive.png" alt="加盟"/><span>加盟</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_find.png" alt="申请"/><img class="two" src="../img/img/foot_findActive.png" alt="申请"/><span>申请</span></a></li>
+					<li><a href="javascript:;"><img class="one" src="../img/img/foot_my.png" alt="我的"/><img class="two" src="../img/img/foot_myActive.png" alt="我的"/><span>我的</span></a></li>
+				</ul>
+			</div>
+		<!-- 底部导航  end-->
+	</body>
+</html>

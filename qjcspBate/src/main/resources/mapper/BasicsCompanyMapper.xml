@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsCompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsCompany" >
+    <id column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="parent_company_id" property="parentCompanyId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="SMALLINT" />
+    <result column="is_last_layer" property="isLastLayer" jdbcType="CHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_alias" property="companyAlias" jdbcType="VARCHAR" />
+    <result column="company_prefix" property="companyPrefix" jdbcType="VARCHAR" />
+    <result column="prov_code" property="provCode" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="university_id" property="universityId" jdbcType="BIGINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="corporation" property="corporation" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="back_no" property="backNo" jdbcType="VARCHAR" />
+    <result column="back_name" property="backName" jdbcType="VARCHAR" />
+    <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+    <result column="telautogram" property="telautogram" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="company_status" property="companyStatus" jdbcType="CHAR" />
+    <result column="symbol" property="symbol" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="parent_company_name" property="parentCompanyName" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="business_hours" property="businessHours" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    company_id, company_code, parent_company_id, level, is_last_layer, company_name, 
+    company_alias, company_prefix, prov_code, province, city_code, city_name, area_code, 
+    area_name, university_id,address, corporation, card_no, back_no, back_name, card_name, telautogram, 
+    tel, email, company_status, symbol, isdel, create_time, last_mod_time, create_user_id, 
+    mod_user_id,parent_company_name,latitude,longitude,business_hours
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_company
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_company
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    insert into basics_company (company_id, company_code, parent_company_id, 
+      level, is_last_layer, company_name, 
+      company_alias, company_prefix, prov_code, 
+      province, city_code, city_name, 
+      area_code, area_name, address, 
+      corporation, card_no, back_no, 
+      back_name, card_name, telautogram, 
+      tel, email, company_status, 
+      symbol, isdel, create_time, 
+      last_mod_time, create_user_id, 
+      mod_user_id,parent_company_name,
+      latitude,longitude,business_hours,university_id
+      )
+    values (#{companyId,jdbcType=BIGINT}, #{companyCode,jdbcType=VARCHAR}, #{parentCompanyId,jdbcType=BIGINT}, 
+      #{level,jdbcType=SMALLINT}, #{isLastLayer,jdbcType=CHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{companyAlias,jdbcType=VARCHAR}, #{companyPrefix,jdbcType=VARCHAR}, #{provCode,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{corporation,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{backNo,jdbcType=VARCHAR}, 
+      #{backName,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, #{telautogram,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{companyStatus,jdbcType=CHAR}, 
+      #{symbol,jdbcType=CHAR}, #{isdel,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastModTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, #{modUserId,jdbcType=BIGINT},
+      #{parentCompanyName,jdbcType=VARCHAR},#{latitude,jdbcType=DOUBLE},#{longitude,jdbcType=DOUBLE},
+	  #{businessHours,jdbcType=VARCHAR},#{universityId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    insert into basics_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="companyCode != null" >
+        company_code,
+      </if>
+      <if test="parentCompanyId != null" >
+        parent_company_id,
+      </if>
+      <if test="parentCompanyName != null" >
+        parent_company_name,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="isLastLayer != null" >
+        is_last_layer,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyAlias != null" >
+        company_alias,
+      </if>
+      <if test="companyPrefix != null" >
+        company_prefix,
+      </if>
+      <if test="provCode != null" >
+        prov_code,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+       <if test="universityId != null" >
+        university_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="corporation != null" >
+        corporation,
+      </if>
+      <if test="cardNo != null" >
+        card_no,
+      </if>
+      <if test="backNo != null" >
+        back_no,
+      </if>
+      <if test="backName != null" >
+        back_name,
+      </if>
+      <if test="cardName != null" >
+        card_name,
+      </if>
+      <if test="telautogram != null" >
+        telautogram,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="businessHours != null" >
+        business_hours,
+      </if>
+      <if test="companyStatus != null" >
+        company_status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="companyCode != null" >
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCompanyId != null" >
+        #{parentCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="parentCompanyName != null" >
+      	#{parentCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="isLastLayer != null" >
+        #{isLastLayer,jdbcType=CHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAlias != null" >
+        #{companyAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPrefix != null" >
+        #{companyPrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="provCode != null" >
+        #{provCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="universityId != null" >
+         #{universityId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="corporation != null" >
+        #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backNo != null" >
+        #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backName != null" >
+        #{backName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null" >
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="telautogram != null" >
+        #{telautogram,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="businessHours != null" >
+        #{businessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="companyStatus != null" >
+        #{companyStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    UPDATE basics_company
+    <set >
+      <if test="companyId != null" >
+      	company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="companyCode != null" >
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCompanyId != null" >
+        parent_company_id = #{parentCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="parentCompanyName != null" >
+      	parent_company_name = #{parentCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="isLastLayer != null" >
+        is_last_layer = #{isLastLayer,jdbcType=CHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAlias != null" >
+        company_alias = #{companyAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPrefix != null" >
+        company_prefix = #{companyPrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="provCode != null" >
+        prov_code = #{provCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+       <if test="universityId != null" >
+        university_id = #{universityId,jdbcType=BIGINT},
+	  </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+	  </if>
+	  <if test="corporation != null" >
+        corporation = #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        card_no = #{cardNo,jdbcType=VARCHAR},
+	  </if>
+	  <if test="backNo != null" >
+        back_no = #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backName != null" >
+        back_name = #{backName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null" >
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="telautogram != null" >
+        telautogram = #{telautogram,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="businessHours != null" >
+        business_hours = #{businessHours,jdbcType=VARCHAR},
+	  </if>
+      <if test="companyStatus != null" >
+        company_status = #{companyStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    WHERE company_id = #{companyId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="newUpdateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    UPDATE basics_company
+    <set >
+      <if test="companyId != null" >
+      	company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="companyCode != null" >
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCompanyId != null" >
+        parent_company_id = #{parentCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="parentCompanyName != null" >
+      	parent_company_name = #{parentCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="isLastLayer != null" >
+        is_last_layer = #{isLastLayer,jdbcType=CHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAlias != null" >
+        company_alias = #{companyAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPrefix != null" >
+        company_prefix = #{companyPrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="provCode != null" >
+        prov_code = #{provCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="universityId != null" >
+        university_id = #{universityId,jdbcType=BIGINT},
+	  </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+	  </if>
+	  <if test="corporation != null" >
+        corporation = #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        card_no = #{cardNo,jdbcType=VARCHAR},
+	  </if>
+	  <if test="backNo != null" >
+        back_no = #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backName != null" >
+        back_name = #{backName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null" >
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="telautogram != null" >
+        telautogram = #{telautogram,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="businessHours != null" >
+        business_hours = #{businessHours,jdbcType=VARCHAR},
+	  </if>
+      <if test="companyStatus != null" >
+        company_status = #{companyStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    WHERE company_id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByCompanyId" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    UPDATE basics_company
+    <set >
+      <if test="companyId != null" >
+      	company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="companyCode != null" >
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCompanyId != null" >
+        parent_company_id = #{parentCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="parentCompanyName != null" >
+      	parent_company_name = #{parentCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="isLastLayer != null" >
+        is_last_layer = #{isLastLayer,jdbcType=CHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAlias != null" >
+        company_alias = #{companyAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPrefix != null" >
+        company_prefix = #{companyPrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="provCode != null" >
+        prov_code = #{provCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="universityId != null" >
+        university_id = #{universityId,jdbcType=BIGINT},
+	  </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+	  </if>
+	  <if test="corporation != null" >
+        corporation = #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        card_no = #{cardNo,jdbcType=VARCHAR},
+	  </if>
+	  <if test="backNo != null" >
+        back_no = #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backName != null" >
+        back_name = #{backName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null" >
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="telautogram != null" >
+        telautogram = #{telautogram,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="businessHours != null" >
+        business_hours = #{businessHours,jdbcType=VARCHAR},
+	  </if>
+      <if test="companyStatus != null" >
+        company_status = #{companyStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    WHERE company_id = #{companyId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    UPDATE basics_company
+    SET company_code = #{companyCode,jdbcType=VARCHAR},
+      parent_company_id = #{parentCompanyId,jdbcType=BIGINT},
+      parent_company_name = #{parentCompanyName,jdbcType=VARCHAR},
+      level = #{level,jdbcType=SMALLINT},
+      is_last_layer = #{isLastLayer,jdbcType=CHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_alias = #{companyAlias,jdbcType=VARCHAR},
+      company_prefix = #{companyPrefix,jdbcType=VARCHAR},
+      prov_code = #{provCode,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      area_name = #{areaName,jdbcType=VARCHAR},
+       university_id = #{universityId,jdbcType=BIGINT},
+      address = #{address,jdbcType=VARCHAR},
+      corporation = #{corporation,jdbcType=VARCHAR},
+      card_no = #{cardNo,jdbcType=VARCHAR},
+      back_no = #{backNo,jdbcType=VARCHAR},
+      back_name = #{backName,jdbcType=VARCHAR},
+      card_name = #{cardName,jdbcType=VARCHAR},
+      telautogram = #{telautogram,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      business_hours = #{businessHours,jdbcType=VARCHAR},
+      company_status = #{companyStatus,jdbcType=CHAR},
+      symbol = #{symbol,jdbcType=CHAR},
+      isdel = #{isdel,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      mod_user_id = #{modUserId,jdbcType=BIGINT}
+    WHERE company_id = #{companyId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAllMainListByCount" resultType="java.lang.Long">
+    SELECT 
+    count(*)
+    FROM basics_company
+  </select>
+  
+  <select id="findAllMainList" resultMap="BaseResultMap">
+    SELECT
+	<include refid="Base_Column_List" />
+	FROM basics_company bc
+	WHERE bc.isdel = 'N'
+	<if test="pid != null">
+		AND bc.parent_company_id = #{pid,jdbcType=BIGINT}
+	</if>
+	<if test="pid == null">
+		AND bc.parent_company_id IS NULL
+	</if>
+  </select>
+  
+  <select id="findMainList" resultMap="BaseResultMap">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM basics_company bc
+	WHERE bc.isdel = 'N'
+  </select>
+  
+  <select id="queryChildCompanybyPId" resultMap="BaseResultMap" parameterType="Long">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM basics_company bc
+	WHERE bc.isdel = 'N' AND bc.parent_company_id = #{pid}
+  </select>
+  
+  <update id="deleteCompanybyId" parameterType="com.qjkj.qjcsp.entity.BasicsCompany" >
+    UPDATE basics_company bc
+    SET company_status = '0',isdel = 'Y'
+    WHERE company_id = #{companyId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryChildCompanyStatusbyPId" resultMap="BaseResultMap" parameterType="Long">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM basics_company bc
+	WHERE bc.company_status = '1' AND bc.isdel = 'N' AND bc.parent_company_id = #{pid}
+  </select>
+  
+  <select id="getCompanyListByLocation" parameterType="map" resultType="map">
+	SELECT 
+	    CAST(c.company_id AS CHAR) AS companyId, c.company_name AS companyName
+    FROM basics_company c
+    WHERE 
+	    c.company_status = '1' AND c.isdel = 'N'
+	    AND (c.company_name LIKE '%${locationName}%' 
+	    	OR c.address LIKE '%${locationName}%')
+  </select>
+  
+  <select id="getCompanyIdAndName" resultType="com.qjkj.qjcsp.entity.CompanyPo">
+  		SELECT company_id as companyId,company_name as companyName FROM basics_company
+  		WHERE company_status='1' and isdel='N'
+  </select>
+  
+  <update id="updateParentCompanyName" >
+	UPDATE basics_company t 
+	SET t.parent_company_name = #{companyName,jdbcType=VARCHAR}
+	WHERE t.parent_company_id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="judgeCompanyExist" resultType="java.lang.Integer">
+	SELECT count(*) FROM basics_company t 
+	WHERE t.company_name = #{companyName} AND t.isdel = 'N'
+  </select>
+  <select id="getAllCompany" resultType="map">
+  	SELECT bc.company_id as companyId,bc.company_name as companyName FROM 
+	basics_company bc where bc.isdel='N' and bc.company_status='1';
+  </select>
+  
+  <select id="judgeCompanyIdExist" resultType="java.lang.Integer">
+	SELECT count(*) FROM basics_company t 
+	WHERE t.company_id = #{companyId}
+  </select>
+  
+  <update id="updateIsdel">
+  	UPDATE basics_company t SET t.isdel = 'N', t.company_status = 1
+	WHERE t.company_id = #{companyId}
+  </update>
+  
+  <select id="judgeCompany" resultType="java.lang.Integer">
+  	<!-- SELECT count(*) FROM (SELECT * FROM basics_company t WHERE t.company_id != #{id}) a WHERE a.company_id = #{companyId} -->
+  	
+  	SELECT count(*) FROM basics_company t WHERE t.company_name = #{companyName} AND t.company_id != #{pid} AND t.isdel = 'N'
+  	
+  	<!-- SELECT count(*) FROM basics_users t WHERE t.user_account = #{userAccount,jdbcType=VARCHAR} AND isdel = 'N' AND user_id != #{userId} -->
+  </select>
+  
+  <select id="getUniversityIdByCompanyId" resultType="Long">
+  	SELECT c.university_id FROM basics_company c where c.company_id=#{companyId};
+  </select>
+</mapper>

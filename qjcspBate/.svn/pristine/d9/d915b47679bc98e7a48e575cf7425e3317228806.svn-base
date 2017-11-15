@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GUniversityMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.GUniversity" >
+    <id column="university_id" property="universityId" jdbcType="BIGINT" />
+    <result column="university_name" property="universityName" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="spell_all" property="spellAll" jdbcType="VARCHAR" />
+    <result column="spell_short" property="spellShort" jdbcType="VARCHAR" />
+    <result column="zone_name" property="zoneName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    university_id, university_name, longitude, latitude, spell_all, spell_short, zone_name, 
+    city_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from g_university
+    where university_id = #{universityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_university
+    where university_id = #{universityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.GUniversity" >
+    insert into g_university (university_id, university_name, longitude, 
+      latitude, spell_all, spell_short, 
+      zone_name, city_id)
+    values (#{universityId,jdbcType=BIGINT}, #{universityName,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, 
+      #{latitude,jdbcType=DOUBLE}, #{spellAll,jdbcType=VARCHAR}, #{spellShort,jdbcType=VARCHAR}, 
+      #{zoneName,jdbcType=VARCHAR}, #{cityId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.GUniversity" >
+    insert into g_university
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="universityId != null" >
+        university_id,
+      </if>
+      <if test="universityName != null" >
+        university_name,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="spellAll != null" >
+        spell_all,
+      </if>
+      <if test="spellShort != null" >
+        spell_short,
+      </if>
+      <if test="zoneName != null" >
+        zone_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="universityId != null" >
+        #{universityId,jdbcType=BIGINT},
+      </if>
+      <if test="universityName != null" >
+        #{universityName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAll != null" >
+        #{spellAll,jdbcType=VARCHAR},
+      </if>
+      <if test="spellShort != null" >
+        #{spellShort,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.GUniversity" >
+    update g_university
+    <set >
+      <if test="universityName != null" >
+        university_name = #{universityName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAll != null" >
+        spell_all = #{spellAll,jdbcType=VARCHAR},
+      </if>
+      <if test="spellShort != null" >
+        spell_short = #{spellShort,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        zone_name = #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where university_id = #{universityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.GUniversity" >
+    update g_university
+    set university_name = #{universityName,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      spell_all = #{spellAll,jdbcType=VARCHAR},
+      spell_short = #{spellShort,jdbcType=VARCHAR},
+      zone_name = #{zoneName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT}
+    where university_id = #{universityId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryAllUniversitiesList" resultMap="BaseResultMap">
+  	SELECT
+  	<include refid="Base_Column_List"></include>
+  	FROM g_university
+  </select>  
+  
+  <select id="queryZoneByCityName" parameterType="String" resultType="map">
+  	SELECT gu.zone_name zoneName, gu.city_id cityId FROM g_university gu, g_city gc 
+  	WHERE gu.city_id=gc.city_id AND gc.city_name=REPLACE(#{cityName,jdbcType=VARCHAR},'市','')
+  	GROUP BY gu.city_id,gu.zone_name 
+  </select>
+  
+  <select id="queryUniversitiesByZoneAndCity" resultType="map">
+  	SELECT CAST(university_id AS CHAR) universityId, university_name universityName
+  	FROM g_university 
+  	WHERE zone_name = #{zoneName,jdbcType=VARCHAR} AND city_id = #{cityId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryUniversitiesByGPSLocation" resultType="map">
+	SELECT CAST(university_id AS CHAR) universityId, university_name universityName
+    FROM g_university
+	ORDER BY 
+		ACOS(SIN((#{latitude} * PI()) / 180 ) *SIN((latitude * PI()) / 180 ) +
+		COS((#{latitude} * PI()) / 180 ) * COS((latitude * PI()) / 180 ) *COS((#{longitude} * PI()) / 180 - 
+		(longitude * PI()) / 180 ) ) * 6378.137 ASC
+	LIMIT 0,6;  
+  </select>
+  
+  <select id="fuzzySearchUniversity" parameterType="String" resultType="map">
+	SELECT 
+	CAST(university_id AS CHAR)universityId, university_name universityName
+	FROM g_university
+	WHERE CONCAT(university_name, spell_all, spell_short) LIKE '%${keywords}%'
+	LIMIT 0,5	
+  </select>
+  
+  <select id="getCityNameByUniversityId" resultType="String">
+  	SELECT c.city_name FROM g_university u 
+  	LEFT JOIN g_city c ON c.city_id=u.city_id 
+  	WHERE u.university_id = #{universityId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

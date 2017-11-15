@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderChildMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderChild">
+		<id column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+		<result column="order_child_num" property="orderChildNum"
+			jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="BIGINT" />
+		<result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="machine_id" property="machineId" jdbcType="BIGINT" />
+		<result column="order_child_status" property="orderChildStatus"
+			jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="identifying_code" property="identifyingCode"
+			jdbcType="VARCHAR" />
+		<result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="check_state" property="checkState" jdbcType="CHAR" />
+		<result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+		<result column="refund_money" property="refundMoney" jdbcType="DECIMAL" />
+		<result column="balance_amount_sign" property="balanceAmountSign" jdbcType="CHAR" />
+		<result column="order_preissue_last_refund_time" property="orderPreissueLastRefundTime"
+			jdbcType="TIMESTAMP" />
+			
+		<result column="time_type" property="timeType" jdbcType="CHAR" />
+	 	<result column="supply_end_time" property="supplyEndTime" jdbcType="TIME" /> 	
+			
+		<!-- <result column="retail_id" property="retailId" jdbcType="BIGINT" /> -->
+	</resultMap>
+	 <!-- //结算相关start -->
+	<resultMap id="OrderByUserMap" type="com.qjkj.qjcsp.entity.OrderByUserMap">
+		 <id column="customer_id" property="customerId" jdbcType="BIGINT"/>   
+        <collection property="orderChilds"  resultMap="BaseResultMap" />
+	</resultMap>
+	 <!-- //结算相关end -->
+	<sql id="Base_Column_List">
+		order_child_id, order_child_num, order_id, area_model_id,order_time,machine_id,
+		order_child_status, isdel,
+		identifying_code,
+		begin_time, end_time,
+		check_state,
+		check_time,refund_money,order_preissue_last_refund_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_order_child
+		where order_child_id =
+		#{orderChildId,jdbcType=BIGINT}
+	</select>
+	
+	<!-- <select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_order_child
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</select> -->
+	<!--2.3.19根据订单ID号获取订单明细  -->
+	<select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+	select toc.order_child_id,toc.identifying_code, toc.order_child_num, toc.order_id, toc.area_model_id,toc.order_time,toc.machine_id,
+		toc.order_child_status, toc.isdel,
+		toc.identifying_code,
+		toc.begin_time, toc.end_time,
+		toc.check_state,bam.time_type, 
+        bmc.retail_supply_end_time,
+<!-- 	bmc.supply_end_time,           -->
+		toc.check_time,toc.refund_money,toc.order_preissue_last_refund_time
+    from tbl_order_child toc 
+    LEFT JOIN  basics_area_model bam ON toc.area_model_id=bam.area_model_id 
+    LEFT JOIN  basics_model_clean_goods  bmc ON toc.area_model_id=bmc.area_model_id 
+	where toc.order_id = #{orderId,jdbcType=BIGINT}
+	ORDER BY toc.begin_time
+	</select>
+	
+	
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		tbl_order_child
+		where order_child_id = #{orderChildId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrderChild"
+		useGeneratedKeys="true" keyProperty="orderChildId">
+		insert into tbl_order_child (order_child_id, order_child_num,
+		order_id,
+		area_model_id,order_time,machine_id, order_child_status, isdel,
+		identifying_code,
+		begin_time, end_time,
+		check_state,
+		check_time,order_preissue_last_refund_time
+		)
+		values
+		(#{orderChildId,jdbcType=BIGINT}, #{orderChildNum,jdbcType=VARCHAR},
+		#{orderId,jdbcType=BIGINT},
+		#{areaModelId,jdbcType=BIGINT},#{orderTime,jdbcType=TIMESTAMP},#{machineId,jdbcType=BIGINT},
+		#{orderChildStatus,jdbcType=CHAR}, #{isdel,jdbcType=CHAR},
+		#{identifyingCode,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP},
+		#{endTime,jdbcType=TIMESTAMP},
+		#{checkState,jdbcType=CHAR},
+		#{checkTime,jdbcType=TIMESTAMP},#{orderPreissueLastRefundTime,jdbcType=TIMESTAMP}
+		)
+		<!-- values (#{orderChildId,jdbcType=BIGINT}, #{orderChildNum,jdbcType=VARCHAR}, 
+			#{orderId,jdbcType=BIGINT}, -->
+		<!-- #{areaModelId,jdbcType=BIGINT}, #{orderStatus,jdbcType=CHAR}, #{isdel,jdbcType=CHAR}, -->
+		<!-- #{identifyingCode,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+			#{endTime,jdbcType=TIMESTAMP}, -->
+		<!-- #{checkState,jdbcType=CHAR}, #{checkTime,jdbcType=TIMESTAMP}, #{retailId,jdbcType=BIGINT} -->
+		<!-- ) -->
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrderChild">
+		insert into tbl_order_child
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderChildId != null">
+				order_child_id,
+			</if>
+			<if test="orderChildNum != null">
+				order_child_num,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="areaModelId != null">
+				area_model_id,
+			</if>
+			<if test="orderTime != null">
+				order_time,
+			</if>
+			<if test="machineId != null">
+				machine_id,
+			</if>
+			<if test="orderChildStatus != null">
+				order_child_status,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+			<if test="identifyingCode != null">
+				identifying_code,
+			</if>
+			<if test="beginTime != null">
+				begin_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="checkState != null">
+				check_state,
+			</if>
+			<if test="checkTime != null">
+				check_time,
+			</if>
+			<if test="refundMoney != null">
+				refund_money,
+			</if>
+			<if test="orderPreissueLastRefundTime != null">
+				order_preissue_last_refund_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderChildId != null">
+				#{orderChildId,jdbcType=BIGINT},
+			</if>
+			<if test="orderChildNum != null">
+				#{orderChildNum,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				#{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="machineId != null">
+				#{machineId,jdbcType=BIGINT},
+			</if>
+			<if test="orderChildStatus != null">
+				#{orderChildStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+			<if test="identifyingCode != null">
+				#{identifyingCode,jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				#{beginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="checkState != null">
+				#{checkState,jdbcType=CHAR},
+			</if>
+			<if test="checkTime != null">
+				#{checkTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="refundMoney != null">
+				#{refundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPreissueLastRefundTime != null">
+				{orderPreissueLastRefundTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrderChild">
+		update tbl_order_child
+		<set>
+			<if test="orderChildNum != null">
+				order_child_num = #{orderChildNum,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=BIGINT},
+			</if>
+			<if test="areaModelId != null">
+				area_model_id = #{areaModelId,jdbcType=BIGINT},
+			</if>
+			<if test="orderChildStatus != null">
+				order_child_status = #{orderChildStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+			<if test="identifyingCode != null">
+				identifying_code = #{identifyingCode,jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				begin_time = #{beginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="checkState != null">
+				check_state = #{checkState,jdbcType=CHAR},
+			</if>
+			<if test="checkTime != null">
+				check_time = #{checkTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="refundMoney != null">
+				refund_money = #{refundMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPreissueLastRefundTime != null">
+				order_preissue_last_refund_time =
+				{orderPreissueLastRefundTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where order_child_id = #{orderChildId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrderChild">
+		update
+		tbl_order_child
+		set order_child_num =
+		#{orderChildNum,jdbcType=VARCHAR},
+		order_id =
+		#{orderId,jdbcType=BIGINT},
+		area_model_id =
+		#{areaModelId,jdbcType=BIGINT},
+		order_child_status =
+		#{orderChildStatus,jdbcType=CHAR},
+		isdel = #{isdel,jdbcType=CHAR},
+		identifying_code = #{identifyingCode,jdbcType=VARCHAR},
+		begin_time =
+		#{beginTime,jdbcType=TIMESTAMP},
+		end_time =
+		#{endTime,jdbcType=TIMESTAMP},
+		check_state =
+		#{checkState,jdbcType=CHAR},
+		check_time =
+		#{checkTime,jdbcType=TIMESTAMP},
+		refund_money =
+		#{refundMoney,jdbcType=DECIMAL},
+		order_preissue_last_refund_time =
+		{orderPreissueLastRefundTime,jdbcType=TIMESTAMP}
+		where order_child_id =
+		#{orderChildId,jdbcType=BIGINT}
+	</update>
+	<!-- 根据orderID获取子订单信息          获取预订取餐截止时间,取餐开始时间,预订截止时间-->
+	<select id="getOrderChildByOrderId" resultType="map">
+		<!--  SELECT bam.time_type as timeType,oc.end_time as endDate,oc.begin_time as beginTime 
+		FROM basics_area_model bam,tbl_order_child oc 
+		where bam.area_model_id=oc.area_model_id and
+		oc.isdel='N' and oc.order_id =#{orderId};  -->
+		 
+    SELECT bam.time_type as timeType,oc.end_time as endDate,oc.begin_time as beginTime,
+        DATE_FORMAT(oc.order_preissue_last_refund_time,'%Y-%m-%d %T') as reserveEndTime,
+        oc.order_child_status as orderChildStatus 
+		FROM basics_area_model bam,tbl_order_child oc,basics_model_clean_goods bcg
+		where bam.area_model_id=oc.area_model_id and oc.area_model_id=bcg.area_model_id
+		and oc.isdel='N' and oc.order_id =#{orderId};
+	</select>
+
+	<!-- 根据订单nums获取子订单信息 -->
+	<select id="getOrderChildByOrderNum" resultType="map">
+	<!--  select bam.time_type as timeType,oc.end_time as endDate,oc.begin_time as beginTime
+		from basics_area_model bam,tbl_order_child oc
+		where bam.area_model_id=oc.area_model_id and oc.isdel='N' and
+		oc.order_child_num in
+		<foreach collection="orderChildNums" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>   -->
+		
+	 select bam.time_type as timeType,oc.end_time as endDate,oc.begin_time as beginTime ,
+        date_format(oc.order_preissue_last_refund_time,'%Y-%m-%d %T')  as reserveEndTime,
+        oc.order_child_status as orderChildStatus 
+	 from basics_area_model bam,tbl_order_child oc,basics_model_clean_goods bcg
+		where bam.area_model_id=oc.area_model_id and oc.area_model_id=bcg.area_model_id and oc.isdel='N' and
+		oc.order_child_num in
+		<foreach collection="orderChildNums" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach> 
+	</select>
+
+	<!-- 修改子订单状态 -->
+	<update id="updateChildOrderStatusByChildorderId">
+		update tbl_order_child set order_child_status='5'
+		,refund_money =
+		#{refundMoney,jdbcType=DECIMAL} where order_child_id =
+		#{childorderId,jdbcType=BIGINT};
+	</update>
+	<!-- 通过子订单num修改子订单状态 -->
+	<update id="updateChildOrderStatusByOrderChildNumsList">
+		update tbl_order_child set order_child_status='5' where
+		order_child_num in
+		<foreach collection="orderChildNums" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	<update id="updateByOrderId" >
+			UPDATE tbl_order_child 
+		  	<set>
+		  		<if test="orderChildStatus != null">
+		  			order_child_status = #{orderChildStatus,jdbcType=CHAR},
+		  		</if>
+		  	</set>
+		  	<where>
+		  		<if test="orderId != null">
+		  			order_id = #{orderId,jdbcType=BIGINT}
+		  		</if>
+		  	</where>
+	</update>
+
+	<select id="selectByDeviceCode" resultMap="BaseResultMap">
+		SELECT 
+		*	 
+		FROM
+		tbl_order_child t
+		LEFT JOIN
+		basics_machine b 
+		ON b.machine_id = t.machine_id
+		WHERE 
+		b.machine_id = #{machineId,jdbcType=VARCHAR} 
+		AND b.isdel='N' 
+		AND t.identifying_code = #{idCode,jdbcType=VARCHAR}
+		ORDER BY order_child_id DESC LIMIT 1;
+	</select>
+
+	<resultMap id="BaseResultMapp" type="com.qjkj.qjcsp.entity.BasicsMachineCell">
+		<id column="cell_id" property="cellId" jdbcType="VARCHAR" />
+		<result column="machine_id" property="machineId" jdbcType="BIGINT" />
+		<result column="row_num" property="rowNum" jdbcType="SMALLINT" />
+		<result column="col_num" property="colNum" jdbcType="SMALLINT" />
+		<result column="cell_num" property="cellNum" jdbcType="INTEGER" />
+		<result column="cell_status" property="cellStatus" jdbcType="CHAR" />
+		<result column="item_id" property="itemId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_Listt">
+		cell_id, machine_id, row_num, col_num, cell_num,cell_status, item_id
+	</sql>
+	<select id="getBasicsMachineCells" resultMap="BaseResultMapp"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_Listt"></include>
+		FROM basics_machine_cell WHERE machine_id = #{machineId} AND cell_id
+		NOT IN(
+		SELECT cell_id FROM tbl_temporary_retail WHERE temporary_date =
+		#{temporaryDate}
+		AND machine_id = #{machineId} AND area_model_id
+		=#{areaModelId}) AND cell_status in('0','1')
+		ORDER BY row_num ASC,col_num ASC
+	</select>
+	<select id="getRefundOrderList" resultType="map">
+		SELECT
+		a.order_num
+		orderNum
+		,b.order_child_num orderChildNum
+		,DATE_FORMAT(a.order_time,'%Y-%m-%d %T') orderTime
+		,b.order_child_status orderStatus
+		,c.refund_reason_order_child_status
+		refundReasonOrderChildStatus
+		,DATE_FORMAT(b.begin_time,'%Y-%m-%d %T')
+		takenStartTime
+		,DATE_FORMAT(b.end_time,'%Y-%m-%d %T') takenEndTime
+		,d.area_model_name areaModelName
+		,e.address address
+		,e.machine_icon machineIcon
+		,a.order_type orderType
+		,CAST(b.refund_money AS CHAR) refundMoney
+		,CAST((SELECT sum(goods_num)
+		from tbl_order_detail f where
+		b.order_child_id=f.order_child_id)AS
+		CHAR) goodsNum
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_refund c,
+		basics_area_model d,
+		basics_machine e
+		WHERE
+		a.order_id = b.order_id
+		AND
+		b.order_child_id =
+		c.order_child_id
+		AND a.machine_id=e.machine_id
+		AND
+		b.area_model_id=d.area_model_id
+		AND a.isdel='N'
+		AND a.customer_delete='N'
+		AND b.isdel='N'
+		AND
+		b.order_child_status in('5','8','9')
+		AND a.customer_id=#{customerId}
+		ORDER BY   orderstatus DESC,ordertime  ASC
+<!-- 		order by CAST(c.refund_reason_order_child_status AS SIGNED) asc,a.order_time asc -->
+	</select>
+
+	<select id="getOrderChildByOrderNumAndrefundReasonOrderChildStatus"
+		resultType="map">
+		SELECT
+		a.order_num orderNum,
+		b.order_child_num orderChildNum,
+		a.mobile mobile,
+		CAST(a.total_money AS CHAR) totalFee,
+		DATE_FORMAT(a.order_time,'%Y-%m-%d %T') orderTime,
+		c.address address,
+		CAST(IFNULL(d.refund_money,'0')AS CHAR) refundMoney
+		,DATE_FORMAT(d.begin_time,'%Y-%m-%d %T') takenStartTime
+		,DATE_FORMAT(d.end_time,'%Y-%m-%d %T') takenEndTime
+		,e.area_model_name
+		areaModelName
+		,d.order_child_status orderStatus
+		,COALESCE(b.finance_check_comment,b.business_check_comment,b.refund_comment) refundComment
+		FROM
+		tbl_order a,
+		tbl_order_refund b,
+		basics_machine c,
+		tbl_order_child d,
+		basics_area_model e
+		WHERE
+		a.order_id = d.order_id
+		AND
+		a.machine_id=c.machine_id
+		AND
+		b.order_child_id=d.order_child_id
+		AND
+		d.area_model_id=e.area_model_id
+		<if test="orderNum !=null">
+		AND
+		a.order_num=#{orderNum}
+		</if>
+		<if test="refundReasonOrderChildStatus !=null">
+		AND
+		b.refund_reason_order_child_status=#{refundReasonOrderChildStatus}
+		</if>
+		<if test="orderChildNum !=null">
+		AND d.order_child_num=#{orderChildNum}
+		</if>
+	</select>
+
+	<select id="getOrderDetailsByOrderNum" resultType="map">
+		SELECT
+		CAST(b.goods_id as CHAR) goodsId
+		,b.goods_name goodsName
+		,CAST(b.goods_num AS CHAR) goodsNum
+		,CAST(b.price AS CHAR) itemFee
+		FROM
+		tbl_order_child a,
+		tbl_order_detail b
+		WHERE
+		a.order_child_id = b.order_child_id
+		AND a.order_child_num = #{orderChildNum}
+		ORDER BY a.order_time
+	</select>
+	
+	<update id="updateOrderChildStatusByOrderChildId">
+		UPDATE tbl_order_child
+		SET order_child_status = #{orderChildStatus,jdbcType=CHAR}
+		WHERE order_child_id = #{orderChildId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateTakenOrderChild" parameterType="list">
+		UPDATE tbl_order_child
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="identifying_code = case" suffix="end,">
+				<foreach collection="orderChildList" item="orderChild">
+					<if test="orderChild.identifyingCode != null">
+						WHEN order_child_id = #{orderChild.orderChildId,jdbcType=BIGINT}
+						THEN #{orderChild.identifyingCode,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="order_child_status = case" suffix="end,">
+				<foreach collection="orderChildList" item="orderChild">
+					<if test="orderChild.orderChildStatus != null">
+						WHEN order_child_id = #{orderChild.orderChildId,jdbcType=BIGINT}
+						THEN #{orderChild.orderChildStatus,jdbcType=CHAR}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		WHERE
+		<foreach collection="orderChildList" item="orderChild" separator="or">
+			order_child_id = #{orderChild.orderChildId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	<update id="updateSignOrderChild" parameterType="list">
+		UPDATE tbl_order_child
+		SET balance_amount_sign ='1'
+		WHERE order_child_id in
+		<foreach collection="orderChildList" item="orderChild"
+		index="index" open="(" separator="," close=")">
+			#{orderChild.orderChildId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+	
+	<select id="getTakingGoodsInfo" resultType="String">
+<!-- 		SELECT GROUP_CONCAT(result.pickTimeAndPickCode SEPARATOR ';') AS content FROM 
+		(SELECT 
+		CONCAT(content.beginTime, ' ',GROUP_CONCAT(content.modelNameAndVerifyCode)) AS pickTimeAndPickCode FROM
+		(SELECT 
+		DATE_FORMAT(toc.begin_time, "%Y-%m-%d") AS beginTime, 
+		CONCAT(bam.area_model_name, ' ', toc.identifying_code) AS modelNameAndVerifyCode
+		FROM tbl_order_child toc, basics_area_model bam 
+		WHERE toc.area_model_id = bam.area_model_id AND toc.order_id=#{orderId,jdbcType=BIGINT} 
+		ORDER BY toc.begin_time
+		) content
+		GROUP BY content.beginTime
+		) result -->
+		SELECT GROUP_CONCAT(content.endTimeAndVerifyCode SEPARATOR ';') FROM
+		(SELECT 
+		  CONCAT(
+		  '取餐截止时间为：',
+		    toc.end_time,
+		    ' 取餐码为',
+		    toc.identifying_code
+		  ) AS endTimeAndVerifyCode 
+		FROM
+		  tbl_order_child toc,
+		  basics_area_model bam 
+		WHERE toc.area_model_id = bam.area_model_id 
+		  AND toc.order_id = #{orderId,jdbcType=BIGINT}) content 
+	</select>	
+	 <!-- //结算相关start -->
+		<!-- 根据订单号查子订单 -->
+<select id="queryOrderChildbyOrderNum" resultType="map">
+  	select 
+c.order_child_id AS orderChildId,
+c.order_child_num AS childNum,
+c.identifying_code AS identifyingCode,
+c.begin_time AS beginTime,
+c.end_time AS endTime,
+c.check_state AS checkState,
+c.check_time AS checkTime,
+c.isdel AS isdel,
+c.refund_money AS refundMoney,
+c.order_preissue_last_refund_time AS refundTime
+ from tbl_order_child c
+LEFT JOIN  tbl_order o on c.order_id=o.order_id
+WHERE o.order_num=#{orderNum,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPendingSettlements" resultMap="OrderByUserMap">
+   SELECT
+  	o.*,a.customer_id,a.pay_mode
+  	FROM tbl_order_child o 
+	LEFT JOIN tbl_order a ON o.order_id=a.order_id 
+  	WHERE 1 = 1 AND o.order_child_status not in (0,2,9)
+		AND a.pay_mode ='3' and o.isdel ='N'
+		AND o.balance_amount_sign is null
+		AND date_format(o.order_time,'%Y-%m-%d %H:%i:%s') &lt;= #{startTime} 
+		ORDER BY o.order_time
+  </select>
+   <!-- //结算相关end -->
+   
+   
+   
+   <update id="updateAlarmOrder">
+   	UPDATE tbl_order_child t SET t.order_child_status = 10 
+   	WHERE t.order_child_id = #{orderChildId}
+   </update>
+   
+     <select id="getOrderChildListByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+    select 
+<include refid="Base_Column_List" />
+    from tbl_order_child
+    where order_id = #{orderId,jdbcType=BIGINT} and order_child_status=3
+  </select>
+</mapper>

@@ -1,0 +1,33 @@
+.top{
+	height: 0.9rem;
+	background-color: #fff;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	text-align: center;
+}
+.top img{
+	width: 0.26rem;
+	height: 0.44rem;
+	vertical-align: bottom;
+	margin-top: 0.2rem;
+	margin-left: 0.2rem;
+	float: left;
+}
+.top span{
+	color: #1a1a1a;
+	font-size: 0.36rem;
+    margin-top: 0.23rem;
+    display: inline-block;
+}
+.bottom{
+	text-align: center;
+}
+.bottom div img{
+	width: 1.9rem;
+	height: 1.9rem;
+	margin-top: 2.4rem;
+	margin-bottom: 0.4rem;
+}
+.bottom div span{
+	color: #CECECE;
+	font-size: 0.34rem;
+}

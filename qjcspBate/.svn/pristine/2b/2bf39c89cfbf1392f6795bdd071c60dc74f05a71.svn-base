@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblBalanceAmountMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblBalanceAmount" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="recharge_id" property="rechargeId" jdbcType="BIGINT" />
+    <result column="recharge_order_num" property="rechargeOrderNum" jdbcType="VARCHAR" />
+    <result column="order_child_id" property="orderChildId" jdbcType="BIGINT" />
+    <result column="order_child_num" property="orderChildNum" jdbcType="VARCHAR" />
+    <result column="order_child_total_money" property="orderChildTotalMoney" jdbcType="DECIMAL" />
+    <result column="offset_amount" property="offsetAmount" jdbcType="DECIMAL" />
+    <result column="recharge_surplus_amount" property="rechargeSurplusAmount" jdbcType="DECIMAL" />
+    <result column="recharge_total_money" property="rechargeTotalMoney" jdbcType="DECIMAL" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+     <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, recharge_id, recharge_order_num, order_child_id, order_child_num, order_child_total_money, 
+    offset_amount, recharge_surplus_amount, recharge_total_money, create_user_id, create_time,customer_id, 
+    isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_balance_amount
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_balance_amount
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblBalanceAmount" >
+    insert into tbl_balance_amount (id, recharge_id, recharge_order_num, 
+      order_child_id, order_child_num, order_child_total_money, 
+      offset_amount, recharge_surplus_amount, recharge_total_money, 
+      create_user_id, create_time,customer_id, isdel
+      )
+    values (#{id,jdbcType=BIGINT}, #{rechargeId,jdbcType=BIGINT}, #{rechargeOrderNum,jdbcType=VARCHAR}, 
+      #{orderChildId,jdbcType=BIGINT}, #{orderChildNum,jdbcType=VARCHAR}, #{orderChildTotalMoney,jdbcType=DECIMAL}, 
+      #{offsetAmount,jdbcType=DECIMAL}, #{rechargeSurplusAmount,jdbcType=DECIMAL}, #{rechargeTotalMoney,jdbcType=DECIMAL}, 
+      #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},#{customerId,jdbcType=BIGINT}, #{isdel,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblBalanceAmount" >
+    insert into tbl_balance_amount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rechargeId != null" >
+        recharge_id,
+      </if>
+      <if test="rechargeOrderNum != null" >
+        recharge_order_num,
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id,
+      </if>
+      <if test="orderChildNum != null" >
+        order_child_num,
+      </if>
+      <if test="orderChildTotalMoney != null" >
+        order_child_total_money,
+      </if>
+      <if test="offsetAmount != null" >
+        offset_amount,
+      </if>
+      <if test="rechargeSurplusAmount != null" >
+        recharge_surplus_amount,
+      </if>
+      <if test="rechargeTotalMoney != null" >
+        recharge_total_money,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="customer_id != null" >
+        customer_id,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeId != null" >
+        #{rechargeId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeOrderNum != null" >
+        #{rechargeOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildNum != null" >
+        #{orderChildNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildTotalMoney != null" >
+        #{orderChildTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="offsetAmount != null" >
+        #{offsetAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeSurplusAmount != null" >
+        #{rechargeSurplusAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeTotalMoney != null" >
+        #{rechargeTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="customer_id != null" >
+       #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+   <insert id="insertList" parameterType="list" >
+   insert into tbl_balance_amount (id, recharge_id, recharge_order_num, 
+      order_child_id, order_child_num, order_child_total_money, 
+      offset_amount, recharge_surplus_amount, recharge_total_money, 
+       create_time,customer_id, isdel
+      )
+    values
+	  <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.id,jdbcType=BIGINT}, #{item.rechargeId,jdbcType=BIGINT}, #{item.rechargeOrderNum,jdbcType=VARCHAR}, 
+		      #{item.orderChildId,jdbcType=BIGINT}, #{item.orderChildNum,jdbcType=VARCHAR}, #{item.orderChildTotalMoney,jdbcType=DECIMAL}, 
+		      #{item.offsetAmount,jdbcType=DECIMAL}, #{item.rechargeSurplusAmount,jdbcType=DECIMAL}, #{item.rechargeTotalMoney,jdbcType=DECIMAL}, 
+		       #{item.createTime,jdbcType=TIMESTAMP},#{item.customerId,jdbcType=BIGINT}, #{item.isdel,jdbcType=CHAR}
+	        )  
+	    </foreach>
+    </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblBalanceAmount" >
+    update tbl_balance_amount
+    <set >
+      <if test="rechargeId != null" >
+        recharge_id = #{rechargeId,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeOrderNum != null" >
+        recharge_order_num = #{rechargeOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildId != null" >
+        order_child_id = #{orderChildId,jdbcType=BIGINT},
+      </if>
+      <if test="orderChildNum != null" >
+        order_child_num = #{orderChildNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderChildTotalMoney != null" >
+        order_child_total_money = #{orderChildTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="offsetAmount != null" >
+        offset_amount = #{offsetAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeSurplusAmount != null" >
+        recharge_surplus_amount = #{rechargeSurplusAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeTotalMoney != null" >
+        recharge_total_money = #{rechargeTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customer_id != null" >
+      	customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblBalanceAmount" >
+    update tbl_balance_amount
+    set recharge_id = #{rechargeId,jdbcType=BIGINT},
+      recharge_order_num = #{rechargeOrderNum,jdbcType=VARCHAR},
+      order_child_id = #{orderChildId,jdbcType=BIGINT},
+      order_child_num = #{orderChildNum,jdbcType=VARCHAR},
+      order_child_total_money = #{orderChildTotalMoney,jdbcType=DECIMAL},
+      offset_amount = #{offsetAmount,jdbcType=DECIMAL},
+      recharge_surplus_amount = #{rechargeSurplusAmount,jdbcType=DECIMAL},
+      recharge_total_money = #{rechargeTotalMoney,jdbcType=DECIMAL},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      isdel = #{isdel,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByCustomerId"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  	select 
+  	<include refid="Base_Column_List" />
+  	from tbl_balance_amount
+  	where customer_id=#{customerId,jdbcType=BIGINT}
+    ORDER by create_time
+	LIMIT 0,1
+  </select>
+  <select id="findAllBalanceAmountList"  resultType="map">
+		SELECT  order_child_id as orderChildId, order_child_num as orderChildNum, order_child_total_money as orderChildTotalMoney, 
+    offset_amount as offsetAmount, recharge_surplus_amount as rechargeSurplusAmount, recharge_total_money as rechargeTotalMoney, 
+    CAST(create_time AS CHAR) AS createTime ,customer_id
+		FROM tbl_balance_amount
+		where
+		recharge_order_num =#{rechargeId}
+		ORDER BY create_time
+	</select>
+  
+  
+</mapper>

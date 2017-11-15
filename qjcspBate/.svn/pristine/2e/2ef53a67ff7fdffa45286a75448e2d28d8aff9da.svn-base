@@ -1,0 +1,114 @@
+.bod {
+	background-color: #f2f2f2;
+}
+
+.top {
+	height: 0.9rem;
+	background-color: #fff;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	text-align: center;
+}
+
+.top img {
+	width: 0.44rem;
+	height: 0.44rem;
+	vertical-align: bottom;
+	margin-top: 0.2rem;
+	margin-left: 0.2rem;
+	float: left;
+}
+
+.top span {
+	color: #1a1a1a;
+	font-size: 0.36rem;
+	margin-top: 0.23rem;
+	display: inline-block;
+}
+
+.Vbackground {
+	width: 6.4rem;
+	height: 3.4rem;
+}
+
+.sendout {
+	width: 6.4rem;
+	height: 0.98rem;
+	font-size: 0.28rem;
+	line-height: 0.98rem;
+	text-indent: 0.32rem;
+}
+
+.obtain {
+	width: 6.4rem;
+	height: 0.9rem;
+}
+
+.obtaino {
+	width: 6.0rem;
+	height: 0.9rem;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.obtainon {
+	width: 3.7rem;
+	height: 0.92rem;
+	float: left;
+}
+
+.obtainon_input {
+	width: 3.7rem;
+	height: 0.9rem;
+	border: 1px solid #ff8420;
+	border-radius: 5px 5px 5px 5px;
+	float: left;
+	font-size: 0.2rem;
+	text-indent: 0.48rem;
+	background-color: #ffffff;
+	background-image: url(../img/srk.png);
+	background-repeat: no-repeat;
+}
+.huoqu{
+	width: 2.1rem;
+	height: 0.9rem;
+	background-color: #ff8400;
+	border-radius: 5px 5px 5px 5px;
+	float: right;
+	font-size: 0.3rem;
+	line-height: 0.9rem;
+	text-align: center;
+	color: #FFFFFF;
+}
+.huoqu1{
+	background-color: #ffc494;
+	color: #FFFFFF;
+	font-size: 0.25rem;
+}
+.success {
+	margin-top: 0.6rem;
+	width: 6.4rem;
+	height: 0.9rem;
+	
+}
+.complete {
+	width: 6.0rem;
+	height: 0.9rem;
+	color: #FFFFFF;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #ff8420;
+	line-height: 0.9rem;
+	text-align: center;
+	font-size: 0.3rem;
+	border-radius: 5px 5px 5px 5px;
+}
+.completee {
+	width: 6.0rem;
+	height: 0.9rem;
+	color: #FFFFFF;
+	background-color: #ff8420;
+	line-height: 0.9rem;
+	text-align: center;
+	font-size: 0.3rem;
+	border-radius: 5px 5px 5px 5px;
+}

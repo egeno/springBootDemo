@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.StockInfoMapper">
+
+	<select id="findStockInfo" parameterType="map" resultType="map" >
+	
+		SELECT ce.cell_id AS cellId, ce.row_num AS cellRow, ce.col_num AS cellColumn,ce.cell_status AS cellStatus,
+		IF(de.item_id IS NOT NULL,de.item_id,'') AS itemId,
+		IF(de.item_type IS NOT NULL,de.item_type,'') AS itemType,
+		IF(g.goods_id IS NOT NULL,g.goods_id,'') AS goodsId,
+		IF(g.goods_name IS NOT NULL,g.goods_name,'') AS goodsName,
+		'' AS isCurrentOrder 
+		FROM basics_machine_cell ce
+		LEFT JOIN tbl_item_detail de
+		ON de.item_id = ce.item_id
+		LEFT JOIN basics_goods g
+		ON g.goods_id = de.goods_id
+		WHERE ce.machine_id = #{machineid}
+		ORDER BY ce.row_num DESC,ce.col_num ASC
+	</select>
+	<select id="getGoodsNum" parameterType="long" resultType="map" >
+        
+        SELECT m.goods_id AS goodsId,g.goods_name AS goodsName,
+        ca.parent_goods_category_id AS parentGoodsCategoryId,
+        ca.parent_goods_category_name AS parentGoodsCategoryName,
+        COUNT(*) AS goodsNum FROM tbl_goods_area_model m,basics_goods g,basics_goods_category ca
+        WHERE m.goods_id = g.goods_id AND ca.goods_category_id = g.goods_category_id 
+        AND  m.area_model_id = #{areamodelid} 
+        GROUP BY m.goods_id
+	</select>
+	
+	
+	<select id="findMachineByCode" resultType="com.qjkj.qjcsp.entity.BasicsMachine" parameterType="string" >
+       SELECT machine_id as machineid,area_model_id AS areaModelId,machine_name as machineName,
+       company_id AS companyid FROM basics_machine
+       WHERE machine_id = #{machineid}
+    </select>
+    
+    <select id="findMachineByMachineId" resultType="com.qjkj.qjcsp.entity.BasicsMachine" parameterType="string" >
+       SELECT machine_id as machineid,area_model_id AS areaModelId,machine_name as machineName,
+       company_id AS companyid FROM basics_machine
+       WHERE machine_id = #{machineId}
+    </select>
+    
+    
+</mapper>
+	

@@ -1,0 +1,66 @@
+body{color:#2f2f2f;/*overflow:hidden;height:100%;*/}
+.what{
+	float: right!important;
+	padding-right: 0.1rem;
+	width: 0.44rem!important;
+	height: 0.44rem!important;
+}
+.splitLine{
+	background:#f5f5f5;
+	height:0.2rem;
+	border: none;
+    border-top:1px solid #d8d8d8;
+}
+.balancebox{
+	margin-top: 0.2rem;
+	height: 2.92rem;
+	width: 100%;
+	background:url(../img/image/mybalancebg.jpg);
+	background-size: 100%;
+	position: relative;
+}
+.inforbox{
+	position: absolute;
+	right: 0.35rem;
+	top: 0.7rem;
+	width: 2.8rem;
+}
+.yue{
+	font-family: "SimSun";
+	color:#808080;
+	font-size: 0.3rem;
+	height: 0.5rem;
+	line-height: 0.5rem;
+}
+.mymoney{
+	font-family: "micsoft Yahei";
+	font-size: 0.34rem;
+	color: #ff7151;
+}
+.mymoney span{
+	font-size: 0.8rem;
+}
+.butok{
+	display: block;
+	width: 5.9rem;
+	height: 1rem;
+	margin: 0.2rem auto 0;
+}
+.butok img{	width: 5.9rem; height: 1rem;}
+.none{
+    display: none;
+}
+.pop-up2{
+    width: 4.7rem;height: 2.4rem;
+    background: url("../img/image/pop-upbg2.png");
+    background-size: 100%;
+    position: absolute;
+    left: 50%;top: 50%;
+    margin: -1.2rem 0 0 -2.35rem;
+    z-index: 2;
+}
+.ntitle{font-size: 0.36rem;color: #000;font-family: "Microsoft Yahei";text-align: center;height: 0.5rem;line-height: 0.5rem;margin-top: 0.1rem;}
+.ncontent{font-size: 0.30rem;color: #000;font-family: "Microsoft Yahei";text-align: center;height: 0.4rem;line-height: 0.4rem;margin-top: 0.1rem;}
+.cancel{position: absolute;left: 0;bottom: 0;width: 2.35rem;height: 0.75rem;}
+.shezhi{position: absolute;right: 0;bottom: 0;width: 2.35rem;height: 0.75rem;}
+.gray{position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.5);z-index: 1;}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GoodsPublishReportMapper">
+    <select id="getGoodsPublishReport" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ti.goods_id AS goodsId,
+        bg.goods_name AS goodsName,
+        ti.issue_num AS publishNum,
+        DATE_FORMAT(ti.issue_time,'%Y:%m:%d') AS publishTime,
+        bam.area_model_name AS areaModelName
+        FROM tbl_issue ti LEFT JOIN basics_goods bg ON
+        ti.goods_id=bg.goods_id
+        LEFT JOIN basics_area_model bam ON
+        ti.area_model_id=bam.area_model_id
+        WHERE
+        DATE_FORMAT(ti.issue_time, '%Y-%m-%d') = #{psdate}
+        AND ti.company_id=#{companyId}
+        ORDER by ti.goods_id
+
+    </select>
+    <select id="getGoodsPublishReportTotal" resultType="java.lang.Long" parameterType="java.util.Map">
+    SELECT COUNT(1) FROM
+    ( SELECT 1
+    FROM tbl_issue ti LEFT JOIN basics_goods bg ON
+    ti.goods_id=bg.goods_id
+    WHERE
+    DATE_FORMAT(ti.issue_time, '%Y-%m-%d') = #{psdate}
+    AND ti.company_id=#{companyId}) AS tt
+  </select>
+    <select id="findGoodsIdByPsdate"  resultType="java.lang.Long">
+       <!--  SELECT distinct ti.goods_id
+        FROM
+        tbl_issue ti LEFT JOIN basics_goods bg ON
+        ti.goods_id=bg.goods_id
+        LEFT JOIN basics_area_model bam ON
+        ti.area_model_id=bam.area_model_id
+        WHERE
+        <if test="psdate != null and psdate != ''">
+            DATE_FORMAT(ti.issue_time, '%Y-%m-%d') = #{psdate}
+        </if>
+        <if test="psdate != null and psdate != ''">
+            AND ti.company_id=#{companyId}
+        </if> -->
+        SELECT distinct ti.goods_id FROM 
+        tbl_goods_retail_num ti LEFT JOIN basics_goods bg ON
+        ti.goods_id=bg.goods_id
+        LEFT JOIN basics_area_model bam ON
+        ti.area_model_id=bam.area_model_id
+		LEFT JOIN basics_company bc ON bg.company_id=bc.company_id
+        WHERE 1=1 
+        <if test="psdate != null and psdate != ''">
+           AND DATE_FORMAT(ti.replenishment_time, '%Y-%m-%d') = #{psdate}
+        </if>
+       <if test="companyId != null and companyId != ''">
+            AND bc.company_id=#{companyId}
+        </if>
+    </select>
+    <select id="findReportBygoodsId" resultType="java.util.Map" parameterType="java.util.Map">
+       <!--  SELECT
+        sum(ti.issue_num) AS publishNum,
+        DATE_FORMAT(ti.issue_time,'%Y-%m-%d') AS publishTime,
+        bam.area_model_name AS areaModelName
+        FROM tbl_issue ti LEFT JOIN basics_goods bg ON
+        ti.goods_id=bg.goods_id
+        LEFT JOIN basics_area_model bam ON
+        ti.area_model_id=bam.area_model_id
+        WHERE
+        ti.goods_id=#{goodsId}
+        AND
+        DATE_FORMAT(ti.issue_time, '%Y-%m-%d') = #{psdate}
+        AND ti.company_id=#{companyId}
+        GROUP BY  areaModelName
+        ORDER by ti.goods_id -->
+         SELECT
+          sum(ti.goods_num) AS publishNum, 
+       <!--  ti.goods_num AS publishNum, -->
+        DATE_FORMAT(ti.replenishment_time,'%Y-%m-%d') AS publishTime,
+        bam.area_model_name AS areaModelName
+        FROM tbl_goods_retail_num ti LEFT JOIN basics_goods bg ON
+        ti.goods_id=bg.goods_id
+        LEFT JOIN basics_area_model bam ON
+        ti.area_model_id=bam.area_model_id
+        WHERE
+        ti.goods_id=#{goodsId}
+        AND
+        DATE_FORMAT(ti.replenishment_time, '%Y-%m-%d') = #{psdate}
+        AND ti.isdel='N' 
+        GROUP BY  areaModelName
+        ORDER by ti.goods_id
+    </select>
+</mapper>

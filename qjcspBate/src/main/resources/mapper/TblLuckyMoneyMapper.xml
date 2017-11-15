@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblLuckyMoneyMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblLuckyMoney">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="lucky_money" property="luckyMoney" jdbcType="DECIMAL" />
+		<result column="customer_mobile" property="customerMobile"
+			jdbcType="VARCHAR" />
+		<result column="customer_id" property="customerId" jdbcType="BIGINT" />
+		<result column="valid_start_date" property="validStartDate"
+			jdbcType="TIMESTAMP" />
+		<result column="valid_end_date" property="validEndDate"
+			jdbcType="TIMESTAMP" />
+		<result column="lucky_money_type" property="luckyMoneyType"
+			jdbcType="CHAR" />
+		<result column="is_used" property="isUsed" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, lucky_money, customer_mobile, customer_id,
+		valid_start_date,
+		valid_end_date,
+		lucky_money_type,
+		is_used
+	</sql>
+	<select id="getNumByMobileAndType" parameterType="java.lang.String" 
+	    resultMap="BaseResultMap">
+	    select
+		<include refid="Base_Column_List" />
+		from tbl_lucky_money
+		where customer_mobile = #{customerMobile,jdbcType=VARCHAR}
+		and lucky_money_type = 0
+	</select>
+	<select id="selectluckyMoney" parameterType="map" 
+	    resultMap="BaseResultMap">
+	    select
+		<include refid="Base_Column_List" />
+		from tbl_lucky_money
+		where 1=1
+		<if test="customerMobile != null and customerMobile !=''">
+		    and customer_mobile = #{customerMobile,jdbcType=VARCHAR}
+		</if>
+		and lucky_money_type = 0
+		and is_used = 0
+		ORDER BY valid_start_date DESC
+		LIMIT #{offset},#{limit}	
+	</select>
+	<select id="getluckycount" parameterType="map" 
+	    resultType="java.lang.Integer">
+	    select
+		count(*)
+		from tbl_lucky_money
+		where 1=1
+		<if test="customerMobile != null and customerMobile !=''">
+		    and customer_mobile = #{customerMobile,jdbcType=VARCHAR}
+		</if>
+		and lucky_money_type = 0
+		and is_used = 0 
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_lucky_money
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		tbl_lucky_money
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblLuckyMoney">
+		insert into tbl_lucky_money
+		(id, lucky_money, customer_mobile,
+		customer_id, valid_start_date,
+		valid_end_date,
+		lucky_money_type,is_used)
+		values (#{id,jdbcType=BIGINT},
+		#{luckyMoney,jdbcType=DECIMAL},
+		#{customerMobile,jdbcType=VARCHAR},
+		#{customerId,jdbcType=BIGINT}, #{validStartDate,jdbcType=TIMESTAMP},
+		#{validEndDate,jdbcType=TIMESTAMP},
+		#{luckyMoneyType,jdbcType=CHAR},
+		#{isUsed,jdbcType=CHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblLuckyMoney">
+		insert into tbl_lucky_money
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="luckyMoney != null">
+				lucky_money,
+			</if>
+			<if test="customerMobile != null">
+				customer_mobile,
+			</if>
+			<if test="customerId != null">
+				customer_id,
+			</if>
+			<if test="validStartDate != null">
+				valid_start_date,
+			</if>
+			<if test="validEndDate != null">
+				valid_end_date,
+			</if>
+			<if test="luckyMoneyType != null">
+				lucky_money_type,
+			</if>
+			<if test="isUesd != null">
+				is_used,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="luckyMoney != null">
+				#{luckyMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="customerMobile != null">
+				#{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				#{customerId,jdbcType=BIGINT},
+			</if>
+			<if test="validStartDate != null">
+				#{validStartDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="validEndDate != null">
+				#{validEndDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="luckyMoneyType != null">
+				#{luckyMoneyType,jdbcType=CHAR},
+			</if>
+			<if test="isUsed != null">
+				#{isUsed,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblLuckyMoney">
+		update tbl_lucky_money
+		<set>
+			<if test="luckyMoney != null">
+				lucky_money = #{luckyMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="customerMobile != null">
+				customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				customer_id = #{customerId,jdbcType=BIGINT},
+			</if>
+			<if test="validStartDate != null">
+				valid_start_date = #{validStartDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="validEndDate != null">
+				valid_end_date = #{validEndDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="luckyMoneyType != null">
+				lucky_money_type = #{luckyMoneyType,jdbcType=CHAR},
+			</if>
+			<if test="isUsed != null">
+				is_used = #{isUsed,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblLuckyMoney">
+		update
+		tbl_lucky_money
+		set lucky_money = #{luckyMoney,jdbcType=DECIMAL},
+		customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+		customer_id =
+		#{customerId,jdbcType=BIGINT},
+		valid_start_date =
+		#{validStartDate,jdbcType=TIMESTAMP},
+		valid_end_date =
+		#{validEndDate,jdbcType=TIMESTAMP},
+		lucky_money_type =
+		#{luckyMoneyType,jdbcType=CHAR},
+		is_used =
+		#{isUsed,jdbcType=CHAR},
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="findLuckyMoneysByCustomerId" resultType="map">
+		select
+		CAST(id AS CHAR) luckMoneyId
+		,CAST(lucky_money AS CHAR) luckyMoney
+		,DATE_FORMAT(valid_start_date,'%Y-%m-%d') validStartDate
+		,DATE_FORMAT(valid_end_date,'%Y-%m-%d') validEndDate
+		,CAST(lucky_money_type AS CHAR) luckyMoneyType
+		,case when  now()&lt;valid_start_date then '2' 
+					when valid_start_date&lt;=now() and datediff(valid_end_date,now())>=3 then '0' 
+					when datediff(valid_end_date,now())&lt;3 then '1'
+			end luckyMoneyStatus
+		from
+		tbl_lucky_money
+		where
+		valid_end_date>=now()
+		AND is_used ='0'
+		AND customer_id=#{customerId}
+	</select>
+
+	<select id="findLuckyMoneysCountByCustomerId" resultType="java.lang.Integer">
+		select
+		count(1)
+		from
+		tbl_lucky_money
+		where
+		valid_start_date&lt;=now() AND
+		valid_end_date>=now() 
+		AND is_used ='0'
+		AND customer_id=#{customerId}
+	</select>
+	
+	<update id="updateIsUsedById">
+	UPDATE tbl_lucky_money SET is_used = #{isUsed,jdbcType=CHAR}
+	WHERE id = #{luckMoneyId,jdbcType=BIGINT} 
+	</update>
+	
+	<select id="findByCount" resultType="java.lang.Long">
+  		SELECT count(*) FROM tbl_lottery_grade_activity t 
+ 	</select>
+  
+	<select id="findAllLuckyMoneyActivity">
+	  	SELECT * FROM tbl_lottery_grade_activity t 
+	</select>
+</mapper>

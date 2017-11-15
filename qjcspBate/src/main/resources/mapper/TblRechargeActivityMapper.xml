@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblRechargeActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblRechargeActivity" >
+    <id column="activity_id" property="activityId" jdbcType="BIGINT" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="activity_money" property="activityMoney" jdbcType="DECIMAL" />
+    <result column="effect_symbol" property="effectSymbol" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    activity_id, starttime, endtime, money, activity_money, effect_symbol, create_time, 
+    last_modify_time, create_user_id, mod_user_id, isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_recharge_activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </select>
+  <update id="deleteByPrimaryKey">
+    update tbl_recharge_activity set isdel='Y' , effect_symbol='0'
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblRechargeActivitySun" >
+    insert into tbl_recharge_activity (starttime, endtime, 
+      money, activity_money, effect_symbol, 
+      create_time,create_user_id)
+    values (#{rechargeStartTime}, #{rechargeEndTime}, 
+      #{money}, #{activityMoney},'1', 
+      #{createTime}, #{createUserId})  
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblRechargeActivity" >
+    insert into tbl_recharge_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="activityMoney != null" >
+        activity_money,
+      </if>
+      <if test="effectSymbol != null" >
+        effect_symbol,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="activityMoney != null" >
+        #{activityMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="effectSymbol != null" >
+        #{effectSymbol,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblRechargeActivitySun" >
+    update tbl_recharge_activity
+    <set >
+      <if test="rechargeStartTime != null and rechargeStartTime !=''" >
+        starttime = #{rechargeStartTime},
+      </if>
+      <if test="rechargeEndTime != null and rechargeEndTime !=''" >
+        endtime = #{rechargeEndTime},
+      </if>
+      <if test="money != null and money !=''" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+  <!-- <if test="activityMoney != null and activityMoney !=''" > -->
+        activity_money = #{activityMoney,jdbcType=DECIMAL},
+<!--  </if> -->
+      <if test="effectSymbol != null and effectSymbol !=''" >
+        effect_symbol = #{effectSymbol},
+      </if>
+      <if test="lastModifyTime != null and lastModifyTime !=''" >
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null and modUserId !=''" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblRechargeActivity" >
+    update tbl_recharge_activity
+    set starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      money = #{money,jdbcType=DECIMAL},
+      activity_money = #{activityMoney,jdbcType=DECIMAL},
+      effect_symbol = #{effectSymbol,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      mod_user_id = #{modUserId,jdbcType=BIGINT},
+      isdel = #{isdel,jdbcType=CHAR}
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAllrechargeActivityList" parameterType="map" resultType="map">
+  	  SELECT tra.activity_id AS activityId, 
+  	         CAST(tra.starttime AS CHAR) AS startTime,
+  	         CAST(tra.endtime AS CHAR) AS endTime,
+  	         tra.money,
+  	         tra.activity_money AS activityMoney,
+  	         (CASE WHEN (tra.effect_symbol='0') THEN '无效'
+		          WHEN (tra.effect_symbol ='1' ) THEN '有效'
+ 		     ELSE '' END) AS effectSymbol,
+ 		     CAST(tra.create_time AS CHAR) AS createTime,
+ 		     CAST(tra.last_modify_time AS CHAR) AS lastModifyTime,
+ 		     buc.user_name AS createUserName,
+ 		     bum.user_name AS modifyUserName
+ 	  FROM   
+ 	   	 tbl_recharge_activity tra
+		 LEFT JOIN  basics_users buc ON  tra.create_user_id =buc.user_id
+		 LEFT JOIN  basics_users bum ON  tra.mod_user_id =bum.user_id
+ 	  <where>
+ 	  		1=1
+ 	  		AND tra.isdel='N'
+ 	        <if test="rechargeStartTime !=null and rechargeStartTime !=''">
+ 	        	AND <![CDATA[ tra.starttime >=#{rechargeStartTime}]]>
+ 	        </if>
+ 	        <if test="rechargeEndTime !=null and rechargeEndTime !=''">
+ 	        	AND <![CDATA[ tra.endtime <=#{rechargeEndTime}]]>
+ 	        </if>
+ 	  </where>   
+ 	  ORDER BY tra.effect_symbol DESC
+  	 limit #{offset},#{limit}
+  </select>
+  <select id="selectAllRechargeActivity" resultType="map">
+  	SELECT
+	 CAST(activity_id AS CHAR) activityId  	 
+  	,CAST(activity_money AS CHAR) activityMoney
+  	,CAST(money AS CHAR) realMoney
+  	,CAST(activity_money+money AS CHAR) totalMoney 
+  	FROM tbl_recharge_activity WHERE starttime &lt;=now() AND endtime>=now() AND effect_symbol='1'	
+  </select>
+  <select id="selectValidActivityByPrimaryKey" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List" /> 
+  	FROM tbl_recharge_activity WHERE starttime &lt;=now() AND endtime>=now() AND effect_symbol='1'	AND activity_id=#{activityId}
+  </select>
+  <select id="findByCount" resultType="java.lang.Long"
+		parameterType="map">
+		SELECT
+		count(1)
+		FROM
+		tbl_recharge_activity tra
+		 LEFT JOIN  basics_users buc ON  tra.create_user_id =buc.user_id
+		 LEFT JOIN  basics_users bum ON  tra.mod_user_id =bum.user_id
+		 <where>
+ 	  		1=1
+ 	  		AND tra.isdel='N'
+ 	        <if test="rechargeStartTime !=null and rechargeStartTime !=''">
+ 	        	AND <![CDATA[ tra.starttime >=#{rechargeStartTime}]]>
+ 	        </if>
+ 	        <if test="rechargeEndTime !=null and rechargeEndTime !=''">
+ 	        	AND <![CDATA[ tra.endtime <=#{rechargeEndTime}]]>
+ 	        </if>
+ 	  </where>   
+	</select>
+	<update id="updateActivityEffectSymbol">
+		UPDATE tbl_recharge_activity t SET t.effect_symbol='0' WHERE t.activity_id=#{activityId}
+	</update>
+</mapper>

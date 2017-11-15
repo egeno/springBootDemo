@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.QuartzMapper" >
+ <!-- 清货前15-20分钟提醒 -->
+	 <select id="clearanceRemind" resultType="map">
+	   SELECT DISTINCT
+		(SELECT address FROM basics_machine WHERE machine_id =item.machine_id) AS address ,
+		(SELECT mobile FROM tbl_order WHERE order_id=item.order_id ) AS mobile ,
+		(SELECT identifying_code FROM tbl_order_child WHERE order_child_id = item.order_child_id ) AS identifyingCode,
+		<!-- CAST((SELECT DATE_FORMAT(end_time, '%Y-%m-%d %H:%i') FROM tbl_order_child WHERE order_child_id = item.order_child_id ) AS CHAR) AS endTime --> 
+	  	CAST((SELECT IF(end_time&lt;NOW(),null,end_time)  FROM tbl_order_child WHERE order_child_id = item.order_child_id ) AS CHAR) AS endTime
+		FROM basics_machine_cell cell,tbl_item_detail item
+		WHERE cell.item_id = item.item_id  AND order_id IS NOT NULL
+	 </select>
+	 <!-- 得到所有用户信息 -->
+     <select id="getCustomer_All" resultType="map">
+	   SELECT CAST(customer_id AS CHAR) AS customerId,customer_mobile AS mobile 
+	   FROM 
+	   tbl_customer WHERE isdel ='N'
+	   and <![CDATA[ UNIX_TIMESTAMP(SUBDATE( DATE_FORMAT(NOW(),'%Y-%m-%d') , INTERVAL 7 DAY )) < UNIX_TIMESTAMP(DATE_FORMAT(create_time,'%Y-%m-%d')) ]]>
+	 </select>
+	 
+	 <!-- 获取补货员的userid -->
+	<!--  <select id="getUser_Id" resultType="map" >
+	 select distinct(b.user_id) AS userId  from  basics_users b,basics_user_role bu,basics_role br
+      where b.user_id=bu.user_id and bu.role_id=br.role_id  
+      and b.user_type='3' or b.user_type='4' or br.special_role_num='2'
+	 </select> -->
+	 <!-- 预订 -->
+	 <select id="getCustomer_Id" resultType="map" >
+	<!--  SELECT DISTINCT(customer_id) AS customerId,mobile AS mobile 
+	 FROM tbl_order 
+	 WHERE date_format(order_time,'%Y-%m-%d')=date_format(NOW(),'%Y-%m-%d')  
+	 AND order_status=1  and  customer_id !='' -->
+	 
+	<!--  select distinct(o.customer_id) AS customerId from tbl_order o, tbl_temporary_retail ttr  where 
+     o.order_id=ttr.order_id  and  o.order_status='1' and  ttr.isdel='Y' -->
+     
+     select distinct(o.customer_id) AS customerId 
+     from tbl_order o,tbl_item_detail tid,tbl_order_child toc
+     where o.order_id=tid.order_id  and toc.order_id=tid.order_id 
+     and toc.order_child_status='1' and tid.item_status='1'  and o.customer_id!=''  
+     
+	 </select>
+<!-- 	 <select id="getCurrentAreaModelName" resultType="String"> -->
+<!-- 	    SELECT (SELECT m.area_model_name FROM basics_area_model m WHERE m.isdel ='N' AND m.area_model_id = c.area_model_id) AS areaModelName -->
+<!--         FROM basics_model_clean_goods c WHERE isdel ='N' AND  <![CDATA[ UNIX_TIMESTAMP(NOW()) <= UNIX_TIMESTAMP(c.clean_start_time) ]]>	 -->
+<!--         AND <![CDATA[ UNIX_TIMESTAMP(NOW()) >= UNIX_TIMESTAMP(c.supply_end_time) ]]> -->
+<!-- 	 </select> -->
+<!-- 当前时间在补货前40分钟的模板id及补货截止时间 -->
+
+<!-- 短信 -->
+<select id="getCleanGoodsInfo" resultType="map">
+	  <!--  SELECT
+	     CAST(area_model_id AS CHAR)  AS areaModelId,
+         CAST(retail_supply_end_time AS CHAR) AS endTime 
+         FROM 
+         basics_model_clean_goods WHERE isdel ='N' 
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',retail_supply_end_time - INTERVAL 40 MINUTE)]]>
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',retail_supply_end_time)]]> -->
+         
+select zhss.areaModelId,bu.user_name,zhss.endTime
+from basics_users bu,
+(select zhs.areaModelId,bg.goods_name,zhs.endTime
+from basics_goods bg,
+(SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,ttr.goods_id,CAST(bmcg.retail_supply_end_time AS CHAR) AS endTime         
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam,tbl_temporary_retail ttr              
+    WHERE 
+         bmcg.isdel ='N'
+         AND ttr.isdel='N' 
+         AND bmcg.area_model_id = bam.area_model_id
+         AND bam.area_model_id=ttr.area_model_id
+         AND  bam.time_type = 0
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.retail_supply_end_time - INTERVAL 40 MINUTE)]]>
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.retail_supply_end_time)]]> 
+)zhs
+where bg.goods_id=zhs.goods_id)zhss
+where SUBSTRING_INDEX(SUBSTRING_INDEX(zhss.goods_name,'(',-1),')',1)=bu.user_name             
+
+</select>
+
+
+<select id="getCleanGoodsInfoRetail" resultType="map">
+select zhss.areaModelId,bu.user_name,zhss.endTime
+from basics_users bu,
+(select zhs.areaModelId,bg.goods_name,zhs.endTime
+from basics_goods bg,
+(SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,ttr.goods_id,CAST(bmcg.retail_supply_end_time AS CHAR) AS endTime         
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam,tbl_goods_retail_temporary ttr              
+    WHERE 
+         bmcg.isdel ='N'
+         AND ttr.isdel='N' 
+         AND bmcg.area_model_id = bam.area_model_id
+         AND bam.area_model_id=ttr.area_model_id
+         AND  bam.time_type = 0
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.retail_supply_end_time - INTERVAL 40 MINUTE)]]>
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.retail_supply_end_time)]]> 
+   )zhs
+     where bg.goods_id=zhs.goods_id)zhss
+     where SUBSTRING_INDEX(SUBSTRING_INDEX(zhss.goods_name,'(',-1),')',1)=bu.user_name             
+
+</select>
+
+
+
+	 
+	 <select id="getReplenishmentMobileAndAddress" resultType="map">
+		 SELECT 
+	  	(SELECT user_mobile FROM basics_users WHERE user_id = um.user_id) AS mobile,
+	  	(SELECT address FROM basics_machine WHERE machine_id = um.machine_id ) AS address
+	  	FROM basics_user_machine um,basics_machine_area_model am,basics_users bu
+	  	WHERE um.machine_id = am.machine_id AND bu.user_id = um.user_id AND um.special_role_num = '2' AND am.area_model_id =#{areaModelId}
+	 </select>
+	 
+     <!-- 	 根据补货的格子信息得到 补货的订单及  客户id -->
+	 <select id="getReplenishmenOrder" resultType="map">
+		select distinct toc.order_child_num AS orderChildNum, CAST(tto.customer_id AS CHAR) AS customerId from tbl_temporary_retail ttr,tbl_order_child toc,tbl_order tto
+		where 
+	    ttr.cell_num in( #{cellNums} )
+	    and ttr.area_model_id = #{areaModelId} 
+	    and  ttr.machine_id = #{machineId} 
+	    and ttr.temporary_date = date_format(NOW(), '%Y-%m-%d')
+	    and ttr.isdel = 'Y'
+        and toc.order_child_id = ttr.order_child_id
+        and tto.order_id = toc.order_id
+	 </select>
+	 
+	 <!-- 中餐，晚餐，休闲餐补货提醒 -->
+	 <select id="getMachineInfoByModeId" resultType="map" >
+		<!-- select
+			CAST(bum.user_id AS CHAR) as userId,
+			CAST(bum.machine_id AS CHAR) as machineId,
+			(SELECT user_mobile from basics_users where user_id = bum.user_id) as mobile,
+			CAST((SELECT create_time from basics_users where user_id = bum.user_id) AS CHAR) as userCreateTime,
+			(select bbm.address FROM basics_machine  bbm   where bbm.machine_id = bmam.machine_id) as address,
+			CAST(bmcg.retail_replenishment_start_time AS CHAR) as retailStartTime,
+			CAST(bmcg.reserve_replenishment_start_time AS CHAR) as reserveStartTime,
+			CAST(bmcg.retail_supply_end_time AS CHAR) as retailSupplyEndTime,
+			CAST(bum.special_role_num AS CHAR) specialToleNum
+		from
+			basics_user_machine bum,basics_machine_area_model bmam,basics_model_clean_goods bmcg
+		where 
+			2代表补货员和众包商，3代表商户
+			bum.special_role_num in (2,3)
+			and bum.machine_id = bmam.machine_id
+			and bmcg.area_model_id = bmam.area_model_id
+			and bmam.area_model_id = #{areaModelId}
+		group by address,userId -->
+		
+		select
+			CAST(bum.user_id AS CHAR) as userId,
+			CAST(bum.machine_id AS CHAR) as machineId,
+			(SELECT user_mobile from basics_users where user_id = bum.user_id) as mobile,
+			CAST((SELECT create_time from basics_users where user_id = bum.user_id) AS CHAR) as userCreateTime,
+			(select bbm.address FROM basics_machine  bbm   where bbm.machine_id = bmam.machine_id) as address,
+			CAST(bmcg.retail_replenishment_start_time AS CHAR) as retailStartTime,
+			CAST(bmcg.reserve_replenishment_start_time AS CHAR) as reserveStartTime,
+			CAST(bmcg.retail_supply_end_time AS CHAR) as retailSupplyEndTime,
+			CAST(bum.special_role_num AS CHAR) specialToleNum
+		from
+			basics_user_machine bum,basics_machine_area_model bmam,basics_model_clean_goods bmcg,tbl_temporary_retail ttr
+		where 
+		
+			bum.special_role_num in (2,3)
+			and bum.machine_id = bmam.machine_id
+			and bmcg.area_model_id = bmam.area_model_id
+            and bum.machine_id=ttr.machine_id
+            and ttr.temporary_date = date_format(NOW(), '%Y-%m-%d')
+			and bmam.area_model_id = #{areaModelId}
+		group by address,userId	
+	 </select>
+
+	  <!-- 	 根据当前模型的未补货的份数 -->
+	 <select id="getNotReplenishmenNum" resultType="map">
+		select CAST(COUNT(temporary_id) AS CHAR) notReplenishmentNum from tbl_temporary_retail
+		where
+		machine_id IN (SELECT machine_id FROM basics_machine_area_model WHERE area_model_id = #{areaModelId} )
+		and area_model_id = #{areaModelId}
+		and temporary_date =date_format(NOW(), '%Y-%m-%d')
+		and isdel = 'N'
+		union
+		select CAST(COUNT(temporary_id) AS CHAR) notReplenishmentNum from tbl_goods_retail_temporary
+		where
+		machine_id IN (SELECT machine_id FROM basics_machine_area_model WHERE area_model_id = #{areaModelId} )
+		and area_model_id = #{areaModelId}
+		and temporary_date =date_format(NOW(), '%Y-%m-%d')
+		and isdel = 'N'
+	 </select>
+
+<!-- 得到补货的模型ID   中，休闲，晚模型   预订补货提醒-->
+ <select id="getAreaModelId" resultType="map">
+   <!--  SELECT
+	   CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,
+       CAST(bmcg.reserve_replenishment_start_time AS CHAR) AS reserveReplenishmentStartTime,
+       CAST(bmcg.retail_replenishment_start_time AS CHAR) AS retailReplenishmentStartTime
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam
+    WHERE 
+         bmcg.isdel ='N' 
+         AND bmcg.area_model_id = bam.area_model_id
+         AND  bam.time_type in (1,2,3)
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time - INTERVAL 60 MINUTE)]]>
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time)]]>
+  -->
+select zhss.areaModelId,bu.user_name
+from basics_users bu,
+(select zhs.areaModelId,bg.goods_name
+from basics_goods bg,
+(SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,ttr.goods_id          
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam,tbl_temporary_retail ttr              
+    WHERE 
+         bmcg.isdel ='N' 
+         AND ttr.isdel='N'
+         AND bmcg.area_model_id = bam.area_model_id
+         AND bam.area_model_id=ttr.area_model_id
+         AND  bam.time_type in (1,2,3)
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time - INTERVAL 60 MINUTE)]]>
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time)]]>
+         AND ttr.temporary_date = date_format(NOW(), '%Y-%m-%d')<!-- 取餐日期是当前日期 -->
+)zhs
+where bg.goods_id=zhs.goods_id)zhss
+where SUBSTRING_INDEX(SUBSTRING_INDEX(zhss.goods_name,'(',-1),')',1)=bu.user_name
+ </select>
+ 
+ <!--零售补货提醒  -->
+<select id="getAreaModelIdRetail" resultType="map">
+select zhss.areaModelId,bu.user_name
+from basics_users bu,
+(select zhs.areaModelId,bg.goods_name
+from basics_goods bg,
+(SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,ttr.goods_id          
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam,tbl_goods_retail_temporary ttr              
+    WHERE 
+         bmcg.isdel ='N' 
+         AND ttr.isdel='N'
+         AND bmcg.area_model_id = bam.area_model_id
+         AND bam.area_model_id=ttr.area_model_id
+         AND  bam.time_type in (1,2,3)
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time - INTERVAL 60 MINUTE)]]>
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time)]]>
+         AND ttr.temporary_date = date_format(NOW(), '%Y-%m-%d')<!-- 取餐日期是当前日期 -->
+)zhs
+where bg.goods_id=zhs.goods_id)zhss
+where SUBSTRING_INDEX(SUBSTRING_INDEX(zhss.goods_name,'(',-1),')',1)=bu.user_name
+ </select>
+ 
+ <!-- 得到补货的模型ID   早餐模型     预订补货-->
+ <select id="getBreakfastAreaModelId" resultType="map">
+     <!--   SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,
+       CAST(bmcg.reserve_replenishment_start_time AS CHAR) AS reserveReplenishmentStartTime,
+       CAST(bmcg.retail_replenishment_start_time AS CHAR) AS retailReplenishmentStartTime
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam
+    WHERE 
+         bmcg.isdel ='N' 
+         AND bmcg.area_model_id = bam.area_model_id
+         AND  bam.time_type = 0
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ','20:00:00')]]> 
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(date_add(now(), INTERVAL 1 day), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time)]]>       -->
+         
+         
+select zhss.areaModelId,bu.user_name
+from basics_users bu,
+(select zhs.areaModelId,bg.goods_name
+from basics_goods bg,
+(SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,ttr.goods_id          
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam,tbl_temporary_retail ttr              
+    WHERE 
+         bmcg.isdel ='N'
+         AND ttr.isdel='N' 
+         AND bmcg.area_model_id = bam.area_model_id
+         AND bam.area_model_id=ttr.area_model_id
+         AND  bam.time_type = 0
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ','20:00:00')]]> 
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(date_add(now(), INTERVAL 1 day), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time)]]>   
+        AND CONCAT(DATE_FORMAT(date_add(now(), INTERVAL 1 day), '%Y-%m-%d'))= ttr.temporary_date  <!--取餐日期是当前日期的后一天  -->   
+)zhs
+where bg.goods_id=zhs.goods_id)zhss
+where SUBSTRING_INDEX(SUBSTRING_INDEX(zhss.goods_name,'(',-1),')',1)=bu.user_name                           
+</select>
+ 
+<!--早餐零售补货提醒  --> 
+<select id="getBreakfastAreaRetail" resultType="map">    
+select zhss.areaModelId,bu.user_name
+from basics_users bu,
+(select zhs.areaModelId,bg.goods_name
+from basics_goods bg,
+(SELECT
+	    CAST(bmcg.area_model_id AS CHAR)  AS areaModelId,ttr.goods_id          
+    FROM 
+         basics_model_clean_goods bmcg,basics_area_model bam,tbl_goods_retail_temporary ttr              
+    WHERE 
+         bmcg.isdel ='N'
+         AND ttr.isdel='N' 
+         AND bmcg.area_model_id = bam.area_model_id
+         AND bam.area_model_id=ttr.area_model_id
+         AND  bam.time_type = 0
+         AND <![CDATA[NOW() >= CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'),' ','20:00:00')]]> 
+         AND <![CDATA[NOW() <= CONCAT(DATE_FORMAT(date_add(now(), INTERVAL 1 day), '%Y-%m-%d'),' ',bmcg.reserve_replenishment_start_time)]]>  
+         AND CONCAT(DATE_FORMAT(date_add(now(), INTERVAL 1 day), '%Y-%m-%d'))= ttr.temporary_date   <!--取餐日期是当前日期的后一天   -->    
+)zhs
+where bg.goods_id=zhs.goods_id)zhss
+where SUBSTRING_INDEX(SUBSTRING_INDEX(zhss.goods_name,'(',-1),')',1)=bu.user_name                           
+ </select>
+ 
+ <select id="getReplenishmentNum" resultType="int">
+	SELECT COUNT(1) AS ReplenishmentNum 
+	FROM tbl_temporary_retail ttr,basics_goods gd
+	WHERE 
+	ttr.goods_id = gd.goods_id
+	AND ttr.machine_id = #{machineId}
+	<if test="userId != null" >
+        AND SUBSTRING_INDEX(SUBSTRING_INDEX(gd.goods_name,'(',-1),')',1)= (SELECT user_name FROM basics_users WHERE user_id = #{userId} )
+    </if>
+	AND ttr.area_model_id =  #{areaModelId}
+	AND ttr.temporary_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+	AND ttr.isdel = 'N'         
+</select>
+</mapper>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsMachineModelMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsMachineModel" >
+    <id column="model_id" property="modelId" jdbcType="INTEGER" />
+    <result column="model_name" property="modelName" jdbcType="VARCHAR" />
+    <result column="model_icon" property="modelIcon" jdbcType="VARCHAR" />
+    <result column="model_type" property="modelType" jdbcType="CHAR" />
+    <result column="row_num" property="rowNum" jdbcType="INTEGER" />
+    <result column="column_num" property="columnNum" jdbcType="INTEGER" />
+    <result column="tolerance" property="tolerance" jdbcType="VARCHAR" />
+    <result column="target_temperature" property="targetTemperature" jdbcType="VARCHAR" />
+    <result column="model_memo" property="modelMemo" jdbcType="VARCHAR" />
+    <result column="model_status" property="modelStatus" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMapVo" type="com.qjkj.qjcsp.entity.viewmodel.BasicsMachineModelVo" >
+    <id column="model_id" property="modelId" jdbcType="INTEGER" />
+    <result column="model_name" property="modelName" jdbcType="VARCHAR" />
+    <result column="model_icon" property="modelIcon" jdbcType="VARCHAR" />
+    <result column="model_type" property="modelType" jdbcType="CHAR" />
+    <result column="row_num" property="rowNum" jdbcType="INTEGER" />
+    <result column="column_num" property="columnNum" jdbcType="INTEGER" />
+    <result column="tolerance" property="tolerance" jdbcType="VARCHAR" />
+    <result column="target_temperature" property="targetTemperature" jdbcType="VARCHAR" />
+    <result column="model_memo" property="modelMemo" jdbcType="VARCHAR" />
+    <result column="model_status" property="modelStatus" jdbcType="CHAR" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="create_time_str" property="createTimeStr" jdbcType="VARCHAR" />
+    <result column="last_mod_time_str" property="lastModTimeStr" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    model_id, model_name, model_icon, model_type, row_num, column_num, tolerance, target_temperature, 
+    model_memo, model_status, isdel, create_time, last_mod_time, create_user_id, 
+    mod_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_machine_model
+    where model_id = #{modelId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_machine_model
+    where model_id = #{modelId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsMachineModel" >
+    insert into basics_machine_model (model_id, model_name, model_icon, 
+      model_type, row_num, column_num, 
+      tolerance, target_temperature, 
+      model_memo, model_status, isdel, 
+      create_time, last_mod_time, create_user_id, 
+      mod_user_id)
+    values (#{modelId,jdbcType=INTEGER}, #{modelName,jdbcType=VARCHAR}, #{modelIcon,jdbcType=VARCHAR}, 
+      #{modelType,jdbcType=CHAR}, #{rowNum,jdbcType=INTEGER}, #{columnNum,jdbcType=INTEGER}, 
+      #{tolerance,jdbcType=VARCHAR}, #{targetTemperature,jdbcType=VARCHAR}, 
+      #{modelMemo,jdbcType=VARCHAR}, #{modelStatus,jdbcType=CHAR}, #{isdel,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastModTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, 
+      #{modUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachineModel" >
+    insert into basics_machine_model
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="modelId != null" >
+        model_id,
+      </if>
+      <if test="modelName != null" >
+        model_name,
+      </if>
+      <if test="modelIcon != null" >
+        model_icon,
+      </if>
+      <if test="modelType != null" >
+        model_type,
+      </if>
+      <if test="rowNum != null" >
+        row_num,
+      </if>
+      <if test="columnNum != null" >
+        column_num,
+      </if>
+      <if test="tolerance != null" >
+        tolerance,
+      </if>
+      <if test="targetTemperature != null" >
+        target_temperature,
+      </if>
+      <if test="modelMemo != null" >
+        model_memo,
+      </if>
+      <if test="modelStatus != null" >
+        model_status,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="modelId != null" >
+        #{modelId,jdbcType=INTEGER},
+      </if>
+      <if test="modelName != null" >
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelIcon != null" >
+        #{modelIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null" >
+        #{modelType,jdbcType=CHAR},
+      </if>
+      <if test="rowNum != null" >
+        #{rowNum,jdbcType=INTEGER},
+      </if>
+      <if test="columnNum != null" >
+        #{columnNum,jdbcType=INTEGER},
+      </if>
+      <if test="tolerance != null" >
+        #{tolerance,jdbcType=VARCHAR},
+      </if>
+      <if test="targetTemperature != null" >
+        #{targetTemperature,jdbcType=VARCHAR},
+      </if>
+      <if test="modelMemo != null" >
+        #{modelMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelStatus != null" >
+        #{modelStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsMachineModel" >
+    update basics_machine_model
+    <set >
+      <if test="modelName != null" >
+        model_name = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelIcon != null" >
+        model_icon = #{modelIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null" >
+        model_type = #{modelType,jdbcType=CHAR},
+      </if>
+      <if test="rowNum != null" >
+        row_num = #{rowNum,jdbcType=INTEGER},
+      </if>
+      <if test="columnNum != null" >
+        column_num = #{columnNum,jdbcType=INTEGER},
+      </if>
+      <if test="tolerance != null" >
+        tolerance = #{tolerance,jdbcType=VARCHAR},
+      </if>
+      <if test="targetTemperature != null" >
+        target_temperature = #{targetTemperature,jdbcType=VARCHAR},
+      </if>
+      <if test="modelMemo != null" >
+        model_memo = #{modelMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelStatus != null" >
+        model_status = #{modelStatus,jdbcType=CHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModTime != null" >
+        last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where model_id = #{modelId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsMachineModel" >
+    update basics_machine_model
+    set model_name = #{modelName,jdbcType=VARCHAR},
+      model_icon = #{modelIcon,jdbcType=VARCHAR},
+      model_type = #{modelType,jdbcType=CHAR},
+      row_num = #{rowNum,jdbcType=INTEGER},
+      column_num = #{columnNum,jdbcType=INTEGER},
+      tolerance = #{tolerance,jdbcType=VARCHAR},
+      target_temperature = #{targetTemperature,jdbcType=VARCHAR},
+      model_memo = #{modelMemo,jdbcType=VARCHAR},
+      model_status = #{modelStatus,jdbcType=CHAR},
+      isdel = #{isdel,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      mod_user_id = #{modUserId,jdbcType=BIGINT}
+    where model_id = #{modelId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findByCount" resultType="java.lang.Long" parameterType="map" >
+    SELECT 
+    	count(1)
+    FROM 
+    	basics_machine_model
+    WHERE
+    	1 = 1 AND isdel = 'N'
+      <if test="modelId != null" >
+        AND model_id = #{modelId,jdbcType=INTEGER}
+      </if>
+      <if test="modelName != null" >
+        AND model_name = #{modelName,jdbcType=VARCHAR}
+      </if>
+      <if test="modelIcon != null" >
+        AND model_icon = #{modelIcon,jdbcType=VARCHAR}
+      </if>
+      <if test="modelType != null" >
+        AND model_type = #{modelType,jdbcType=CHAR}
+      </if>
+      <if test="rowNum != null" >
+        AND row_num = #{rowNum,jdbcType=INTEGER}
+      </if>
+      <if test="columnNum != null" >
+        AND column_num = #{columnNum,jdbcType=INTEGER}
+      </if>
+      <if test="tolerance != null" >
+        AND tolerance = #{tolerance,jdbcType=VARCHAR}
+      </if>
+      <if test="targetTemperature != null" >
+        AND target_temperature = #{targetTemperature,jdbcType=VARCHAR}
+      </if>
+      <if test="modelMemo != null" >
+        AND model_memo = #{modelMemo,jdbcType=VARCHAR}
+      </if>
+      <if test="modelStatus != null" >
+        AND model_status = #{modelStatus,jdbcType=CHAR}
+      </if>
+      <if test="createTime != null" >
+        AND create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastModTime != null" >
+        AND last_mod_time = #{lastModTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createUserId != null" >
+        AND create_user_id = #{createUserId,jdbcType=BIGINT}
+      </if>
+      <if test="modUserId != null" >
+        AND mod_user_id = #{modUserId,jdbcType=BIGINT}
+      </if>
+  </select>
+  
+  <select id="findByList" resultMap="BaseResultMapVo" parameterType="map" >
+    SELECT 
+	    model_id, model_name, model_icon, model_type, row_num, column_num, tolerance, target_temperature, 
+	    model_memo, model_status, isdel, 
+        (SELECT u.user_account FROM basics_users u WHERE u.user_id = m.create_user_id) as creater,
+    	(SELECT u.user_account FROM basics_users u WHERE u.user_id = m.mod_user_id) as modifier,
+		date_format(create_time, '%Y-%m-%d %H:%i:%s') as createTimeStr, 
+	    date_format(last_mod_time, '%Y-%m-%d %H:%i:%s') as lastModTimeStr
+
+    FROM basics_machine_model m
+    where
+    	1 = 1 AND isdel = 'N'
+      <if test="modelId != null" >
+        AND model_id = #{modelId,jdbcType=INTEGER}
+      </if>
+      <if test="modelName != null" >
+        AND model_name = #{modelName,jdbcType=VARCHAR}
+      </if>
+      <if test="modelIcon != null" >
+        AND model_icon = #{modelIcon,jdbcType=VARCHAR}
+      </if>
+      <if test="modelType != null" >
+        AND model_type = #{modelType,jdbcType=CHAR}
+      </if>
+      <if test="rowNum != null" >
+        AND row_num = #{rowNum,jdbcType=INTEGER}
+      </if>
+      <if test="columnNum != null" >
+        AND column_num = #{columnNum,jdbcType=INTEGER}
+      </if>
+      <if test="tolerance != null" >
+        AND tolerance = #{tolerance,jdbcType=VARCHAR}
+      </if>
+      <if test="targetTemperature != null" >
+        AND target_temperature = #{targetTemperature,jdbcType=VARCHAR}
+      </if>
+      <if test="modelMemo != null" >
+        AND model_memo = #{modelMemo,jdbcType=VARCHAR}
+      </if>
+      <if test="modelStatus != null" >
+        AND model_status = #{modelStatus,jdbcType=CHAR}
+      </if>
+      <if test="createTime != null" >
+        AND create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastModTime != null" >
+        AND last_mod_time = #{lastModTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createUserId != null" >
+        AND create_user_id = #{createUserId,jdbcType=BIGINT}
+      </if>
+      <if test="modUserId != null" >
+        AND mod_user_id = #{modUserId,jdbcType=BIGINT}
+      </if>
+      <if test="order != null and order != ''" >
+       	order by ${order} ${sort}
+      </if>
+      <if test="offset != null and limit != null">
+		limit #{offset},#{limit}
+	  </if>
+  </select>  
+  
+  <update id="deleteBasicsMachineModelbyId" parameterType="java.lang.Integer">
+	UPDATE basics_machine_model
+	SET model_status = '0', isdel = 'Y'
+	WHERE model_id = #{modelId,jdbcType=INTEGER}  
+  </update>
+  
+  <select id="findAllListForCombotree" resultMap="BaseResultMap">
+  	SELECT model_id, model_name
+  	FROM basics_machine_model
+  	WHERE model_status = '1' AND isdel = 'N'
+  </select>
+  
+  <select id="findModelListByDeviceCode" resultType="java.util.HashMap">
+  	SELECT a.area_model_id AS areaModelId, a.area_model_name AS areaModelName,IF(b.area_model_id=a.area_model_id,1,0) AS isCurrentAreaModel 
+	FROM basics_area_model a, basics_machine b, basics_machine_area_model c
+	WHERE a.area_model_id = c.area_model_id AND b.machine_id = c.machine_id
+	AND b.device_code = #{deviceCode} AND a.area_model_status = '1' AND a.isdel = 'N' AND b.company_id = (
+	    SELECT company_id FROM basics_machine WHERE device_code = #{deviceCode} AND isdel = 'N'
+	) 
+  </select>
+  
+  <select id="findMachineCount" resultType="java.lang.Integer">
+	    SELECT count(*) 
+	    FROM basics_machine t WHERE t.model_id = #{modelId,jdbcType=VARCHAR}  
+  </select>
+</mapper>

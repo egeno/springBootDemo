@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblGoodsRetailTemporaryMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblGoodsRetailTemporary" >
+    <id column="temporary_id" property="temporaryId" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="area_model_id" property="areaModelId" jdbcType="BIGINT" />
+    <result column="cell_id" property="cellId" jdbcType="VARCHAR" />
+    <result column="cell_row" property="cellRow" jdbcType="SMALLINT" />
+    <result column="cell_column" property="cellColumn" jdbcType="SMALLINT" />
+    <result column="cell_num" property="cellNum" jdbcType="INTEGER" />
+    <result column="temporary_date" property="temporaryDate" jdbcType="DATE" />
+    <result column="goods_retail_num_id" property="goodsRetailNumId" jdbcType="BIGINT" />
+    <result column="isdel" property="isDel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    temporary_id, machine_id, goods_id, area_model_id, cell_id, cell_row, cell_column, 
+    cell_num, temporary_date, goods_retail_num_id,isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_goods_retail_temporary
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_goods_retail_temporary
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailTemporary" >
+    insert into tbl_goods_retail_temporary (temporary_id, machine_id, goods_id, 
+      area_model_id, cell_id, cell_row, 
+      cell_column, cell_num, temporary_date, goods_retail_num_id,isdel
+      )
+    values (#{temporaryId,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{areaModelId,jdbcType=BIGINT}, #{cellId,jdbcType=VARCHAR}, #{cellRow,jdbcType=SMALLINT}, 
+      #{cellColumn,jdbcType=SMALLINT}, #{cellNum,jdbcType=INTEGER}, #{temporaryDate,jdbcType=DATE},
+      #{goodsRetailNumId,jdbcType=BIGINT},#{isDel,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailTemporary" >
+    insert into tbl_goods_retail_temporary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="temporaryId != null" >
+        temporary_id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id,
+      </if>
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="cellRow != null" >
+        cell_row,
+      </if>
+      <if test="cellColumn != null" >
+        cell_column,
+      </if>
+      <if test="cellNum != null" >
+        cell_num,
+      </if>
+      <if test="temporaryDate != null" >
+        temporary_date,
+      </if>
+      <if test="goodsRetailNumId != null" >
+        goods_retail_num_id,
+      </if>
+       <if test="isDel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="temporaryId != null" >
+        #{temporaryId,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="cellId != null" >
+        #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellRow != null" >
+        #{cellRow,jdbcType=SMALLINT},
+      </if>
+      <if test="cellColumn != null" >
+        #{cellColumn,jdbcType=SMALLINT},
+      </if>
+      <if test="cellNum != null" >
+        #{cellNum,jdbcType=INTEGER},
+      </if>
+      <if test="temporaryDate != null" >
+        #{temporaryDate,jdbcType=DATE},
+      </if>
+      <if test="goodsRetailNumId != null" >
+        #{goodsRetailNumId,jdbcType=BIGINT},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailTemporary" >
+    update tbl_goods_retail_temporary
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="areaModelId != null" >
+        area_model_id = #{areaModelId,jdbcType=BIGINT},
+      </if>
+      <if test="cellId != null" >
+        cell_id = #{cellId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellRow != null" >
+        cell_row = #{cellRow,jdbcType=SMALLINT},
+      </if>
+      <if test="cellColumn != null" >
+        cell_column = #{cellColumn,jdbcType=SMALLINT},
+      </if>
+      <if test="cellNum != null" >
+        cell_num = #{cellNum,jdbcType=INTEGER},
+      </if>
+      <if test="temporaryDate != null" >
+        temporary_date = #{temporaryDate,jdbcType=DATE},
+      </if>
+      <if test="goodsRetailNumId != null" >
+        goods_retail_num_id = #{goodsRetailNumId,jdbcType=BIGINT},
+      </if>
+      <if test="isDel != null" >
+        isdel = #{isDel,jdbcType=CHAR},
+      </if>
+    </set>
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblGoodsRetailTemporary" >
+    update tbl_goods_retail_temporary
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      area_model_id = #{areaModelId,jdbcType=BIGINT},
+      cell_id = #{cellId,jdbcType=VARCHAR},
+      cell_row = #{cellRow,jdbcType=SMALLINT},
+      cell_column = #{cellColumn,jdbcType=SMALLINT},
+      cell_num = #{cellNum,jdbcType=INTEGER},
+      temporary_date = #{temporaryDate,jdbcType=DATE},
+      goods_retail_num_id = #{goodsRetailNumId,jdbcType=BIGINT},
+      isdel=#{isDel,jdbcType=CHAR}
+    where temporary_id = #{temporaryId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectRetailTemporaryList" resultType="map">
+	    SELECT z.cell_num AS cellNum
+	    FROM tbl_goods_retail_temporary z,basics_machine_cell c
+	    WHERE c.cell_id=z.cell_id AND z.isdel = 'N' AND z.machine_id = #{machineId,jdbcType=BIGINT} AND 
+	    z.area_model_id = #{areaModelId,jdbcType=BIGINT}  AND z.temporary_date = DATE_FORMAT(NOW(),'%y-%m-%d')
+	    AND z.isdel='N' 
+	    <if test="userId != null">
+         AND  z.goods_id IN(	
+	        SELECT goods_id FROM basics_goods 
+	        WHERE 
+	        SUBSTRING_INDEX(SUBSTRING_INDEX(goods_name,'(',-1),')',1) = (
+	           SELECT user_name FROM basics_users WHERE user_id = #{userId}
+	        ) and isdel ='N'
+	      )
+        </if>
+   </select>
+   
+   <select id="getTemporaryRetailByReplenishment" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM tbl_goods_retail_temporary where machine_id=#{machineId} AND area_model_id=#{areaModelId} AND temporary_date=#{currentTimeFormat} AND cell_num=#{cellNum}  AND isdel='N' 
+   </select>
+   
+   <select id="getAllocatedMachineCell" resultType="map">
+   SELECT cell_id cellId, row_num cellRow, col_num cellColumn, cell_num cellNum
+   FROM basics_machine_cell 
+   WHERE machine_id=#{machineId} AND cell_status!=2 AND cell_id NOT IN
+	(SELECT cell_id FROM
+		(SELECT cell_id FROM tbl_goods_retail_temporary 
+		WHERE machine_id=#{machineId} AND area_model_id=#{areaModelId} AND temporary_date=#{temporaryDate}  
+<!-- 		AND isdel='N'  -->
+		UNION ALL
+		SELECT cell_id FROM tbl_temporary_retail
+		 WHERE machine_id=#{machineId} AND area_model_id=#{areaModelId} AND temporary_date=#{temporaryDate}  
+<!-- 		 AND isdel='N'  -->
+		) 
+	tr)
+	ORDER BY cell_num LIMIT #{addCellNum}
+   </select>
+   
+   <insert id="addGoodsRetailList">
+    INSERT INTO tbl_goods_retail_temporary
+    (goods_retail_num_id, machine_id, goods_id, area_model_id, cell_id, cell_row, cell_column, cell_num, temporary_date,isdel)
+    VALUES
+    <foreach collection="allocatedMachineCellList" item="allocatedMachineCell" separator=",">
+    (#{id}, #{machineId}, #{goodsId}, #{areaModelId}, #{allocatedMachineCell.cellId}, #{allocatedMachineCell.cellRow}, 
+      #{allocatedMachineCell.cellColumn}, #{allocatedMachineCell.cellNum}, #{temporaryDate},'N')
+    </foreach>  
+   </insert>
+   
+   <delete id="reduceGoodsRetail">
+   	DELETE FROM  
+   	tbl_goods_retail_temporary 
+	WHERE 
+	goods_retail_num_id = #{id}  AND isdel ='N' 
+	ORDER BY cell_num DESC LIMIT #{addCellNum}
+   </delete>
+   
+   <delete id="delByGoodsRetailNumId" parameterType="Long">
+   	DELETE FROM tbl_goods_retail_temporary 
+	WHERE goods_retail_num_id=#{goodsRetailNumId,jdbcType=BIGINT}
+   </delete>
+   
+   <select id="getSupplyNumById" resultType="int">
+   select 
+   count(1) as nupplyNum
+   from
+   tbl_goods_retail_temporary 
+	WHERE 
+	goods_retail_num_id = #{id}  AND isdel ='Y'
+   </select>
+   
+   <select id="goodsRetailTemporaryCount" resultType="integer">
+   		SELECT COUNT(1) FROM tbl_goods_retail_temporary tgrt WHERE tgrt.goods_id =#{goodsId} AND tgrt.temporary_date >= CURDATE();
+   </select>
+</mapper>

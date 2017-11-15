@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblLotteryGradeActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblLotteryGradeActivity" >
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="effect_symbol" property="effectSymbol" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblLotteryGradeActivity" >
+    insert into tbl_lottery_grade_activity (start_time, end_time, create_user_id, 
+      create_time, mod_user_id, mod_time, 
+      effect_symbol)
+    values (#{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modUserId,jdbcType=BIGINT}, #{modTime,jdbcType=TIMESTAMP}, 
+      #{effectSymbol,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblLotteryGradeActivity" >
+    insert into tbl_lottery_grade_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="modTime != null" >
+        mod_time,
+      </if>
+      <if test="effectSymbol != null" >
+        effect_symbol,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectSymbol != null" >
+        #{effectSymbol,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findlotterygradeactivity" resultMap="BaseResultMap">
+     select * from tbl_lottery_grade_activity where effect_symbol =1
+  </select>
+  
+  <select id="findAllLuckyMoneyActivity" resultMap="BaseResultMap">
+	  	SELECT t.start_time, t.end_time, bu.user_name createUserName, t.create_time, bus.user_name modUserName, t.mod_time, t.effect_symbol FROM tbl_lottery_grade_activity t
+		LEFT JOIN basics_users bu ON t.create_user_id = bu.user_id
+		LEFT JOIN basics_users bus ON t.mod_user_id = bus.user_id
+  </select>
+  
+  <update id="updateSelective" parameterType="com.qjkj.qjcsp.entity.TblLotteryGradeActivity" >
+    update tbl_lottery_grade_activity
+    <set >
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectSymbol != null" >
+        effect_symbol = #{effectSymbol,jdbcType=CHAR},
+      </if>
+    </set>
+  </update>
+</mapper>

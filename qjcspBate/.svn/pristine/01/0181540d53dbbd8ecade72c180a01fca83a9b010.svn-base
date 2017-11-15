@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderDetailMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderDetail">
+		<id column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+		<result column="order_child_id" property="orderChildId"
+			jdbcType="BIGINT" />
+		<result column="machine_id" property="machineId" jdbcType="BIGINT" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="order_detail_num" property="orderDetailNum"
+			jdbcType="VARCHAR" />
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+		<result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="profit" property="profit" jdbcType="DECIMAL" />
+		<result column="retail_id" property="retailId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		order_detail_id, order_child_id, machine_id, company_id, order_detail_num, goods_id,
+		goods_name, goods_num, price,cost_price, profit, retail_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_order_detail
+		where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+	</select>
+	<select id="selectByOrderChildId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_order_detail
+		where order_child_id = #{orderChildId,jdbcType=BIGINT}
+	</select>
+	<select id="queryOrderDetailsbyOrderChildNum" resultType="map">
+	  	SELECT
+
+	  		d.goods_name AS goodsName,round(d.price/d.goods_num,2) AS retailPrice, <!--  g.retail_price AS retailPrice,  -->  
+	  		d.goods_num AS goodsNum, d.price
+	  	FROM tbl_order_detail d
+	  <!-- 	LEFT JOIN basics_goods g ON d.goods_id = g.goods_id -->
+	  	WHERE d.order_child_id = (
+	  	     SELECT order_child_id FROM tbl_order_child WHERE order_child_num =#{orderChildNum,jdbcType=VARCHAR}
+	  	)
+    </select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from tbl_order_detail
+		where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrderDetail">
+		insert into tbl_order_detail (order_detail_id, order_child_id,
+		machine_id,
+		company_id, order_detail_num, goods_id,
+		goods_name, goods_num, price, profit, retail_id ,cost_price
+		)
+		values (#{orderDetailId,jdbcType=BIGINT}, #{orderChildId,jdbcType=BIGINT},
+		#{machineId,jdbcType=BIGINT},
+		#{companyId,jdbcType=BIGINT}, #{orderDetailNum,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT},
+		#{goodsName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=INTEGER},
+		#{price,jdbcType=DECIMAL}, #{profit,jdbcType=DECIMAL}, #{retailId,jdbcType=BIGINT}, #{costPrice,jdbcType=DECIMAL}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrderDetail"
+		useGeneratedKeys="true" keyProperty="orderDetailId">
+		insert into tbl_order_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderDetailId != null">
+				order_detail_id,
+			</if>
+			<if test="orderChildId != null">
+				order_child_id,
+			</if>
+			<if test="machineId != null">
+				machine_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="orderDetailNum != null">
+				order_detail_num,
+			</if>
+			<if test="goodsId != null">
+				goods_id,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="goodsNum != null">
+				goods_num,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="profit != null">
+				profit,
+			</if>
+			<if test="retailId != null">
+				retail_id,
+			</if>
+			<if test="costPrice != null">
+				cost_price,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderDetailId != null">
+				#{orderDetailId,jdbcType=BIGINT},
+			</if>
+			<if test="orderChildId != null">
+				#{orderChildId,jdbcType=BIGINT},
+			</if>
+			<if test="machineId != null">
+				#{machineId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="orderDetailNum != null">
+				#{orderDetailNum,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				#{goodsId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsNum != null">
+				#{goodsNum,jdbcType=INTEGER},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="profit != null">
+				#{profit,jdbcType=DECIMAL},
+			</if>
+			<if test="retailId != null">
+				#{retailId,jdbcType=BIGINT},
+			</if>
+			<if test="costPrice != null">
+				#{costPrice,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrderDetail">
+		update tbl_order_detail
+		<set>
+			<if test="orderChildId != null">
+				order_child_id = #{orderChildId,jdbcType=BIGINT},
+			</if>
+			<if test="machineId != null">
+				machine_id = #{machineId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="orderDetailNum != null">
+				order_detail_num = #{orderDetailNum,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsId != null">
+				goods_id = #{goodsId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsName != null">
+				goods_name = #{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsNum != null">
+				goods_num = #{goodsNum,jdbcType=INTEGER},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="profit != null">
+				profit = #{profit,jdbcType=DECIMAL},
+			</if>
+			<if test="retailId != null">
+				retail_id = #{retailId,jdbcType=DECIMAL},
+			</if>
+			<if test="costPrice != null">
+				cost_price = #{costPrice,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrderDetail">
+		update tbl_order_detail
+		set order_child_id = #{orderChildId,jdbcType=BIGINT},
+		machine_id = #{machineId,jdbcType=BIGINT},
+		company_id = #{companyId,jdbcType=BIGINT},
+		order_detail_num = #{orderDetailNum,jdbcType=VARCHAR},
+		goods_id = #{goodsId,jdbcType=BIGINT},
+		goods_name = #{goodsName,jdbcType=VARCHAR},
+		goods_num = #{goodsNum,jdbcType=INTEGER},
+		price = #{price,jdbcType=DECIMAL},
+		profit = #{profit,jdbcType=DECIMAL},
+		cost_price = #{costPrice,jdbcType=DECIMAL},
+		retail_id = #{retailId,jdbcType=BIGINT}
+		where order_detail_id = #{orderDetailId,jdbcType=BIGINT}
+	</update>
+	<select id="findGoodsSale" resultType="map">
+		SELECT
+		c.goods_name
+		goodsName
+		,count(1) goodsNum
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_detail c,
+		tbl_item_detail d
+		WHERE a.order_id=b.order_id
+		AND b.order_child_id=c.order_child_id
+		AND b.order_child_status in(3,10)
+		AND
+		DATE_FORMAT(a.order_time,'%Y-%m-%d')>=#{beforeDate}
+		AND
+		DATE_FORMAT(a.order_time,'%Y-%m-%d')&lt;=#{afterDate}
+		AND
+		b.area_model_id=#{areaModelId}
+		AND b.machine_id=#{machineId}
+		AND c.order_detail_id=d.order_detail_id
+		AND d.item_status ='3'
+		GROUP BY
+		c.goods_id
+	</select>
+
+	<select id="findPreissueGoods" resultType="map">
+
+	</select>
+
+	<select id="getAllMoneyByOrderId" resultType="map">
+		select sum(od.price) as refundMoney ,oc.order_child_id as
+		childId,oc.order_child_num as childNum ,oc.order_child_status as
+		childStatus from tbl_order_detail od
+		,tbl_order_child oc where od.order_child_id=oc.order_child_id and oc.isdel='N'
+		AND od.order_child_id in( select oc.order_child_id from tbl_order_child
+		oc where oc.isdel='N' and oc.order_id=#{orderId} )
+		GROUP BY childId ORDER BY oc.end_time asc
+	</select>
+	<!-- 通过子订单的orderNum获取子订单ID和订单明细总金额 -->
+	<select id="getAllMoneyByChildOrderId" resultType="map">
+		select sum(od.price) as refundMoney
+		,oc.order_child_id as childId,oc.order_child_num as
+		childNum,oc.order_child_status as childStatus from tbl_order_detail od
+		,tbl_order_child oc where od.order_child_id=oc.order_child_id and
+		oc.isdel='N'
+		and od.order_child_id in
+		(select toc.order_child_id from tbl_order_child
+		toc where toc.isdel='N' and toc.order_child_num in
+		<foreach collection="orderChildNums" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		)
+		GROUP BY childId ORDER BY oc.end_time asc ;
+	</select>
+
+	<select id="findOrderDetailsByDeviceCodeAndOrderNum" resultType="map">
+		SELECT DISTINCT
+		a.order_num OrderNum
+		,CAST(b.order_child_id AS CHAR) orderChildId
+		,CAST(c.order_detail_id AS CHAR) orderDetailId
+		,CAST(c.goods_id AS CHAR) goodsId
+		,c.goods_name goodsName
+		,count(1) goodsCount
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_detail c,
+		tbl_item_detail d
+		WHERE c.order_detail_id=d.order_detail_id AND d.item_status=1
+		AND a.order_id = b.order_id
+		AND b.order_child_id = c.order_child_id
+		AND b.order_child_status in(1,10)
+		AND a.order_num=#{orderNum}
+		AND a.machine_id=#{machineId}
+		GROUP BY goodsName
+	</select>
+	
+	<select id="findDetailByChildIdAndMachineId" resultType="map">
+		<!-- SELECT * FROM tbl_order_detail t 
+		JOIN tbl_order_child b ON t.order_child_id = b.order_child_id
+		WHERE b.order_child_num = #{orderChildNum,jdbcType=VARCHAR} AND t.machine_id = #{machineId,jdbcType=VARCHAR}-->
+		
+		SELECT
+		a.order_num OrderNum
+		,b.order_child_id orderChildId
+		,c.order_detail_id orderDetailId
+		,c.goods_id goodsId
+		,c.goods_name goodsName
+		,c.goods_num goodsCount
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_detail c
+		WHERE
+		a.order_id = b.order_id
+		AND b.order_child_id = c.order_child_id
+		AND b.order_child_status='1'
+		AND b.order_child_id = #{orderChildId,jdbcType=BIGINT}
+		AND a.machine_id = #{machineId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="findDetailByChildNumAndMachineId" resultType="map">
+		<!-- SELECT * FROM tbl_order_detail t 
+		JOIN tbl_order_child b ON t.order_child_id = b.order_child_id
+		WHERE b.order_child_num = #{orderChildNum,jdbcType=VARCHAR} AND t.machine_id = #{machineId,jdbcType=VARCHAR}-->
+		
+		SELECT
+		a.order_num OrderNum
+		,b.order_child_id orderChildId
+		,c.order_detail_id orderDetailId
+		,c.goods_id goodsId
+		,c.goods_name goodsName
+		,c.goods_num goodsCount
+		FROM
+		tbl_order a,
+		tbl_order_child b,
+		tbl_order_detail c
+		WHERE
+		a.order_id = b.order_id
+		AND b.order_child_id = c.order_child_id
+		AND b.order_child_status='1'
+		AND b.order_child_num = #{orderChildNum,jdbcType=VARCHAR}
+		AND a.machine_id = #{machineId,jdbcType=BIGINT}
+	</select>
+	<!-- 查询商品预订数量 -->
+	<select id="queryFoodsPreNum" resultType="map">
+		SELECT tod.goods_name AS foodName ,SUM(tod.goods_num) AS preNum
+		FROM tbl_order o,tbl_order_child toc,tbl_order_detail tod 
+		WHERE o.order_id=toc.order_id AND toc.order_child_id=tod.order_child_id
+		AND o.isdel='N' AND o.order_type='0' AND toc.isdel='N' AND toc.order_child_status='1'
+		AND tod.company_id=#{companyId} 
+		<if test="startTime !=null and endTime !=null and startTime !='' and endTime !=''">
+			AND DATE_FORMAT(o.order_time,'%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="machineId != null and machineId != ''">
+			AND tod.machine_id = #{machineId}
+		</if>
+		<if test="areaModelId != null and areaModelId != ''">
+	 		AND toc.area_model_id = #{areaModelId} 
+		</if>
+		<if test="foodName != null and foodName !=''">
+			AND tod.goods_name LIKE '%${foodName}%'
+		</if>
+		GROUP BY tod.goods_id order by preNum desc 
+		LIMIT #{offset},#{limit}
+	</select>
+	
+	<select id="queryFoodsPreNumCount" resultType="integer">
+		SELECT COUNT(1) FROM(
+		SELECT tod.goods_name AS foodName ,SUM(tod.goods_num) AS preNum
+		FROM tbl_order o,tbl_order_child toc,tbl_order_detail tod 
+		WHERE o.order_id=toc.order_id AND toc.order_child_id=tod.order_child_id
+		AND o.isdel='N' AND o.order_type='0' AND toc.isdel='N' AND toc.order_child_status='1'
+		AND tod.company_id=#{companyId} 
+		<if test="startTime !=null and endTime !=null and startTime !='' and endTime !=''">
+			AND DATE_FORMAT(o.order_time,'%Y-%m-%d') BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="machineId != null and machineId != ''">
+			AND tod.machine_id = #{machineId}
+		</if>
+		<if test="areaModelId != null and areaModelId != ''">
+	 		AND toc.area_model_id = #{areaModelId} 
+		</if>
+		<if test="foodName != null and foodName !=''">
+			AND tod.goods_name LIKE '%${foodName}%'
+		</if>
+		GROUP BY tod.goods_id ) count
+	</select>
+	 <!-- //结算相关start -->
+	<select id="getSumMoneyByChildOrderId" resultType="java.math.BigDecimal" parameterType="java.lang.Long">
+		select sum(price) as refundMoney
+		from tbl_order_detail
+		where order_child_id =#{orderChildId,jdbcType=BIGINT}
+	</select>
+	 <!-- //结算相关end -->
+	 
+	 <select id="orderDetailCount" resultType="integer">
+	 	SELECT COUNT(1) FROM tbl_order_detail tod,tbl_order_child toc 
+		WHERE tod.order_child_id =toc.order_child_id AND tod.goods_id=#{goodsId} AND toc.order_child_status ='1' AND toc.isdel='N';
+	 </select>
+</mapper>

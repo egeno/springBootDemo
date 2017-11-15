@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblVerifyCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblVerifyCode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code_num" property="codeNum" jdbcType="VARCHAR" />
+    <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR" />
+    <result column="code_type" property="codeType" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="closing_time" property="closingTime" jdbcType="TIMESTAMP" />
+    <result column="verify_time" property="verifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code_num, mobile_num, code_type, create_time, closing_time, verify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_verify_code
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_verify_code
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblVerifyCode" >
+    insert into tbl_verify_code (id, code_num, mobile_num, 
+      code_type, create_time, closing_time, 
+      verify_time)
+    values (#{id,jdbcType=BIGINT}, #{codeNum,jdbcType=VARCHAR}, #{mobileNum,jdbcType=VARCHAR}, 
+      #{codeType,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{closingTime,jdbcType=TIMESTAMP}, 
+      #{verifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblVerifyCode" >
+    insert into tbl_verify_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="codeNum != null" >
+        code_num,
+      </if>
+      <if test="mobileNum != null" >
+        mobile_num,
+      </if>
+      <if test="codeType != null" >
+        code_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="closingTime != null" >
+        closing_time,
+      </if>
+      <if test="verifyTime != null" >
+        verify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="codeNum != null" >
+        #{codeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNum != null" >
+        #{mobileNum,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        #{codeType,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closingTime != null" >
+        #{closingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyTime != null" >
+        #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblVerifyCode" >
+    update tbl_verify_code
+    <set >
+      <if test="codeNum != null" >
+        code_num = #{codeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNum != null" >
+        mobile_num = #{mobileNum,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        code_type = #{codeType,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closingTime != null" >
+        closing_time = #{closingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyTime != null" >
+        verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblVerifyCode" >
+    update tbl_verify_code
+    set code_num = #{codeNum,jdbcType=VARCHAR},
+      mobile_num = #{mobileNum,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      closing_time = #{closingTime,jdbcType=TIMESTAMP},
+      verify_time = #{verifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getCountByCodeMobileNum" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_verify_code
+    where mobile_num = #{mobileNum,jdbcType=VARCHAR} AND code_num = #{code,jdbcType=VARCHAR} 
+  </select>
+  
+  <select id="selectByCodeMobileNum" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_verify_code
+    where mobile_num = #{mobileNum,jdbcType=VARCHAR} 
+    AND code_num = #{code,jdbcType=VARCHAR}
+    AND code_type = 3
+  </select>
+  
+  <delete id="deleteByMobile" parameterType="string">
+  	delete from tbl_verify_code 
+    where mobile_num = #{mobileNum,jdbcType=VARCHAR} and code_type='3'
+  </delete>
+  
+  <delete id="deleteVerifyCodeByMobileAndType">
+  	DELETE FROM tbl_verify_code
+    WHERE mobile_num = #{mobileNum,jdbcType=VARCHAR} 
+    AND code_type = #{codeType,jdbcType=CHAR}
+  </delete>
+  <select id="selectByMobileNumCode" resultMap="BaseResultMap" >
+  	SELECT 
+    <include refid="Base_Column_List"></include>
+     FROM tbl_verify_code
+    WHERE mobile_num =#{mobileNum,jdbcType=VARCHAR} 
+    AND code_num = #{verifyCode,jdbcType=VARCHAR} 
+    AND code_type = #{codeType,jdbcType=CHAR}
+    
+  </select>
+</mapper>

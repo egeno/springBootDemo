@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsSpecialRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsSpecialRole" >
+    <id column="special_role_num" property="specialRoleNum" jdbcType="CHAR" />
+    <result column="special_role_name" property="specialRoleName" jdbcType="VARCHAR" />
+    <result column="special_role_memo" property="specialRoleMemo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    special_role_num, special_role_name, special_role_memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_special_role
+    where special_role_num = #{specialRoleNum,jdbcType=CHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_special_role
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from basics_special_role
+    where special_role_num = #{specialRoleNum,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsSpecialRole" >
+    insert into basics_special_role (special_role_num, special_role_name, special_role_memo
+      )
+    values (#{specialRoleNum,jdbcType=CHAR}, #{specialRoleName,jdbcType=VARCHAR}, #{specialRoleMemo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsSpecialRole" >
+    insert into basics_special_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="specialRoleNum != null" >
+        special_role_num,
+      </if>
+      <if test="specialRoleName != null" >
+        special_role_name,
+      </if>
+      <if test="specialRoleMemo != null" >
+        special_role_memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="specialRoleNum != null" >
+        #{specialRoleNum,jdbcType=CHAR},
+      </if>
+      <if test="specialRoleName != null" >
+        #{specialRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialRoleMemo != null" >
+        #{specialRoleMemo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsSpecialRole" >
+    update basics_special_role
+    <set >
+      <if test="specialRoleName != null" >
+        special_role_name = #{specialRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialRoleMemo != null" >
+        special_role_memo = #{specialRoleMemo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where special_role_num = #{specialRoleNum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsSpecialRole" >
+    update basics_special_role
+    set special_role_name = #{specialRoleName,jdbcType=VARCHAR},
+      special_role_memo = #{specialRoleMemo,jdbcType=VARCHAR}
+    where special_role_num = #{specialRoleNum,jdbcType=CHAR}
+  </update>
+  
+  
+</mapper>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblCustomerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblCustomerInfo" >
+    <id column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="university_name" property="universityName" jdbcType="VARCHAR" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="student_num" property="studentNum" jdbcType="VARCHAR" />
+    <result column="native_place" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    customer_id, university_name, building_name, grade, student_num, native_place, create_time, 
+    modify_time, create_user_id, mod_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_customer_info
+    where customer_id = #{customerId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <select id="selectByPrimaryKeyMap" resultType="map" parameterType="java.lang.Long" >
+  SELECT 
+    CAST(customer_id AS CHAR) AS customerId,
+    CAST(native_place AS CHAR) AS nativePlace,
+    CAST(university_name AS CHAR) AS universityName,
+    CAST(grade AS CHAR) AS grade, 
+    CAST(building_name AS CHAR) AS buildingName, 
+    CAST(student_num AS CHAR) AS studentNum
+    FROM tbl_customer_info
+    WHERE customer_id =#{customerId}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_customer_info
+    where customer_id = #{customerId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblCustomerInfo" >
+    insert into tbl_customer_info (customer_id, university_name, building_name, 
+      grade, student_num, native_place, 
+      create_time, modify_time, create_user_id, 
+      mod_user_id)
+    values (#{customerId,jdbcType=BIGINT}, #{universityName,jdbcType=BIGINT}, #{buildingName,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=VARCHAR}, #{studentNum,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, 
+      #{modUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerInfo" >
+    insert into tbl_customer_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="universityName != null" >
+        university_name,
+      </if>
+      <if test="buildingName != null" >
+        building_name,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="studentNum != null" >
+        student_num,
+      </if>
+      <if test="nativePlace != null" >
+        native_place,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="universityName != null" >
+        #{universityName,jdbcType=BIGINT},
+      </if>
+      <if test="buildingName != null" >
+        #{buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNum != null" >
+        #{studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblCustomerInfo" >
+    update tbl_customer_info
+    <set >
+      <if test="universityName != null" >
+        university_name = #{universityName,jdbcType=BIGINT},
+      </if>
+      <if test="buildingName != null" >
+        building_name = #{buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNum != null" >
+        student_num = #{studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where customer_id = #{customerId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblCustomerInfo" >
+    update tbl_customer_info
+    set university_name = #{universityName,jdbcType=BIGINT},
+      building_name = #{buildingName,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      student_num = #{studentNum,jdbcType=VARCHAR},
+      native_place = #{nativePlace,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      mod_user_id = #{modUserId,jdbcType=BIGINT}
+    where customer_id = #{customerId,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="insertId" parameterType="java.lang.Long"  >
+    insert into tbl_customer_info (customer_id,university_name,native_place,grade,building_name,student_num,create_time,modify_time,create_user_id,mod_user_id)
+    values (#{customerId,jdbcType=BIGINT},"","","","","",now(),now(),#{customerId,jdbcType=BIGINT},#{customerId,jdbcType=BIGINT})
+  </insert>
+</mapper>

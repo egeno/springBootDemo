@@ -1,0 +1,244 @@
+.top{
+	height: 0.9rem;
+	background-color: #fff;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	text-align: center;
+}
+.top img{
+	width: 0.26rem;
+	height: 0.44rem;
+	vertical-align: bottom;
+	margin-top: 0.2rem;
+	margin-left: 0.2rem;
+	float: left;
+}
+.top span{
+	color: #1a1a1a;
+	font-size: 0.36rem;
+    margin-top: 0.23rem;
+    display: inline-block;
+}
+.jiange{
+	height: 0.2rem;
+	background-color: #f5f5f5;
+	border-bottom: #E4E4E4 solid 0.03rem;
+}
+.address{
+	height: 0.88rem;
+	background-color: #fff;
+	
+	
+}
+.addressk{
+	width: 0.3rem;
+	height: 0.88rem;
+	float: left;
+}
+.addressr{
+	float: right;
+	width: 6.1rem;
+	height: 0.88rem;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	color: #1a1a1a;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+}
+.aid{
+	height: 0.88rem;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	color: #cccccc;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	text-indent: 0.3rem;
+	background-color: #fff;
+}
+.red{
+	height: 0.88rem;
+	background-color: #fff;
+	border-bottom: #E4E4E4 solid 0.03rem;
+} 
+.hb{
+    height: 0.88rem;
+    width:4.53rem;
+	color: #000000;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	float: left;
+	margin-left: 0.3rem;
+}
+.hbqian{
+	 height: 0.88rem;
+    width:1.0rem;
+    float: left;
+    color: #CCCCCC;
+	font-size: 0.3rem;
+	line-height: 0.88rem;
+	
+}
+.hbtup {
+	  width:0.17rem;
+	 height: 0.88rem;
+	float: right;
+	margin-right: 0.3rem;
+}
+.hbtup img{height:0.27rem;
+	width: 0.17rem;
+      margin-top: 0.3rem;
+	
+}
+
+
+
+.number{ width: 1.67rem;
+height: 0.88rem;;
+color: #000000;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	margin-right: 0.3rem;
+	float: left;
+}
+.numberr{
+	
+	height: 0.88rem;
+    width:4.03rem;
+	color: #000000;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	float: left;
+	margin-left: 0.3rem;
+	
+}
+.MealTime{
+	height: 0.5rem;
+	background-color:#f5f5f5;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	
+}
+.MealTime_a{
+	width: 0.08rem;
+	height: 0.47rem;
+	float: left;
+	background-color:#fd8424;
+} 
+.MealTime_b{
+	width: 6.32rem;
+	height: 0.47rem;
+	color: #666666;
+	font-size: 0.25rem;
+	line-height: 0.5rem;
+	text-indent: 0.17rem;
+	float: right;
+	background-color: #808080;
+}
+.Dishwz{
+	float: left;
+	width: 3.75rem;
+	height: 0.88rem;
+	color: #1a1a1a;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+}
+.Dishwz span{
+	
+	color:#999999;
+}
+.Dish{
+	height: 0.88rem;;
+	
+}
+.xian{
+	width: 6.1rem;
+	height: 0.91rem;
+	float: right;
+	border-bottom: #E6E6E6 solid 0.03rem;
+	
+}
+.fenshu{
+	width: 0.8rem;
+	height: 0.88rem;
+	color: #1a1a1a;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	float: left;		
+}
+.price{
+	
+	width: 1.3rem;
+	height: 0.88rem;
+	color: #1a1a1a;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	float: left;	
+}
+.jiantb{
+	
+	width:0.8rem;
+	height: 0.88rem;
+	float: left;
+}
+.jiantb img{
+	width: 0.7rem;
+	height: 0.7rem;
+	margin-top: 0.09rem;
+}
+.discount{
+	width: 1.55rem;
+	height: 0.88rem;
+	float: left;
+	text-indent: 0.3rem;
+	color:#ff8421;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	
+	
+}
+.MwealTime{
+	height: 0.5rem;
+	background-color:#f5f5f5;
+	border-bottom: #E4E4E4 solid 0.03rem;
+	
+}
+.MwealTime_a{
+	width: 0.08rem;
+	height: 0.47rem;
+	float: left;
+	background-color:#fd8424;
+	margin-bottom:0.0rem;
+} 
+.MwealTime_b{
+	width: 6.32rem;
+	height: 0.47rem;
+	color: #666666;
+	font-size: 0.25rem;
+	line-height: 0.5rem;
+	text-indent: 0.17rem;
+	float: right;
+	background-color: #808080;
+}
+.Bigprice{
+	 width: 1.0rem;
+height: 0.88rem;;
+color: #000000;
+	font-size: 0.3rem;
+	line-height: 0.88rem;
+	float: left;
+}
+.numberrr{
+	
+	height: 0.88rem;
+    width:3.93rem;
+	color: #000000;
+	font-size: 0.32rem;
+	line-height: 0.88rem;
+	float: left;
+	margin-left: 0.3rem;
+	
+}
+.Bigpricea{
+	 width: 0.1rem;
+height: 0.88rem;;
+color: #fb4e44;
+	font-size: 0.3rem;
+	line-height: 0.88rem;
+	float: left;
+}

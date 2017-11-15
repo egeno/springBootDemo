@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<meta name="format-detection" content="telephone=no">
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mobiscroll.core.js"></script>
+	    <script src="../js/mobiscroll.frame.js"></script>
+	    <script src="../js/mobiscroll.scroller.js"></script>
+	    <script src="../js/mobiscroll.select.js"></script>
+	    <script src="../js/getwxopenid_index.js" type="text/javascript" charset="utf-8"></script>
+		
+		<link href="../css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+   		<link href="../css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" /> 
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Nooutput.css" />
+		<title>我的美食柜</title>
+		<style type="text/css">
+        /* Demo Page styling, you can disregard this in your implementation */
+        body { padding: 0; margin: 0; font-size: 16px; font-family: arial, verdana, sans-serif; }
+        input, select {line-height: 0.35rem;z-index: 99999;width: 5.8rem;margin-left: 0.6rem; padding: 0.7em;box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;position: absolute;}
+        .header { padding: .625em; background: #5185a8;}
+        .header h1 { margin: 0; padding: 0; color: #fff; text-align: center; font-size: 1.25em; font-weight: bold; text-shadow: 1px 1px 1px #000; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .content { padding: 1em; }
+        .mbsc-mobiscroll .dwwol {  
+		 border:none;
+	     width: 230px;
+	     height: 0.52rem !important;
+	     left: 50%;
+	     margin-left: -115px;
+	     border-left: none;
+	     border-right: none;
+	     margin-top: -0.243rem !important;
+		}  
+		.mbsc-mobiscroll .dwwr{
+		  /* background:#ffffff; */
+		  background: url(../img/aa1.png) no-repeat  center -11px;
+		  font-size: 12px;
+		  background-size: 6.4rem 180px;
+		}
+		
+		.sense-ui{background:#fff;}
+		.tickBox{padding: 5px 35px 5px 25px;border-radius: 20px;border:1px solid #fb850d;}
+		.tick{ display: inline-block; width: 7px;height:2px; background: #fb850d;line-height: 0;font-size:0;vertical-align: middle;-webkit-transform: rotate(45deg);}
+      	.tick:after{content:'/';display:block;width: 15px;height:2px; background: #fb850d;-webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);}
+    	.demo{position: fixed;top: 0.9rem;}
+    	.shijianz{background: #fefaef;  position: fixed;width: 0.6rem;height:0.6rem;}
+    	.shijianz img{width: 0.3rem;height: 0.3rem;margin-top: 0.15rem; margin-left: 0.15rem;}
+    </style>
+	</head>
+    
+	<body class="scrol">
+
+	
+	<div class="top">
+		<div class="cha">
+			<a href="index.html" class="gotoback"><img src="../img/imagey/return2.png"/></a>
+			</div>
+			<div class="wenzi"><span>我的美食柜 <img src="../img/imagey/actionbar_plant_title.png"><br/><em></em></span></div>
+			    
+			<div class="you">
+				<a href="Cabinetselection.html"><img src="../img/imagey/select_guiji.png" /></a>
+			</div>
+		</div>
+		
+		
+		<div class="heis" style="display: none;">
+			<div class="heisee">
+				<div class="fujin" style="display: none;">
+					<div class="immge"><img src="../img/img/titleCover.png"></div>
+					<div class="pp">常用机柜</div>
+				</div>
+				<div class="fuj">
+			<!-- 	<div class="sheb">
+					<div class="sheba">
+						<div class="shebaa">楼上设备</div>
+						<div class="wendu">874m</div>
+					</div>
+					<div class="shebb">全家科技3楼</div>
+				</div>  -->
+				</div>
+					<div class=fujinn>
+					<div class="immge"><img src="../img/img/titleCover.png"></div>
+					<div class="ppa">附近机柜</div>
+				</div>
+				<div class="cayyy">
+				<!-- <div class="sheb">
+					<div class="sheba">
+						<div class="shebaa">楼上设备</div>
+						<div class="wendu">2.766km</div>
+					</div>
+					<div class="shebb">全家科技3楼</div>
+				</div> -->
+				</div>
+			</div>
+		</div>
+		
+		<div class="neiron">
+			<div class="sican" id="sican" style="display:block;">
+				<div class="sican_box">
+				<div class="immg"><img src="../img/imagey/shujian.png"><em>  中餐（取餐时间 10：00-11：30）</em></div>
+				<div class="sicann" style="display: block;"><p class="sicann">四餐选择<img src="../img/imagey/actionbar_plant_title.png"></p></div>
+				<div class="sicann" onclick="kuangb()" style="display: none;"><p>四餐选择<img src="../img/imagey/actionbar_plant_title_up.png"></p></div>
+				</div>
+				<script>
+			var num;
+	        $(function () {
+	            function init() {
+	                $('#demo_select').mobiscroll().select({
+	                	//点击确定按钮
+	                	onSelect:function(valueText,inst){
+	                		console.log(inst);
+	                		//显示的是select标签选中的值  
+		                    //console.log("valueText : " + valueText); 
+	                		//显示select 的value的值  
+	                    	//console.log("inst._tempValue : " + inst._tempValue);  
+	                		localStorage.setItem("selectAreaModelId",inst._tempValue);
+	                		var selectdate=$(".xuanzzz").find(".p2").attr("lang");
+	                		var nowDate=$(".xuanzzz").find(".p2").text();
+	                 		localStorage.setItem("selectdate",selectdate);
+	                 		var companyId=localStorage.getItem("selectCompanyId");
+	                 		//var customerId= sessionStorage.getItem('customerId');
+	                 		//var machineId=localStorage.getItem("machineId");
+	                 		//var areaModelId=localStorage.getItem("areaModelId");
+	                 		//var companyId="88";
+	                 		var areaModelId=inst._tempValue;
+	                 		localStorage.setItem("areaID",areaModelId);
+	                 		var machineId=localStorage.getItem("selectMachineId");
+	                 		$(".zz").removeClass("xuanzzz");
+	                 		var zzIndex=localStorage.getItem("zzIndex");
+	                 		$(".zz").eq(zzIndex).addClass("xuanzzz");
+	                 		$(".bzk2").text($(".xuanzzz").find(".p1").text()+nowDate);
+	                 		$(".gou").hide();
+	                 		$("#demo_select_dummy").attr("data_id",$("#demo_select").val());
+	                 		$("#demo_select option").each(function(){
+	                 			if( areaModelId==$(this).attr("value")){
+	                 				$("#demo_select_dummy").attr("data_index",$(this).attr("data_index"));
+	                 			}
+	                 		});
+	                 		weekPreissueGoodsWX(companyId,selectdate,areaModelId,machineId);
+	                    }
+	                });
+	            }   
+	          //自定义属性  
+	           /* var settings = {  
+	                "onSelect":function(valueText,inst){  
+	                    //显示的是select标签选中的值  
+	                    console.log("valueText : " + valueText);  
+	                    //显示select 的value的值  
+	                    console.log("inst._tempValue : " + inst._tempValue);  
+	                    console.dir("inst : " + inst);  
+	                    //显示select 的value的值  
+	                    alert($('#demo_select').mobiscroll('getValue'));  
+	                },
+	                "btnClass" : 'sqh_color_56 font_16 sqh_line_height_15 margin_10 sqh_font_type',
+	                "onShow":showDialog  
+	            }  */
+	            var demo, theme, mode, display, lang;
+	            $('.settings').on('change', function() {
+	                demo = $('#demo').val();
+	                theme = $('#theme').val() || $.mobiscroll.defaults.theme,
+	                mode = $('#mode').val(),
+	                display = $('#display').val(),
+	                lang = $('#language').val();
+	                $('.demo-cont').hide();
+	                $("#demo_cont_" + demo).show();
+	                init();
+	            });
+	            $('#demo').trigger('change');
+	        });
+    	</script>
+
+        <div style="display: none;" >
+            <select name="demo" id="demo" class="settings">
+                <option value="select" selected>Select</option>
+            </select>
+        </div>
+        <a></a>
+        <!-- Demo configurator markup END -->
+
+    
+        <!-- Select demo markup -->
+        <div data-role="fieldcontain" class="demo-cont" id="demo_cont_select" style="dispaly:block;">
+	        <div class="shijianz"><img src="../img/imagey/shujian.png"></div>
+	        <div class="sicann" style="position: fixed;font-size:0.3rem"><span>暂未开放</span><p id="mbsc-control-ev">四餐选择<img src="../img/imagey/actionbar_plant_title.png"></p></div>
+	        <select name="Cities" id="demo_select" data-role="none">
+	            <!-- <option value="0">早餐(取餐时间：03:00-10:00)</option>
+	            <option value="1">中餐(取餐时间：10:00-13:30)</option>
+	            <option value="2">休闲(取餐时间：13:30-17:00)</option>
+	            <option value="3">晚餐(取餐时间：17:00-03:00)</option> -->
+	           
+	        </select>   
+        </div>
+		<div class="bzk" id="bzk" style="display: block;">
+			<p class="bzk1">本周</p>
+			<p class="bzk2">周四 08-04</p>
+			<!-- <p class="bzk3">可预订份数:89份</p> -->
+		</div>
+	</div>
+		
+		<script type="text/javascript">
+			
+$(document).ready(function(e) {
+	num=2;
+	$(".wenzi").click(function(){
+		if($(".mbsc-mobiscroll").length<=0){
+			if(num%2==0){
+				$(".scrol").addClass("bodyy");
+				$(".mbsc-mobiscroll").hide();
+				$(".heilan").hide();
+				$("#demo_cont_select").hide();
+				$("#bzk").hide();
+				$(".neir").hide();
+				$(".neiron").hide();
+				$("#demo_cont_select").hide();
+				$("#bzk").hide();
+			}else{
+				$(".scrol").removeClass("bodyy");
+				$(".heilan").show();
+				$("#demo_cont_select").show();
+				$("#bzk").show();
+				$(".neir").show();
+				$(".neiron").show();
+				$("#demo_cont_select").show();
+				$("#bzk").show();
+			}
+			num++;
+			$(".heis").slideToggle(1);
+			$(".heis").css("overflow","auto");
+		}
+	});
+});
+	
+	
+		</script>
+		
+			<div class="neir">
+				<div id="shijian" class="neir-z">
+					<div class="add_iphone" style="height: 0.9rem;width: 1.6rem;background-color: #F2F4F5;margin-top: -0.9rem;position: absolute;z-index: -1111;"></div>
+					<!-- 	<span style="height: 0.3rem; text-align: center;">本周</span>
+						<div class="xuanzzz">
+							<p class="p1">周五</p>
+							<p class="p2">02-16</p>
+						</div>	
+						
+						<div class="zz">
+							<p class="p1">周六</p>
+							<p class="p2">02-16</p>
+						</div>	
+						
+						<div class="zz">
+							<p class="p1">周日</p>
+							<p class="p2">02-16</p>
+						</div>	
+						<div id="xiaz">
+						<span style="height: 0.3rem; text-align: center;">下周</span>
+						</div>
+						
+						<div class="zz">
+							<p class="p1">周一</p>
+							<p class="p2">02-16</p>
+						</div>-->
+					<!--	<div id="xiaz">
+						</div>-->
+				</div>
+				
+				<div class="neir-y neir-fixed">
+					<div class="noFoods">
+						<img src="../img/image/no_food_saling.png"  >
+						<p>暂时还没有餐食，可预订其他餐~</p>
+					</div>
+					<ul class="taba">
+						<li class="tabaa">
+							<!--<div class="zhuang">
+								<div class="zhuang_z">
+									<div class="zhuang_t"><img src="../img/imagey/shiwu.png"></div>
+								</div>
+								<div class="zhuang_y">
+								<div class="zhuang_zz">焦糖布丁甜品</div>	
+								<div class="zhuang_xx">
+									<div class="xing"><img src="../img/imagey/quanxing.png"></div>
+									<div class="xing"><img src="../img/imagey/quanxing.png"></div>
+									<div class="xing"><img src="../img/imagey/quanxing.png"></div>
+									<div class="xing"><img src="../img/imagey/quanxing.png"></div>
+									<div class="xing"><img src="../img/imagey/quanxing.png"></div>
+								</div>
+								
+								<div class="zhuang_jg">
+									<div class="zhuang_jg_zt">￥100.00</div>
+									<div class="zhuang_anniu">
+										<div  class="jianhao"><img src="../img/imagey/minus_red.png"></div>
+										<div  class="zi"><em onclick="aa()">1</em></div>
+										<div id="a" class="jiahao"><img src="../img/imagey/plus_red.png"></div>
+										
+									</div>
+									</div>
+								</div>
+							</div>-->
+						</li>
+					</ul>
+					
+				</div>
+				</div>
+			
+			<div class="heilan">
+				<div class="heiyan_z">
+					<div class="che"><img src="../img/imagey/che.png"><i class="allCount">0</i></div>
+					<div class="qian allPrice">&#165;<em>0.00</em></div>
+				</div>
+				<div class="heiyan_ya">去选餐</div>
+				<div class="heiyan_y">去结算</div>
+			</div>
+		</div>
+		<div class="dialog">
+				<div class="car">	<!-- 购物车 -->
+					<h1>您的购物车 <img class="delete" src="../img/img/clear.png" /></h1>
+					<div class="scroll">
+						<!--<ul>
+							<div class='reserve'><em class='date'>"+_thisDate+"</em><em class='time'>"+_thisTime+"</em></div>
+							<li>
+								<span class="dishName">红烧狮子头套餐1</span>
+								<span class="dishPrice">&#165;15.00</span>
+								<span class="min">-</span>
+								<span class="buyCount">1</span>
+								<span class="add">+</span>
+							</li>
+						</ul>-->
+					</div>
+				</div>
+			</div>
+		<span class="overTime"></span>
+		<!-- <span class="nodivece">该模型未关联商户</span> -->
+    	<script src="../js/Nooutput.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

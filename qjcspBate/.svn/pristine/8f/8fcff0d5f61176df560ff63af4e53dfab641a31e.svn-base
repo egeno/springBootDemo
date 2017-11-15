@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblMachineTemplateRetailDateMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblMachineTemplateRetailDate" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="machine_id" property="machineId" jdbcType="BIGINT" />
+    <result column="template_id" property="templateId" jdbcType="BIGINT" />
+    <result column="retail_date" property="retailDate" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_id, template_id, retail_date, create_user_id, create_time, mod_user_id, 
+    mod_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_machine_template_retail_date
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_machine_template_retail_date
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblMachineTemplateRetailDate" >
+    insert into tbl_machine_template_retail_date (id, machine_id, template_id, 
+      retail_date, create_user_id, create_time, 
+      mod_user_id, mod_time)
+    values (#{id,jdbcType=BIGINT}, #{machineId,jdbcType=BIGINT}, #{templateId,jdbcType=BIGINT}, 
+      #{retailDate}, #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modUserId,jdbcType=BIGINT}, #{modTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblMachineTemplateRetailDate" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_machine_template_retail_date
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="templateId != null" >
+        template_id,
+      </if>
+      <if test="retailDate != null" >
+        retail_date,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="modTime != null" >
+        mod_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="templateId != null" >
+        #{templateId,jdbcType=BIGINT},
+      </if>
+      <if test="retailDate != null" >
+        #{retailDate},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        #{modTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblMachineTemplateRetailDate" >
+    update tbl_machine_template_retail_date
+    <set >
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=BIGINT},
+      </if>
+      <if test="templateId != null" >
+        template_id = #{templateId,jdbcType=BIGINT},
+      </if>
+      <if test="retailDate != null" >
+        retail_date = #{retailDate},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblMachineTemplateRetailDate" >
+    update tbl_machine_template_retail_date
+    set machine_id = #{machineId,jdbcType=BIGINT},
+      template_id = #{templateId,jdbcType=BIGINT},
+      retail_date = #{retailDate},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      mod_user_id = #{modUserId,jdbcType=BIGINT},
+      mod_time = #{modTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 获取本周的所有模板信息 -->
+  <select id="getTemplateInfo" resultType="map">
+  	SELECT rd.machine_id as machineId,rd.retail_date as retailDate ,bt.template_name as templateName,bt.template_id as templateId
+	FROM tbl_machine_template_retail_date rd ,basics_template bt 
+	where bt.template_id =rd.template_id AND bt.isdel='N' and bt.company_id =#{companyId} ORDER BY rd.retail_date ASC
+  </select>
+  <!-- 按设备ID和零售日期删除数据 -->
+  <delete id="deleteByMachineIdAndRetailDate">
+   delete from tbl_machine_template_retail_date
+    where machine_id=#{machineId} and retail_date =#{retailDate}
+  </delete>
+  <!-- 按设备ID和零售日期获取数量 -->
+  <select id="getCountByMachineAndRetailDate" resultType="integer">
+  	SELECT COUNT(1) FROM tbl_machine_template_retail_date t where t.machine_id=#{machineId} and t.retail_date=#{retailDate};
+  </select>
+  <!-- 按设备Id和零售日期修改绑定的模型ID -->
+  <update id="updateTemplateByMachineAndRetailDate">
+  	UPDATE tbl_machine_template_retail_date t 
+	<set>
+ 	t.template_id=#{templateId} 
+ 	</set>
+ 	where t.machine_id=#{machineId} and t.retail_date=#{retailDate}
+  </update>
+  <select id="getCount" resultType="integer">
+  	select count(1) from tbl_machine_template_retail_date where template_id=#{templateId}
+  </select>
+  
+  <select id="getByMachineIdAndRetailDate" resultType="long">
+  	select id from tbl_machine_template_retail_date where machine_id=#{machineId} and retail_date=#{retailDate}
+  </select>
+  
+  <select id="getTemplateIdByMachineIdAndRetailDate" resultType="Long">
+  	SELECT template_id 
+  	FROM tbl_machine_template_retail_date 
+  	WHERE 
+  	machine_id=#{machineId} 
+  	AND retail_date=#{retailDate}
+  </select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.TblOrderModeMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.TblOrderMode" >
+    <id column="mode_num" property="modeNum" jdbcType="CHAR" />
+    <result column="mode_name" property="modeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mode_num, mode_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_mode
+    where mode_num = #{modeNum,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_order_mode
+    where mode_num = #{modeNum,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.TblOrderMode" >
+    insert into tbl_order_mode (mode_num, mode_name)
+    values (#{modeNum,jdbcType=CHAR}, #{modeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.TblOrderMode" >
+    insert into tbl_order_mode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="modeNum != null" >
+        mode_num,
+      </if>
+      <if test="modeName != null" >
+        mode_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="modeNum != null" >
+        #{modeNum,jdbcType=CHAR},
+      </if>
+      <if test="modeName != null" >
+        #{modeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.TblOrderMode" >
+    update tbl_order_mode
+    <set >
+      <if test="modeName != null" >
+        mode_name = #{modeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mode_num = #{modeNum,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.TblOrderMode" >
+    update tbl_order_mode
+    set mode_name = #{modeName,jdbcType=VARCHAR}
+    where mode_num = #{modeNum,jdbcType=CHAR}
+  </update>
+</mapper>

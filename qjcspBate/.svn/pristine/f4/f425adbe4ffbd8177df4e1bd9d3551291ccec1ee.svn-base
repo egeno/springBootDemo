@@ -1,0 +1,60 @@
+.head{
+	width:100%;
+	height:20%;
+}
+.body{
+	width:100%;
+	height:70%;
+}
+.foot{
+	width:100%;
+	height:10%;
+	background: black;
+	color: white;
+}
+.Shopping_Cart{
+	width:15%;
+	height:100%;
+	float: left;
+}
+.Shopping_Cart img{
+	height:100%;
+}
+.many{
+	width:55%;
+	height:100%;
+	float: left;
+	font-size: 2em;
+}
+.order{
+	width:30%;
+	height:100%;
+	float:right; 
+	font-size: 2em;
+}
+.up{
+	width:100%;
+	height:75%;
+}
+.down{
+	width:100%;
+	height:25%;
+}
+.down div{
+	float: left;
+}
+.return{
+	width:20%;
+	height:100%;
+	float: left;
+}
+.return img{
+	height:100%;
+}
+.nearby_cabinet{
+	width:60%;
+}
+.choice_cabinet{
+	width:20%;
+	float: right;
+}

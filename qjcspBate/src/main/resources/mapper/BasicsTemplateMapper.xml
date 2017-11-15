@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsTemplate" >
+    <id column="template_id" property="templateId" jdbcType="BIGINT" />
+    <result column="template_name" property="templateName" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+    <result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="isdel" property="isdel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    template_id, template_name, company_id, create_user_id, create_time, mod_user_id, mod_time, isdel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from basics_template
+    where template_id = #{templateId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from basics_template
+    where template_id = #{templateId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsTemplate" useGeneratedKeys="true" keyProperty="templateId">
+    insert into basics_template (template_id, template_name, company_id, create_user_id, 
+      create_time, mod_user_id, mod_time, 
+      isdel)
+    values (#{templateId,jdbcType=BIGINT}, #{templateName,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modUserId,jdbcType=BIGINT}, #{modTime,jdbcType=TIMESTAMP}, 
+      #{isdel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsTemplate" >
+    insert into basics_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="templateId != null" >
+        template_id,
+      </if>
+      <if test="templateName != null" >
+        template_name,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id,
+      </if>
+      <if test="modTime != null" >
+        mod_time,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="templateId != null" >
+        #{templateId,jdbcType=BIGINT},
+      </if>
+      <if test="templateName != null" >
+        #{templateName,jdbcType=VARCHAR},
+      </if>
+       <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsTemplate" >
+    update basics_template
+    <set >
+      <if test="templateName != null" >
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+      	company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modUserId != null" >
+        mod_user_id = #{modUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modTime != null" >
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=CHAR},
+      </if>
+    </set>
+    where template_id = #{templateId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsTemplate" >
+    update basics_template
+    set template_name = #{templateName,jdbcType=VARCHAR},
+	  company_id = #{companyId,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      mod_user_id = #{modUserId,jdbcType=BIGINT},
+      mod_time = #{modTime,jdbcType=TIMESTAMP},
+      isdel = #{isdel,jdbcType=CHAR}
+    where template_id = #{templateId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 根据公司Id获取模板id和模板名 -->
+  <select id="getTemplateList" resultType="map">
+  	SELECT t.template_id as templateId,t.template_name as templateName 
+  	FROM basics_template t where t.isdel='N' and t.company_id =#{companyId};
+  </select>
+  
+  <select id="exist" resultType="java.lang.Integer">
+  	SELECT count(*) FROM basics_template t 
+  	WHERE t.template_name = #{template,jdbcType=VARCHAR}
+  	AND t.template_id = #{getTemplateId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="newExist" resultType="java.lang.Integer">
+  	SELECT count(*) FROM basics_template t 
+  	WHERE t.template_name = #{template,jdbcType=VARCHAR} and t.isdel='N'
+  </select>
+  
+  <update id="change"  >
+    UPDATE basics_template SET template_name = #{changeId,jdbcType=VARCHAR},
+    	company_id = #{companyId,jdbcType=BIGINT},
+    	mod_user_id = #{userId,jdbcType=BIGINT},
+      	mod_time = #{date,jdbcType=TIMESTAMP}
+    WHERE template_name = #{template,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="modelList" resultType="map">
+  	SELECT * FROM basics_area_model b 
+	JOIN tbl_template_area_model t ON t.area_model_id = b.area_model_id
+	WHERE t.template_id = 1
+  </select>
+  
+  <update id="delTemplate">
+  	 update basics_template set isdel='Y' where template_id = #{templateId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getTemplateId" resultType="java.lang.Integer">
+  	SELECT template_id FROM basics_template t WHERE t.template_name = #{templateName,jdbcType=VARCHAR} and t.isdel='N'
+  </select>
+  
+  <update id="updateByTemplateName">
+  	UPDATE basics_template SET template_name = #{template,jdbcType=VARCHAR}
+    WHERE template_id = #{getTemplateId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.GCityMapper" >
+  <resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.GCity" >
+    <id column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="spell_all" property="spellAll" jdbcType="VARCHAR" />
+    <result column="spell_short" property="spellShort" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    city_id, city_name, spell_all, spell_short, province_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from g_city
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from g_city
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qjkj.qjcsp.entity.GCity" >
+    insert into g_city (city_id, city_name, spell_all, 
+      spell_short, province_id)
+    values (#{cityId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, #{spellAll,jdbcType=VARCHAR}, 
+      #{spellShort,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.GCity" >
+    insert into g_city
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="spellAll != null" >
+        spell_all,
+      </if>
+      <if test="spellShort != null" >
+        spell_short,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="spellAll != null" >
+        #{spellAll,jdbcType=VARCHAR},
+      </if>
+      <if test="spellShort != null" >
+        #{spellShort,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.GCity" >
+    update g_city
+    <set >
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="spellAll != null" >
+        spell_all = #{spellAll,jdbcType=VARCHAR},
+      </if>
+      <if test="spellShort != null" >
+        spell_short = #{spellShort,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.GCity" >
+    update g_city
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      spell_all = #{spellAll,jdbcType=VARCHAR},
+      spell_short = #{spellShort,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=BIGINT}
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </update>
+  <!-- 获取所有城市列表 -->
+  <select id="getAllCitiesList" resultType="map">
+  	SELECT cast(c.city_id as char) as cityId,cast(c.city_name as char)as cityName,
+	cast(c.province_id as char)as provinceId,cast(p.province_name as char)as provinceName,
+	cast(c.spell_all as char)as spellAll,cast(c.spell_short as char)as spellShort,
+	UPPER(SUBSTRING(c.spell_short,1,1)) as en
+	 FROM g_city c INNER JOIN g_province p on c.province_id = p.province_id 
+	ORDER BY en,cityId asc;
+  </select>
+  <!-- 获取热门城市列表 -->
+  <select id="getHotCitiesList" resultType="map">
+	  SELECT cast(c.city_id as char)as cityId,cast(c.city_name as char)as cityName,
+	  cast(c.province_id as char)as provinceId,cast(p.province_name as char)as provinceName,
+	  cast(c.spell_all as char)as spellAll,cast(c.spell_short as char)as spellShort
+	  FROM g_city c,g_hot_city hc,g_province p where c.city_id=hc.city_id and c.province_id =p.province_id
+	  order by hc.click_num desc LIMIT 0,12;
+  </select>
+  
+  <select id="queryAllCitiesList" resultMap="BaseResultMap">
+  	SELECT
+  	<include refid="Base_Column_List"></include>
+  	FROM g_city
+  </select>
+  
+  <select id="getCityIdByCityName" resultType="long">
+  	SELECT city_id
+  	FROM g_city
+  	WHERE city_name = #{cityName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="fuzzySearchCity" parameterType="String" resultType="map">
+  	SELECT 
+	CAST(gc.city_id AS CHAR)cityId, gc.city_name cityName, 
+	CAST(gp.province_id AS CHAR)provinceId, gp.province_name provinceName, 
+	gc.spell_all spellAll, gc.spell_short spellShort
+	FROM g_city gc
+	LEFT JOIN g_province gp ON gc.province_id=gp.province_id
+	WHERE CONCAT(gc.city_name, gc.spell_all, gc.spell_short) LIKE '%${keywords}%'
+	LIMIT 0,5	
+  </select>
+  
+</mapper>

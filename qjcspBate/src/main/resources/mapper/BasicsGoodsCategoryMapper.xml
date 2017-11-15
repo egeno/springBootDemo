@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qjkj.qjcsp.mapper.BasicsGoodsCategoryMapper">
+	<resultMap id="BaseResultMap" type="com.qjkj.qjcsp.entity.BasicsGoodsCategory">
+		<id column="goods_category_id" property="goodsCategoryId" jdbcType="BIGINT" />
+		<result column="goods_category_code" property="goodsCategoryCode"
+			jdbcType="VARCHAR" />
+		<result column="parent_goods_category_id" property="parentGoodsCategoryId"
+			jdbcType="BIGINT" />
+		<result column="parent_goods_category_name" property="parentGoodsCategoryName"
+			jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="SMALLINT" />
+		<result column="is_last_layer" property="isLastLayer" jdbcType="CHAR" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="goods_category_icon" property="goodsCategoryIcon"
+			jdbcType="VARCHAR" />
+		<result column="goods_category_name" property="goodsCategoryName"
+			jdbcType="VARCHAR" />
+		<result column="goods_category_memo" property="goodsCategoryMemo"
+			jdbcType="VARCHAR" />
+		<result column="goods_category_sort" property="goodsCategorySort"
+			jdbcType="INTEGER" />
+		<result column="goods_category_status" property="goodsCategoryStatus"
+			jdbcType="CHAR" />
+		<result column="isdel" property="isdel" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="last_mod_time" property="lastModTime" jdbcType="TIMESTAMP" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="BIGINT" />
+		<result column="mod_user_id" property="modUserId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		goods_category_id, goods_category_code,
+		parent_goods_category_id,
+		parent_goods_category_name,
+		level,
+		is_last_layer, company_id, goods_category_icon, goods_category_name,
+		goods_category_memo,
+		goods_category_sort, goods_category_status, isdel,
+		create_time, last_mod_time,
+		create_user_id,
+		mod_user_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from basics_goods_category
+		where goods_category_id =
+		#{goodsCategoryId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		basics_goods_category
+		where goods_category_id =
+		#{goodsCategoryId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.qjkj.qjcsp.entity.BasicsGoodsCategory">
+		insert into
+		basics_goods_category (goods_category_id,
+		goods_category_code,
+		parent_goods_category_id, parent_goods_category_name,
+		level,
+		is_last_layer, company_id,
+		goods_category_icon, goods_category_name,
+		goods_category_memo,
+		goods_category_sort, goods_category_status, isdel,
+		create_time, last_mod_time, create_user_id,
+		mod_user_id)
+		values
+		(#{goodsCategoryId,jdbcType=BIGINT},
+		#{goodsCategoryCode,jdbcType=VARCHAR},
+		#{parentGoodsCategoryId,jdbcType=BIGINT},
+		#{parentGoodsCategoryName,jdbcType=VARCHAR},
+		#{level,jdbcType=SMALLINT}, #{isLastLayer,jdbcType=CHAR},
+		#{companyId,jdbcType=BIGINT},
+		#{goodsCategoryIcon,jdbcType=VARCHAR},
+		#{goodsCategoryName,jdbcType=VARCHAR},
+		#{goodsCategoryMemo,jdbcType=VARCHAR},
+		#{goodsCategorySort,jdbcType=INTEGER},
+		#{goodsCategoryStatus,jdbcType=CHAR}, #{isdel,jdbcType=CHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{lastModTime,jdbcType=TIMESTAMP},
+		#{createUserId,jdbcType=BIGINT},
+		#{modUserId,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qjkj.qjcsp.entity.BasicsGoodsCategory">
+		insert into basics_goods_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsCategoryId != null">
+				goods_category_id,
+			</if>
+			<if test="goodsCategoryCode != null">
+				goods_category_code,
+			</if>
+			<if test="parentGoodsCategoryId != null">
+				parent_goods_category_id,
+			</if>
+			<if test="parentGoodsCategoryName != null">
+				parent_goods_category_name,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="isLastLayer != null">
+				is_last_layer,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="goodsCategoryIcon != null">
+				goods_category_icon,
+			</if>
+			<if test="goodsCategoryName != null">
+				goods_category_name,
+			</if>
+			<if test="goodsCategoryMemo != null">
+				goods_category_memo,
+			</if>
+			<if test="goodsCategorySort != null">
+				goods_category_sort,
+			</if>
+			<if test="goodsCategoryStatus != null">
+				goods_category_status,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModTime != null">
+				last_mod_time,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="modUserId != null">
+				mod_user_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsCategoryId != null">
+				#{goodsCategoryId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsCategoryCode != null">
+				#{goodsCategoryCode,jdbcType=VARCHAR},
+			</if>
+			<if test="parentGoodsCategoryId != null">
+				#{parentGoodsCategoryId,jdbcType=BIGINT},
+			</if>
+			<if test="parentGoodsCategoryName != null">
+				#{parentGoodsCategoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=SMALLINT},
+			</if>
+			<if test="isLastLayer != null">
+				#{isLastLayer,jdbcType=CHAR},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsCategoryIcon != null">
+				#{goodsCategoryIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsCategoryName != null">
+				#{goodsCategoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsCategoryMemo != null">
+				#{goodsCategoryMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsCategorySort != null">
+				#{goodsCategorySort,jdbcType=INTEGER},
+			</if>
+			<if test="goodsCategoryStatus != null">
+				#{goodsCategoryStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModTime != null">
+				#{lastModTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				#{modUserId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qjkj.qjcsp.entity.BasicsGoodsCategory">
+		update basics_goods_category
+		<set>
+			<if test="goodsCategoryCode != null">
+				goods_category_code =
+				#{goodsCategoryCode,jdbcType=VARCHAR},
+			</if>
+			<if test="parentGoodsCategoryId != null">
+				parent_goods_category_id =
+				#{parentGoodsCategoryId,jdbcType=BIGINT},
+			</if>
+			<if test="parentGoodsCategoryName != null">
+				parent_goods_category_name =
+				#{parentGoodsCategoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=SMALLINT},
+			</if>
+			<if test="isLastLayer != null">
+				is_last_layer = #{isLastLayer,jdbcType=CHAR},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="goodsCategoryIcon != null">
+				goods_category_icon =
+				#{goodsCategoryIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsCategoryName != null">
+				goods_category_name =
+				#{goodsCategoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsCategoryMemo != null">
+				goods_category_memo =
+				#{goodsCategoryMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsCategorySort != null">
+				goods_category_sort =
+				#{goodsCategorySort,jdbcType=INTEGER},
+			</if>
+			<if test="goodsCategoryStatus != null">
+				goods_category_status =
+				#{goodsCategoryStatus,jdbcType=CHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModTime != null">
+				last_mod_time = #{lastModTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modUserId != null">
+				mod_user_id = #{modUserId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where goods_category_id = #{goodsCategoryId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qjkj.qjcsp.entity.BasicsGoodsCategory">
+		update
+		basics_goods_category
+		set goods_category_code =
+		#{goodsCategoryCode,jdbcType=VARCHAR},
+		parent_goods_category_id =
+		#{parentGoodsCategoryId,jdbcType=BIGINT},
+		parent_goods_category_name =
+		#{parentGoodsCategoryName,jdbcType=VARCHAR},
+		level =
+		#{level,jdbcType=SMALLINT},
+		is_last_layer =
+		#{isLastLayer,jdbcType=CHAR},
+		company_id =
+		#{companyId,jdbcType=BIGINT},
+		goods_category_icon =
+		#{goodsCategoryIcon,jdbcType=VARCHAR},
+		goods_category_name =
+		#{goodsCategoryName,jdbcType=VARCHAR},
+		goods_category_memo =
+		#{goodsCategoryMemo,jdbcType=VARCHAR},
+		goods_category_sort =
+		#{goodsCategorySort,jdbcType=INTEGER},
+		goods_category_status =
+		#{goodsCategoryStatus,jdbcType=CHAR},
+		isdel = #{isdel,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		last_mod_time =
+		#{lastModTime,jdbcType=TIMESTAMP},
+		create_user_id =
+		#{createUserId,jdbcType=BIGINT},
+		mod_user_id =
+		#{modUserId,jdbcType=BIGINT}
+		where goods_category_id =
+		#{goodsCategoryId,jdbcType=BIGINT}
+	</update>
+	<!-- 查询商品预订发布的商品类型 -->
+	<select id="selectGoodsCategoryById" resultType="map"
+		parameterType="long">
+		SELECT bgc.goods_category_id as
+		id,bgc.goods_category_name as name FROM
+		basics_goods_category bgc where
+		bgc.isdel='N' and bgc.goods_category_status ='1' and
+		bgc.company_id=#{companyId};
+	</select>
+
+	<select id="selectGoodsCategoryByCompanyId" resultType="map"
+		parameterType="long">
+		SELECT bgc.goods_category_id as
+		categoryId,bgc.goods_category_name as
+		categoryName FROM
+		basics_goods_category bgc where bgc.isdel='N' and
+		bgc.company_id=#{companyId};
+	</select>
+	<select id="findCategoryAllList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_goods_category c
+		WHERE c.isdel = 'N' 
+		AND c.goods_category_status='1'
+		AND c.company_id =#{companyId,jdbcType=BIGINT}
+		ORDER BY c.goods_category_sort
+	</select>
+	<select id="findCategory" resultType="map" parameterType="Long">
+		SELECT
+		c.goods_category_id as goodsCategoryId, c.goods_category_name as
+		goodsCategoryName,
+		c.parent_goods_category_id as parentGoodsCategoryId,
+		c.parent_goods_category_name as parentGoodsCategoryName,
+		c.level,
+		(SELECT u.user_account FROM basics_users u WHERE u.user_id =
+		c.create_user_id) as creater,
+		c.create_time as createTime, (SELECT
+		u.user_account FROM basics_users u WHERE u.user_id = c.mod_user_id) as
+		modifier,
+		c.last_mod_time as modifyTime, c.goods_category_status as
+		goodsCategoryStatus,
+		c.goods_category_code as goodsCategoryCode
+		FROM
+		basics_goods_category c
+		WHERE c.isdel = 'N'
+		<if test="pid != null">
+			AND c.parent_goods_category_id = #{pid}
+		</if>
+		<if test="pid == null">
+			AND c.parent_goods_category_id IS NULL
+		</if>
+		<if test="companyId != null">
+			AND c.company_id = #{companyId,jdbcType=BIGINT}
+		</if>
+		ORDER BY c.goods_category_sort
+	</select>
+	<select id="getChildCategoryCountbyPId" resultType="int"
+		parameterType="Long">
+		SELECT
+		count(1)
+		FROM basics_goods_category c
+		WHERE c.isdel
+		= 'N' AND c.parent_goods_category_id = #{pid}
+		ORDER BY
+		c.goods_category_sort
+	</select>
+
+	<update id="deleteCategorybyId" parameterType="com.qjkj.qjcsp.entity.BasicsGoodsCategory">
+		UPDATE
+		basics_goods_category
+		SET goods_category_status = '0',isdel = 'Y'
+		WHERE
+		goods_category_id = #{goodsCategoryId,jdbcType=BIGINT}
+	</update>
+
+	<select id="queryChildCategoryStatusbyPId" resultMap="BaseResultMap"
+		parameterType="Long">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_goods_category c
+		WHERE c.goods_category_status = '1' AND c.isdel = 'N' AND
+		c.parent_goods_category_id = #{pid}
+		ORDER BY c.goods_category_sort
+	</select>
+	
+	<select id="selectGoodsCategoryName" resultType="map">
+		SELECT goods_category_id,goods_category_name 
+		FROM basics_goods_category t 
+		WHERE t.company_id = #{companyId,jdbcType=BIGINT} AND t.isdel = 'N'
+	</select>
+	<!-- 按编号查询，用于添加时判断是否编号重复 -->
+	<select id="findCategoryNumByCode" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM basics_goods_category c
+		WHERE c.goods_category_code = #{code,jdbcType=VARCHAR}
+		AND
+		c.company_id = #{companyId,jdbcType=BIGINT}
+	</select>
+</mapper>
