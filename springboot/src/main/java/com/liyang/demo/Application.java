@@ -8,8 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 
  * 
  * @author yangcb
- *
+ *http://127.0.0.1:8080/index/asss
  */
+
 //@SpringBootApplication相当于@Configuration、@EnableAutoConfiguration和  @ComponentScan
 @SpringBootApplication
 public class Application  
